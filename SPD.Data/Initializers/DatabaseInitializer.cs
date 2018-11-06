@@ -1,0 +1,228 @@
+﻿using SPD.Data.Contexts;
+using SPD.Data.Utilities;
+using SPD.Model.Model;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Globalization;
+using System.IO;
+
+namespace SPD.Data.Initializers
+{
+    /// <summary>
+    /// Responsável por fornecer métodos para inicialização do banco de dados da aplicação com gravação de dados padrões
+    /// </summary>
+    /// <typeparam name="TContext"></typeparam>
+    public sealed class DatabaseInitializer<TContext> : CreateDatabaseIfNotExists<TContext> where TContext : BaseContext<TContext>
+    {
+        private const string SCHEMAKEY = "###SCHEMA###";
+
+        internal TContext Context { get; private set; }
+
+        public DatabaseInitializer(TContext context)
+        {
+            this.Context = context;
+        }
+
+        private Funcionalidade[] Funcionalidades()
+        {
+            Funcionalidade login = new Funcionalidade()
+            {
+                Nome = "Efetuar Login",
+                isAtivo = true
+            };
+
+            Funcionalidade logoff = new Funcionalidade()
+            {
+                Nome = "Efetuar Logoff",
+                isAtivo = true
+            };
+
+            Funcionalidade usuario = new Funcionalidade()
+            {
+                Nome = "Gerenciar Usuários",
+                isAtivo = true
+            };
+
+            Funcionalidade addPaciente = new Funcionalidade()
+            {
+                Nome = "Adicionar Novo Paciente",
+                isAtivo = true
+            };
+
+            Funcionalidade editPaciente = new Funcionalidade()
+            {
+                Nome = "Editar Paciente Cadastrado",
+                isAtivo = true
+            };
+
+            Funcionalidade delPaciente = new Funcionalidade()
+            {
+                Nome = "Excluir Paciente",
+                isAtivo = true
+            };
+
+            Funcionalidade consulta = new Funcionalidade()
+            {
+                Nome = "Gerenciar Consultas",
+                isAtivo = true
+            };
+
+            Funcionalidade historico = new Funcionalidade()
+            {
+                Nome = "Visualizar Histórico de Operação",
+                isAtivo = true
+            };
+
+            Funcionalidade notificacao = new Funcionalidade()
+            {
+                Nome = "Receber Notificações",
+                isAtivo = true
+            };
+
+            return new Funcionalidade[] { login, logoff, usuario, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
+
+        }
+
+        private EstadoCivil[] PreparaEstadoCivil()
+        {
+            EstadoCivil solteiro = new EstadoCivil()
+            {
+                DESCRICAO = "Solteiro"
+            };
+
+            EstadoCivil casado = new EstadoCivil()
+            {
+                DESCRICAO = "Casado"
+            };
+
+            EstadoCivil divorciado = new EstadoCivil()
+            {
+                DESCRICAO = "Divorciado"
+            };
+
+            EstadoCivil separado = new EstadoCivil()
+            {
+                DESCRICAO = "Separado"
+            };
+
+            EstadoCivil viuvo = new EstadoCivil()
+            {
+                DESCRICAO = "Viúvo"
+            };
+
+            EstadoCivil naoAplica = new EstadoCivil()
+            {
+                DESCRICAO = "N/A"
+            };
+
+            return new EstadoCivil[] { solteiro, casado, divorciado, separado, viuvo, naoAplica };
+        }
+
+        private List<UsuarioFuncionalidade> ListUsuarioFuncionalidades(Usuario usuario, Funcionalidade[] funcionalidades)
+        {
+            var userFuncs = new List<UsuarioFuncionalidade>();
+
+            foreach (var item in funcionalidades)
+            {
+                userFuncs.Add(new UsuarioFuncionalidade()
+                {
+                    USUARIO = usuario,
+                    FUNCIONALIDADE = item
+                });
+            }
+
+            return userFuncs;
+        }
+
+        private IEnumerable<TipoOperacao> PreparaTiposOperacoes()
+        {
+            var tiposOperacoes = new List<TipoOperacao>();
+
+            foreach (var nome in Enum.GetNames(typeof(Model.Enums.SPD_Enums.Tipo_Operacao)))
+            {
+                tiposOperacoes.Add(new TipoOperacao()
+                {
+                    CODIGO_TIPO_OPERACAO = nome,
+                    DESCRICAO_TIPO_OPERACAO = nome,
+                });
+            }
+
+            return tiposOperacoes;
+        }
+
+        private void ExecuteSqlCommand()
+        {
+            var scriptsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin");
+            var searchPattern = String.Format(CultureInfo.InvariantCulture, "*.{0}.sql", Enum.GetName(this.Context.ContextType.GetType(), this.Context.ContextType));
+
+            foreach (var sqlFilePath in Directory.GetFiles(scriptsPath, searchPattern, SearchOption.TopDirectoryOnly))
+            {
+                using (var sqlFile = new StreamReader(sqlFilePath))
+                {
+                    var content = sqlFile.ReadToEnd();
+
+                    if (content.Contains(DatabaseInitializer<TContext>.SCHEMAKEY))
+                    {
+                        content = content.Replace(DatabaseInitializer<TContext>.SCHEMAKEY, this.Context.Schema);
+                    }
+
+                    this.Context.Database.ExecuteSqlCommand(content);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Método responsável pela inicialização do sistema
+        /// </summary>
+        internal void Initialize()
+        {
+
+            Usuario usuarioAdministrador = new Usuario()
+            {
+                Nome = "Administrador",
+                Email = "brunomarcelo.1995@gmail.com",
+                Login = "adminsis",
+                Password = Usuario.GerarHash("a12345678"),
+                TrocaSenhaObrigatoria = true,
+                isAtivo = true,
+            };
+
+            var funcionalidades = Funcionalidades();
+            var usuarioFuncionalidades = ListUsuarioFuncionalidades(usuarioAdministrador, Funcionalidades());
+            var tiposOperacoes = this.PreparaTiposOperacoes();
+            var estadoCivil = PreparaEstadoCivil();
+
+            this.Context.Set<Funcionalidade>().AddRange(funcionalidades);
+            this.Context.Set<Usuario>().Add(usuarioAdministrador);
+            this.Context.Set<UsuarioFuncionalidade>().AddRange(usuarioFuncionalidades);
+            this.Context.Set<TipoOperacao>().AddRange(tiposOperacoes);
+            this.Context.Set<EstadoCivil>().AddRange(estadoCivil);
+
+            try
+            {
+                // Salva as alterações no banco de dados
+                this.Context.SaveChanges();
+
+                // Executa scripts sql personalizados
+                ExecuteSqlCommand();
+
+                // Chama o restante da seed
+                base.Seed(this.Context);
+            }
+            catch (DbEntityValidationException dbEntityValidationException)
+            {
+                ContextDebugger.ShowInDebugConsole(dbEntityValidationException);
+
+                throw dbEntityValidationException;
+            }
+        }
+
+        protected override void Seed(TContext context)
+        {
+            this.Initialize();
+        }
+
+    }
+}

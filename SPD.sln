@@ -1,0 +1,90 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Projetos Web", "0 - Projetos Web", "{EC2E5758-7751-47AA-8C22-35569E5F1BDD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Services", "2 - Services", "{D17D6BCE-CFEA-40E6-8F12-196A707D8946}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Data", "4 - Data", "{AFD2D4DA-7131-4627-952E-21846E9F420A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Model", "1 - Model", "{73574920-95E7-48DB-9856-B6B569EBF635}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Itens Config", "6 - Itens Config", "{5EFF05F8-FA19-4BE3-8487-AA5E5009B179}"
+	ProjectSection(SolutionItems) = preProject
+		..\SGTAN\SPD.Data.ConnectionStrings.config = ..\SGTAN\SPD.Data.ConnectionStrings.config
+		..\SGTAN\SPD.EmailConfiguracao.config = ..\SGTAN\SPD.EmailConfiguracao.config
+		..\SGTAN\SPD.MenuConfuguracao.json = ..\SGTAN\SPD.MenuConfuguracao.json
+		..\SGTAN\SPD.Modulos.json = ..\SGTAN\SPD.Modulos.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - CrossCutting", "5 - CrossCutting", "{806FFC2F-9F07-4337-B424-30DA3C62F441}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.Model", "SPD.Model\SPD.Model.csproj", "{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.Services", "SPD.Services\SPD.Services.csproj", "{777DEE64-A1A3-4699-856C-0D18416621D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Repository", "3 - Repository", "{C87DF0B8-0661-402B-93DC-F377C4BD115F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.Repository", "SPD.Repository\SPD.Repository.csproj", "{5DBC8992-E0BC-4EB1-94E7-FAE451CB93D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.Data", "SPD.Data\SPD.Data.csproj", "{0F3AB370-F82A-4E26-90C4-3553376F429D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.CrossCutting", "SPD.CrossCutting\SPD.CrossCutting.csproj", "{DECB053B-11F8-4AE2-9609-149700D703C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.MVC.PortalWeb", "SPD.MVC.PortalWeb\SPD.MVC.PortalWeb.csproj", "{5B3BCC0B-6BD0-46E8-8040-C82C070F06D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.MVC.Geral", "SPD.MVC.Geral\SPD.MVC.Geral.csproj", "{1F423BBE-8065-4B88-A336-00B7576A3B88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{777DEE64-A1A3-4699-856C-0D18416621D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{777DEE64-A1A3-4699-856C-0D18416621D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{777DEE64-A1A3-4699-856C-0D18416621D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{777DEE64-A1A3-4699-856C-0D18416621D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DBC8992-E0BC-4EB1-94E7-FAE451CB93D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DBC8992-E0BC-4EB1-94E7-FAE451CB93D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DBC8992-E0BC-4EB1-94E7-FAE451CB93D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DBC8992-E0BC-4EB1-94E7-FAE451CB93D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F3AB370-F82A-4E26-90C4-3553376F429D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F3AB370-F82A-4E26-90C4-3553376F429D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F3AB370-F82A-4E26-90C4-3553376F429D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F3AB370-F82A-4E26-90C4-3553376F429D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DECB053B-11F8-4AE2-9609-149700D703C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DECB053B-11F8-4AE2-9609-149700D703C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DECB053B-11F8-4AE2-9609-149700D703C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DECB053B-11F8-4AE2-9609-149700D703C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B3BCC0B-6BD0-46E8-8040-C82C070F06D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B3BCC0B-6BD0-46E8-8040-C82C070F06D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B3BCC0B-6BD0-46E8-8040-C82C070F06D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B3BCC0B-6BD0-46E8-8040-C82C070F06D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F423BBE-8065-4B88-A336-00B7576A3B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F423BBE-8065-4B88-A336-00B7576A3B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F423BBE-8065-4B88-A336-00B7576A3B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F423BBE-8065-4B88-A336-00B7576A3B88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B} = {73574920-95E7-48DB-9856-B6B569EBF635}
+		{777DEE64-A1A3-4699-856C-0D18416621D1} = {D17D6BCE-CFEA-40E6-8F12-196A707D8946}
+		{5DBC8992-E0BC-4EB1-94E7-FAE451CB93D2} = {C87DF0B8-0661-402B-93DC-F377C4BD115F}
+		{0F3AB370-F82A-4E26-90C4-3553376F429D} = {AFD2D4DA-7131-4627-952E-21846E9F420A}
+		{DECB053B-11F8-4AE2-9609-149700D703C8} = {806FFC2F-9F07-4337-B424-30DA3C62F441}
+		{5B3BCC0B-6BD0-46E8-8040-C82C070F06D7} = {EC2E5758-7751-47AA-8C22-35569E5F1BDD}
+		{1F423BBE-8065-4B88-A336-00B7576A3B88} = {EC2E5758-7751-47AA-8C22-35569E5F1BDD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FED0231-10FF-4987-986A-D22D82C72620}
+	EndGlobalSection
+EndGlobal
