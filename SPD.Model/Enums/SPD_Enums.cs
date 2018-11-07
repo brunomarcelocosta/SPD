@@ -38,6 +38,12 @@ namespace SPD.Model.Enums
             Senha = 12
         }
 
+        public enum Tipo_Funcionalidades
+        {
+            EfetuarLogin = 1,
+            EfetuarLogof = 2
+        }
+
         public enum EstadoCivil
         {
 

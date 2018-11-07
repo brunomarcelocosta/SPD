@@ -30,6 +30,7 @@ namespace SPD.Data.Contexts
         public DbSet<Funcionalidade> Funcionalidades { get; set; }
         public DbSet<HistoricoOperacao> HistoricoOperacoes { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }
+        public DbSet<SessaoUsuario> SessaoUsuario { get; set; }
         public DbSet<TipoOperacao> TipoOperacao { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioFuncionalidade> UsuarioFuncionalidades { get; set; }

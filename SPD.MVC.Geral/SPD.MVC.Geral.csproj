@@ -74,6 +74,7 @@
       <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.4.4.0\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
@@ -110,7 +111,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Content\Texts\AuthenticationResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuthenticationResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\MapperController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -129,6 +137,7 @@
     <Compile Include="Utilities\UseAuthentication.cs" />
     <Compile Include="Utilities\WsCEP.cs" />
     <Compile Include="Util\LeituraArquivo.cs" />
+    <Compile Include="ViewModels\AuthenticationViewModel.cs" />
     <Compile Include="ViewModels\ConfigViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ModalViewModel.cs" />
@@ -147,15 +156,27 @@
       <Project>{DECB053B-11F8-4AE2-9609-149700D703C8}</Project>
       <Name>SPD.CrossCutting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SPD.Model\SPD.Model.csproj">
+      <Project>{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}</Project>
+      <Name>SPD.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SPD.Services\SPD.Services.csproj">
       <Project>{777DEE64-A1A3-4699-856C-0D18416621D1}</Project>
       <Name>SPD.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Styles\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Texts\AuthenticationResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AuthenticationResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

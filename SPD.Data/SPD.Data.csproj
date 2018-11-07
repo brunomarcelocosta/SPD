@@ -65,6 +65,7 @@
     <Compile Include="EntityConfigurations\ModelsConfiguration\FuncionalidadeConfiguration.cs" />
     <Compile Include="EntityConfigurations\ModelsConfiguration\HistoricoOperacaoConfiguration.cs" />
     <Compile Include="EntityConfigurations\ModelsConfiguration\PacienteConfiguration.cs" />
+    <Compile Include="EntityConfigurations\ModelsConfiguration\SessaoUsuarioConfiguration.cs" />
     <Compile Include="EntityConfigurations\ModelsConfiguration\TipoOperacaoConfiguration.cs" />
     <Compile Include="EntityConfigurations\ModelsConfiguration\UsuarioConfiguration.cs" />
     <Compile Include="EntityConfigurations\IConfiguration.cs" />

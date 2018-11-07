@@ -47,6 +47,14 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
                 .HasColumnName("status_usuario")
                 .IsRequired();
 
+            this.Property(usuario => usuario.isBloqueado)
+                .HasColumnName("usuario_bloqueado")
+                .IsRequired();
+
+            this.Property(usuario => usuario.TentativasLogin)
+                .HasColumnName("tentativas")
+                .IsRequired();
+
             this.Property(usuario => usuario.TrocaSenhaObrigatoria)
                 .HasColumnName("lg_troca_obrigatoria");
         }
