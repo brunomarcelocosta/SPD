@@ -55,10 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IRepositoryBase.cs" />
+    <Compile Include="Interface\Model\IFuncionalidadeRepository.cs" />
+    <Compile Include="Interface\Model\IHistoricoOperacaoRepository.cs" />
     <Compile Include="Interface\Model\ISessaoUsuarioRepository.cs" />
+    <Compile Include="Interface\Model\ITipoOperacaoRepository.cs" />
     <Compile Include="Interface\Model\IUsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Model\FuncionalidadeRepository.cs" />
+    <Compile Include="Repository\Model\HistoricoOperacaoRepository.cs" />
     <Compile Include="Repository\Model\SessaoUsuarioRepository.cs" />
+    <Compile Include="Repository\Model\TipoOperacaoRepository.cs" />
     <Compile Include="Repository\Model\UsuarioRepository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
   </ItemGroup>

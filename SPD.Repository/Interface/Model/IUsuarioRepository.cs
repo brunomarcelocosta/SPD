@@ -29,6 +29,6 @@ namespace SPD.Repository.Interface.Model
 
         Usuario ZerarTentativas(Usuario usuario);
 
-        Usuario IncrementarTentativas(Usuario usuario)
+        Usuario IncrementarTentativas(Usuario usuario);
     }
 }

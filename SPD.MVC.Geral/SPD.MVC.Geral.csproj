@@ -131,10 +131,10 @@
     <Compile Include="Utilities\Delegates.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\GridHeaderRenderer.cs" />
-    <Compile Include="Utilities\IoCServer.cs" />
     <Compile Include="Utilities\Job.cs" />
     <Compile Include="Utilities\StringCipher.cs" />
     <Compile Include="Utilities\UseAuthentication.cs" />
+    <Compile Include="Utilities\UsuarioStore.cs" />
     <Compile Include="Utilities\WsCEP.cs" />
     <Compile Include="Util\LeituraArquivo.cs" />
     <Compile Include="ViewModels\AuthenticationViewModel.cs" />

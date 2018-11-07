@@ -1,4 +1,6 @@
 ﻿using SPD.CrossCutting.Util;
+using SPD.MVC.Geral.Global;
+using SPD.MVC.Geral.Utilities;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -35,8 +37,6 @@ namespace SPD.MVC.Geral
                 try
                 {
                     Debug.WriteLine(String.Format(CultureInfo.InvariantCulture, "{0} - Elapsed from {1}.", e.SignalTime, module));
-
-                    Job.NotifyJobs(e.SignalTime.Ticks);
 
                     Job.StartReadyJobs(e.SignalTime.Ticks);
                 }

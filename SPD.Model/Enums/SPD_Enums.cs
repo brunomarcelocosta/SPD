@@ -35,6 +35,7 @@ namespace SPD.Model.Enums
             Exportacao = 6,
             Login = 7,
             Logoff = 8,
+            Sistema = 9,
             Senha = 12
         }
 

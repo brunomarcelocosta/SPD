@@ -25,6 +25,14 @@ namespace SPD.Model.Model
         public virtual ICollection<UsuarioFuncionalidade> ListUsuarioFuncionalidade { get; set; }
         public virtual SessaoUsuario SessaoUsuario { get; set; } // UML - (1) Usuario é associado com (1) SessaoUsuario. Virtual para lazy load
 
+        public IList<Funcionalidade> Funcionalidades
+        {
+            get
+            {
+                return (this.ListUsuarioFuncionalidade == null ? new List<Funcionalidade>() : this.ListUsuarioFuncionalidade.Select(usuariosPerfil => usuariosPerfil.FUNCIONALIDADE).ToList());
+            }
+        }
+
         public Usuario()
         {
             this.TentativasLogin = 0;
@@ -112,32 +120,6 @@ namespace SPD.Model.Model
         }
 
         #endregion
-
-        public bool EmailJaCadastrado(String email)
-        {
-
-            if (this._UsuarioRepository.EmailJaCadastrado(email))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool NomeJaUtilizado(String nome)
-        {
-            if (this._UsuarioRepository.NomeJaUtilizado(nome))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool LoginJaUtilizado(Usuario novoUsuario)
-        {
-            return this.Login.Equals(novoUsuario.Login, StringComparison.InvariantCulture);
-        }
 
         public static string EncryptID(string text)
         {

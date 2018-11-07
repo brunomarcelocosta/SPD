@@ -18,13 +18,17 @@ namespace SPD.Services.Services.Model
     {
         private readonly IUsuarioRepository _UsuarioRepository;
         private readonly ISessaoUsuarioRepository _SessaoUsuarioRepository;
+        private readonly IHistoricoOperacaoRepository _HistoricoOperacaoRepository;
+        private readonly IFuncionalidadeRepository _FuncionalidadeRepository;
 
-
-        public AutenticacaoService(IUsuarioRepository usuarioRepository, ISessaoUsuarioRepository sessaoUsuarioRepository)
+        public AutenticacaoService(IUsuarioRepository usuarioRepository, ISessaoUsuarioRepository sessaoUsuarioRepository,
+                                   IHistoricoOperacaoRepository historicoOperacaoRepository, IFuncionalidadeRepository funcionalidadeRepository)
             : base(usuarioRepository)
         {
             _UsuarioRepository = usuarioRepository;
             _SessaoUsuarioRepository = sessaoUsuarioRepository;
+            _HistoricoOperacaoRepository = historicoOperacaoRepository;
+            _FuncionalidadeRepository = funcionalidadeRepository;
         }
 
         public bool AutenticarUsuario(ref Usuario usuario, string enderecoIP, string autenticacaoUrl, out string resultados)
@@ -66,7 +70,7 @@ namespace SPD.Services.Services.Model
                                         new Notificacao().NotificarPorEmail(usuario.Email, string.Format("Tentativa de acesso simultâneo do Login {0}. Usuário já está conectado em outra estação de trabalho.<br /><br />Clique <a href='{1}'>aqui</a> para forçar seu logout da outra estação ou acesse o link <a href='{1}'>{1}</a> pelo seu navegador.", usuario.Login, url), "Acesso simultâneo identificado", EmailConfiguration.FromEmailSettings());
 
                                         // 6.2.Sistema registra o acesso simultâneo [UC02.22 – Registrar Histórico de Operação de Usuário];
-                                        this._HistoricoOperacaoService.RegistraHistorico("Usuário conectado em outra estação de trabalho", usuario, Tipo_Operacao.Logoff, Tipo_Funcionalidades.EfetuarLogof);
+                                        this._HistoricoOperacaoRepository.RegistraHistorico("Usuário conectado em outra estação de trabalho", usuario, Tipo_Operacao.Logoff, Tipo_Funcionalidades.EfetuarLogof);
 
                                         // 6.3.Sistema exibe a mensagem informando que o usuário já está conectado em outra estação de trabalho;
                                         throw new Exception("Usuário já está conectado em outra estação de trabalho.");
@@ -75,21 +79,21 @@ namespace SPD.Services.Services.Model
                                     {
                                         this._SessaoUsuarioRepository.CriarSessao(usuario, enderecoIP);
 
-                                        this._HistoricoOperacaoService.RegistraHistorico("Usuário efetuou login", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+                                        this._HistoricoOperacaoRepository.RegistraHistorico("Usuário efetuou login", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
                                         usuario = this._UsuarioRepository.ZerarTentativas(usuario);
                                     }
                                 }
                                 else
                                 {
-                                    this._HistoricoOperacaoService.RegistraHistorico("Tentativa de acesso de usuário bloqueado.", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+                                    this._HistoricoOperacaoRepository.RegistraHistorico("Tentativa de acesso de usuário bloqueado.", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
                                     throw new Exception("Usuário bloqueado. Contate o administrador.");
                                 }
                             }
                             else
                             {
-                                this._HistoricoOperacaoService.RegistraHistorico("Tentativa de acesso de usuário inativo", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+                                this._HistoricoOperacaoRepository.RegistraHistorico("Tentativa de acesso de usuário inativo", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
                                 usuario = this._UsuarioRepository.IncrementarTentativas(usuario);
 
@@ -102,13 +106,13 @@ namespace SPD.Services.Services.Model
 
                             if (usuario == null)
                             {
-                                this._HistoricoOperacaoService.RegistraHistoricoSistema("Login Inexistente");
+                                this._HistoricoOperacaoRepository.RegistraHistoricoSistema("Login Inexistente");
 
                                 throw new Exception("Login e/ou senha inválidos.");
                             }
                             else
                             {
-                                this._HistoricoOperacaoService.RegistraHistorico("Senha inválida para o login informado", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+                                this._HistoricoOperacaoRepository.RegistraHistorico("Senha inválida para o login informado", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
                                 if (!this._UsuarioRepository.IsBloqueado(usuario))
                                 {
@@ -122,11 +126,11 @@ namespace SPD.Services.Services.Model
                                     {
                                         this._UsuarioRepository.Bloquear(usuario);
 
-                                        this._HistoricoOperacaoService.RegistraHistorico("Usuário foi bloqueado", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+                                        this._HistoricoOperacaoRepository.RegistraHistorico("Usuário foi bloqueado", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
                                         List<Funcionalidade> recipients = new List<Funcionalidade>();
 
-                                        recipients = _FuncionalidadeRepoistory.Query().ToList<Funcionalidade>();
+                                        recipients = _FuncionalidadeRepository.Query().ToList<Funcionalidade>();
 
                                         foreach (var item in recipients)
                                         {
@@ -151,7 +155,7 @@ namespace SPD.Services.Services.Model
                                 }
                                 else
                                 {
-                                    this._HistoricoOperacaoRepository.RegistraHistorico("Tentativa de acesso de usuário bloqueado.", usuario, kindTipoOperacao.Login, kindFuncionalidade.EfetuarLogin);
+                                    this._HistoricoOperacaoRepository.RegistraHistorico("Tentativa de acesso de usuário bloqueado.", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
                                     throw new Exception("Login e/ou senha inválidos.");
                                 }
@@ -159,7 +163,7 @@ namespace SPD.Services.Services.Model
                                 throw new Exception("Login e/ou senha inválidos.");
                             }
                         }
-                    }                  
+                    }
 
                     this.SaveChanges(transactionScope);
                 }

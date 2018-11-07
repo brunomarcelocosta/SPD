@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using SPD.CrossCutting.Util;
 using SPD.Model.Model;
 using SPD.MVC.Geral.Global;
+using SPD.MVC.Geral.Utilities;
 using SPD.MVC.Geral.ViewModels;
+using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +31,9 @@ namespace SPD.MVC.Geral.Controllers
         public SecurityController() : base()
         {
             this.UsuarioManager = new UserManager<Usuario>(new UsuarioStore<Usuario>());
-            this._AutenticacaoApplicationService = IoCServer.GetWebInstance<IAutenticacaoApplicationService>();
-            this._UsuarioService = IoCServer.GetWebInstance<IUsuarioApplicationService>();
-            this._SessaoUsuarioService = IoCServer.GetWebInstance<ISessaoUsuarioApplicationService>();
+            this._AutenticacaoService = IoCServer.GetWebInstance<IAutenticacaoService>();
+            this._UsuarioService = IoCServer.GetWebInstance<IUsuarioService>();
+            this._SessaoUsuarioService = IoCServer.GetWebInstance<ISessaoUsuarioService>();
         }
 
         /// <summary>
@@ -51,15 +54,15 @@ namespace SPD.MVC.Geral.Controllers
                     return false;
                 }
 
-                var funcoesPerfil = new List<FuncoesPerfil>();
+                var usuarioFincionalidades = new List<UsuarioFuncionalidade>();
 
-                foreach (var perfil in this._UsuarioService.GetById(authenticationViewModel.ID).Perfils)
+                foreach (var item in this._UsuarioService.GetById(authenticationViewModel.ID).Funcionalidades)
                 {
-                    funcoesPerfil.AddRange(perfil.FuncoesPerfil);
+                    usuarioFincionalidades.AddRange(item.UsuarioFuncionalidade);
                 }
 
                 // Usado para exibir ou não exibir os botões de ação para as views
-                this.ViewBag.FuncoesPerfil = funcoesPerfil.AsEnumerable();
+                this.ViewBag.FuncoesPerfil = usuarioFincionalidades.AsEnumerable();
             }
 
             this.ViewBag.Authentication = authenticationViewModel;
