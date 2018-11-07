@@ -34,6 +34,9 @@
     <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -75,6 +78,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
@@ -125,6 +129,7 @@
     <Compile Include="Global\DataConstants.cs" />
     <Compile Include="Global\GlobalConstants.cs" />
     <Compile Include="Hubs\HubBase.cs" />
+    <Compile Include="Hubs\NotificationHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AutenticacaoOwin.cs" />
     <Compile Include="Utilities\ConnectionMapping.cs" />
@@ -132,8 +137,12 @@
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\GridHeaderRenderer.cs" />
     <Compile Include="Utilities\Job.cs" />
+    <Compile Include="Utilities\Notification.cs" />
+    <Compile Include="Utilities\SessionStateServer.cs" />
+    <Compile Include="Utilities\SpdUserIdProvider.cs" />
     <Compile Include="Utilities\StringCipher.cs" />
     <Compile Include="Utilities\UseAuthentication.cs" />
+    <Compile Include="Utilities\UseAuthorization.cs" />
     <Compile Include="Utilities\UsuarioStore.cs" />
     <Compile Include="Utilities\WsCEP.cs" />
     <Compile Include="Util\LeituraArquivo.cs" />
@@ -159,6 +168,10 @@
     <ProjectReference Include="..\SPD.Model\SPD.Model.csproj">
       <Project>{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}</Project>
       <Name>SPD.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SPD.Repository\SPD.Repository.csproj">
+      <Project>{5DBC8992-E0BC-4EB1-94E7-FAE451CB93D2}</Project>
+      <Name>SPD.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\SPD.Services\SPD.Services.csproj">
       <Project>{777DEE64-A1A3-4699-856C-0D18416621D1}</Project>

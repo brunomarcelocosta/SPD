@@ -1,8 +1,12 @@
 ﻿using SimpleInjector;
 using SPD.Repository.Interface;
+using SPD.Repository.Interface.Model;
 using SPD.Repository.Repository;
+using SPD.Repository.Repository.Model;
 using SPD.Services.Interface;
+using SPD.Services.Interface.Model;
 using SPD.Services.Services;
+using SPD.Services.Services.Model;
 
 namespace SPD.CrossCutting
 {
@@ -14,12 +18,22 @@ namespace SPD.CrossCutting
             #region Service
 
             container.Register(typeof(IServiceBase<>), typeof(ServiceBase<>), Lifestyle.Scoped);
+            container.Register(typeof(IAutenticacaoService), typeof(AutenticacaoService), Lifestyle.Scoped);
+            container.Register(typeof(ISessaoUsuarioService), typeof(SessaoUsuarioService), Lifestyle.Scoped);
+            container.Register(typeof(IUsuarioService), typeof(UsuarioService), Lifestyle.Scoped);
+
 
             #endregion
 
             #region Repository
 
             container.Register(typeof(IRepositoryBase<>), typeof(RepositoryBase<>), Lifestyle.Scoped);
+            container.Register(typeof(IFuncionalidadeRepository), typeof(FuncionalidadeRepository), Lifestyle.Scoped);
+            container.Register(typeof(IHistoricoOperacaoRepository), typeof(HistoricoOperacaoRepository), Lifestyle.Scoped);
+            container.Register(typeof(ISessaoUsuarioRepository), typeof(SessaoUsuarioRepository), Lifestyle.Scoped);
+            container.Register(typeof(ITipoOperacaoRepository), typeof(TipoOperacaoRepository), Lifestyle.Scoped);
+            container.Register(typeof(IUsuarioRepository), typeof(UsuarioRepository), Lifestyle.Scoped);
+
 
             #endregion
 

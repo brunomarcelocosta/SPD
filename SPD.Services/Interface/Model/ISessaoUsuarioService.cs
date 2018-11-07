@@ -12,5 +12,9 @@ namespace SPD.Services.Interface.Model
         SessaoUsuario GetSessaoByUsuarioID(int usuarioID);
 
         bool UsuarioConectado(int usuarioID);
+
+        bool EncerrarSessao(SessaoUsuario sessaoUsuario);
+
+        void DesconetarSessaoUsuarios(Usuario usuario);
     }
 }

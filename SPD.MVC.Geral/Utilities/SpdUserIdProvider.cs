@@ -3,9 +3,9 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 
-namespace SPD.MVC.Geral.Hubs
+namespace SPD.MVC.Geral.Utilities
 {
-    public class SPDUserIdProvider : IUserIdProvider
+    public class SPDUserIdProvider
     {
         public string GetUserId(IRequest request)
         {
@@ -25,5 +25,6 @@ namespace SPD.MVC.Geral.Hubs
 
             return sidClaim.Value;
         }
+
     }
 }
