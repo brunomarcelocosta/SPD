@@ -20,15 +20,18 @@ namespace SPD.Services.Services.Model
         private readonly ISessaoUsuarioRepository _SessaoUsuarioRepository;
         private readonly IHistoricoOperacaoRepository _HistoricoOperacaoRepository;
         private readonly IFuncionalidadeRepository _FuncionalidadeRepository;
+        private readonly IUsuarioFuncionalidadeRepository _UsuarioFuncionalidadeRepository;
 
         public AutenticacaoService(IUsuarioRepository usuarioRepository, ISessaoUsuarioRepository sessaoUsuarioRepository,
-                                   IHistoricoOperacaoRepository historicoOperacaoRepository, IFuncionalidadeRepository funcionalidadeRepository)
+                                   IHistoricoOperacaoRepository historicoOperacaoRepository, IFuncionalidadeRepository funcionalidadeRepository,
+                                   IUsuarioFuncionalidadeRepository usuarioFuncionalidadeRepository)
             : base(usuarioRepository)
         {
             _UsuarioRepository = usuarioRepository;
             _SessaoUsuarioRepository = sessaoUsuarioRepository;
             _HistoricoOperacaoRepository = historicoOperacaoRepository;
             _FuncionalidadeRepository = funcionalidadeRepository;
+            _UsuarioFuncionalidadeRepository = usuarioFuncionalidadeRepository;
         }
 
         public bool AutenticarUsuario(ref Usuario usuario, string enderecoIP, string autenticacaoUrl, out string resultados)
@@ -50,7 +53,14 @@ namespace SPD.Services.Services.Model
                         throw new Exception("Login e Senha são obrigatórios");
                     }
 
-                    if ((this._UsuarioRepository.GetByLogin(auxUsuario.Login) != null && this._UsuarioRepository.GetByLogin(auxUsuario.Login).ListUsuarioFuncionalidade.Where(u => u.FUNCIONALIDADE.Nome == "Login").Any()))
+                    bool existeUser = false;
+                    var user = _UsuarioRepository.GetByLogin(auxUsuario.Login);
+                    var funcionalidades = _FuncionalidadeRepository.Query().Where(a => a.Nome.Equals("Efetuar Login")).ToList().Count();
+
+                    if (user != null)
+                        existeUser = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID && funcionalidades > 0).ToList().Count() > 0 ? true : false;
+
+                    if (existeUser)
                     {
                         usuario = this._UsuarioRepository.GetByLoginSenha(usuario.Login, Usuario.GerarHash(usuario.Password));
 
@@ -65,7 +75,7 @@ namespace SPD.Services.Services.Model
                                     if (conexoes.Count > 0)
                                     {
                                         var usuarioID = Usuario.EncryptID(Convert.ToString(usuario.ID));
-                                        var url = String.Format(CultureInfo.InvariantCulture, "{0}/Autenticacao/Logout/?k={1}", autenticacaoUrl, usuarioID);
+                                        var url = String.Format(CultureInfo.InvariantCulture, "{0}/Login/Logout/?k={1}", autenticacaoUrl, usuarioID);
 
                                         new Notificacao().NotificarPorEmail(usuario.Email, string.Format("Tentativa de acesso simultâneo do Login {0}. Usuário já está conectado em outra estação de trabalho.<br /><br />Clique <a href='{1}'>aqui</a> para forçar seu logout da outra estação ou acesse o link <a href='{1}'>{1}</a> pelo seu navegador.", usuario.Login, url), "Acesso simultâneo identificado", EmailConfiguration.FromEmailSettings());
 
@@ -82,6 +92,8 @@ namespace SPD.Services.Services.Model
                                         this._HistoricoOperacaoRepository.RegistraHistorico("Usuário efetuou login", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
                                         usuario = this._UsuarioRepository.ZerarTentativas(usuario);
+
+                                        usuario.ListUsuarioFuncionalidade = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID).ToList();
                                     }
                                 }
                                 else
@@ -134,7 +146,7 @@ namespace SPD.Services.Services.Model
 
                                         foreach (var item in recipients)
                                         {
-                                            if (item.Nome.Equals("Login"))
+                                            if (item.Nome.Equals("Efetuar Login"))
                                             {
                                                 foreach (var subItem in item.Usuarios)
                                                 {

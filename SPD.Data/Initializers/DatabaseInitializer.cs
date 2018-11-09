@@ -194,8 +194,8 @@ namespace SPD.Data.Initializers
             var tiposOperacoes = this.PreparaTiposOperacoes();
             var estadoCivil = PreparaEstadoCivil();
 
-            this.Context.Set<Funcionalidade>().AddRange(funcionalidades);
             this.Context.Set<Usuario>().Add(usuarioAdministrador);
+            this.Context.Set<Funcionalidade>().AddRange(funcionalidades);
             this.Context.Set<UsuarioFuncionalidade>().AddRange(usuarioFuncionalidades);
             this.Context.Set<TipoOperacao>().AddRange(tiposOperacoes);
             this.Context.Set<EstadoCivil>().AddRange(estadoCivil);

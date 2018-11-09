@@ -73,10 +73,10 @@ namespace SPD.MVC.PortalWeb.Controllers
                     authenticationViewModel.EnderecoIP = enderecoIP;
                     authenticationViewModel.SessionID = this._SessaoUsuarioService.GetSessaoByUsuarioID(usuario.ID).ID;
 
-                    foreach (var item in usuario.Funcionalidades)
+                    foreach (var item in usuario.ListUsuarioFuncionalidade)
                     {
-                        authenticationViewModel.FuncionalidadesUsuarioIDs.Add(item.ID);
-                        authenticationViewModel.FuncionalidadesUsuarioNomes.Add(item.Nome);
+                        authenticationViewModel.FuncionalidadesUsuarioIDs.Add(item.ID_FUNCIONALIDADE);
+                        authenticationViewModel.FuncionalidadesUsuarioNomes.Add(item.FUNCIONALIDADE.Nome);
                     }
 
                     this.StoreAuthenticationInSession(authenticationViewModel);

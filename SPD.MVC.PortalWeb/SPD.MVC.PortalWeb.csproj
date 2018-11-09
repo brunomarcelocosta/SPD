@@ -228,6 +228,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Login\Login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -243,11 +244,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="SPD.Data.ConnectionStrings.config" />
     <Content Include="SPD.EmailConfiguracao.config" />
-    <Content Include="SPD.MenuConfuguracao.json" />
+    <Content Include="SPD.MenuConfiguracao.json" />
     <Content Include="SPD.Modulos.json" />
     <Content Include="Views\Login\AutenticarLogin.cshtml" />
+    <Content Include="SPD.Data.ConnectionStrings.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -72,6 +72,7 @@
     <Compile Include="EntityConfigurations\ModelsConfiguration\UsuarioFuncionalidadeConfiguration.cs" />
     <Compile Include="Initializers\DatabaseInitializer.cs" />
     <Compile Include="Interfaces\Contexts\IDataContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ContextDebugger.cs" />
     <Compile Include="Utilities\ContextProvider.cs" />
@@ -83,9 +84,7 @@
     <None Include="packages.config" />
     <None Include="SPD.Data.ConnectionStrings.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SPD.Model\SPD.Model.csproj">
       <Project>{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}</Project>

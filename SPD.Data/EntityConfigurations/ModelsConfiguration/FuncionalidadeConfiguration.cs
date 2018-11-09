@@ -21,8 +21,8 @@ namespace SPD.Data.EntityConfigurations.Administracao
             this.Property(funcionalidade => funcionalidade.Nome)
                 .HasColumnName("descricao")
                 .HasMaxLength(255)
-                .IsRequired()
-                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
+                .IsRequired();
+                //.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
 
             this.Property(funcionalidade => funcionalidade.isAtivo)
                 .HasColumnName("lg_ativo")

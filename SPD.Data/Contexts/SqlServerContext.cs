@@ -31,7 +31,7 @@ namespace SPD.Data.Contexts
         {
             // Set the context type
             this.ContextType = ContextType.SqlServer;
-
+            
             // Set the schema
             this.Schema = ConfigurationManager
                 .ConnectionStrings["SqlServer"]
