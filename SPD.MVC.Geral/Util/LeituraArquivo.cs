@@ -18,7 +18,7 @@ namespace SPD.MVC.Geral.Util
             var serializer = new JavaScriptSerializer();
             var objMenu = new List<MenuViewModel>();
 
-            var nomeArquivo = "SGTAN.MenuSettings.json";
+            var nomeArquivo = "SPD.MenuConfiguracao.json";
             var arquivo = LerArquivoBase(nomeArquivo);
 
             if (string.IsNullOrEmpty(arquivo))
@@ -44,7 +44,7 @@ namespace SPD.MVC.Geral.Util
             var serializer = new JavaScriptSerializer();
             var objConfig = new ConfigViewModel();
 
-            var nomeArquivo = "SGTAN.Modulos.json";
+            var nomeArquivo = "SPD.Modulos.json";
             var arquivo = LerArquivoBase(nomeArquivo);
 
             if (string.IsNullOrEmpty(arquivo))

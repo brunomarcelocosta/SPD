@@ -42,7 +42,8 @@ namespace SPD.Model.Enums
         public enum Tipo_Funcionalidades
         {
             EfetuarLogin = 1,
-            EfetuarLogof = 2
+            EfetuarLogof = 2,
+            Usuarios = 3
         }
 
         public enum EstadoCivil

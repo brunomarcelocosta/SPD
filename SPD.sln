@@ -15,8 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Itens Config", "6 - Ite
 	ProjectSection(SolutionItems) = preProject
 		..\SGTAN\SPD.Data.ConnectionStrings.config = ..\SGTAN\SPD.Data.ConnectionStrings.config
 		..\SGTAN\SPD.EmailConfiguracao.config = ..\SGTAN\SPD.EmailConfiguracao.config
-		..\SGTAN\SPD.MenuConfuguracao.json = ..\SGTAN\SPD.MenuConfuguracao.json
-		..\SGTAN\SPD.Modulos.json = ..\SGTAN\SPD.Modulos.json
+		SPD.MVC.PortalWeb\SPD.MenuConfuguracao.json = SPD.MVC.PortalWeb\SPD.MenuConfuguracao.json
+		SPD.MVC.PortalWeb\SPD.Modulos.json = SPD.MVC.PortalWeb\SPD.Modulos.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - CrossCutting", "5 - CrossCutting", "{806FFC2F-9F07-4337-B424-30DA3C62F441}"

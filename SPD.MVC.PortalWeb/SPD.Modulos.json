@@ -2,24 +2,8 @@
   "Url": "http://localhost",
   "Modulos": [
     {
-      "Nome": "SGTAN.MVC.Administracao",
-      "Porta": "49203"
-    },
-    {
-      "Nome": "SGTAN.MVC.AutenticacaoTelaPrincipal",
-      "Porta": "49207"
-    },
-    {
-      "Nome": "SGTAN.MVC.CadastrosGerais",
-      "Porta": "49184"
-    },
-    {
-      "Nome": "SGTAN.MVC.Mensagens",
-      "Porta": "51412"
-    },
-    {
-      "Nome": "SGTAN.MVC.Teste",
-      "Porta": "56927"
+      "Nome": "SPD.MVC.PortalWeb",
+      "Porta": "59916"
     }
   ]
 }

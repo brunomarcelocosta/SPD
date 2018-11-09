@@ -102,7 +102,7 @@ namespace SPD.MVC.Geral.Global
         public sealed class ConfirmRedefinePassword
         {
             public const string Controller = "Login";
-            public const string ConfirmRedefinePasswordAction = "ConfirmarSenha";
+            public const string ConfirmRedefinePasswordAction = "ConfirmarAlterarSenha";
 
             public static string ConfirmRedefinePasswordUrl
             {
@@ -127,8 +127,8 @@ namespace SPD.MVC.Geral.Global
 
             public sealed class Web
             {
-                public const string Name = "Login";
-                public const string Port = "49207";
+                public const string Name = "Web";
+                public const string Port = "59916";
 
                 public static string Url
                 {

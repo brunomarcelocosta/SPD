@@ -8,10 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SPD.MVC.Geral.Content.Texts {
+namespace SPD.MVC.Geral.Content.Texts
+{
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,220 +23,268 @@ namespace SPD.MVC.Geral.Content.Texts {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AuthenticationResource {
-        
+    public class AuthenticationResource
+    {
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AuthenticationResource() {
+        internal AuthenticationResource()
+        {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        public static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SPD.MVC.Geral.Content.Texts.AuthenticationResource", typeof(AuthenticationResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
-            get {
+        public static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Data de Acesso.
         /// </summary>
-        internal static string DataAcesso {
-            get {
+        public static string DataAcesso
+        {
+            get
+            {
                 return ResourceManager.GetString("DataAcesso", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Endereço IP.
         /// </summary>
-        internal static string EnderecoIP {
-            get {
+        public static string EnderecoIP
+        {
+            get
+            {
                 return ResourceManager.GetString("EnderecoIP", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Entrar.
         /// </summary>
-        internal static string Entrar {
-            get {
+        public static string Entrar
+        {
+            get
+            {
                 return ResourceManager.GetString("Entrar", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Erro ao Encerrar a Sessão.
         /// </summary>
-        internal static string ErroEncerrarSessao {
-            get {
+        public static string ErroEncerrarSessao
+        {
+            get
+            {
                 return ResourceManager.GetString("ErroEncerrarSessao", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Não foi possível encerrar a sessão, caso erro persista contate o administrador do sistema..
         /// </summary>
-        internal static string ErroEncerrarSessaoMessage {
-            get {
+        public static string ErroEncerrarSessaoMessage
+        {
+            get
+            {
                 return ResourceManager.GetString("ErroEncerrarSessaoMessage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
-        internal static string Login {
-            get {
+        public static string Login
+        {
+            get
+            {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Login ou Senha inválidos..
         /// </summary>
-        internal static string LoginErrorMessage {
-            get {
+        public static string LoginErrorMessage
+        {
+            get
+            {
                 return ResourceManager.GetString("LoginErrorMessage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Preenchimento obrigatório..
         /// </summary>
-        internal static string LoginRequiredMessage {
-            get {
+        public static string LoginRequiredMessage
+        {
+            get
+            {
                 return ResourceManager.GetString("LoginRequiredMessage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Usuário &quot;{0}&quot; registrado com sucesso..
         /// </summary>
-        internal static string LoginSuccessMessage {
-            get {
+        public static string LoginSuccessMessage
+        {
+            get
+            {
                 return ResourceManager.GetString("LoginSuccessMessage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Sair.
         /// </summary>
-        internal static string Logout {
-            get {
+        public static string Logout
+        {
+            get
+            {
                 return ResourceManager.GetString("Logout", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Nome.
         /// </summary>
-        internal static string Nome {
-            get {
+        public static string Nome
+        {
+            get
+            {
                 return ResourceManager.GetString("Nome", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Preenchimento obrigatório..
         /// </summary>
-        internal static string NomeRequiredMessage {
-            get {
+        public static string NomeRequiredMessage
+        {
+            get
+            {
                 return ResourceManager.GetString("NomeRequiredMessage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Senha.
         /// </summary>
-        internal static string Password {
-            get {
+        public static string Password
+        {
+            get
+            {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Preenchimento obrigatório..
         /// </summary>
-        internal static string PasswordRequiredMessage {
-            get {
+        public static string PasswordRequiredMessage
+        {
+            get
+            {
                 return ResourceManager.GetString("PasswordRequiredMessage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Identificador do Perfil do Usuário.
         /// </summary>
-        internal static string PerfilUsuarioIDs {
-            get {
+        public static string PerfilUsuarioIDs
+        {
+            get
+            {
                 return ResourceManager.GetString("PerfilUsuarioIDs", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Nome do Perfil do Usuário.
         /// </summary>
-        internal static string PerfilUsuarioNomes {
-            get {
+        public static string PerfilUsuarioNomes
+        {
+            get
+            {
                 return ResourceManager.GetString("PerfilUsuarioNomes", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Redefinir Senha.
         /// </summary>
-        internal static string RedefinirSenha {
-            get {
+        public static string RedefinirSenha
+        {
+            get
+            {
                 return ResourceManager.GetString("RedefinirSenha", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Sessão do Usuário.
         /// </summary>
-        internal static string SessionID {
-            get {
+        public static string SessionID
+        {
+            get
+            {
                 return ResourceManager.GetString("SessionID", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to O sistema encontra-se inativo.
         /// </summary>
-        internal static string SistemaInativo {
-            get {
+        public static string SistemaInativo
+        {
+            get
+            {
                 return ResourceManager.GetString("SistemaInativo", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Troca Senha Obrigatória.
         /// </summary>
-        internal static string TrocaSenhaObrigatoria {
-            get {
+        public static string TrocaSenhaObrigatoria
+        {
+            get
+            {
                 return ResourceManager.GetString("TrocaSenhaObrigatoria", resourceCulture);
             }
         }

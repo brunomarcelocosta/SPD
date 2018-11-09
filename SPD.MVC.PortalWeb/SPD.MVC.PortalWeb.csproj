@@ -196,6 +196,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -246,6 +247,7 @@
     <Content Include="SPD.EmailConfiguracao.config" />
     <Content Include="SPD.MenuConfuguracao.json" />
     <Content Include="SPD.Modulos.json" />
+    <Content Include="Views\Login\AutenticarLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -265,9 +267,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SPD.Model\SPD.Model.csproj">
+      <Project>{C410E0B8-3D8D-4D2A-A6F2-EF8DAAAE1B4B}</Project>
+      <Name>SPD.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SPD.MVC.Geral\SPD.MVC.Geral.csproj">
       <Project>{1F423BBE-8065-4B88-A336-00B7576A3B88}</Project>
       <Name>SPD.MVC.Geral</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SPD.Services\SPD.Services.csproj">
+      <Project>{777DEE64-A1A3-4699-856C-0D18416621D1}</Project>
+      <Name>SPD.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -120,6 +120,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AuthenticationResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Content\Texts\ErrorResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\MapperController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
@@ -159,6 +164,7 @@
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.3.0.js" />
     <Content Include="Scripts\jquery.signalR-2.3.0.min.js" />
+    <Content Include="Scripts\Login\Login.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SPD.CrossCutting\SPD.CrossCutting.csproj">
@@ -189,6 +195,10 @@
     <EmbeddedResource Include="Content\Texts\AuthenticationResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AuthenticationResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\ErrorResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

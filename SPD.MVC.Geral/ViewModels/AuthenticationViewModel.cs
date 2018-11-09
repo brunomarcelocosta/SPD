@@ -41,11 +41,11 @@ namespace SPD.MVC.Geral.ViewModels
         [Display(ResourceType = typeof(AuthenticationResource), Name = "SessionID")]
         public int SessionID { get; set; }
 
-        [Display(ResourceType = typeof(AuthenticationResource), Name = "PerfilUsuarioIDs")]
-        public List<int> PerfilUsuarioIDs = new List<int>();
+        [Display(ResourceType = typeof(AuthenticationResource), Name = "FuncionalidadesUsuarioIDs")]
+        public List<int> FuncionalidadesUsuarioIDs = new List<int>();
 
-        [Display(ResourceType = typeof(AuthenticationResource), Name = "PerfilUsuarioNomes")]
-        public List<string> PerfilUsuarioNomes = new List<string>();
+        [Display(ResourceType = typeof(AuthenticationResource), Name = "FuncionalidadesUsuarioNomes")]
+        public List<string> FuncionalidadesUsuarioNomes = new List<string>();
 
     }
 }

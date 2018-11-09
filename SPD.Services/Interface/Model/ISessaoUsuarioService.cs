@@ -1,4 +1,5 @@
 ﻿using SPD.Model.Model;
+using SPD.Model.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace SPD.Services.Interface.Model
         bool UsuarioConectado(int usuarioID);
 
         bool EncerrarSessao(SessaoUsuario sessaoUsuario);
+
+        [Transactional]
+        bool EncerrarSessao(int usuarioID, string valor);
 
         void DesconetarSessaoUsuarios(Usuario usuario);
     }

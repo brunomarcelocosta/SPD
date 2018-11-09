@@ -3,6 +3,7 @@ using SPD.Repository.Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 
 namespace SPD.Repository.Repository.Model
 {
@@ -16,7 +17,7 @@ namespace SPD.Repository.Repository.Model
 
             this.Add(sessaoUsuario);
         }
-        
+
         public bool EncerrarSessao(SessaoUsuario sessaoUsuario)
         {
             try
@@ -35,17 +36,17 @@ namespace SPD.Repository.Repository.Model
         {
             return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.UsuarioID.Equals(usuario.ID)).ToList();
         }
-        
+
         public bool UsuarioConectado(int usuarioID)
         {
             return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.UsuarioID.Equals(usuarioID)).ToList().Count > 0;
         }
-        
+
         public SessaoUsuario GetSessaoByUsuarioID(int usuarioID)
         {
             return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.Usuario.ID == usuarioID).FirstOrDefault();
         }
-        
+
         public void DesconetarSessaoUsuarios(Usuario usuario, out List<SessaoUsuario> sessoes)
         {
             if (usuario != null)
