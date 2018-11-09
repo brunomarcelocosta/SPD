@@ -99,7 +99,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                     AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
 
-                    return this.RedirectToAction(GlobalConstants.Login.AuthenticatedAction);
+                    return this.RedirectToAction(GlobalConstants.Login.AuthenticatedAction); 
                 }
                 else
                 {
