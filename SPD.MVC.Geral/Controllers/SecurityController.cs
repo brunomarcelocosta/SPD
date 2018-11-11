@@ -49,16 +49,16 @@ namespace SPD.MVC.Geral.Controllers
             {
                 var sessaoUsuario = this._SessaoUsuarioService.GetSessaoByUsuarioID(authenticationViewModel.ID);
 
-                if (!this._SessaoUsuarioService.UsuarioConectado(authenticationViewModel.ID) || (sessaoUsuario != null && (!authenticationViewModel.EnderecoIP.Equals(sessaoUsuario.EnderecoIP, StringComparison.InvariantCulture))) || (sessaoUsuario != null && (authenticationViewModel.SessionID != sessaoUsuario.ID)))
+                if (!this._SessaoUsuarioService.UsuarioConectado(authenticationViewModel.ID) || (sessaoUsuario != null && (!authenticationViewModel.EnderecoIP.Equals(sessaoUsuario.enderecoIP, StringComparison.InvariantCulture))) || (sessaoUsuario != null && (authenticationViewModel.SessionID != sessaoUsuario.ID)))
                 {
                     return false;
                 }
 
                 var usuarioFincionalidades = new List<UsuarioFuncionalidade>();
 
-                foreach (var item in this._UsuarioService.GetById(authenticationViewModel.ID).Funcionalidades)
+                foreach (var item in this._UsuarioService.GetById(authenticationViewModel.ID).FUNCIONALIDADES)
                 {
-                    usuarioFincionalidades.AddRange(item.UsuarioFuncionalidade);
+                    usuarioFincionalidades.AddRange(item.usuarioFuncionalidade);
                 }
 
                 // Usado para exibir ou não exibir os botões de ação para as views

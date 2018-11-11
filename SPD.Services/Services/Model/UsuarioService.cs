@@ -45,13 +45,13 @@ namespace SPD.Services.Services.Model
 
                             if (RedefinirSenha(usuario, out novaSenha))
                             {
-                                this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha do usuário {0} redefinida.", usuario.Login), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
+                                this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha do usuário {0} redefinida.", usuario.LOGIN), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
 
                                 try
                                 {
                                     using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                                     {
-                                        this._NotificacaoRepository.NotificarPorEmail(usuario.Email, String.Format("Prezado(a) Usuário(a) {0}. Durante o login será solicitada uma nova senha, esta é sua senha provisória {1}", usuario.Login, novaSenha), "Redefinição de Senha", smtpConfiguration);
+                                        this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) {0}. Durante o login será solicitada uma nova senha, esta é sua senha provisória {1}", usuario.LOGIN, novaSenha), "Redefinição de Senha", smtpConfiguration);
 
                                         this.SaveChanges(transactionScope);
                                     }
@@ -71,7 +71,7 @@ namespace SPD.Services.Services.Model
                             {
                                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                                 //{
-                                this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Não foi possível alterar a senha do usuário: \"{0}\".", usuario.Login), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
+                                this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Não foi possível alterar a senha do usuário: \"{0}\".", usuario.LOGIN), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
 
                                 this.SaveChanges();
                                 //}

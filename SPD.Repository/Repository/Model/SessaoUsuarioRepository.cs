@@ -34,24 +34,24 @@ namespace SPD.Repository.Repository.Model
 
         public List<SessaoUsuario> VerificaConexoesSimultaneas(Usuario usuario)
         {
-            return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.UsuarioID.Equals(usuario.ID)).ToList();
+            return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.ID_USUARIO.Equals(usuario.ID)).ToList();
         }
 
         public bool UsuarioConectado(int usuarioID)
         {
-            return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.UsuarioID.Equals(usuarioID)).ToList().Count > 0;
+            return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.ID_USUARIO.Equals(usuarioID)).ToList().Count > 0;
         }
 
         public SessaoUsuario GetSessaoByUsuarioID(int usuarioID)
         {
-            return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.Usuario.ID == usuarioID).FirstOrDefault();
+            return this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.usuario.ID == usuarioID).FirstOrDefault();
         }
 
         public void DesconetarSessaoUsuarios(Usuario usuario, out List<SessaoUsuario> sessoes)
         {
             if (usuario != null)
             {
-                sessoes = this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.Usuario.ID != usuario.ID).ToList();
+                sessoes = this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().Where(sessaoUsuario => sessaoUsuario.usuario.ID != usuario.ID).ToList();
                 this.DomainContext.DataContext.Entity.Set<SessaoUsuario>().RemoveRange(sessoes);
             }
             else

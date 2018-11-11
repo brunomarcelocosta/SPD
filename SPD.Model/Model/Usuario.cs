@@ -13,19 +13,19 @@ namespace SPD.Model.Model
         static string key { get; set; } = "A!9HHhi%XjjYY4YP2@Nob009X";
 
         public int ID { get; set; } // Alterado para public devido ao mapeamento objeto-relacional do EntityFramework
-        public string Nome { get; set; }
-        public string Email { get; set; }
-        public string Login { get; set; } // Alterado para public devido ao mapeamento objeto-relacional do EntityFramework
-        public string Password { get; set; } // Alterado para public devido ao mapeamento objeto-relacional do EntityFramework
-        public int TentativasLogin { get; set; }
-        public bool isAtivo { get; set; }
-        public bool isBloqueado { get; set; }
-        public bool TrocaSenhaObrigatoria { get; set; }
+        public string NOME { get; set; }
+        public string EMAIL { get; set; }
+        public string LOGIN { get; set; } // Alterado para public devido ao mapeamento objeto-relacional do EntityFramework
+        public string PASSWORD { get; set; } // Alterado para public devido ao mapeamento objeto-relacional do EntityFramework
+        public int TENTATIVAS_LOGIN { get; set; }
+        public bool IsATIVO { get; set; }
+        public bool IsBLOQUEADO { get; set; }
+        public bool TROCA_SENHA_OBRIGATORIA { get; set; }
 
         public virtual ICollection<UsuarioFuncionalidade> ListUsuarioFuncionalidade { get; set; }
-        public virtual SessaoUsuario SessaoUsuario { get; set; } // UML - (1) Usuario é associado com (1) SessaoUsuario. Virtual para lazy load
+        public virtual SessaoUsuario sessaoUsuario { get; set; } // UML - (1) Usuario é associado com (1) SessaoUsuario. Virtual para lazy load
 
-        public IList<Funcionalidade> Funcionalidades
+        public IList<Funcionalidade> FUNCIONALIDADES
         {
             get
             {
@@ -35,16 +35,16 @@ namespace SPD.Model.Model
 
         public Usuario()
         {
-            this.TentativasLogin = 0;
-            this.TrocaSenhaObrigatoria = true;
-            this.SessaoUsuario = null;
+            this.TENTATIVAS_LOGIN = 0;
+            this.TROCA_SENHA_OBRIGATORIA = true;
+            this.sessaoUsuario = null;
             this.ListUsuarioFuncionalidade = null;
         }
 
         public Usuario(SessaoUsuario sessaoUsuario, params UsuarioFuncionalidade[] usuariosPerfis)
             : this()
         {
-            this.SessaoUsuario = sessaoUsuario;
+            this.sessaoUsuario = sessaoUsuario;
             this.ListUsuarioFuncionalidade = usuariosPerfis;
         }
 
@@ -87,12 +87,12 @@ namespace SPD.Model.Model
 
         public bool RedefinirSenha(out string novaSenha)
         {
-            this.Password = GenerateNewPassword(8, true, true, true, false);
+            this.PASSWORD = GenerateNewPassword(8, true, true, true, false);
 
-            novaSenha = this.Password;
+            novaSenha = this.PASSWORD;
 
-            this.Password = GerarHash(this.Password);
-            this.TrocaSenhaObrigatoria = true;
+            this.PASSWORD = GerarHash(this.PASSWORD);
+            this.TROCA_SENHA_OBRIGATORIA = true;
 
             return true;
         }
@@ -111,11 +111,11 @@ namespace SPD.Model.Model
         {
             get
             {
-                return this.Nome;
+                return this.NOME;
             }
             set
             {
-                this.Nome = value;
+                this.NOME = value;
             }
         }
 

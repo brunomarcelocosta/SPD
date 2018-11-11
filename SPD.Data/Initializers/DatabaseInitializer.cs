@@ -29,56 +29,56 @@ namespace SPD.Data.Initializers
         {
             Funcionalidade login = new Funcionalidade()
             {
-                Nome = "Efetuar Login",
-                isAtivo = true
+                NOME = "Efetuar Login",
+                IsATIVO = true
             };
 
             Funcionalidade logoff = new Funcionalidade()
             {
-                Nome = "Efetuar Logoff",
-                isAtivo = true
+                NOME = "Efetuar Logoff",
+                IsATIVO = true
             };
 
             Funcionalidade usuario = new Funcionalidade()
             {
-                Nome = "Gerenciar Usuários",
-                isAtivo = true
+                NOME = "Gerenciar Usuários",
+                IsATIVO = true
             };
 
             Funcionalidade addPaciente = new Funcionalidade()
             {
-                Nome = "Adicionar Novo Paciente",
-                isAtivo = true
+                NOME = "Adicionar Novo Paciente",
+                IsATIVO = true
             };
 
             Funcionalidade editPaciente = new Funcionalidade()
             {
-                Nome = "Editar Paciente Cadastrado",
-                isAtivo = true
+                NOME = "Editar Paciente Cadastrado",
+                IsATIVO = true
             };
 
             Funcionalidade delPaciente = new Funcionalidade()
             {
-                Nome = "Excluir Paciente",
-                isAtivo = true
+                NOME = "Excluir Paciente",
+                IsATIVO = true
             };
 
             Funcionalidade consulta = new Funcionalidade()
             {
-                Nome = "Gerenciar Consultas",
-                isAtivo = true
+                NOME = "Gerenciar Consultas",
+                IsATIVO = true
             };
 
             Funcionalidade historico = new Funcionalidade()
             {
-                Nome = "Visualizar Histórico de Operação",
-                isAtivo = true
+                NOME = "Visualizar Histórico de Operação",
+                IsATIVO = true
             };
 
             Funcionalidade notificacao = new Funcionalidade()
             {
-                Nome = "Receber Notificações",
-                isAtivo = true
+                NOME = "Receber Notificações",
+                IsATIVO = true
             };
 
             return new Funcionalidade[] { login, logoff, usuario, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
@@ -181,12 +181,12 @@ namespace SPD.Data.Initializers
 
             Usuario usuarioAdministrador = new Usuario()
             {
-                Nome = "Administrador",
-                Email = "brunomarcelo.1995@gmail.com",
-                Login = "adminsis",
-                Password = Usuario.GerarHash("a12345678"),
-                TrocaSenhaObrigatoria = true,
-                isAtivo = true,
+                NOME = "Administrador",
+                EMAIL = "brunomarcelo.1995@gmail.com",
+                LOGIN = "adminsis",
+                PASSWORD = Usuario.GerarHash("a12345678"),
+                TROCA_SENHA_OBRIGATORIA = true,
+                IsATIVO = true,
             };
 
             var funcionalidades = Funcionalidades();

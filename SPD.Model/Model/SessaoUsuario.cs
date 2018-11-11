@@ -8,16 +8,21 @@ namespace SPD.Model.Model
 {
     public class SessaoUsuario
     {
-        public int ID { get; set; } // Alterado para public devido ao mapeamento objeto-relacional do EntityFramework
-        public DateTime DataHoraAcesso { get; set; }
-        public string EnderecoIP { get; set; }
-        public virtual Usuario Usuario { get; set; } // UML - (1) SessaoUsuario é associado com (1) Usuario. Virtual para lazy load
-        public int UsuarioID { get; set; } // Adicionado devido ao mapeamento objeto-relacional do EntityFramework
+        public int ID { get; set; }
 
-        // Adicionado devido ao mapeamento objeto-relacional do EntityFramework
+        public DateTime dataHoraAcesso { get; set; }
+
+        public string enderecoIP { get; set; }
+
+        public virtual Usuario usuario { get; set; }
+
+        public int ID_USUARIO { get; set; }
+
+        #region Métodos
+
         public SessaoUsuario()
         {
-            this.Usuario = null;
+            this.usuario = null;
         }
 
         public SessaoUsuario(Usuario usuario)
@@ -25,35 +30,37 @@ namespace SPD.Model.Model
         {
             // ToDo: Must fix: An entity object cannot be referenced by multiple instances of IEntityChangeTracker when we do the relationship via objects.
             //this.Usuario = usuario;
-            this.UsuarioID = usuario.ID;
+            this.ID_USUARIO = usuario.ID;
         }
 
         public SessaoUsuario(Usuario usuario, string enderecoIP)
             : this(usuario)
         {
-            this.EnderecoIP = enderecoIP;
+            this.enderecoIP = enderecoIP;
         }
 
         public void CriarSessao(Context context)
         {
-            this.DataHoraAcesso = DateTime.Now;
+            this.dataHoraAcesso = DateTime.Now;
 
-            if (String.IsNullOrWhiteSpace(this.EnderecoIP))
+            if (String.IsNullOrWhiteSpace(this.enderecoIP))
             {
-                this.EnderecoIP = context.usuarioIP;
+                this.enderecoIP = context.usuarioIP;
             }
         }
 
         public bool EncerrarSessao(Context context)
         {
-            this.DataHoraAcesso = DateTime.Now;
+            this.dataHoraAcesso = DateTime.Now;
 
-            if (String.IsNullOrWhiteSpace(this.EnderecoIP))
+            if (String.IsNullOrWhiteSpace(this.enderecoIP))
             {
-                this.EnderecoIP = context.usuarioIP;
+                this.enderecoIP = context.usuarioIP;
             }
 
             return true;
         }
+
+        #endregion
     }
 }

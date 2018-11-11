@@ -23,22 +23,22 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
                 .HasColumnName("id_sessao")
                 .IsRequired();
 
-            this.Property(sessaoUsuario => sessaoUsuario.UsuarioID)
+            this.Property(sessaoUsuario => sessaoUsuario.ID_USUARIO)
                 .HasColumnName("fk_id_usuario")
                 .IsRequired()
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_SESSAO_USUARIO_SPD_USUARIO_FK")))
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_SESSAO_USUARIO__UN") { IsUnique = true }));
 
-            this.HasRequired(sessaoUsuario => sessaoUsuario.Usuario)
+            this.HasRequired(sessaoUsuario => sessaoUsuario.usuario)
                 .WithMany()
-                .HasForeignKey(sessaoUsuario => sessaoUsuario.UsuarioID);
+                .HasForeignKey(sessaoUsuario => sessaoUsuario.ID_USUARIO);
 
-            this.Property(sessaoUsuario => sessaoUsuario.EnderecoIP)
+            this.Property(sessaoUsuario => sessaoUsuario.enderecoIP)
                 .HasColumnName("vl_endereco_ip")
                 .HasMaxLength(15)
                 .IsRequired();
 
-            this.Property(sessaoUsuario => sessaoUsuario.DataHoraAcesso)
+            this.Property(sessaoUsuario => sessaoUsuario.dataHoraAcesso)
                 .HasColumnName("data_hora_acesso")
                 .IsRequired();
         }

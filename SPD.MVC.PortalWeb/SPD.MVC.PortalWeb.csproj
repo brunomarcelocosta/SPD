@@ -195,22 +195,64 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Content\Texts\FuncionalidadeResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FuncionalidadeResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\GlobalResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GlobalResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\HistoricoOperacaoResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HistoricoOperacaoResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\NotificacaoResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificacaoResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\SessaoUsuarioResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SessaoUsuarioResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\TipoOperacaoResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TipoOperacaoResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Texts\UsuarioResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsuarioResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\FuncionalidadeViewModel.cs" />
+    <Compile Include="ViewModels\HistoricoOperacaoViewModel.cs" />
+    <Compile Include="ViewModels\NotificacaoViewModel.cs" />
+    <Compile Include="ViewModels\SessaoUsuarioViewModel.cs" />
+    <Compile Include="ViewModels\TipoOperacaoViewModel.cs" />
+    <Compile Include="ViewModels\UsuarioFuncionalidadeViewModel.cs" />
+    <Compile Include="ViewModels\UsuarioViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Styles\bootstrap-theme.css" />
+    <Content Include="Content\Styles\bootstrap-theme.min.css" />
+    <Content Include="Content\Styles\bootstrap.css" />
+    <Content Include="Content\Styles\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\Styles\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -249,6 +291,7 @@
     <Content Include="SPD.Modulos.json" />
     <Content Include="Views\Login\AutenticarLogin.cshtml" />
     <Content Include="SPD.Data.ConnectionStrings.config" />
+    <Content Include="Views\Login\AlterarSenha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -259,10 +302,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\Styles\bootstrap.min.css.map" />
+    <Content Include="Content\Styles\bootstrap.css.map" />
+    <Content Include="Content\Styles\bootstrap-theme.min.css.map" />
+    <Content Include="Content\Styles\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
@@ -280,6 +323,36 @@
       <Project>{777DEE64-A1A3-4699-856C-0D18416621D1}</Project>
       <Name>SPD.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Texts\FuncionalidadeResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FuncionalidadeResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\GlobalResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GlobalResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\HistoricoOperacaoResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>HistoricoOperacaoResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\NotificacaoResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NotificacaoResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\SessaoUsuarioResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SessaoUsuarioResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\TipoOperacaoResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TipoOperacaoResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\UsuarioResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsuarioResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

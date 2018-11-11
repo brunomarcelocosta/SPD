@@ -5,12 +5,16 @@ namespace SPD.Model.Model
 {
     public class Notificacao
     {
-        public int ID { get; set; } // Alterado para public devido ao mapeamento objeto-relacional do EntityFramework
-        public string Descricao { get; set; }
-        public DateTime Data { get; set; }
-        public bool Situacao { get; set; }
-        public virtual Usuario Usuario { get; set; } // UML - (0..*) Notificacao é associado com (0..1) Usuario. Virtual para lazy load
-        public int UsuarioID { get; set; } // Adicionado devido ao mapeamento objeto-relacional do EntityFramework
+        public int ID { get; set; }
+
+        public string DESCRICAO { get; set; }
+
+        public DateTime DATA { get; set; }
+
+        public bool SITUACAO { get; set; }
+
+        public int ID_USUARIO { get; set; }
+        public virtual Usuario usuario { get; set; }
 
         public void NotificarPorEmail(string email, string valor, string assunto, EmailConfiguration smtpConfiguration)
         {

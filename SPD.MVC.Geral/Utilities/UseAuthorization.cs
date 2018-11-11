@@ -70,7 +70,7 @@ namespace SPD.MVC.Geral.Utilities
 
             public FuncionalidadeClaim(UsuarioFuncionalidade usuarioFuncionalidade)
             {
-                Nome = usuarioFuncionalidade.FUNCIONALIDADE.Nome;
+                Nome = usuarioFuncionalidade.FUNCIONALIDADE.NOME;
             }
 
             public bool Has(FuncionalidadeClaim funcionalidadeClaim)

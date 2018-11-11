@@ -180,11 +180,11 @@ namespace SPD.MVC.Geral.Hubs
         {
             foreach (var item in _SessaoUsuarioService.GetAll())
             {
-                if (_UserConnectionRepository.All().FindAll().Where(x => x.UserId == item.UsuarioID).Count() == 0)
+                if (_UserConnectionRepository.All().FindAll().Where(x => x.UserId == item.ID_USUARIO).Count() == 0)
                 {
-                    var usuarioSessao = _SessaoUsuarioService.GetSessaoByUsuarioID(item.UsuarioID);
+                    var usuarioSessao = _SessaoUsuarioService.GetSessaoByUsuarioID(item.ID_USUARIO);
                     _SessaoUsuarioService.EncerrarSessao(usuarioSessao);
-                    _SessaoUsuarioService.DesconetarSessaoUsuarios(usuarioSessao.Usuario);
+                    _SessaoUsuarioService.DesconetarSessaoUsuarios(usuarioSessao.usuario);
                 }
             }
         }
@@ -227,7 +227,7 @@ namespace SPD.MVC.Geral.Hubs
             {
                 if (_UserConnectionRepository.All().Find(x => x.UserId == userConnection.UserId).Count() == 0)
                 {
-                    var sessao = this._SessaoUsuarioService.GetAll().Where(s => s.Usuario.ID == userConnection.UserId).FirstOrDefault();
+                    var sessao = this._SessaoUsuarioService.GetAll().Where(s => s.usuario.ID == userConnection.UserId).FirstOrDefault();
                     if (sessao != null)
                     {
                         var usuarioSessao = _SessaoUsuarioService.GetSessaoByUsuarioID(userConnection.UserId);

@@ -52,7 +52,7 @@ namespace SPD.Services.Services.Model
                     var usuario = this._UsuarioService.GetById(usuarioID);
 
                     this._HistoricoOperacaoRepository.RegistraHistorico(valor, usuario, Tipo_Operacao.Logoff, Tipo_Funcionalidades.EfetuarLogof);
-                    var sessao = this._SessaoUsuarioRepository.GetAll().Where(s => s.Usuario.ID == usuarioID).FirstOrDefault();
+                    var sessao = this._SessaoUsuarioRepository.GetAll().Where(s => s.usuario.ID == usuarioID).FirstOrDefault();
                     if (sessao == null)
                         return false;
 
@@ -77,7 +77,7 @@ namespace SPD.Services.Services.Model
 
             foreach (var sessao in sessoes)
             {
-                this._HistoricoOperacaoRepository.RegistraHistoricoSistema(String.Format("Usuário {0} desconectado pelo sistema", this._UsuarioService.GetById(sessao.UsuarioID).Nome));
+                this._HistoricoOperacaoRepository.RegistraHistoricoSistema(String.Format("Usuário {0} desconectado pelo sistema", this._UsuarioService.GetById(sessao.ID_USUARIO).NOME));
                 this._HistoricoOperacaoRepository.SaveChanges();
             }
         }

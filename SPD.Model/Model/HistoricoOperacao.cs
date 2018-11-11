@@ -23,7 +23,7 @@ namespace SPD.Model.Model
         public virtual Usuario USUARIO { get; set; }
 
         public int ID_TIPO_OPERACAO { get; set; }
-        public virtual TipoOperacao TipoOperacao { get; set; }
+        public virtual TipoOperacao tipoOperacao { get; set; }
 
         public int? ID_FUNCIONALIDADE { get; set; }
         public virtual Funcionalidade FUNCIONALIDADE { get; set; }
@@ -111,7 +111,7 @@ namespace SPD.Model.Model
             this.DUMP = dump.ToString();
             this.SessaoUID = context.usuarioSessionID;
 
-            this.TipoOperacao = tipoOperacao;
+            this.tipoOperacao = tipoOperacao;
             this.USUARIO = usuario;
             this.FUNCIONALIDADE = funcionalidade;
         }
@@ -120,7 +120,7 @@ namespace SPD.Model.Model
         {
             this.DESCRICAO = valor;
             this.DT_OPERACAO = DateTime.Now;
-            this.TipoOperacao = new TipoOperacao(SPD_Enums.Tipo_Operacao.Sistema);
+            this.tipoOperacao = new TipoOperacao(SPD_Enums.Tipo_Operacao.Sistema);
         }
 
         public string ReturnIP(Context context, string valores, out string Dump)

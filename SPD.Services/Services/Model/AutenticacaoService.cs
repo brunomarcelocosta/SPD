@@ -41,28 +41,28 @@ namespace SPD.Services.Services.Model
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
                     resultados = String.Empty;
-                    string auxLogin = usuario.Login;
+                    string auxLogin = usuario.LOGIN;
 
                     Usuario auxUsuario = new Usuario()
                     {
-                        Login = auxLogin
+                        LOGIN = auxLogin
                     };
 
-                    if (usuario.Login == null || usuario.Password == null)
+                    if (usuario.LOGIN == null || usuario.PASSWORD == null)
                     {
                         throw new Exception("Login e Senha são obrigatórios");
                     }
 
                     bool existeUser = false;
-                    var user = _UsuarioRepository.GetByLogin(auxUsuario.Login);
-                    var funcionalidades = _FuncionalidadeRepository.Query().Where(a => a.Nome.Equals("Efetuar Login")).ToList().Count();
+                    var user = _UsuarioRepository.GetByLogin(auxUsuario.LOGIN);
+                    var funcionalidades = _FuncionalidadeRepository.Query().Where(a => a.NOME.Equals("Efetuar Login")).ToList().Count();
 
                     if (user != null)
                         existeUser = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID && funcionalidades > 0).ToList().Count() > 0 ? true : false;
 
                     if (existeUser)
                     {
-                        usuario = this._UsuarioRepository.GetByLoginSenha(usuario.Login, Usuario.GerarHash(usuario.Password));
+                        usuario = this._UsuarioRepository.GetByLoginSenha(usuario.LOGIN, Usuario.GerarHash(usuario.PASSWORD));
 
                         if (usuario != null)
                         {
@@ -77,7 +77,7 @@ namespace SPD.Services.Services.Model
                                         var usuarioID = Usuario.EncryptID(Convert.ToString(usuario.ID));
                                         var url = String.Format(CultureInfo.InvariantCulture, "{0}/Login/Logout/?k={1}", autenticacaoUrl, usuarioID);
 
-                                        new Notificacao().NotificarPorEmail(usuario.Email, string.Format("Tentativa de acesso simultâneo do Login {0}. Usuário já está conectado em outra estação de trabalho.<br /><br />Clique <a href='{1}'>aqui</a> para forçar seu logout da outra estação ou acesse o link <a href='{1}'>{1}</a> pelo seu navegador.", usuario.Login, url), "Acesso simultâneo identificado", EmailConfiguration.FromEmailSettings());
+                                        new Notificacao().NotificarPorEmail(usuario.EMAIL, string.Format("Tentativa de acesso simultâneo do Login {0}. Usuário já está conectado em outra estação de trabalho.<br /><br />Clique <a href='{1}'>aqui</a> para forçar seu logout da outra estação ou acesse o link <a href='{1}'>{1}</a> pelo seu navegador.", usuario.LOGIN, url), "Acesso simultâneo identificado", EmailConfiguration.FromEmailSettings());
 
                                         // 6.2.Sistema registra o acesso simultâneo [UC02.22 – Registrar Histórico de Operação de Usuário];
                                         this._HistoricoOperacaoRepository.RegistraHistorico("Usuário conectado em outra estação de trabalho", usuario, Tipo_Operacao.Logoff, Tipo_Funcionalidades.EfetuarLogof);
@@ -114,7 +114,7 @@ namespace SPD.Services.Services.Model
                         }
                         else
                         {
-                            usuario = this._UsuarioRepository.GetByLogin(auxUsuario.Login);
+                            usuario = this._UsuarioRepository.GetByLogin(auxUsuario.LOGIN);
 
                             if (usuario == null)
                             {
@@ -130,11 +130,11 @@ namespace SPD.Services.Services.Model
                                 {
                                     usuario = this._UsuarioRepository.IncrementarTentativas(usuario);
 
-                                    if (usuario.TentativasLogin == 3)
+                                    if (usuario.TENTATIVAS_LOGIN == 3)
                                     {
                                         throw new Exception("Resta apenas uma tentativa incorreta de acesso antes que o login seja bloqueado.");
                                     }
-                                    else if (usuario.TentativasLogin > 3)
+                                    else if (usuario.TENTATIVAS_LOGIN > 3)
                                     {
                                         this._UsuarioRepository.Bloquear(usuario);
 
@@ -146,13 +146,13 @@ namespace SPD.Services.Services.Model
 
                                         foreach (var item in recipients)
                                         {
-                                            if (item.Nome.Equals("Efetuar Login"))
+                                            if (item.NOME.Equals("Efetuar Login"))
                                             {
-                                                foreach (var subItem in item.Usuarios)
+                                                foreach (var subItem in item.USUARIOS)
                                                 {
                                                     try
                                                     {
-                                                        new Notificacao().NotificarPorEmail(subItem.Email, "Login do usuário " + subItem.Login + " bloqueado por 3 tentativas inválidas de acesso.", "Bloqueio de usuário", EmailConfiguration.FromEmailSettings());
+                                                        new Notificacao().NotificarPorEmail(subItem.EMAIL, "Login do usuário " + subItem.LOGIN + " bloqueado por 3 tentativas inválidas de acesso.", "Bloqueio de usuário", EmailConfiguration.FromEmailSettings());
                                                     }
                                                     catch (SmtpException Exception)
                                                     {

@@ -18,13 +18,13 @@ namespace SPD.Data.EntityConfigurations.Administracao
                 .HasColumnName("id_funcionalidade")
                 .IsRequired();
 
-            this.Property(funcionalidade => funcionalidade.Nome)
+            this.Property(funcionalidade => funcionalidade.NOME)
                 .HasColumnName("descricao")
                 .HasMaxLength(255)
                 .IsRequired();
                 //.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
 
-            this.Property(funcionalidade => funcionalidade.isAtivo)
+            this.Property(funcionalidade => funcionalidade.IsATIVO)
                 .HasColumnName("lg_ativo")
                 .IsRequired();
 

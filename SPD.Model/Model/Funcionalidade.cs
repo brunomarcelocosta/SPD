@@ -10,17 +10,17 @@ namespace SPD.Model.Model
     {
         public int ID { get; set; } // Alterado para public devido ao mapeamento objeto-relacional do EntityFramework
 
-        public string Nome { get; set; }
+        public string NOME { get; set; }
 
-        public bool isAtivo { get; set; }
+        public bool IsATIVO { get; set; }
 
-        public virtual ICollection<UsuarioFuncionalidade> UsuarioFuncionalidade { get; set; } // UML - (1..*) Perfil é associado com (0..*) Usuario. Virtual para lazy load
+        public virtual ICollection<UsuarioFuncionalidade> usuarioFuncionalidade { get; set; } // UML - (1..*) Perfil é associado com (0..*) Usuario. Virtual para lazy load
 
-        public IEnumerable<Usuario> Usuarios
+        public IEnumerable<Usuario> USUARIOS
         {
             get
             {
-                return (this.UsuarioFuncionalidade == null ? new List<Usuario>() : this.UsuarioFuncionalidade.Select(usuariosPerfil => usuariosPerfil.USUARIO).ToList());
+                return (this.usuarioFuncionalidade == null ? new List<Usuario>() : this.usuarioFuncionalidade.Select(usuariosPerfil => usuariosPerfil.USUARIO).ToList());
             }
         }
     }

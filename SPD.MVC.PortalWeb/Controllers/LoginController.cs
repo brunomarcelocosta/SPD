@@ -61,22 +61,22 @@ namespace SPD.MVC.PortalWeb.Controllers
 
                 Usuario usuario = new Usuario()
                 {
-                    Login = authenticationViewModel.Login,
-                    Password = authenticationViewModel.Password,
+                    LOGIN = authenticationViewModel.Login,
+                    PASSWORD = authenticationViewModel.Password,
                 };
 
                 if (this._AutenticacaoService.AutenticarUsuario(ref usuario, enderecoIP, GlobalConstants.Modules.Web.Url, out resultados))
                 {
                     authenticationViewModel.ID = usuario.ID;
-                    authenticationViewModel.Nome = usuario.Nome;
-                    authenticationViewModel.TrocaSenhaObrigatoria = usuario.TrocaSenhaObrigatoria;
+                    authenticationViewModel.Nome = usuario.NOME;
+                    authenticationViewModel.TrocaSenhaObrigatoria = usuario.TROCA_SENHA_OBRIGATORIA;
                     authenticationViewModel.EnderecoIP = enderecoIP;
                     authenticationViewModel.SessionID = this._SessaoUsuarioService.GetSessaoByUsuarioID(usuario.ID).ID;
 
                     foreach (var item in usuario.ListUsuarioFuncionalidade)
                     {
                         authenticationViewModel.FuncionalidadesUsuarioIDs.Add(item.ID_FUNCIONALIDADE);
-                        authenticationViewModel.FuncionalidadesUsuarioNomes.Add(item.FUNCIONALIDADE.Nome);
+                        authenticationViewModel.FuncionalidadesUsuarioNomes.Add(item.FUNCIONALIDADE.NOME);
                     }
 
                     this.StoreAuthenticationInSession(authenticationViewModel);
@@ -90,7 +90,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     {
                         Funcionalidade funcionalidade = funcionalidadesUsuario.FUNCIONALIDADE;
 
-                        if (!funcionalidade.isAtivo) { continue; }
+                        if (!funcionalidade.IsATIVO) { continue; }
                         string jsonClaim = new JavaScriptSerializer().Serialize(new UseAuthorization.FuncionalidadeClaim(funcionalidadesUsuario));
                         identity.AddClaim(new Claim(ClaimTypes.Role, jsonClaim));
                     }
@@ -210,6 +210,19 @@ namespace SPD.MVC.PortalWeb.Controllers
                 return View("LogoutError");
             }
 
+        }
+
+        public ActionResult AlterarSenha()
+        {
+            // Instancia a variável do resultado final do método
+            var usuario = this.ApplicationService.GetById(this.GetAuthenticationFromSession().ID);
+
+            if (usuario != null)
+            {
+                usuario.PASSWORD = "";
+            }
+
+            return View(this.ToViewModel(usuario));
         }
     }
 }

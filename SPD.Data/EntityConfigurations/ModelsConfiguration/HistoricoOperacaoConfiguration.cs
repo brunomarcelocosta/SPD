@@ -38,7 +38,7 @@ namespace SPD.Infrastructure.Data.EntityConfigurations.Administracao
                .HasColumnName("fk_id_tipo_operacao")
                .IsRequired()
                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_HISTORICO_OPERACAO_SPD_TIPO_OPERACAO")));
-           this.HasRequired(historicoOperacao => historicoOperacao.TipoOperacao)
+           this.HasRequired(historicoOperacao => historicoOperacao.tipoOperacao)
                .WithMany()
                .HasForeignKey(historicoOperacao => historicoOperacao.ID_TIPO_OPERACAO);
 
