@@ -20,13 +20,6 @@ namespace SPD.MVC.PortalWeb
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
-
-            bundles.Add(new StyleBundle("~/Content/multileveldropdown").Include(
-                            "~/Content/Styles/multileveldropdown.css"));
-
             bundles.Add(new ScriptBundle("~/bundles/sweetalert").Include(
                 "~/Scripts/sweetalert.min.js"));
 
@@ -34,8 +27,15 @@ namespace SPD.MVC.PortalWeb
                 "~/Scripts/jquery.signalR-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/site").Include(
-               "~/Scripts/sitebase.js", 
+               "~/Scripts/sitebase.js",
                "~/Scripts/site.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/Styles/bootstrap.css",
+                      "~/Content/Styles/Site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/multileveldropdown").Include(
+                            "~/Content/Styles/multileveldropdown.css"));
         }
     }
 }
