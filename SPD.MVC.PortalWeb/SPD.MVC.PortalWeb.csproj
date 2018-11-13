@@ -195,6 +195,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AutoMapper\DomainToViewModelMappingProfile.cs" />
+    <Compile Include="AutoMapper\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="Content\Texts\FuncionalidadeResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -220,6 +222,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SessaoUsuarioResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Content\Texts\TelaPrincipalResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TelaPrincipalResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Content\Texts\TipoOperacaoResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -230,6 +237,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsuarioResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AlterarSenhaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -249,6 +257,7 @@
     <Content Include="Content\Styles\bootstrap-theme.min.css" />
     <Content Include="Content\Styles\bootstrap.css" />
     <Content Include="Content\Styles\bootstrap.min.css" />
+    <Content Include="Content\Styles\multileveldropdown.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -270,8 +279,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Login\AlterarSenha.js" />
     <Content Include="Scripts\Login\Login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\sitebase.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -283,15 +295,16 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="SPD.EmailConfiguracao.config" />
     <Content Include="SPD.MenuConfiguracao.json" />
     <Content Include="SPD.Modulos.json" />
     <Content Include="Views\Login\AutenticarLogin.cshtml" />
     <Content Include="SPD.Data.ConnectionStrings.config" />
-    <Content Include="Views\Login\AlterarSenha.cshtml" />
+    <Content Include="Views\Shared\InvalidarLogin.cshtml" />
+    <Content Include="Views\Shared\Menu.cshtml" />
+    <Content Include="Views\Shared\Status.cshtml" />
+    <Content Include="Views\AlterarSenha\Alterar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -302,10 +315,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\Styles\bootstrap.min.css.map" />
-    <Content Include="Content\Styles\bootstrap.css.map" />
-    <Content Include="Content\Styles\bootstrap-theme.min.css.map" />
-    <Content Include="Content\Styles\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
@@ -344,6 +353,10 @@
     <EmbeddedResource Include="Content\Texts\SessaoUsuarioResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SessaoUsuarioResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\Texts\TelaPrincipalResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TelaPrincipalResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Texts\TipoOperacaoResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>

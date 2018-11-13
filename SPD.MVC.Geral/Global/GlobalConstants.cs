@@ -65,7 +65,7 @@ namespace SPD.MVC.Geral.Global
             public const string Controller = "Login";
             public const string AuthenticateAction = "AutenticarLogin";
             public const string AuthenticatedAction = "LoginAutenticado";
-            public const string AuthenticationStatusAction = "StatusLogin";
+            public const string AuthenticationStatusAction = "Status";
             public const string UnauthenticateAction = "InvalidarLogin";
 
             public static string AuthenticateUrl
@@ -87,8 +87,8 @@ namespace SPD.MVC.Geral.Global
 
         public sealed class RedefinePassword
         {
-            public const string Controller = "Login";
-            public const string RedefinePasswordAction = "AlterarSenha";
+            public const string Controller = "AlterarSenha";
+            public const string RedefinePasswordAction = "Alterar";
 
             public static string RedefinePasswordUrl
             {
@@ -101,8 +101,8 @@ namespace SPD.MVC.Geral.Global
 
         public sealed class ConfirmRedefinePassword
         {
-            public const string Controller = "Login";
-            public const string ConfirmRedefinePasswordAction = "ConfirmarAlterarSenha";
+            public const string Controller = "AlterarSenha";
+            public const string ConfirmRedefinePasswordAction = "Confirmar";
 
             public static string ConfirmRedefinePasswordUrl
             {

@@ -7,6 +7,7 @@ using SPD.MVC.Geral.Controllers;
 using SPD.MVC.Geral.Global;
 using SPD.MVC.Geral.Utilities;
 using SPD.MVC.Geral.ViewModels;
+using SPD.MVC.PortalWeb.ViewModels;
 using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
@@ -212,17 +213,5 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         }
 
-        public ActionResult AlterarSenha()
-        {
-            // Instancia a variável do resultado final do método
-            var usuario = this.ApplicationService.GetById(this.GetAuthenticationFromSession().ID);
-
-            if (usuario != null)
-            {
-                usuario.PASSWORD = "";
-            }
-
-            return View(this.ToViewModel(usuario));
-        }
     }
 }

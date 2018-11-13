@@ -112,5 +112,45 @@ namespace SPD.Services.Services.Model
             return false;
         }
 
+        public bool ConfirmarSenha(int ID, string password, out string result)
+        {
+            string mensagemHistorico = null;
+
+            var usuario = _UsuarioRepository.GetById(ID);
+
+            try
+            {
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    usuario.PASSWORD = Usuario.GerarHash(password);
+
+                    if (usuario.TROCA_SENHA_OBRIGATORIA)
+                    {
+                        mensagemHistorico = "Alteração obrigatória da senha do usuário";
+                    }
+                    else
+                    {
+                        mensagemHistorico = "Alteração da senha do usuário";
+                    }
+
+                    usuario.TROCA_SENHA_OBRIGATORIA = false;
+                    _UsuarioRepository.Atualizar(usuario);
+
+                    _HistoricoOperacaoRepository.RegistraHistorico(mensagemHistorico, usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
+
+                    SaveChanges(transactionScope);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = "erro ao salvar: " + ex.Message;
+                return false;
+            }
+
+            result = "Senha alterada com sucesso.";
+            return true;
+        }
+
+
     }
 }

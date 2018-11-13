@@ -1,0 +1,123 @@
+﻿@using SPD.MVC.Geral.Global
+@using SPD.MVC.PortalWeb.Content.Texts
+@using SPD.MVC.Geral.Utilities
+@using SPD.MVC.Geral.ViewModels
+@using System.Linq
+@using SPD.Model.Model
+
+@{ var config = (ConfigViewModel)ViewBag.Config; }
+
+@*domain virá do arquivo Solution Items -> SGTAN.Modulos.json -> tag Url*@
+@*@{ var domain = config.Domain;}*@
+
+<div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*menu Home Page*@
+            @Html.ExternalLink(GlobalResource.ApplicationShortTitle, GlobalConstants.Home.HomeUrl, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            @{
+                var Session = this.Session[GlobalConstants.Security.AuthenticationSession] as AuthenticationViewModel;
+            }
+
+            @if (Session != null)
+            {
+                var funcoesPerfil = this.ViewBag.FuncoesPerfil as IEnumerable<UsuarioFuncionalidade>;
+                <ul class="nav navbar-nav">
+                    @if (ViewBag.Menu != null)
+                    {
+                        foreach (var item in ViewBag.Menu)
+                        {
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@item.Titulo<b class="caret"></b></a>
+                                <ul class="dropdown-menu multi-level">
+
+                                    @foreach (var subMenu in item.SubMenus)
+                                    {
+                                        <!-- //Primeiro Nivel   -->
+                                        if (subMenu.SubMenus == null)
+                                        {
+                                            string fullUrl = GlobalConstants.Modules.Action(config.GetUrl(subMenu.Modulo), subMenu.Controle, subMenu.Acao);
+                                            // domain virá do arquivo Solution Items -> SGTAN.Modulos.json -> tag Url
+                                            //string partialUrl = "" + domain + fullUrl.Substring(fullUrl.IndexOf(":", 5));
+                                            string partialUrl = fullUrl;
+                                            //if (subMenu.Controle.Equals("HistoricoOperacao"))
+                                            //{
+                                            //    partialUrl += "?grid-column=DataOperacao&grid-dir=1";
+                                            //}
+                                            <li>
+                                                <a href="@partialUrl">@subMenu.Titulo</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="dropdown-submenu">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@subMenu.Titulo</a>
+                                                <ul class="dropdown-menu">
+                                                    @foreach (var nivelSubMenu in subMenu.SubMenus)
+                                                    {
+                                                        if (nivelSubMenu.SubMenus == null)
+                                                        {
+                                                            if (((funcoesPerfil != null) && (funcoesPerfil.Any(funcaoPerfil => funcaoPerfil.FUNCIONALIDADE.NOME.Equals(nivelSubMenu.Perfil)))) || string.IsNullOrEmpty(nivelSubMenu.Perfil))
+                                                            {
+                                                                <!-- Segundo Nivel -->
+                                                                string fullUrl = GlobalConstants.Modules.Action(config.GetUrl(nivelSubMenu.Modulo), nivelSubMenu.Controle, nivelSubMenu.Acao);
+                                                                // domain virá do arquivo Solution Items -> SGTAN.Modulos.json -> tag Url
+                                                                //string partialUrl = "" + domain + fullUrl.Substring(fullUrl.IndexOf(":", 5));
+                                                                string partialUrl = fullUrl;
+
+                                                                if (nivelSubMenu.Controle.Equals("Operador") || nivelSubMenu.Controle.Equals("CiaAerea"))
+                                                                {
+                                                                    partialUrl += "?oper=1";
+                                                                }
+
+                                                                <li><a href="@partialUrl">@nivelSubMenu.Titulo</a></li>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if ((funcoesPerfil != null) && (funcoesPerfil.Any(funcaoPerfil => funcaoPerfil.FUNCIONALIDADE.NOME.Equals(nivelSubMenu.Perfil))) || string.IsNullOrEmpty(nivelSubMenu.Perfil))
+                                                            {
+                                                                <li class="dropdown-submenu">
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">@nivelSubMenu.Titulo</a>
+                                                                    <ul class="dropdown-menu">
+                                                                        @foreach (var itemSub in nivelSubMenu.SubMenus)
+                                                                        {
+                                                                            <!-- //Terceiro Nivel-->
+                                                                            string fullUrl = GlobalConstants.Modules.Action(config.GetUrl(itemSub.Modulo), itemSub.Controle, itemSub.Acao);
+                                                                            // domain virá do arquivo Solution Items -> SGTAN.Modulos.json -> tag Url
+                                                                            //string partialUrl = "" + domain + fullUrl.Substring(fullUrl.IndexOf(":", 5));
+                                                                            string partialUrl = fullUrl;
+                                                                            <li><a href="@partialUrl">@itemSub.Titulo</a></li>
+                                                                        }
+                                                                    </ul>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @*menu Sair*@
+                    <li>@Html.Partial(GlobalConstants.Login.UnauthenticateAction)</li>
+                </ul>
+            }
+        </div>
+
+    </div>
+</div>
+
+

@@ -1,0 +1,14 @@
+﻿@using SPD.MVC.Geral.Global
+@using SPD.MVC.Geral.Content.Texts
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @action = GlobalConstants.Login.UnauthenticateUrl, @class = "navbar-form", @name = "frmLogoffSistema" }))
+{
+    @Html.AntiForgeryToken()
+
+    <input type="button" id="logoffSistema" value="@AuthenticationResource.Logout" class="btn btn-link navbar-link logout" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

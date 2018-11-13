@@ -1,0 +1,19 @@
+﻿@using SPD.MVC.Geral.Global
+@using SPD.MVC.PortalWeb.Content.Texts
+@model SPD.MVC.Geral.ViewModels.AuthenticationViewModel
+
+<footer>
+    @{
+        if (this.ViewBag.Authentication != null)
+        {
+            <p>@Html.DisplayNameFor(model => model.Nome): <strong>  @Html.DisplayFor(model => model.Nome) </strong> @Html.DisplayNameFor(model => model.DataAcesso): <strong> @Html.DisplayFor(model => model.DataAcesso) </strong>Status: <strong>Usuário Autenticado com sucesso</strong></p>
+        }
+
+        <p>&copy; @DateTime.Now.Year @GlobalResource.ApplicationTitle - @GlobalResource.CopyrightMessage - Versão: @GlobalConstants.General.Version</p>
+    }
+</footer>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
