@@ -3,81 +3,27 @@
     "Hierarquia": 1,
     "Titulo": "Gerenciamento",
     "IsSubMenu": true,
-    "SubMenus": [
+    "SubMenus": [      
       {
         "Nivel": 1,
-        "Titulo": "Operadores e Permissões",
-        "IsSubMenu": true,
-        "SubMenus": [
-          {
-            "Nivel": 1,
-            "Titulo": "Ativar/Desativar Sistema",
-            "Modulo": "SGTAN.MVC.Administracao",
-            "Controle": "Sistema",
-            "Acao": "AtivarDesativar",
-            "Perfil": "Sistema"
-          },
-          {
-            "Nivel": 2,
-            "Titulo": "Módulos",
-            "Modulo": "SGTAN.MVC.Administracao",
-            "IsSubMenu": true,
-            "Perfil": "Módulos",
-            "SubMenus": [
-              {
-                "Nivel": 1,
-                "Titulo": "Gerenciar",
-                "Modulo": "SGTAN.MVC.Administracao",
-                "Controle": "Modulo",
-                "Acao": "List"
-              },
-              {
-                "Nivel": 2,
-                "Titulo": "Instalar Módulos",
-                "Modulo": "SGTAN.MVC.Administracao",
-                "Controle": "Modulo",
-                "Acao": "InstalarModulos"
-              }
-            ]
-          },
-          {
-            "Nivel": 3,
-            "Titulo": "Perfil",
-            "Modulo": "SGTAN.MVC.Administracao",
-            "Controle": "Perfil",
-            "Acao": "List",
-            "Perfil": "Perfis de Usuário"
-          },
-          {
-            "Nivel": 4,
-            "Titulo": "Usuário",
-            "Modulo": "SGTAN.MVC.Administracao",
-            "Controle": "Usuario",
-            "Acao": "List",
-            "Perfil": "Usuários"
-          }
-        ]
-      },
-      {
-        "Nivel": 2,
         "Titulo": "Configurações",
-        "Modulo": "SGTAN.MVC.Administracao",
+        "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "Configuracao",
         "Acao": "List",
         "Perfil": "Sistema"
       },
       {
-        "Nivel": 3,
+        "Nivel": 2,
         "Titulo": "Histórico de Operações",
-        "Modulo": "SGTAN.MVC.Administracao",
+        "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "HistoricoOperacao",
         "Acao": "List",
-        "Perfil": "Histórico de Operações e Exceções"
+        "Perfil": "Visualizar Histórico de Operação"
       },
       {
-        "Nivel": 4,
+        "Nivel": 3,
         "Titulo": "Alterar Senha",
-        "Modulo": "SGTAN.MVC.Administracao",
+        "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "AlterarSenha",
         "Acao": "Alterar"
       }

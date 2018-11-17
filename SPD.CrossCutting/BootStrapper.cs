@@ -19,7 +19,10 @@ namespace SPD.CrossCutting
 
             container.Register(typeof(IServiceBase<>), typeof(ServiceBase<>), Lifestyle.Scoped);
             container.Register(typeof(IAutenticacaoService), typeof(AutenticacaoService), Lifestyle.Scoped);
+            container.Register(typeof(IFuncionalidadeService), typeof(FuncionalidadeService), Lifestyle.Scoped);
+            container.Register(typeof(IHistoricoOperacaoService), typeof(HistoricoOperacaoService), Lifestyle.Scoped);
             container.Register(typeof(ISessaoUsuarioService), typeof(SessaoUsuarioService), Lifestyle.Scoped);
+            container.Register(typeof(ITipoOperacaoService), typeof(TipoOperacaoService), Lifestyle.Scoped);
             container.Register(typeof(IUsuarioService), typeof(UsuarioService), Lifestyle.Scoped);
 
 

@@ -255,58 +255,58 @@ function notify(notification, type, useAnimation, id) {
 }
 
 // For modules
-var notificationHub = null;
-var sistemaHub = null;
-var portalweb = 'http://' + window.location.hostname + ':59916';
+//var notificationHub = null;
+//var sistemaHub = null;
+//var portalweb = 'http://' + window.location.hostname + ':59916';
 
-/// <summary>
-/// função para setup de notificação hub
-/// </summary>
-function setupNotificationHub() {
-    // Configure the connection
-    $.connection.hub.url = portalweb + '/portalweb';
-    //$.connection.hub.logging = true;
+///// <summary>
+///// função para setup de notificação hub
+///// </summary>
+//function setupNotificationHub() {
+//    // Configure the connection
+//    $.connection.hub.url = portalweb + '/portalweb';
+//    //$.connection.hub.logging = true;
 
-    // Create the proxy for the hub
-    notificationHub = $.connection.notificationHub;
+//    // Create the proxy for the hub
+//    notificationHub = $.connection.notificationHub;
 
-    // Setup the client
-    notificationHub.client.notifyAll = function (notification, type, useAnimation, id) {
-        // For Debug
-        console.log('notificationHub.client.notifyAll');
+//    // Setup the client
+//    notificationHub.client.notifyAll = function (notification, type, useAnimation, id) {
+//        // For Debug
+//        console.log('notificationHub.client.notifyAll');
 
-        // Add the message to the page.
-        notify(notification, type, useAnimation, id);
-    };
+//        // Add the message to the page.
+//        notify(notification, type, useAnimation, id);
+//    };
 
 
-    // Setup the client
-    notificationHub.client.callBack = function (mustReload) {
+//    // Setup the client
+//    notificationHub.client.callBack = function (mustReload) {
 
-        window.location.href = moduloAutenticacaoTelaPrincipalURL + "/Login/AutenticarLogin";
-    };
+//        window.location.href = moduloAutenticacaoTelaPrincipalURL + "/Login/AutenticarLogin";
+//    };
 
-}
+//}
 
-/// <summary>
-/// função para setup do sistema hub
-/// </summary>
-function setupSistemaHub() {
-    // Configure the connection
-    $.connection.hub.url = portalweb + '/portalweb';
-    //$.connection.hub.logging = true;
+///// <summary>
+///// função para setup do sistema hub
+///// </summary>
+//function setupSistemaHub() {
+//    // Configure the connection
+//    $.connection.hub.url = portalweb + '/portalweb';
+//    //$.connection.hub.logging = true;
 
-    // Create the proxy for the hub
-    sistemaHub = $.connection.sistemaHub;
+//    // Create the proxy for the hub
+//    sistemaHub = $.connection.sistemaHub;
 
-    sistemaHub.client.desativar = function (url) {
-        // For Debug
-        console.log('sistemaHub.client.desativar');
+//    sistemaHub.client.desativar = function (url) {
+//        // For Debug
+//        console.log('sistemaHub.client.desativar');
 
-        // Go to the new url
-        window.location.href = url;
-    };
-}
+//        // Go to the new url
+//        window.location.href = url;
+//    };
+//}
 
 /// <summary>
 /// função para confirmação de logoff do sistema
@@ -342,23 +342,11 @@ $(document).ready(function () {
     //console.log("Ready from sitebase");
 
     // Setups
-    setupNotificationHub();
-    setupSistemaHub();
+    //setupNotificationHub();
+    //setupSistemaHub();
     setupLogoff();
 });
 
-
-$(document).ready(function () {
-
-    var id = $('#ID').val();
-    console.log(id);
-
-    if (id == 0) {
-        $('#ID').val('');
-        $('#isAtivo').val('');
-        $('#Nacionalidade').val('');
-    }
-});
 
 function callback(usuarioID) {
     console.log("Ajax para desconectar o usuário");

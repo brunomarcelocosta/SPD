@@ -1,6 +1,7 @@
 ﻿using SPD.MVC.Geral.ViewModels;
 using SPD.MVC.PortalWeb.Content.Texts;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static SPD.Model.Enums.SPD_Enums;
 
@@ -25,7 +26,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         [Required(ErrorMessageResourceType = typeof(HistoricoOperacaoResource), ErrorMessageResourceName = "DataOperacaoRequiredMessage")]
         [Display(ResourceType = typeof(HistoricoOperacaoResource), Name = "DataOperacao")]
-        public DateTime DataOperacao { get; set; }
+        public DateTime Dt_Operacao { get; set; }
 
         [MaxLength(4000, ErrorMessageResourceType = typeof(HistoricoOperacaoResource), ErrorMessageResourceName = "DumpMaxLengthMessage")]
         [Display(ResourceType = typeof(HistoricoOperacaoResource), Name = "Dump")]
@@ -34,18 +35,17 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public int ID_Usuario { get; set; }
         public virtual UsuarioViewModel Usuario { get; set; }
 
-
-        public int ID_Tipo_Operacao { get; set; } // Adicionado devido ao mapeamento objeto-relacional do EntityFramework
-        public virtual TipoOperacaoViewModel TipoOperacao { get; set; } // Adicionado devido ao mapeamento objeto-relacional do EntityFramework. Virtual para lazy load
+        public int ID_Tipo_Operacao { get; set; }
+        public virtual TipoOperacaoViewModel TipoOperacao { get; set; }
 
         [NonSerialized]
         public int? ID_Funcionalidade;
-        public virtual FuncionalidadeViewModel Funcionalidade { get; set; } // UML - (0..*) HistoricoOperacao é agregado com (1) Funcionalidade. Virtual para lazy load
-
+        public virtual FuncionalidadeViewModel Funcionalidade { get; set; } 
 
         [Display(ResourceType = typeof(HistoricoOperacaoResource), Name = "SessaoUID")]
         private string SessaoUID { get; set; }
 
+        public virtual List<HistoricoOperacaoViewModel> ListHistoricoOperacaoViewModels { get; set; }
 
     }
 }

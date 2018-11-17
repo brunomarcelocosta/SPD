@@ -48,11 +48,17 @@
   <ItemGroup>
     <Compile Include="Interface\IServiceBase.cs" />
     <Compile Include="Interface\Model\IAutenticacaoService.cs" />
+    <Compile Include="Interface\Model\IFuncionalidadeService.cs" />
+    <Compile Include="Interface\Model\IHistoricoOperacaoService.cs" />
     <Compile Include="Interface\Model\ISessaoUsuarioService.cs" />
+    <Compile Include="Interface\Model\ITipoOperacaoService.cs" />
     <Compile Include="Interface\Model\IUsuarioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Model\AutenticacaoService.cs" />
+    <Compile Include="Services\Model\FuncionalidadeService.cs" />
+    <Compile Include="Services\Model\HistoricoOperacaoService.cs" />
     <Compile Include="Services\Model\SessaoUsuarioService.cs" />
+    <Compile Include="Services\Model\TipoOperacaoService.cs" />
     <Compile Include="Services\Model\UsuarioService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
   </ItemGroup>

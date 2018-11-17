@@ -9,7 +9,7 @@ namespace SPD.MVC.PortalWeb
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-3.3.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -32,10 +32,13 @@ namespace SPD.MVC.PortalWeb
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Styles/bootstrap.css",
-                      "~/Content/Styles/Site.css"));
+                      "~/Content/Styles/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/multileveldropdown").Include(
                             "~/Content/Styles/multileveldropdown.css"));
+
+            //bundles.Add(new StyleBundle("~/Content/datatables").Include(
+            //                 "~/Content/DataTables/css/"));
         }
     }
 }
