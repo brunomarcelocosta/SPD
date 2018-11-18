@@ -46,20 +46,20 @@
 
     DataTable();
     document.getElementsByClassName("dataTables_info")[0].setAttribute("class", "negrito");
-   
+
 });
 
 function DataTable() {
 
     var table = $('#idGrid').DataTable({
-    //    "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-left"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"pull-left"ip>>>',
-    //    "info": false,
+        "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-left"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"pull-left"ip>>>',
+        //    "info": false,
         "sPaginationType": "full_numbers_no_ellipses",
-    //    "serverSide": true,
+        "serverSide": true,
         "searching": false,
-    //    "processing": true,
-    //    "stateSave": false,
-    //    "ordering": true,
+        "processing": true,
+        "stateSave": false,
+        //    "ordering": true,
         "order": [[4, 'DESC']],
         "ajax":
         {
@@ -75,17 +75,6 @@ function DataTable() {
                 'Funcionalidade_Filtro': $('#Funcionalidade_Filtro').val()
             }
         },
-        //"columnDefs": [
-        //    {
-        //        "type": "num",
-        //        "visible": false,
-        //        "targets": groupColumn
-        //    },
-        //    {
-        //        "className": "text-center",
-        //        "targets": [1, 2, 3, 4, 5, 6]
-        //    }
-        //],
         "displayLength": 100,
         //"createdRow": function (row, data, rowIndex) {
         //    $.each($('td', row), function (colIndex) {
@@ -123,20 +112,6 @@ function DataTable() {
             }
         }
     });
-
-
-
-
-    //// Order by the grouping
-    //$('#idGrid tbody').on('click', 'tr.group', function () {
-    //    var currentOrder = table.order()[0];
-    //    if (currentOrder[0] === groupColumn && currentOrder[0] === 'asc') {
-    //        table.order([groupColumn, 'asc']).draw();
-    //    }
-    //    else {
-    //        table.order([4, 'desc']).draw();
-    //    }
-    //});
 
     // DoubleClick outside the grouping
     //$('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {

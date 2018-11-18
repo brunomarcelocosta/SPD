@@ -53,15 +53,15 @@ namespace SPD.MVC.PortalWeb.Controllers
         {
             // Initialization
             //string search = Request.Form.GetValues("search[value]")[0];
-            //string draw = Request.Form.GetValues("draw")[0];
-            //string order = Request.Form.GetValues("order[0][column]")[0];
-            //string orderDir = Request.Form.GetValues("order[0][dir]")[0];
-            //int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
-            //int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
-            //if (pageSize == -1)
-            //{
-            //    pageSize = 50;
-            //}
+            string draw = Request.Form.GetValues("draw")[0];
+            string order = Request.Form.GetValues("order[0][column]")[0];
+            string orderDir = Request.Form.GetValues("order[0][dir]")[0];
+            int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
+            int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
+            if (pageSize == -1)
+            {
+                pageSize = 50;
+            }
 
             HistoricoOperacaoViewModel historicoOperacaoViewModel = new HistoricoOperacaoViewModel();
 
@@ -69,9 +69,11 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             int totalRecords = historicoOperacaoViewModel.ListHistoricoOperacaoViewModels.Count;
 
-            historicoOperacaoViewModel.ListHistoricoOperacaoViewModels = Ordenacao("5", "DESC", historicoOperacaoViewModel.ListHistoricoOperacaoViewModels);
+            historicoOperacaoViewModel.ListHistoricoOperacaoViewModels = Ordenacao(order, orderDir, historicoOperacaoViewModel.ListHistoricoOperacaoViewModels);
 
             int recFilter = historicoOperacaoViewModel.ListHistoricoOperacaoViewModels.Count;
+
+            historicoOperacaoViewModel.ListHistoricoOperacaoViewModels = historicoOperacaoViewModel.ListHistoricoOperacaoViewModels.Skip(startRec).Take(pageSize).ToList();
 
             List<object> listToView = new List<object>();
 
@@ -90,7 +92,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             return Json(new
             {
-                //draw = Convert.ToInt32(draw),
+                draw = Convert.ToInt32(draw),
                 recordsTotal = totalRecords,
                 recordsFiltered = recFilter,
                 data = listToView
@@ -159,7 +161,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         public HistoricoOperacaoViewModel Filtrar(HistoricoOperacaoViewModel historicoOperacaoViewModel, FormCollection collection)
         {
-            List<HistoricoOperacaoViewModel> ListaFiltrada = new List<HistoricoOperacaoViewModel>();           
+            List<HistoricoOperacaoViewModel> ListaFiltrada = new List<HistoricoOperacaoViewModel>();
 
             ListaFiltrada = historicoOperacaoViewModel.ListHistoricoOperacaoViewModels;
 
