@@ -37,7 +37,11 @@ namespace SPD.Services.Services
 
             this._Repository = repository;
         }
-        
+
+        public ServiceBase()
+        {
+        }
+
         public void Add(TEntity entity)
         {
             this._Repository.Transactional = Transactional.ExtractTransactional(this.TransactionalMaps);

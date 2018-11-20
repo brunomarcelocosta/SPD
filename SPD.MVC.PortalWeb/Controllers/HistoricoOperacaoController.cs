@@ -37,15 +37,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             historicoOperacaoViewModel = ReturnHistoricoOperacao(collection);
 
-            // historicoOperacaoViewModel.DataDe_Filtro = (Convert.ToDateTime(historicoOperacaoViewModel.DataDe_Filtro)).ToShortDateString();
-
             return View(historicoOperacaoViewModel);
-        }
-
-        [HttpPost]
-        public PartialViewResult _List(FormCollection collection = null)
-        {
-            return PartialView();
         }
 
         [HttpPost]

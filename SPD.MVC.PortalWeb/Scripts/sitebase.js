@@ -53,6 +53,15 @@ function RenderPartial(controller, action, data, tipo, dataTipo) {
     });
 }
 
+function Render(controller, action, ID) {
+    url = '/' + controller + '/' + action + '/';
+    if (typeof (ID) != "undefined") {
+        url = url + ID
+    }
+
+    window.location = url;
+}
+
 /// <summary>
 /// função para chamada do método de geração de relatório em excel ou pdf
 /// </summary>

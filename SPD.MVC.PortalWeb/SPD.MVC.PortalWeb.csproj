@@ -241,6 +241,7 @@
     <Compile Include="Controllers\HistoricoOperacaoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -540,6 +541,7 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\sitebase.js" />
     <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Scripts\Usuario\Usuario.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -564,6 +566,9 @@
     <Content Include="Views\HistoricoOperacao\List.cshtml" />
     <Content Include="Views\HistoricoOperacao\_List.cshtml" />
     <Content Include="Views\HistoricoOperacao\_Filtros.cshtml" />
+    <Content Include="Views\Usuario\List.cshtml" />
+    <Content Include="Views\Usuario\_Filtros.cshtml" />
+    <Content Include="Views\Usuario\_List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

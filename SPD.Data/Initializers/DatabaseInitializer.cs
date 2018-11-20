@@ -41,7 +41,19 @@ namespace SPD.Data.Initializers
 
             Funcionalidade usuario = new Funcionalidade()
             {
-                NOME = "Gerenciar Usuários",
+                NOME = "Listar Usuários",
+                IsATIVO = true
+            };
+
+            Funcionalidade editusuario = new Funcionalidade()
+            {
+                NOME = "Editar Usuários",
+                IsATIVO = true
+            };
+
+            Funcionalidade deleteusuario = new Funcionalidade()
+            {
+                NOME = "Excluir Usuários",
                 IsATIVO = true
             };
 
@@ -81,7 +93,7 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
-            return new Funcionalidade[] { login, logoff, usuario, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
+            return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
 
         }
 

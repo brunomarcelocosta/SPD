@@ -59,33 +59,38 @@ function DataTable() {
         "processing": true,
         "stateSave": false,
         //    "ordering": true,
-        "order": [[4, 'DESC']],
+        "order": [[1, 'ASC']],
         "ajax":
         {
             "url": "/HistoricoOperacao/Paginacao",
             "type": "POST",
             "dataType": "JSON",
             "data": {
-                'Descricao_Filtro': $('#Descricao_Filtro').val(),
-                'DataDe': $('#DataDe').val(),
-                'DataAte': $('#DataAte').val(),
-                'TipoOperacao_Filtro': $('#TipoOperacao_Filtro').val(),
-                'Usuario_Filtro': $('#Usuario_Filtro').val(),
-                'Funcionalidade_Filtro': $('#Funcionalidade_Filtro').val()
+                'Nome': $('#Descricao_Filtro').val(),
+                'Email': $('#DataDe').val(),
+                'isAtivo': $('#DataAte').val(),
+                'isBloqueado': $('#TipoOperacao_Filtro').val()
             }
         },
+        "columnDefs": [
+            {
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }
+        ],
         "displayLength": 100,
-        //"createdRow": function (row, data, rowIndex) {
-        //    $.each($('td', row), function (colIndex) {
-        //        // $(this).attr("title", "Duplo clique para editar");
-        //    });
-        //},
+        "createdRow": function (row, data, rowIndex) {
+            $.each($('td', row), function (colIndex) {
+                $(this).attr("title", "Duplo clique para editar");
+            });
+        },
         "columns": [
-            { "data": "Descricao", "orderable": true, "autoWidth": true },
-            { "data": "Nome_Tipo_Operacao", "orderable": true, "autoWidth": true },
-            { "data": "Nome_Usuario", "orderable": true, "autoWidth": true },
-            { "data": "Nome_Funcionalidade", "orderable": true, "autoWidth": true },
-            { "data": "DataOperacao", "orderable": true, "autoWidth": true },
+            { "data": "ID", "orderable": true, "autoWidth": true },
+            { "data": "Nome", "orderable": true, "autoWidth": true },
+            { "data": "Email", "orderable": true, "autoWidth": true },
+            { "data": "isAtivo", "orderable": true, "autoWidth": true },
+            { "data": "isBloqueado", "orderable": true, "autoWidth": true }
         ],
         "language": {
             "sEmptyTable": "Nenhum registro encontrado",
@@ -112,8 +117,8 @@ function DataTable() {
         }
     });
 
-    // DoubleClick outside the grouping
-    //$('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {
-    //    Render('MensagensPendentes', 'Edit', table.row(this).data().ID_Erro_Mensagem);
-    //});
+    //DoubleClick outside the grouping
+    $('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {
+        Render('Usuario', 'Edit', table.row(this).data().ID);
+    });
 }

@@ -66,7 +66,11 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public virtual IEnumerable<NotificacaoViewModel> Notificacoes { get; set; } // UML - (0..1) Usuario é associado com (0..*) Notificacao. Virtual para lazy load
 
         public virtual IEnumerable<HistoricoOperacaoViewModel> HistoricoOperacoes { get; set; } // UML - (1) Usuario é agregado com (0..*) HistoricoOperacao. Virtual para lazy load
-        public virtual IList<FuncionalidadeViewModel> Funcionalidades { get; set; } //UML - (0..*) Perfil é associado com (1..*) Funcionalidade. Virtual para lazy load
+
+        public virtual List<UsuarioViewModel> ListUsuarioViewModel { get; set; }
+
+        public virtual List<FuncionalidadeViewModel> ListFuncionalidadeViewModel { get; set; }
+
 
     }
 }
