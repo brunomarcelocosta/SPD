@@ -57,6 +57,30 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
+            Funcionalidade addusuario = new Funcionalidade()
+            {
+                NOME = "Novos Usuários",
+                IsATIVO = true
+            };
+
+            Funcionalidade descusuario = new Funcionalidade()
+            {
+                NOME = "Desconectar Usuários",
+                IsATIVO = true
+            };
+
+            Funcionalidade desblusuario = new Funcionalidade()
+            {
+                NOME = "Desbloquear Usuários",
+                IsATIVO = true
+            };
+
+            Funcionalidade redefinirSenha = new Funcionalidade()
+            {
+                NOME = "Redefinir Senha",
+                IsATIVO = true
+            };
+
             Funcionalidade addPaciente = new Funcionalidade()
             {
                 NOME = "Adicionar Novo Paciente",
@@ -93,7 +117,7 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
-            return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
+            return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario, redefinirSenha, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
 
         }
 

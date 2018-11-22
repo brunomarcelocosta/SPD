@@ -1,4 +1,5 @@
-﻿using SPD.Model.Model;
+﻿using SPD.Model.Enums;
+using SPD.Model.Model;
 using SPD.Model.Util;
 using SPD.Repository.Interface.Model;
 using SPD.Services.Interface.Model;
@@ -19,14 +20,16 @@ namespace SPD.Services.Services.Model
         private readonly IUsuarioRepository _UsuarioRepository;
         private readonly IHistoricoOperacaoRepository _HistoricoOperacaoRepository;
         private readonly INotificacaoRepository _NotificacaoRepository;
+        private readonly ISessaoUsuarioService _SessaoUsuarioService;
 
         public UsuarioService(IUsuarioRepository usuarioRepository, IHistoricoOperacaoRepository historicoOperacaoRepository,
-                              INotificacaoRepository notificacaoRepository)
+                              INotificacaoRepository notificacaoRepository, ISessaoUsuarioService sessaoUsuarioService)
             : base(usuarioRepository)
         {
             _UsuarioRepository = usuarioRepository;
             _HistoricoOperacaoRepository = historicoOperacaoRepository;
             _NotificacaoRepository = notificacaoRepository;
+            _SessaoUsuarioService = sessaoUsuarioService;
         }
 
         public int RedefinirSenha(string login, EmailConfiguration smtpConfiguration, string enderecoIP)
@@ -151,6 +154,63 @@ namespace SPD.Services.Services.Model
             return true;
         }
 
+        public bool Desbloquear(Usuario usuarioDesbloqueio, int idUsuarioAtual)
+        {
+            try
+            {
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    Usuario usuarioAtual = this._UsuarioRepository.GetById(idUsuarioAtual);
 
+                    if (this._UsuarioRepository.DesBloquear(usuarioDesbloqueio)) //executa o desbloqueio
+                    {
+                        //Registra desbloqueio no histórico de operações
+                        this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Desbloqueou o usuário: \"{0}\".", usuarioDesbloqueio.LOGIN), usuarioAtual, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Usuarios);
+                    }
+                    this.SaveChanges(transactionScope);
+                }
+
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                this.SaveChanges();
+
+            }
+            return true;
+        }
+
+        public bool Desconectar(Usuario usuario)
+        {
+            try
+            {
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    this._SessaoUsuarioService.EncerrarSessao(usuario.ID, String.Format("Usuário {0} desconectado do sistema.", usuario.LOGIN));
+                    this.SaveChanges(transactionScope);
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                this.SaveChanges();
+
+            }
+            return true;
+        }
+
+        public bool UpdateUsuario(Usuario usuario, List<UsuarioFuncionalidade> usuarioFuncionalidades, List<int> idFunc_DEL, out string resultado)
+        {
+            resultado = "";
+
+
+            return true;
+        }
     }
 }

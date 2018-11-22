@@ -1,4 +1,5 @@
 ﻿using SPD.Model.Model;
+using SPD.Model.Util;
 using SPD.MVC.Geral.Controllers;
 using SPD.MVC.Geral.Global;
 using SPD.MVC.Geral.Utilities;
@@ -144,7 +145,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Editar
 
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Listar Usuários\"}")]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Editar Usuários\"}")]
         public ActionResult Edit(int id)
         {
             UsuarioViewModel usuarioViewModel = new UsuarioViewModel();
@@ -157,8 +158,133 @@ namespace SPD.MVC.PortalWeb.Controllers
             }
 
             var usuariosFuncionalidades = ToListViewModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(_UsuarioFuncionalidadeService.Query().Where(a => a.ID_USUARIO == usuarioViewModel.ID).ToList());
+            var funcionalidades = ToListViewModel<Funcionalidade, FuncionalidadeViewModel>(_FuncionalidadeService.Query().ToList());
+
+            foreach (var item in funcionalidades)
+            {
+                var existe = usuariosFuncionalidades.Where(a => a.ID_FUNCIONALIDADE == item.ID).ToList().Count() > 0 ? true : false;
+                item.Selecionado = existe;
+            }
+
+            usuarioViewModel.ListFuncionalidadeViewModel = funcionalidades;
 
             return View(usuarioViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(UsuarioViewModel usuarioViewModel)
+        {
+            var resultado = "";
+
+            List<FuncionalidadeViewModel> funcionalidades = new List<FuncionalidadeViewModel>();
+            funcionalidades = usuarioViewModel.ListFuncionalidadeViewModel;
+
+            var ListUsuarioFunc = ToListViewModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(_UsuarioFuncionalidadeService.Query().ToList());
+
+            List<UsuarioFuncionalidadeViewModel> idFunc_ADD = new List<UsuarioFuncionalidadeViewModel>();
+            List<int> idFunc_DEL = new List<int>();
+
+            foreach (var item in funcionalidades)
+            {
+                if (item.Selecionado == true)
+                {
+                    var existe = ListUsuarioFunc.Where(a => a.ID_FUNCIONALIDADE == item.ID && a.ID_Usuario == usuarioViewModel.ID).ToList().Count() > 0 ? true : false;
+
+                    if (!existe)
+                        idFunc_ADD.Add(new UsuarioFuncionalidadeViewModel
+                        {
+                            Usuario = usuarioViewModel,
+                            Funcionalidade = item
+                        });
+                }
+
+                else
+                {
+                    idFunc_DEL.Add(item.ID);
+                }
+            }
+
+            var usuario = ToModel(usuarioViewModel);
+            var usuarioFuncionalides_ADD = ToListModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(idFunc_ADD);
+
+            if (_UsuarioService.UpdateUsuario(usuario, usuarioFuncionalides_ADD, idFunc_DEL, out resultado))
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        #endregion
+
+        #region Redefinir Senha
+
+        [HttpPost]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Redefinir Senha\"}")]
+        public ActionResult RedefinirSenha(string sLogin)
+        {
+            try
+            {
+                if (this.ApplicationService.RedefinirSenha(sLogin, EmailConfiguration.FromEmailSettings(), null) > 0)
+                {
+
+                    return Json(new { Success = true, Response = "Senha redefinida com sucesso." });
+                }
+                else
+                {
+                    return Json(new { Success = false, Response = "Não foi possível redefinir a senha." });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, Response = "Não foi possível redefinir a senha." });
+            }
+        }
+
+        #endregion
+
+        #region Desbloquear Usuário
+
+        [HttpPost]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Desbloquear Usuários\"}")]
+        public ActionResult DesbloquearUsuario(UsuarioViewModel usuarioViewModel)
+        {
+            try
+            {
+                Usuario usuario = ToModel(usuarioViewModel);
+
+                if (this.ApplicationService.Desbloquear(usuario, this.GetAuthenticationFromSession().ID))
+                {
+                    return Json(new { Success = true, Response = "Usuário Desbloqueado." });
+                }
+                else
+                {
+                    return Json(new { Success = false, Response = "Não foi possível desbloquear o usuário." });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, Response = "Não foi possível desbloquear o usuário." });
+            }
+
+        }
+
+        #endregion
+
+        #region Desconectar Usuário
+
+        [HttpGet]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Desconectar Usuários\"}")]
+        public ActionResult Desconecta(int usuarioID)
+        {
+            this._UsuarioService.Desconectar(this._UsuarioService.GetById(usuarioID));
+
+            return Json(new { Success = true });
         }
 
         #endregion

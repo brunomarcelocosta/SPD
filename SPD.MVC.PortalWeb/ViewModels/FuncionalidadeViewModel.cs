@@ -21,5 +21,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
         [Required(ErrorMessageResourceType = typeof(FuncionalidadeResource), ErrorMessageResourceName = "isAtivoRequiredMessage")]
         [Display(ResourceType = typeof(FuncionalidadeResource), Name = "isAtivo")]
         public bool isAtivo { get; set; }
+
+        public bool Selecionado { get; set; }
     }
 }

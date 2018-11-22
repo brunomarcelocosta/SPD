@@ -12,5 +12,11 @@ namespace SPD.Services.Interface.Model
 
         [Transactional]
         bool ConfirmarSenha(int ID, string password, out string result);
+
+        [Transactional]
+        bool Desbloquear(Usuario usuarioDesbloqueio, int idUsuarioAtual);
+
+        [Transactional]
+        bool Desconectar(Usuario usuario);
     }
 }
