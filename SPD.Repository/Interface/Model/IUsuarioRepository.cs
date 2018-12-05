@@ -15,6 +15,8 @@ namespace SPD.Repository.Interface.Model
 
         void Atualizar(Usuario usuario);
 
+        void AtualizarUsuario(Usuario usuario);
+
         bool NomeJaUtilizado(string nome);
 
         Usuario GetByLoginSenha(string login, string password);

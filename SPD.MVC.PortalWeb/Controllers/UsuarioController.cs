@@ -18,15 +18,18 @@ namespace SPD.MVC.PortalWeb.Controllers
         private readonly IUsuarioService _UsuarioService;
         private readonly IFuncionalidadeService _FuncionalidadeService;
         private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
+        private readonly ISessaoUsuarioService _SessaoUsuarioService;
 
         public UsuarioController(IUsuarioService usuarioService,
                                  IFuncionalidadeService funcionalidadeService,
-                                 IUsuarioFuncionalidadeService usuarioFuncionalidadeService)
+                                 IUsuarioFuncionalidadeService usuarioFuncionalidadeService,
+                                 ISessaoUsuarioService sessaoUsuarioService)
             : base(usuarioService)
         {
             _UsuarioService = usuarioService;
             _FuncionalidadeService = funcionalidadeService;
             _UsuarioFuncionalidadeService = usuarioFuncionalidadeService;
+            _SessaoUsuarioService = sessaoUsuarioService;
         }
 
         #region List
@@ -143,6 +146,67 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #endregion
 
+        #region Novo
+
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Novos Usuários\"}")]
+        public ActionResult New()
+        {
+            UsuarioViewModel usuarioViewModel = new UsuarioViewModel();
+            var funcionalidades = ToListViewModel<Funcionalidade, FuncionalidadeViewModel>(_FuncionalidadeService.Query().ToList());
+
+            foreach (var item in funcionalidades)
+            {
+                item.Selecionado = false;
+            }
+
+            usuarioViewModel.ListFuncionalidadeViewModel = funcionalidades;
+
+            return View(usuarioViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Add(UsuarioViewModel usuarioViewModel)
+        {
+            var resultado = "";
+            bool funcAlterado = false;
+
+            List<FuncionalidadeViewModel> funcionalidades = new List<FuncionalidadeViewModel>();
+            funcionalidades = usuarioViewModel.ListFuncionalidadeViewModel;
+
+            var user_logado = this.ApplicationService.GetById(this.GetAuthenticationFromSession().ID);
+
+            var ListUsuarioFunc = ToListViewModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(_UsuarioFuncionalidadeService.Query().ToList());
+
+            List<UsuarioFuncionalidadeViewModel> idFunc_ADD = new List<UsuarioFuncionalidadeViewModel>();
+
+            foreach (var item in funcionalidades)
+            {
+                if (item.Selecionado == true)
+                {
+                    idFunc_ADD.Add(new UsuarioFuncionalidadeViewModel
+                    {
+                        Usuario = usuarioViewModel,
+                        Funcionalidade = item
+                    });
+                }
+            }
+
+            var usuario = ToModel(usuarioViewModel);
+            var usuarioFuncionalidades_ADD = ToListModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(idFunc_ADD);
+
+            if (!_UsuarioService.AddNewUser(usuario, user_logado, usuarioFuncionalidades_ADD, out resultado))
+            {
+                return Json(new { Success = true, Nome = usuario.NOME });
+            }
+            else
+            {
+                return Json(new { Success = false, Response = resultado });
+            }
+        }
+
+        #endregion
+
         #region Editar
 
         [UseAuthorization(Funcionalidades = "{\"Nome\":\"Editar Usuários\"}")]
@@ -176,14 +240,17 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult Update(UsuarioViewModel usuarioViewModel)
         {
             var resultado = "";
+            bool funcAlterado = false;
 
             List<FuncionalidadeViewModel> funcionalidades = new List<FuncionalidadeViewModel>();
             funcionalidades = usuarioViewModel.ListFuncionalidadeViewModel;
 
+            var user_logado = this.ApplicationService.GetById(this.GetAuthenticationFromSession().ID);
+
             var ListUsuarioFunc = ToListViewModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(_UsuarioFuncionalidadeService.Query().ToList());
 
             List<UsuarioFuncionalidadeViewModel> idFunc_ADD = new List<UsuarioFuncionalidadeViewModel>();
-            List<int> idFunc_DEL = new List<int>();
+            List<UsuarioFuncionalidadeViewModel> idFunc_DEL = new List<UsuarioFuncionalidadeViewModel>();
 
             foreach (var item in funcionalidades)
             {
@@ -192,29 +259,55 @@ namespace SPD.MVC.PortalWeb.Controllers
                     var existe = ListUsuarioFunc.Where(a => a.ID_FUNCIONALIDADE == item.ID && a.ID_Usuario == usuarioViewModel.ID).ToList().Count() > 0 ? true : false;
 
                     if (!existe)
+                    {
                         idFunc_ADD.Add(new UsuarioFuncionalidadeViewModel
                         {
                             Usuario = usuarioViewModel,
                             Funcionalidade = item
                         });
+                    }
                 }
 
                 else
                 {
-                    idFunc_DEL.Add(item.ID);
+                    idFunc_DEL.Add(new UsuarioFuncionalidadeViewModel
+                    {
+                        Usuario = usuarioViewModel,
+                        Funcionalidade = item
+                    });
                 }
             }
 
             var usuario = ToModel(usuarioViewModel);
             var usuarioFuncionalides_ADD = ToListModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(idFunc_ADD);
+            var usuarioFuncionalidades_DEL = ToListModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(idFunc_DEL); ;
 
-            if (_UsuarioService.UpdateUsuario(usuario, usuarioFuncionalides_ADD, idFunc_DEL, out resultado))
+            if (_UsuarioService.UpdateUsuario(usuario, user_logado, usuarioFuncionalides_ADD, usuarioFuncionalidades_DEL, out resultado))
             {
+                if ((usuarioFuncionalides_ADD.Count > 0) || (usuarioFuncionalidades_DEL.Count > 0))
+                {
+                    funcAlterado = true;
+
+                    SessaoUsuario sessaoUsuarioDesconectar = this._SessaoUsuarioService.GetSessaoByUsuarioID(usuario.ID);
+                    if (sessaoUsuarioDesconectar != null)
+                    {
+                        Job.ScheduleNewJob(180, () =>
+                        {
+                            this._UsuarioService.Desconectar(this._UsuarioService.GetById(usuario.ID));
+
+                        }).WithNotification("Você será desconectado em {0} por alteração na funcionalidade de acesso.Por favor, salve seus trabalhos correntes.", true).OfDangerType().NotifyUser(usuario.ID);
+
+                    }
+
+                    return Json(new { Success = true, Nome = usuario.NOME, AlteracaoFunc = funcAlterado, IdUsuario = usuario.ID });
+                }
+
+                return Json(new { Success = true, Nome = usuario.NOME, AlteracaoFunc = funcAlterado, IdUsuario = usuario.ID });
 
             }
             else
             {
-
+                return Json(new { Success = false, Response = resultado });
             }
         }
 

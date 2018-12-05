@@ -543,6 +543,7 @@
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\Usuario\Usuario.js" />
     <Content Include="Scripts\Usuario\UsuarioEdit.js" />
+    <Content Include="Scripts\Usuario\UsuarioNew.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -571,6 +572,7 @@
     <Content Include="Views\Usuario\_Filtros.cshtml" />
     <Content Include="Views\Usuario\_List.cshtml" />
     <Content Include="Views\Usuario\Edit.cshtml" />
+    <Content Include="Views\Usuario\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

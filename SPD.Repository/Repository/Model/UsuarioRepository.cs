@@ -24,6 +24,20 @@ namespace SPD.Repository.Repository.Model
             this.Save(usuario, where => where.ID.Equals(usuario.ID));
         }
 
+        public void AtualizarUsuario(Usuario usuario)
+        {
+            var usuarioUpdate = GetById(usuario.ID);
+
+            usuarioUpdate.NOME = usuario.NOME;
+            usuarioUpdate.EMAIL = usuario.EMAIL;
+            usuarioUpdate.IsATIVO = usuario.IsATIVO;
+            usuarioUpdate.IsBLOQUEADO = usuario.IsBLOQUEADO;
+
+            Update(usuarioUpdate);
+
+        }
+
+
         public Usuario GetByLoginSenha(string login, string password)
         {
             // A sensibilidade de caixa alta ou baixa em queries linq para entities é definida na configuração do servidor do bd.

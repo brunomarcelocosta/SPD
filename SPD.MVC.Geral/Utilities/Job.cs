@@ -15,6 +15,8 @@ namespace SPD.MVC.Geral.Utilities
         public DateTime IntervalTime { get; }
         public bool IsFinished { get; private set; }
         private event StartEventHandler StartEvent;
+        public Notification Notification { get; set; }
+
 
         static Job()
         {
@@ -59,6 +61,72 @@ namespace SPD.MVC.Geral.Utilities
                     this.IsFinished = true;
                 }
             }
-        }           
+        }
+
+        public Job WithNotification(string message, bool AlteracaoFunc, params string[] informations)
+        {
+            if (!AlteracaoFunc)
+                this.Notification.Message = String.Format(CultureInfo.InvariantCulture, message, informations);
+            else
+                this.Notification.Message = message;
+
+
+            this.Notification.AlteracaoPerfil = AlteracaoFunc;
+
+            return this;
+        }
+
+        public Job OfWarningType()
+        {
+            this.Notification.Type = NotificationHub.NotificationType.WARNING;
+
+            return this;
+        }
+
+        public Job OfDangerType()
+        {
+            this.Notification.Type = NotificationHub.NotificationType.DANGER;
+
+            return this;
+        }
+
+        public Job NotifyAll()
+        {
+            this.Notification.For = NotificationHub.NotificationFor.All;
+
+            return this;
+        }
+
+        public Job NotifyOthersExcept(int exceptUserID)
+        {
+            this.Notification.For = NotificationHub.NotificationFor.Others;
+
+            this.Notification.UserID = exceptUserID;
+
+            return this;
+        }
+
+        public Job NotifyUser(int userID)
+        {
+            this.Notification.For = NotificationHub.NotificationFor.User;
+
+            this.Notification.UserID = userID;
+
+            return this;
+        }
+
+        public Job NotifyUntil(long until)
+        {
+            if (this.CreatedTime.AddSeconds(until).Ticks <= this.Notification.CountdownLimit)
+            {
+                this.Notification.CountdownLimit = this.CreatedTime.AddSeconds(until).Ticks;
+            }
+            else
+            {
+                throw new Exception("The given parameter is greater than the countdown limit.");
+            }
+
+            return this;
+        }
     }
 }

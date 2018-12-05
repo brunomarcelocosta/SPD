@@ -21,15 +21,18 @@ namespace SPD.Services.Services.Model
         private readonly IHistoricoOperacaoRepository _HistoricoOperacaoRepository;
         private readonly INotificacaoRepository _NotificacaoRepository;
         private readonly ISessaoUsuarioService _SessaoUsuarioService;
+        private readonly IUsuarioFuncionalidadeRepository _UsuarioFuncionalidadeRepository;
 
         public UsuarioService(IUsuarioRepository usuarioRepository, IHistoricoOperacaoRepository historicoOperacaoRepository,
-                              INotificacaoRepository notificacaoRepository, ISessaoUsuarioService sessaoUsuarioService)
+                              INotificacaoRepository notificacaoRepository, ISessaoUsuarioService sessaoUsuarioService,
+                              IUsuarioFuncionalidadeRepository usuarioFuncionalidadeRepository)
             : base(usuarioRepository)
         {
             _UsuarioRepository = usuarioRepository;
             _HistoricoOperacaoRepository = historicoOperacaoRepository;
             _NotificacaoRepository = notificacaoRepository;
             _SessaoUsuarioService = sessaoUsuarioService;
+            _UsuarioFuncionalidadeRepository = usuarioFuncionalidadeRepository;
         }
 
         public int RedefinirSenha(string login, EmailConfiguration smtpConfiguration, string enderecoIP)
@@ -205,10 +208,104 @@ namespace SPD.Services.Services.Model
             return true;
         }
 
-        public bool UpdateUsuario(Usuario usuario, List<UsuarioFuncionalidade> usuarioFuncionalidades, List<int> idFunc_DEL, out string resultado)
+        public bool UpdateUsuario(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, List<UsuarioFuncionalidade> usuarioFuncionalidades_DEL, out string resultado)
         {
             resultado = "";
 
+            try
+            {
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    // atualizar usuario
+                    _UsuarioRepository.AtualizarUsuario(usuario);
+
+                    if (_HistoricoOperacaoRepository.RegistraHistoricoRepository(String.Format(CultureInfo.InvariantCulture, "Atualizou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Usuarios, out resultado))
+                    {
+                        return false;
+                    }
+                    // add usuario_funcionalidade
+                    if (!_UsuarioFuncionalidadeRepository.AddList(usuarioFuncionalidades_ADD, out resultado))
+                    {
+                        return false;
+                    }
+
+                    // del usuario_funcionalidade
+                    if (!_UsuarioFuncionalidadeRepository.DeleteList(usuarioFuncionalidades_DEL, out resultado))
+                    {
+                        return false;
+                    }
+
+                    SaveChanges(transactionScope);
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, out string resultado)
+        {
+            resultado = "";
+
+            if (usuarioFuncionalidades_ADD.Count() == 0 || usuarioFuncionalidades_ADD == null)
+            {
+                resultado = "Funcionalidade deve ser selecionada.";
+                return false;
+            }
+
+            Usuario usuarioBD = this._UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
+            if (usuario != null)
+            {
+                resultado = String.Format(CultureInfo.InvariantCulture, "O login informado já existe.", usuario.LOGIN);
+                return false;
+            }
+
+            string senha = usuario.GenerateNewPassword(8, true, true, true, false).ToString();
+            usuario.PASSWORD = senha;
+            usuario.TROCA_SENHA_OBRIGATORIA = true;
+            usuario.IsBLOQUEADO = false;
+            usuario.TENTATIVAS_LOGIN = 0;
+
+            try
+            {
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    // atualizar usuario
+                    _UsuarioRepository.Add(usuario);
+
+                    if (_HistoricoOperacaoRepository.RegistraHistoricoRepository(String.Format(CultureInfo.InvariantCulture, "Adicionou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios, out resultado))
+                    {
+                        return false;
+                    }
+
+                    var user = _UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
+
+                    if (user != null || user.ID != 0)
+                    {
+                        // add usuario_funcionalidade
+                        if (!_UsuarioFuncionalidadeRepository.AddNewList(usuarioFuncionalidades_ADD, user, out resultado))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        resultado = "Usuario não localizado.";
+                        return false;
+                    }
+
+                    SaveChanges(transactionScope);
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+                return false;
+            }
 
             return true;
         }
