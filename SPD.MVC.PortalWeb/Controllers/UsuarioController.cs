@@ -169,7 +169,6 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult Add(UsuarioViewModel usuarioViewModel)
         {
             var resultado = "";
-            bool funcAlterado = false;
 
             List<FuncionalidadeViewModel> funcionalidades = new List<FuncionalidadeViewModel>();
             funcionalidades = usuarioViewModel.ListFuncionalidadeViewModel;
@@ -195,7 +194,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             var usuario = ToModel(usuarioViewModel);
             var usuarioFuncionalidades_ADD = ToListModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(idFunc_ADD);
 
-            if (!_UsuarioService.AddNewUser(usuario, user_logado, usuarioFuncionalidades_ADD, out resultado))
+            if (!_UsuarioService.AddNewUser(usuario, user_logado, usuarioFuncionalidades_ADD, EmailConfiguration.FromEmailSettings(), out resultado))
             {
                 return Json(new { Success = true, Nome = usuario.NOME });
             }
@@ -282,7 +281,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             var usuarioFuncionalides_ADD = ToListModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(idFunc_ADD);
             var usuarioFuncionalidades_DEL = ToListModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(idFunc_DEL); ;
 
-            if (_UsuarioService.UpdateUsuario(usuario, user_logado, usuarioFuncionalides_ADD, usuarioFuncionalidades_DEL, out resultado))
+            if (_UsuarioService.UpdateUser(usuario, user_logado, usuarioFuncionalides_ADD, usuarioFuncionalidades_DEL, out resultado))
             {
                 if ((usuarioFuncionalides_ADD.Count > 0) || (usuarioFuncionalidades_DEL.Count > 0))
                 {
@@ -309,6 +308,27 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 return Json(new { Success = false, Response = resultado });
             }
+        }
+
+        #endregion
+
+        #region Apagar
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Excluir Usuários\"}")]
+        public ActionResult Delete(int id)
+        {
+            var resultado = "";
+
+            Usuario usuarioAtual = this.ApplicationService.GetById(this.GetAuthenticationFromSession().ID);
+
+            if (!_UsuarioService.DeleteUser(id, usuarioAtual, out resultado))
+            {
+                return Json(new { Success = false, Response = resultado });
+            }
+
+            return Json(new { Success = true });
         }
 
         #endregion

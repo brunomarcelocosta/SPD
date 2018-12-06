@@ -21,9 +21,12 @@ namespace SPD.Services.Interface.Model
         bool Desconectar(Usuario usuario);
 
         [Transactional]
-        bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, out string resultado);
+        bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, EmailConfiguration smtpConfiguration, out string resultado);
 
         [Transactional]
-        bool UpdateUsuario(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, List<UsuarioFuncionalidade> usuarioFuncionalidades_DEL, out string resultado);
+        bool UpdateUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, List<UsuarioFuncionalidade> usuarioFuncionalidades_DEL, out string resultado);
+
+        [Transactional]
+        bool DeleteUser(int id, Usuario usuario_logado, out string resultado);
     }
 }

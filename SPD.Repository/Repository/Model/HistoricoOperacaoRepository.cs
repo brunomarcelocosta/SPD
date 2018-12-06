@@ -66,5 +66,13 @@ namespace SPD.Repository.Repository.Model
 
             this.Add(historicoOperacao);
         }
+
+        public void ExcluiHistoricoUsuario(Usuario usuario)
+        {
+            foreach (var historico in this.DomainContext.DataContext.Entity.Set<HistoricoOperacao>().Where(hist => hist.ID_USUARIO == usuario.ID).ToList())
+            {
+                this.Remove(historico);
+            }
+        }
     }
 }

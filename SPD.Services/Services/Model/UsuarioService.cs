@@ -22,10 +22,11 @@ namespace SPD.Services.Services.Model
         private readonly INotificacaoRepository _NotificacaoRepository;
         private readonly ISessaoUsuarioService _SessaoUsuarioService;
         private readonly IUsuarioFuncionalidadeRepository _UsuarioFuncionalidadeRepository;
+        private readonly IFuncionalidadeRepository _FuncionalidadeRepository;
 
         public UsuarioService(IUsuarioRepository usuarioRepository, IHistoricoOperacaoRepository historicoOperacaoRepository,
                               INotificacaoRepository notificacaoRepository, ISessaoUsuarioService sessaoUsuarioService,
-                              IUsuarioFuncionalidadeRepository usuarioFuncionalidadeRepository)
+                              IUsuarioFuncionalidadeRepository usuarioFuncionalidadeRepository, IFuncionalidadeRepository funcionalidadeRepository)
             : base(usuarioRepository)
         {
             _UsuarioRepository = usuarioRepository;
@@ -33,6 +34,7 @@ namespace SPD.Services.Services.Model
             _NotificacaoRepository = notificacaoRepository;
             _SessaoUsuarioService = sessaoUsuarioService;
             _UsuarioFuncionalidadeRepository = usuarioFuncionalidadeRepository;
+            _FuncionalidadeRepository = funcionalidadeRepository;
         }
 
         public int RedefinirSenha(string login, EmailConfiguration smtpConfiguration, string enderecoIP)
@@ -208,7 +210,7 @@ namespace SPD.Services.Services.Model
             return true;
         }
 
-        public bool UpdateUsuario(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, List<UsuarioFuncionalidade> usuarioFuncionalidades_DEL, out string resultado)
+        public bool UpdateUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, List<UsuarioFuncionalidade> usuarioFuncionalidades_DEL, out string resultado)
         {
             resultado = "";
 
@@ -247,7 +249,7 @@ namespace SPD.Services.Services.Model
             return true;
         }
 
-        public bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, out string resultado)
+        public bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, EmailConfiguration smtpConfiguration, out string resultado)
         {
             resultado = "";
 
@@ -265,7 +267,7 @@ namespace SPD.Services.Services.Model
             }
 
             string senha = usuario.GenerateNewPassword(8, true, true, true, false).ToString();
-            usuario.PASSWORD = senha;
+            usuario.PASSWORD = Usuario.GerarHash(senha);
             usuario.TROCA_SENHA_OBRIGATORIA = true;
             usuario.IsBLOQUEADO = false;
             usuario.TENTATIVAS_LOGIN = 0;
@@ -274,13 +276,30 @@ namespace SPD.Services.Services.Model
             {
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
+                    this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) esta é sua senha provisória {0} . Durante o login, será solicitada uma nova senha.", senha), "Senha de acesso ao sistema SGTAN", smtpConfiguration);
+                    this.SaveChanges(transactionScope);
+                }
+            }
+            catch
+            {
+                resultado = "Caixa de entrada do domínio de email " + usuario.EMAIL + " indisponível.";
+                return false;
+            }
+            finally
+            {
+                this.SaveChanges();
+            }
+
+            try
+            {
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha gerada com sucesso, e enviada ao e-mail do usuário {0}.", usuario.LOGIN.ToUpper()), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+
                     // atualizar usuario
                     _UsuarioRepository.Add(usuario);
 
-                    if (_HistoricoOperacaoRepository.RegistraHistoricoRepository(String.Format(CultureInfo.InvariantCulture, "Adicionou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios, out resultado))
-                    {
-                        return false;
-                    }
+                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Adicionou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
 
                     var user = _UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
 
@@ -290,6 +309,13 @@ namespace SPD.Services.Services.Model
                         if (!_UsuarioFuncionalidadeRepository.AddNewList(usuarioFuncionalidades_ADD, user, out resultado))
                         {
                             return false;
+                        }
+                        else
+                        {
+                            foreach (var item in usuarioFuncionalidades_ADD)
+                            {
+                                _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} associadas ao usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+                            }
                         }
                     }
                     else
@@ -305,6 +331,51 @@ namespace SPD.Services.Services.Model
             {
                 resultado = ex.Message;
                 return false;
+            }
+            finally
+            {
+                SaveChanges();
+            }
+
+            return true;
+        }
+
+        public bool DeleteUser(int id, Usuario usuario_logado, out string resultado)
+        {
+            resultado = "";
+
+            try
+            {
+                var usuarioDelete = _UsuarioRepository.GetById(id);
+                var usuarioFuncsDelete = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == id).ToList();
+                var sessao = _SessaoUsuarioService.GetSessaoByUsuarioID(id);
+
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    _HistoricoOperacaoRepository.ExcluiHistoricoUsuario(usuarioDelete);
+
+                    _SessaoUsuarioService.EncerrarSessao(sessao);
+
+                    if (!_UsuarioFuncionalidadeRepository.DeleteList(usuarioFuncsDelete, out resultado))
+                    {
+                        return false;
+                    }
+
+                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format("Usuário {0} excluído.", usuarioDelete.LOGIN), usuario_logado, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.Usuarios);
+
+                    _UsuarioRepository.Remove(usuarioDelete);
+
+                    SaveChanges(transactionScope);
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+                return false;
+            }
+            finally
+            {
+                SaveChanges();
             }
 
             return true;

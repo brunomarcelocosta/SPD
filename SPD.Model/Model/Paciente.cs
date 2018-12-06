@@ -54,6 +54,6 @@ namespace SPD.Model.Model
 
         //public string NOME_INDICACAO { get; set; }
 
-        public bool ATIVO { get; set; }
+        public bool ATIVO { get; set; }       
     }
 }

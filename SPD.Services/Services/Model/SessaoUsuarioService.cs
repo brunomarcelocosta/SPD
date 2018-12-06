@@ -14,14 +14,14 @@ namespace SPD.Services.Services.Model
     {
         private readonly ISessaoUsuarioRepository _SessaoUsuarioRepository;
         private readonly IHistoricoOperacaoRepository _HistoricoOperacaoRepository;
-        private readonly IUsuarioService _UsuarioService;
+        private readonly IUsuarioRepository _UsuarioRepository;
 
-        public SessaoUsuarioService(ISessaoUsuarioRepository sessaoUsuarioRepository, IUsuarioService usuarioService,
+        public SessaoUsuarioService(ISessaoUsuarioRepository sessaoUsuarioRepository, IUsuarioRepository usuarioRepository,
                                     IHistoricoOperacaoRepository historicoOperacaoRepository)
             : base(sessaoUsuarioRepository)
         {
             _SessaoUsuarioRepository = sessaoUsuarioRepository;
-            _UsuarioService = usuarioService;
+            _UsuarioRepository = usuarioRepository;
             _HistoricoOperacaoRepository = historicoOperacaoRepository;
         }
 
@@ -49,7 +49,7 @@ namespace SPD.Services.Services.Model
             {
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
-                    var usuario = this._UsuarioService.GetById(usuarioID);
+                    var usuario = this._UsuarioRepository.GetById(usuarioID);
 
                     this._HistoricoOperacaoRepository.RegistraHistorico(valor, usuario, Tipo_Operacao.Logoff, Tipo_Funcionalidades.EfetuarLogof);
                     var sessao = this._SessaoUsuarioRepository.GetAll().Where(s => s.usuario.ID == usuarioID).FirstOrDefault();
@@ -77,7 +77,7 @@ namespace SPD.Services.Services.Model
 
             foreach (var sessao in sessoes)
             {
-                this._HistoricoOperacaoRepository.RegistraHistoricoSistema(String.Format("Usuário {0} desconectado pelo sistema", this._UsuarioService.GetById(sessao.ID_USUARIO).NOME));
+                this._HistoricoOperacaoRepository.RegistraHistoricoSistema(String.Format("Usuário {0} desconectado pelo sistema", this._UsuarioRepository.GetById(sessao.ID_USUARIO).NOME));
                 this._HistoricoOperacaoRepository.SaveChanges();
             }
         }
