@@ -74,9 +74,9 @@ function DataTable() {
         },
         "columnDefs": [
             {
-                "targets": [0],
-                "visible": false,
-                "searchable": false
+                "targets": -1,
+                "data": null,
+                "defaultContent": "<input type='button' id='btnDelete' class='btn btn-succes' width='25px' value='Excluir' />"
             }
         ],
         "displayLength": 100,
@@ -117,8 +117,61 @@ function DataTable() {
         }
     });
 
+    $('#idGrid tbody').on('click', '[id*=btnDetails]', function () {
+        var data = table.row($(this).parents('tr')).data();
+        var userID = data[0];
+
+        Excluir(userID);
+    });
+
     //DoubleClick outside the grouping
     $('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {
         Render('Usuario', 'Edit', table.row(this).data().ID);
     });
+}
+
+function Excluir(userID) {
+    var urlList = '/Usuario/List';
+    var url = '/Usuario/Delete';
+    var msg = "Deseja realmente excluir o usuário?";
+
+    swal({
+        title: "Confirmação",
+        text: msg,
+        icon: "warning",
+        buttons: ["Não", "Sim"],
+        dangerMode: false,
+    })
+        .then((willDelete) => {
+            if (!willDelete) {
+                return window.location = urlList;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: { id = userID },
+                dataType: 'JSON',
+                traditional: true,
+            }).done((result) => {
+                if (result == "Não autorizado.") {
+                    swal("", result, "error");
+                    return;
+                }
+
+                if (!result.Success) {
+
+                    swal("", result.Response, "error");
+                    return;
+
+                } else {
+                    swal("", "Usuário excluído com sucesso.", "success")
+                        .then(() => {
+                            window.location = urlList;
+                        });
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+        });
 }

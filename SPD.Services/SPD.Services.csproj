@@ -50,6 +50,7 @@
     <Compile Include="Interface\Model\IAutenticacaoService.cs" />
     <Compile Include="Interface\Model\IFuncionalidadeService.cs" />
     <Compile Include="Interface\Model\IHistoricoOperacaoService.cs" />
+    <Compile Include="Interface\Model\IPacienteService.cs" />
     <Compile Include="Interface\Model\ISessaoUsuarioService.cs" />
     <Compile Include="Interface\Model\ITipoOperacaoService.cs" />
     <Compile Include="Interface\Model\IUsuarioFuncionalidadeService.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Services\Model\AutenticacaoService.cs" />
     <Compile Include="Services\Model\FuncionalidadeService.cs" />
     <Compile Include="Services\Model\HistoricoOperacaoService.cs" />
+    <Compile Include="Services\Model\PacienteService.cs" />
     <Compile Include="Services\Model\SessaoUsuarioService.cs" />
     <Compile Include="Services\Model\TipoOperacaoService.cs" />
     <Compile Include="Services\Model\UsuarioFuncionalidadeService.cs" />

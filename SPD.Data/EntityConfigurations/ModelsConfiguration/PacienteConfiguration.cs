@@ -53,7 +53,7 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .HasColumnName("fk_id_estado_civil")
            .IsRequired()
            .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_PACIENTE_SPD_ESTADO_CIVIL")));
-            HasRequired(paciente => paciente.EstadoCivil)
+            HasRequired(paciente => paciente.estadoCivil)
            .WithMany()
            .HasForeignKey(paciente => paciente.ID_ESTADO_CIVIL);
 

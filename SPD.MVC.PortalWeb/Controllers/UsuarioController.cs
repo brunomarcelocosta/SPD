@@ -312,7 +312,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #endregion
 
-        #region Apagar
+        #region Excluir
 
         [HttpPost]
         [ValidateAntiForgeryToken]

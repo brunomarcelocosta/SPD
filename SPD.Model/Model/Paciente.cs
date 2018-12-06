@@ -26,7 +26,7 @@ namespace SPD.Model.Model
         public string CELULAR { get; set; }
 
         public int ID_ESTADO_CIVIL { get; set; }
-        public virtual EstadoCivil EstadoCivil { get; set; }
+        public virtual EstadoCivil estadoCivil { get; set; }
 
         public string PROFISSAO { get; set; }
 

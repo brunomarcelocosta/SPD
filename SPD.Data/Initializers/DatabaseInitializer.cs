@@ -81,21 +81,27 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
+            Funcionalidade paciente = new Funcionalidade()
+            {
+                NOME = "Listar Pacientes",
+                IsATIVO = true
+            };
+
             Funcionalidade addPaciente = new Funcionalidade()
             {
-                NOME = "Adicionar Novo Paciente",
+                NOME = "Adicionar Pacientes",
                 IsATIVO = true
             };
 
             Funcionalidade editPaciente = new Funcionalidade()
             {
-                NOME = "Editar Paciente Cadastrado",
+                NOME = "Editar Pacientes",
                 IsATIVO = true
             };
 
             Funcionalidade delPaciente = new Funcionalidade()
             {
-                NOME = "Excluir Paciente",
+                NOME = "Excluir Pacientes",
                 IsATIVO = true
             };
 
@@ -117,7 +123,7 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
-            return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario, redefinirSenha, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
+            return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario, redefinirSenha, paciente, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
 
         }
 

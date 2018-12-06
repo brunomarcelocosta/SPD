@@ -21,6 +21,7 @@ namespace SPD.CrossCutting
             container.Register(typeof(IAutenticacaoService), typeof(AutenticacaoService), Lifestyle.Scoped);
             container.Register(typeof(IFuncionalidadeService), typeof(FuncionalidadeService), Lifestyle.Scoped);
             container.Register(typeof(IHistoricoOperacaoService), typeof(HistoricoOperacaoService), Lifestyle.Scoped);
+            container.Register(typeof(IPacienteService), typeof(PacienteService), Lifestyle.Scoped);
             container.Register(typeof(ISessaoUsuarioService), typeof(SessaoUsuarioService), Lifestyle.Scoped);
             container.Register(typeof(ITipoOperacaoService), typeof(TipoOperacaoService), Lifestyle.Scoped);
             container.Register(typeof(IUsuarioService), typeof(UsuarioService), Lifestyle.Scoped);
@@ -35,6 +36,7 @@ namespace SPD.CrossCutting
             container.Register(typeof(IFuncionalidadeRepository), typeof(FuncionalidadeRepository), Lifestyle.Scoped);
             container.Register(typeof(IHistoricoOperacaoRepository), typeof(HistoricoOperacaoRepository), Lifestyle.Scoped);
             container.Register(typeof(INotificacaoRepository), typeof(NotificacaoRepository), Lifestyle.Scoped);
+            container.Register(typeof(IPacienteRepository), typeof(PacienteRepository), Lifestyle.Scoped);
             container.Register(typeof(ISessaoUsuarioRepository), typeof(SessaoUsuarioRepository), Lifestyle.Scoped);
             container.Register(typeof(ITipoOperacaoRepository), typeof(TipoOperacaoRepository), Lifestyle.Scoped);
             container.Register(typeof(IUsuarioFuncionalidadeRepository), typeof(UsuarioFuncionalidadeRepository), Lifestyle.Scoped);

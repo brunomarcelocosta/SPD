@@ -241,15 +241,18 @@
     <Compile Include="Controllers\HistoricoOperacaoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PacienteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\SistemaHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EstadoCivilViewModel.cs" />
     <Compile Include="ViewModels\FuncionalidadeViewModel.cs" />
     <Compile Include="ViewModels\HistoricoOperacaoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
+    <Compile Include="ViewModels\PacienteViewModel.cs" />
     <Compile Include="ViewModels\SessaoUsuarioViewModel.cs" />
     <Compile Include="ViewModels\TipoOperacaoViewModel.cs" />
     <Compile Include="ViewModels\UsuarioFuncionalidadeViewModel.cs" />
@@ -579,6 +582,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Paciente\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
