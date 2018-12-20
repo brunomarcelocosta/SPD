@@ -7,6 +7,7 @@ using SPD.MVC.PortalWeb.ViewModels;
 using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -169,6 +170,7 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult Add(UsuarioViewModel usuarioViewModel)
         {
             var resultado = "";
+            var newusuario = ToModel(usuarioViewModel);
 
             List<FuncionalidadeViewModel> funcionalidades = new List<FuncionalidadeViewModel>();
             funcionalidades = usuarioViewModel.ListFuncionalidadeViewModel;
@@ -194,7 +196,10 @@ namespace SPD.MVC.PortalWeb.Controllers
             var usuario = ToModel(usuarioViewModel);
             var usuarioFuncionalidades_ADD = ToListModel<UsuarioFuncionalidade, UsuarioFuncionalidadeViewModel>(idFunc_ADD);
 
-            if (!_UsuarioService.AddNewUser(usuario, user_logado, usuarioFuncionalidades_ADD, EmailConfiguration.FromEmailSettings(), out resultado))
+            var emailFrom = ConfigurationManager.AppSettings["emailFrom"].ToString();
+            var pwdFrom = ConfigurationManager.AppSettings["pwdFrom"].ToString();
+
+            if (!_UsuarioService.AddNewUser(usuario, user_logado, usuarioFuncionalidades_ADD, emailFrom, pwdFrom, out resultado))
             {
                 return Json(new { Success = true, Nome = usuario.NOME });
             }
@@ -341,7 +346,10 @@ namespace SPD.MVC.PortalWeb.Controllers
         {
             try
             {
-                if (this.ApplicationService.RedefinirSenha(sLogin, EmailConfiguration.FromEmailSettings(), null) > 0)
+                var emailFrom = ConfigurationManager.AppSettings["emailFrom"].ToString();
+                var pwdFrom = ConfigurationManager.AppSettings["pwdFrom"].ToString();
+
+                if (this.ApplicationService.RedefinirSenha(sLogin, emailFrom, pwdFrom, null) > 0)
                 {
 
                     return Json(new { Success = true, Response = "Senha redefinida com sucesso." });

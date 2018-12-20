@@ -151,7 +151,7 @@
     <value>Preenchimento obrigatório.</value>
   </data>
   <data name="Nome" xml:space="preserve">
-    <value>Nome Completo</value>
+    <value>Nome</value>
   </data>
   <data name="NomeMaxLengthMessage" xml:space="preserve">
     <value>Máximo {1} caracteres.</value>

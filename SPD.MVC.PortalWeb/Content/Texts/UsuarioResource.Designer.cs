@@ -22,7 +22,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class UsuarioResource {
+    internal class UsuarioResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SPD.MVC.PortalWeb.Content.Texts.UsuarioResource", typeof(UsuarioResource).Assembly);
@@ -51,7 +51,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to E-mail.
         /// </summary>
-        public static string Email {
+        internal static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Por favor, preencha um e-mail válido..
         /// </summary>
-        public static string EmailEmailAddressMessage {
+        internal static string EmailEmailAddressMessage {
             get {
                 return ResourceManager.GetString("EmailEmailAddressMessage", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Máximo {1} caracteres..
         /// </summary>
-        public static string EmailMaxLengthMessage {
+        internal static string EmailMaxLengthMessage {
             get {
                 return ResourceManager.GetString("EmailMaxLengthMessage", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Preenchimento obrigatório..
         /// </summary>
-        public static string EmailRequiredMessage {
+        internal static string EmailRequiredMessage {
             get {
                 return ResourceManager.GetString("EmailRequiredMessage", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
-        public static string isAtivo {
+        internal static string isAtivo {
             get {
                 return ResourceManager.GetString("isAtivo", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Preenchimento obrigatório..
         /// </summary>
-        public static string isAtivoRequiredMessage {
+        internal static string isAtivoRequiredMessage {
             get {
                 return ResourceManager.GetString("isAtivoRequiredMessage", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Bloqueado.
         /// </summary>
-        public static string isBloqueado {
+        internal static string isBloqueado {
             get {
                 return ResourceManager.GetString("isBloqueado", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
-        public static string Login {
+        internal static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to O login deve ter {1} ou menos caracteres..
         /// </summary>
-        public static string LoginMaxLengthMessage {
+        internal static string LoginMaxLengthMessage {
             get {
                 return ResourceManager.GetString("LoginMaxLengthMessage", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to O login deve ter {1} ou mais caracteres..
         /// </summary>
-        public static string LoginMinLengthMessage {
+        internal static string LoginMinLengthMessage {
             get {
                 return ResourceManager.GetString("LoginMinLengthMessage", resourceCulture);
             }
@@ -153,16 +153,16 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Preenchimento obrigatório..
         /// </summary>
-        public static string LoginRequiredMessage {
+        internal static string LoginRequiredMessage {
             get {
                 return ResourceManager.GetString("LoginRequiredMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nome Completo.
+        ///   Looks up a localized string similar to Nome.
         /// </summary>
-        public static string Nome {
+        internal static string Nome {
             get {
                 return ResourceManager.GetString("Nome", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Máximo {1} caracteres..
         /// </summary>
-        public static string NomeMaxLengthMessage {
+        internal static string NomeMaxLengthMessage {
             get {
                 return ResourceManager.GetString("NomeMaxLengthMessage", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Mínimo {1} caracteres..
         /// </summary>
-        public static string NomeMinLengthMessage {
+        internal static string NomeMinLengthMessage {
             get {
                 return ResourceManager.GetString("NomeMinLengthMessage", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Campo nome é obrigatório..
         /// </summary>
-        public static string NomeRequiredMessage {
+        internal static string NomeRequiredMessage {
             get {
                 return ResourceManager.GetString("NomeRequiredMessage", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Senha.
         /// </summary>
-        public static string Password {
+        internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Repetir Senha.
         /// </summary>
-        public static string PasswordConfirmacao {
+        internal static string PasswordConfirmacao {
             get {
                 return ResourceManager.GetString("PasswordConfirmacao", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to As senhas informadas não são iguais..
         /// </summary>
-        public static string PasswordConfirmacaoCompareMessage {
+        internal static string PasswordConfirmacaoCompareMessage {
             get {
                 return ResourceManager.GetString("PasswordConfirmacaoCompareMessage", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Máximo {1} caracteres..
         /// </summary>
-        public static string PasswordMaxLengthMessage {
+        internal static string PasswordMaxLengthMessage {
             get {
                 return ResourceManager.GetString("PasswordMaxLengthMessage", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to O login deve ter {1} ou mais caracteres..
         /// </summary>
-        public static string PasswordMinLengthMessage {
+        internal static string PasswordMinLengthMessage {
             get {
                 return ResourceManager.GetString("PasswordMinLengthMessage", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Preenchimento obrigatório..
         /// </summary>
-        public static string PasswordRequiredMessage {
+        internal static string PasswordRequiredMessage {
             get {
                 return ResourceManager.GetString("PasswordRequiredMessage", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to A senha informada não atende os critérios de complexidade, comprimento ou histórico do sistema..
         /// </summary>
-        public static string PasswordRule1Message {
+        internal static string PasswordRule1Message {
             get {
                 return ResourceManager.GetString("PasswordRule1Message", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Tentativas de Login.
         /// </summary>
-        public static string TentativasLogin {
+        internal static string TentativasLogin {
             get {
                 return ResourceManager.GetString("TentativasLogin", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Troca de Senha Obrigatória.
         /// </summary>
-        public static string TrocaSenhaObrigatoria {
+        internal static string TrocaSenhaObrigatoria {
             get {
                 return ResourceManager.GetString("TrocaSenhaObrigatoria", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace SPD.MVC.PortalWeb.Content.Texts {
         /// <summary>
         ///   Looks up a localized string similar to Última Troca de Senha.
         /// </summary>
-        public static string UltimaTrocaSenha {
+        internal static string UltimaTrocaSenha {
             get {
                 return ResourceManager.GetString("UltimaTrocaSenha", resourceCulture);
             }

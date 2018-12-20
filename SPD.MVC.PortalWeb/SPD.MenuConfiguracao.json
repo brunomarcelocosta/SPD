@@ -3,17 +3,9 @@
     "Hierarquia": 1,
     "Titulo": "Gerenciamento",
     "IsSubMenu": true,
-    "SubMenus": [      
+    "SubMenus": [
       {
         "Nivel": 1,
-        "Titulo": "Configurações",
-        "Modulo": "SPD.MVC.PortalWeb",
-        "Controle": "Configuracao",
-        "Acao": "List",
-        "Perfil": "Sistema"
-      },
-      {
-        "Nivel": 2,
         "Titulo": "Histórico de Operações",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "HistoricoOperacao",
@@ -21,11 +13,34 @@
         "Perfil": "Visualizar Histórico de Operação"
       },
       {
-        "Nivel": 3,
+        "Nivel": 2,
         "Titulo": "Alterar Senha",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "AlterarSenha",
         "Acao": "Alterar"
+      },
+      {
+        "Nivel": 3,
+        "Titulo": "Usuários",
+        "Modulo": "SPD.MVC.PortalWeb",
+        "Controle": "Usuario",
+        "Acao": "List",
+        "Perfil": "Listar Usuários"
+      }
+    ]
+  },
+  {
+    "Hierarquia": 2,
+    "Titulo": "Cadastros Básicos",
+    "IsSubMenu": true,
+    "SubMenus": [
+      {
+        "Nivel": 1,
+        "Titulo": "Pacientes",
+        "Modulo": "SPD.MVC.PortalWeb",
+        "Controle": "Paciente",
+        "Acao": "List",
+        "Perfil": "Listar Pacientes"
       }
     ]
   }

@@ -8,7 +8,10 @@
 <h2>Usuários</h2>
 
 <hr />
-<br />
+
+<p>
+    <input type="button" value="Novo" class="btn btn-warning btn-sm" onclick="javascript: Render('Usuario','New')" />
+</p>
 
 @using (Html.BeginForm("List", "Usuario", FormMethod.Post, new { name = "frmPrincipal", id = "frmPrincipal" }))
 {

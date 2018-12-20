@@ -11,6 +11,7 @@ using SPD.MVC.PortalWeb.ViewModels;
 using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Globalization;
 using System.Linq;
@@ -100,7 +101,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                     AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
 
-                    return this.RedirectToAction(GlobalConstants.Login.AuthenticatedAction); 
+                    return this.RedirectToAction(GlobalConstants.Login.AuthenticatedAction);
                 }
                 else
                 {
@@ -123,7 +124,10 @@ namespace SPD.MVC.PortalWeb.Controllers
         {
             string enderecoIP = this.Request.UserHostAddress.Equals(GlobalConstants.General.LocalhostIPv6, StringComparison.InvariantCulture) ? GlobalConstants.General.LocalhostIPv4 : this.Request.UserHostAddress;
 
-            int Resultado = this.ApplicationService.RedefinirSenha(Login, EmailConfiguration.FromEmailSettings(), enderecoIP);
+            var emailFrom = ConfigurationManager.AppSettings["emailFrom"].ToString();
+            var pwdFrom = ConfigurationManager.AppSettings["pwdFrom"].ToString();
+
+            int Resultado = this.ApplicationService.RedefinirSenha(Login, emailFrom, pwdFrom, enderecoIP);
 
             if (Resultado > 0)
             {

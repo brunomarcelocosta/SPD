@@ -38,9 +38,9 @@ namespace SPD.Services.Services
             this._Repository = repository;
         }
 
-        public ServiceBase()
-        {
-        }
+        //public ServiceBase()
+        //{
+        //}
 
         public void Add(TEntity entity)
         {

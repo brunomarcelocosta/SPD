@@ -7,7 +7,7 @@ namespace SPD.Services.Interface.Model
     public interface IUsuarioService : IServiceBase<Usuario>
     {
         [Transactional]
-        int RedefinirSenha(string login, EmailConfiguration smtpConfiguration, string enderecoIP);
+        int RedefinirSenha(string login, string emailFrom, string pwdFrom, string enderecoIP);
 
         bool RedefinirSenha(Usuario usuario, out string novaSenha);
 
@@ -21,7 +21,7 @@ namespace SPD.Services.Interface.Model
         bool Desconectar(Usuario usuario);
 
         [Transactional]
-        bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, EmailConfiguration smtpConfiguration, out string resultado);
+        bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, string emailFrom, string pwdFrom, out string resultado);
 
         [Transactional]
         bool UpdateUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, List<UsuarioFuncionalidade> usuarioFuncionalidades_DEL, out string resultado);

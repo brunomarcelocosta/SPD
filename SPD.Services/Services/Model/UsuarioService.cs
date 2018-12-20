@@ -37,62 +37,56 @@ namespace SPD.Services.Services.Model
             _FuncionalidadeRepository = funcionalidadeRepository;
         }
 
-        public int RedefinirSenha(string login, EmailConfiguration smtpConfiguration, string enderecoIP)
+        public int RedefinirSenha(string login, string emailFrom, string pwdFrom, string enderecoIP)
         {
             try
             {
                 if (!String.IsNullOrWhiteSpace(login))
                 {
-                    if (smtpConfiguration.Valido())
+
+                    var usuario = this._UsuarioRepository.GetByLogin(login);
+
+                    if (usuario != null)
                     {
-                        var usuario = this._UsuarioRepository.GetByLogin(login);
+                        string novaSenha;
 
-                        if (usuario != null)
+                        if (RedefinirSenha(usuario, out novaSenha))
                         {
-                            string novaSenha;
+                            this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha do usuário {0} redefinida.", usuario.LOGIN), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
 
-                            if (RedefinirSenha(usuario, out novaSenha))
+                            try
                             {
-                                this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha do usuário {0} redefinida.", usuario.LOGIN), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
-
-                                try
+                                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                                 {
-                                    using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                                    {
-                                        this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) {0}. Durante o login será solicitada uma nova senha, esta é sua senha provisória {1}", usuario.LOGIN, novaSenha), "Redefinição de Senha", smtpConfiguration);
+                                    this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) {0}. Durante o login será solicitada uma nova senha, esta é sua senha provisória {1}", usuario.LOGIN, novaSenha), "Redefinição de Senha", emailFrom, pwdFrom);
 
-                                        this.SaveChanges(transactionScope);
-                                    }
+                                    this.SaveChanges(transactionScope);
                                 }
-                                catch (SmtpException Exception)
-                                {
-                                    return 2;
-                                }
-                                finally
-                                {
-                                    this.SaveChanges();
-                                }
-
-                                return 1;
                             }
-                            else
+                            catch (SmtpException Exception)
                             {
-                                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                                //{
-                                this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Não foi possível alterar a senha do usuário: \"{0}\".", usuario.LOGIN), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
-
+                                return 2;
+                            }
+                            finally
+                            {
                                 this.SaveChanges();
-                                //}
                             }
+
+                            return 1;
                         }
                         else
                         {
-                            throw new Exception(String.Format(CultureInfo.InvariantCulture, "O usuário \"{0}\" não está cadastrado no banco de dados do sistema.", login));
+                            //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                            //{
+                            this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Não foi possível alterar a senha do usuário: \"{0}\".", usuario.LOGIN), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
+
+                            this.SaveChanges();
+                            //}
                         }
                     }
                     else
                     {
-                        throw new Exception(String.Format(CultureInfo.InvariantCulture, "Dados de SMTP inválidos: \"{0}\".", smtpConfiguration.ToString()));
+                        throw new Exception(String.Format(CultureInfo.InvariantCulture, "O usuário \"{0}\" não está cadastrado no banco de dados do sistema.", login));
                     }
                 }
                 else
@@ -249,7 +243,7 @@ namespace SPD.Services.Services.Model
             return true;
         }
 
-        public bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, EmailConfiguration smtpConfiguration, out string resultado)
+        public bool AddNewUser(Usuario usuario, Usuario usuario_logado, List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, string emailFrom, string pwdFrom, out string resultado)
         {
             resultado = "";
 
@@ -260,7 +254,7 @@ namespace SPD.Services.Services.Model
             }
 
             Usuario usuarioBD = this._UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
-            if (usuario != null)
+            if (usuarioBD != null)
             {
                 resultado = String.Format(CultureInfo.InvariantCulture, "O login informado já existe.", usuario.LOGIN);
                 return false;
@@ -276,7 +270,7 @@ namespace SPD.Services.Services.Model
             {
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
-                    this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) esta é sua senha provisória {0} . Durante o login, será solicitada uma nova senha.", senha), "Senha de acesso ao sistema SGTAN", smtpConfiguration);
+                    this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) esta é sua senha provisória {0} . Durante o login, será solicitada uma nova senha.", senha), "Senha de acesso ao sistema SPD", emailFrom, pwdFrom);
                     this.SaveChanges(transactionScope);
                 }
             }

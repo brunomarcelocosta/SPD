@@ -45,7 +45,10 @@
     };
 
     DataTable();
-
+    $('#idGrid tbody').on('click', 'button', function () {
+        var data = table.row($(this).parents('tr')).data();
+        alert(data[0] + "'s salary is: " + data[5]);
+    });
 });
 
 function DataTable() {
@@ -62,7 +65,7 @@ function DataTable() {
         "order": [[1, 'ASC']],
         "ajax":
         {
-            "url": "/HistoricoOperacao/Paginacao",
+            "url": "/Usuario/Paginacao",
             "type": "POST",
             "dataType": "JSON",
             "data": {
@@ -76,7 +79,7 @@ function DataTable() {
             {
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<input type='button' id='btnDelete' class='btn btn-succes' width='25px' value='Excluir' />"
+                "defaultContent": "<button>Click!</button>"
             }
         ],
         "displayLength": 100,
@@ -90,7 +93,12 @@ function DataTable() {
             { "data": "Nome", "orderable": true, "autoWidth": true },
             { "data": "Email", "orderable": true, "autoWidth": true },
             { "data": "isAtivo", "orderable": true, "autoWidth": true },
-            { "data": "isBloqueado", "orderable": true, "autoWidth": true }
+            { "data": "isBloqueado", "orderable": true, "autoWidth": true },
+            {
+                "data": null, "render": function (data, type, row) {
+                    return '<button type="button" id="' + row.ID + '" class="btn btn-danger btn-sm" onclick="Excluir(this)" >Excluir</button>';
+                }
+            }
         ],
         "language": {
             "sEmptyTable": "Nenhum registro encontrado",
@@ -117,12 +125,20 @@ function DataTable() {
         }
     });
 
-    $('#idGrid tbody').on('click', '[id*=btnDetails]', function () {
-        var data = table.row($(this).parents('tr')).data();
-        var userID = data[0];
+    //$('#idGrid tbody').on('click', '[id*=btnDetails]', function () {
+    //    var data = table.row($(this).parents('tr')).data();
+    //    data.counter++;
+    //    var teste = table.row(this).data(data).draw();
+    //    var _id = data[0].ID();
+    //    var userID = data[0];
 
-        Excluir(userID);
-    });
+    //    Excluir(userID);
+    //});
+
+    //$('#idGrid tbody').on('click', 'button', function () {
+    //    var data = table.row($(this).parents('tr')).data();
+    //    alert(data[0] + "'s salary is: " + data[5]);
+    //});
 
     //DoubleClick outside the grouping
     $('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {
@@ -130,7 +146,10 @@ function DataTable() {
     });
 }
 
-function Excluir(userID) {
+function Excluir(obj) {
+
+    var valueID = $(obj).attr('ID');
+
     var urlList = '/Usuario/List';
     var url = '/Usuario/Delete';
     var msg = "Deseja realmente excluir o usuário?";
@@ -150,7 +169,7 @@ function Excluir(userID) {
             $.ajax({
                 type: "POST",
                 url: url,
-                data: { id = userID },
+                data: { id: valueID },
                 dataType: 'JSON',
                 traditional: true,
             }).done((result) => {
