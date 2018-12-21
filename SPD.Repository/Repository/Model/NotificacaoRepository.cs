@@ -2,6 +2,7 @@
 using SPD.Model.Util;
 using SPD.Repository.Interface.Model;
 using System;
+using System.Net;
 using System.Net.Mail;
 
 namespace SPD.Repository.Repository.Model
@@ -15,14 +16,23 @@ namespace SPD.Repository.Repository.Model
 
 
                 MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp.office365.com");
                 mail.From = new MailAddress(emailFrom);
                 mail.To.Add(email);
                 mail.Subject = assunto;
                 mail.Body = valor;
 
-                SmtpServer.Credentials = new System.Net.NetworkCredential(emailFrom, pwdFrom);
-                SmtpServer.EnableSsl = true;
+                SmtpClient SmtpServer = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(emailFrom, pwdFrom)
+                };
+
+                //SmtpServer.Credentials = new System.Net.NetworkCredential(emailFrom, pwdFrom);
+                //SmtpServer.EnableSsl = true;
                 SmtpServer.Send(mail);
             }
             catch (Exception ex)

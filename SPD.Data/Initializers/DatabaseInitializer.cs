@@ -231,6 +231,8 @@ namespace SPD.Data.Initializers
                 IsATIVO = true,
             };
 
+
+
             var funcionalidades = Funcionalidades();
             var usuarioFuncionalidades = ListUsuarioFuncionalidades(usuarioAdministrador, Funcionalidades());
             var tiposOperacoes = this.PreparaTiposOperacoes();
@@ -244,6 +246,19 @@ namespace SPD.Data.Initializers
 
             try
             {
+
+                Usuario usuarioAdministrador = new Usuario()
+                {
+                    NOME = "Administrador",
+                    EMAIL = "brunomarcelo.1995@gmail.com",
+                    LOGIN = "adminsis",
+                    PASSWORD = Usuario.GerarHash("a12345678"),
+                    TROCA_SENHA_OBRIGATORIA = true,
+                    IsATIVO = true,
+                };
+
+                var funcionalidades = Funcionalidades();
+
                 // Salva as alterações no banco de dados
                 this.Context.SaveChanges();
 
@@ -264,6 +279,29 @@ namespace SPD.Data.Initializers
         protected override void Seed(TContext context)
         {
             this.Initialize();
+        }
+
+        internal void SetUsersAndFuncs(Usuario usuarioAdministrador)
+        {
+            try
+            {
+                var funcionalidades = Funcionalidades();
+
+                // Salva as alterações no banco de dados
+                this.Context.SaveChanges();
+
+                // Executa scripts sql personalizados
+                ExecuteSqlCommand();
+
+                // Chama o restante da seed
+                base.Seed(this.Context);
+            }
+            catch (DbEntityValidationException dbEntityValidationException)
+            {
+                ContextDebugger.ShowInDebugConsole(dbEntityValidationException);
+
+                throw dbEntityValidationException;
+            }
         }
 
     }

@@ -38,6 +38,9 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
             this.HasRequired(user => user.FUNCIONALIDADE)
                 .WithMany()
                 .HasForeignKey(user => user.ID_FUNCIONALIDADE);
+
+            Ignore(a => a.USUARIO);
+            Ignore(a => a.FUNCIONALIDADE);
         }
     }
 }

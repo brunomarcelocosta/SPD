@@ -28,5 +28,13 @@ namespace SPD.Services.Interface.Model
 
         [Transactional]
         bool DeleteUser(int id, Usuario usuario_logado, out string resultado);
+
+        List<UsuarioFuncionalidade> HashEntityForUserAndFuncs(List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, Usuario usuario);
+
+        [Transactional]
+        bool AddUserAndFuncs(List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, Usuario usuario, Usuario usuario_logado, out string resultado);
+
+        [Transactional]
+        bool DELUserAndFuncs(List<UsuarioFuncionalidade> usuarioFuncionalidades_DEL, Usuario usuario, Usuario usuario_logado, out string resultado);
     }
 }

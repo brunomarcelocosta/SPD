@@ -201,11 +201,11 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             if (!_UsuarioService.AddNewUser(usuario, user_logado, usuarioFuncionalidades_ADD, emailFrom, pwdFrom, out resultado))
             {
-                return Json(new { Success = true, Nome = usuario.NOME });
+                return Json(new { Success = false, Response = resultado });
             }
             else
             {
-                return Json(new { Success = false, Response = resultado });
+                return Json(new { Success = true, Nome = usuario.NOME });
             }
         }
 
@@ -274,11 +274,16 @@ namespace SPD.MVC.PortalWeb.Controllers
 
                 else
                 {
-                    idFunc_DEL.Add(new UsuarioFuncionalidadeViewModel
+                    var existe = ListUsuarioFunc.Where(a => a.ID_FUNCIONALIDADE == item.ID && a.ID_Usuario == usuarioViewModel.ID).ToList().Count() > 0 ? true : false;
+
+                    if (existe)
                     {
-                        Usuario = usuarioViewModel,
-                        Funcionalidade = item
-                    });
+                        idFunc_DEL.Add(new UsuarioFuncionalidadeViewModel
+                        {
+                            Usuario = usuarioViewModel,
+                            Funcionalidade = item
+                        });
+                    }
                 }
             }
 

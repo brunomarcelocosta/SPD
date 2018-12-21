@@ -39,9 +39,10 @@ namespace SPD.Repository.Repository.Model
             {
                 foreach (var item in usuarioFuncionalidades)
                 {
-                    item.USUARIO = user;
+                    //item.USUARIO = user;
 
                     Add(item);
+                    //SaveChanges();
                 }
 
                 return true;
@@ -61,8 +62,8 @@ namespace SPD.Repository.Repository.Model
             {
                 foreach (var item in usuarioFuncionalidades)
                 {
-                    var user = GetById(item.ID);
-                    Remove(user);
+                    var user = Query().Where(a => a.ID_FUNCIONALIDADE == item.FUNCIONALIDADE.ID && a.ID_USUARIO == item.USUARIO.ID).FirstOrDefault();
+                    Remove(item);
                 }
             }
             catch (Exception ex)

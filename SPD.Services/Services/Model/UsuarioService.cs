@@ -215,21 +215,7 @@ namespace SPD.Services.Services.Model
                     // atualizar usuario
                     _UsuarioRepository.AtualizarUsuario(usuario);
 
-                    if (_HistoricoOperacaoRepository.RegistraHistoricoRepository(String.Format(CultureInfo.InvariantCulture, "Atualizou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Usuarios, out resultado))
-                    {
-                        return false;
-                    }
-                    // add usuario_funcionalidade
-                    if (!_UsuarioFuncionalidadeRepository.AddList(usuarioFuncionalidades_ADD, out resultado))
-                    {
-                        return false;
-                    }
-
-                    // del usuario_funcionalidade
-                    if (!_UsuarioFuncionalidadeRepository.DeleteList(usuarioFuncionalidades_DEL, out resultado))
-                    {
-                        return false;
-                    }
+                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Atualizou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Usuarios);
 
                     SaveChanges(transactionScope);
                 }
@@ -237,6 +223,20 @@ namespace SPD.Services.Services.Model
             catch (Exception ex)
             {
                 resultado = ex.Message;
+                return false;
+            }
+            finally
+            {
+                this.SaveChanges();
+            }
+
+            if (!AddUserAndFuncs(usuarioFuncionalidades_ADD, usuario, usuario_logado, out resultado))
+            {
+                return false;
+            }
+
+            if (!DELUserAndFuncs(usuarioFuncionalidades_DEL, usuario, usuario_logado, out resultado))
+            {
                 return false;
             }
 
@@ -270,53 +270,13 @@ namespace SPD.Services.Services.Model
             {
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
-                    this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) esta é sua senha provisória {0} . Durante o login, será solicitada uma nova senha.", senha), "Senha de acesso ao sistema SPD", emailFrom, pwdFrom);
-                    this.SaveChanges(transactionScope);
-                }
-            }
-            catch
-            {
-                resultado = "Caixa de entrada do domínio de email " + usuario.EMAIL + " indisponível.";
-                return false;
-            }
-            finally
-            {
-                this.SaveChanges();
-            }
+                    _NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) esta é sua senha provisória {0} . Durante o login, será solicitada uma nova senha.", senha), "Senha de acesso ao sistema SPD", emailFrom, pwdFrom);
 
-            try
-            {
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha gerada com sucesso, e enviada ao e-mail do usuário {0}.", usuario.LOGIN.ToUpper()), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha gerada com sucesso, e enviada ao e-mail do usuário {0}.", usuario.LOGIN.ToUpper()), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
 
-                    // atualizar usuario
                     _UsuarioRepository.Add(usuario);
 
                     _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Adicionou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
-
-                    var user = _UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
-
-                    if (user != null || user.ID != 0)
-                    {
-                        // add usuario_funcionalidade
-                        if (!_UsuarioFuncionalidadeRepository.AddNewList(usuarioFuncionalidades_ADD, user, out resultado))
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            foreach (var item in usuarioFuncionalidades_ADD)
-                            {
-                                _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} associadas ao usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        resultado = "Usuario não localizado.";
-                        return false;
-                    }
 
                     SaveChanges(transactionScope);
                 }
@@ -328,8 +288,60 @@ namespace SPD.Services.Services.Model
             }
             finally
             {
-                SaveChanges();
+                this.SaveChanges();
             }
+
+            var user = _UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
+
+            if (!AddUserAndFuncs(usuarioFuncionalidades_ADD, user, usuario_logado, out resultado))
+            {
+                return false;
+            }
+
+            //try
+            //{
+            //    using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+            //    {
+
+            //        user = _UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
+
+            //        if (user != null || user.ID != 0)
+            //        {
+            //            usuarioFuncionalidades_ADD = HashEntityForUserAndFuncs(usuarioFuncionalidades_ADD, user);
+            //            // add usuario_funcionalidade
+            //            if (!_UsuarioFuncionalidadeRepository.AddNewList(usuarioFuncionalidades_ADD, user, out resultado))
+            //            {
+            //                return false;
+            //            }
+            //            else
+            //            {
+            //                foreach (var item in usuarioFuncionalidades_ADD)
+            //                {
+            //                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} associadas ao usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            resultado = "Usuario não localizado.";
+            //            return false;
+            //        }
+
+            //        SaveChanges(transactionScope);
+
+            //        //SaveChanges();
+
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    resultado = ex.Message;
+            //    return false;
+            //}
+            //finally
+            //{
+            //    SaveChanges();
+            //}
 
             return true;
         }
@@ -374,5 +386,106 @@ namespace SPD.Services.Services.Model
 
             return true;
         }
+
+        public List<UsuarioFuncionalidade> HashEntityForUserAndFuncs(List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, Usuario usuario)
+        {
+            List<UsuarioFuncionalidade> list = new List<UsuarioFuncionalidade>();
+
+            foreach (var item in usuarioFuncionalidades_ADD)
+            {
+                var func = _FuncionalidadeRepository.Query().Where(a => a.ID == item.FUNCIONALIDADE.ID).FirstOrDefault();
+
+                item.USUARIO = usuario;
+                item.FUNCIONALIDADE = func;
+
+                list.Add(item);
+            }
+
+            return list;
+        }
+
+        public bool AddUserAndFuncs(List<UsuarioFuncionalidade> usuarioFuncionalidades_ADD, Usuario usuario, Usuario usuario_logado, out string resultado)
+        {
+            resultado = "";
+
+            try
+            {
+                var user = _UsuarioRepository.GetById(usuario.ID);
+
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    usuarioFuncionalidades_ADD = HashEntityForUserAndFuncs(usuarioFuncionalidades_ADD, user);
+                    //usuarioFuncionalidades_DEL = HashEntityForUserAndFuncs(usuarioFuncionalidades_DEL, user);
+
+                    // add usuario_funcionalidade
+                    if (!_UsuarioFuncionalidadeRepository.AddList(usuarioFuncionalidades_ADD, out resultado))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        foreach (var item in usuarioFuncionalidades_ADD)
+                        {
+                            _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} associadas ao usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+                        }
+                    }
+
+                    SaveChanges(transactionScope);
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+                return false;
+            }
+            finally
+            {
+                this.SaveChanges();
+            }
+
+            return true;
+        }
+
+        public bool DELUserAndFuncs(List<UsuarioFuncionalidade> usuarioFuncionalidades_DEL, Usuario usuario, Usuario usuario_logado, out string resultado)
+        {
+            resultado = "";
+
+            try
+            {
+                var user = _UsuarioRepository.GetById(usuario.ID);
+
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    usuarioFuncionalidades_DEL = HashEntityForUserAndFuncs(usuarioFuncionalidades_DEL, user);
+
+                    //del usuario_funcionalidade
+                    if (!_UsuarioFuncionalidadeRepository.DeleteList(usuarioFuncionalidades_DEL, out resultado))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        foreach (var item in usuarioFuncionalidades_DEL)
+                        {
+                            _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} excluída do usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+                        }
+                    }
+
+                    SaveChanges(transactionScope);
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+                return false;
+            }
+            finally
+            {
+                this.SaveChanges();
+            }
+
+            return true;
+        }
+
     }
 }
