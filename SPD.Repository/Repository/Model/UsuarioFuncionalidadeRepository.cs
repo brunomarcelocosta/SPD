@@ -60,11 +60,15 @@ namespace SPD.Repository.Repository.Model
 
             try
             {
+                List<UsuarioFuncionalidade> list = new List<UsuarioFuncionalidade>();
+
                 foreach (var item in usuarioFuncionalidades)
                 {
-                    var user = Query().Where(a => a.ID_FUNCIONALIDADE == item.FUNCIONALIDADE.ID && a.ID_USUARIO == item.USUARIO.ID).FirstOrDefault();
-                    Remove(item);
+                    var user = Query().Where(a => a.ID_FUNCIONALIDADE == item.Funcionalidade.ID && a.ID_USUARIO == item.Usuario.ID).FirstOrDefault();
+                    list.Add(user);
                 }
+
+                RemoveRange(list);
             }
             catch (Exception ex)
             {

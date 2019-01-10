@@ -78,7 +78,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     foreach (var item in usuario.ListUsuarioFuncionalidade)
                     {
                         authenticationViewModel.FuncionalidadesUsuarioIDs.Add(item.ID_FUNCIONALIDADE);
-                        authenticationViewModel.FuncionalidadesUsuarioNomes.Add(item.FUNCIONALIDADE.NOME);
+                        authenticationViewModel.FuncionalidadesUsuarioNomes.Add(item.Funcionalidade.NOME);
                     }
 
                     this.StoreAuthenticationInSession(authenticationViewModel);
@@ -90,7 +90,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
                     foreach (UsuarioFuncionalidade funcionalidadesUsuario in usuario.ListUsuarioFuncionalidade)
                     {
-                        Funcionalidade funcionalidade = funcionalidadesUsuario.FUNCIONALIDADE;
+                        Funcionalidade funcionalidade = funcionalidadesUsuario.Funcionalidade;
 
                         if (!funcionalidade.IsATIVO) { continue; }
                         string jsonClaim = new JavaScriptSerializer().Serialize(new UseAuthorization.FuncionalidadeClaim(funcionalidadesUsuario));

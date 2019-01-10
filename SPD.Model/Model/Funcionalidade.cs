@@ -20,7 +20,7 @@ namespace SPD.Model.Model
         {
             get
             {
-                return (this.usuarioFuncionalidade == null ? new List<Usuario>() : this.usuarioFuncionalidade.Select(usuariosPerfil => usuariosPerfil.USUARIO).ToList());
+                return (this.usuarioFuncionalidade == null ? new List<Usuario>() : this.usuarioFuncionalidade.Select(usuariosPerfil => usuariosPerfil.Usuario).ToList());
             }
         }
     }

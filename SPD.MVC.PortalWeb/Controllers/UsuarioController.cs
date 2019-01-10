@@ -325,15 +325,19 @@ namespace SPD.MVC.PortalWeb.Controllers
         #region Excluir
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Excluir Usuários\"}")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
+            int idUser = int.Parse(id);
             var resultado = "";
 
             Usuario usuarioAtual = this.ApplicationService.GetById(this.GetAuthenticationFromSession().ID);
 
-            if (!_UsuarioService.DeleteUser(id, usuarioAtual, out resultado))
+            if (!ReturnPermission(usuarioAtual, "Excluir Usuários"))
+            {
+                return Json(new { Success = false, Response = "Você não tem permissão para esta funcionalidade." });
+            }
+
+            if (!_UsuarioService.DeleteUser(idUser, usuarioAtual, out resultado))
             {
                 return Json(new { Success = false, Response = resultado });
             }
@@ -425,17 +429,17 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             if (collection != null)
             {
-                if (!string.IsNullOrWhiteSpace(collection["Nome"]))
+                if (!string.IsNullOrWhiteSpace(collection["NomeFiltro"]))
                 {
-                    var nome = collection["Nome"].ToString();
+                    var nome = collection["NomeFiltro"].ToString();
 
                     ListaFiltrada = ListaFiltrada.Where(a => a.Nome.Contains(nome)).ToList();
                     usuarioViewModel.Nome = nome;
                 }
 
-                if (!string.IsNullOrWhiteSpace(collection["Email"]))
+                if (!string.IsNullOrWhiteSpace(collection["EmailFiltro"]))
                 {
-                    var email = collection["Email"].ToString();
+                    var email = collection["EmailFiltro"].ToString();
 
                     ListaFiltrada = ListaFiltrada.Where(a => a.Email.Contains(email)).ToList();
                     usuarioViewModel.Nome = email;
@@ -461,6 +465,31 @@ namespace SPD.MVC.PortalWeb.Controllers
             usuarioViewModel.ListUsuarioViewModel = ListaFiltrada;
 
             return usuarioViewModel;
+        }
+
+        #endregion
+
+        #region Validações
+
+        public bool ReturnPermission(Usuario usuario, string func)
+        {
+            try
+            {
+                var funcionalidade = _FuncionalidadeService.Query().Where(a => a.NOME.Equals(func)).FirstOrDefault();
+                var existeFunc = _UsuarioFuncionalidadeService
+                                .Query()
+                                .Where(a => a.ID_USUARIO == usuario.ID && a.ID_FUNCIONALIDADE == funcionalidade.ID)
+                                .ToList()
+                                .Count() > 0 ?
+                                true :
+                                false;
+
+                return existeFunc;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         #endregion

@@ -9,12 +9,12 @@
 
             <div class="form-group col-md-3" id="divNome" style="padding-left:32px;">
                 @Html.Label("Nome")
-                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @Value = Model.Nome, @class = "form-control input-sm", @style = "width: 200px" } })
+                @Html.EditorFor(model => model.NomeFiltro, new { htmlAttributes = new { @Value = Model.Nome, @class = "form-control input-sm", @style = "width: 200px" } })
             </div>
 
             <div class="form-group col-md-3" id="divEmail" style="padding-left:32px;">
                 @Html.Label("E-mail")
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @Value = Model.Email, @class = "form-control input-sm", @style = "width: 200px" } })
+                @Html.EditorFor(model => model.EmailFiltro, new { htmlAttributes = new { @Value = Model.Email, @class = "form-control input-sm", @style = "width: 200px" } })
             </div>
             <div class="form-group col-md-3" id="divStatus" style="padding-left:32px;">
                 @Html.Label("Status")

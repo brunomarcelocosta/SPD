@@ -11,9 +11,9 @@ namespace SPD.Model.Model
         public int ID { get; set; }
 
         public int ID_USUARIO { get; set; }
-        public virtual Usuario USUARIO { get; set; }
+        public virtual Usuario Usuario { get; set; }
 
         public int ID_FUNCIONALIDADE { get; set; }
-        public virtual Funcionalidade FUNCIONALIDADE { get; set; }
+        public virtual Funcionalidade Funcionalidade { get; set; }
     }
 }

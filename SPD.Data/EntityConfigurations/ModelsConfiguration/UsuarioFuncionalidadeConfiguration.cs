@@ -27,7 +27,7 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
                  .HasColumnName("fk_id_usuario")
                  .IsRequired()
                  .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_USUARIO_FUNCIONALIDADE_SPD_USUARIO_FK")));
-            this.HasRequired(user => user.USUARIO)
+            this.HasRequired(user => user.Usuario)
                 .WithMany()
                 .HasForeignKey(user => user.ID_USUARIO);
 
@@ -35,12 +35,10 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
                 .HasColumnName("fk_id_funcionalidade")
                 .IsRequired()
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_USUARIO_FUNCIONALIDADE_SPD_FUNCIONALIDADE_FK")));
-            this.HasRequired(user => user.FUNCIONALIDADE)
+            this.HasRequired(user => user.Funcionalidade)
                 .WithMany()
                 .HasForeignKey(user => user.ID_FUNCIONALIDADE);
 
-            Ignore(a => a.USUARIO);
-            Ignore(a => a.FUNCIONALIDADE);
         }
     }
 }

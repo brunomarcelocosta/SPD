@@ -230,16 +230,21 @@ namespace SPD.Services.Services.Model
                 this.SaveChanges();
             }
 
-            if (!AddUserAndFuncs(usuarioFuncionalidades_ADD, usuario, usuario_logado, out resultado))
+            if (usuarioFuncionalidades_ADD.Count > 0)
             {
-                return false;
+                if (!AddUserAndFuncs(usuarioFuncionalidades_ADD, usuario, usuario_logado, out resultado))
+                {
+                    return false;
+                }
             }
 
-            if (!DELUserAndFuncs(usuarioFuncionalidades_DEL, usuario, usuario_logado, out resultado))
+            if (usuarioFuncionalidades_DEL.Count > 0)
             {
-                return false;
+                if (!DELUserAndFuncs(usuarioFuncionalidades_DEL, usuario, usuario_logado, out resultado))
+                {
+                    return false;
+                }
             }
-
             return true;
         }
 
@@ -298,51 +303,6 @@ namespace SPD.Services.Services.Model
                 return false;
             }
 
-            //try
-            //{
-            //    using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-            //    {
-
-            //        user = _UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
-
-            //        if (user != null || user.ID != 0)
-            //        {
-            //            usuarioFuncionalidades_ADD = HashEntityForUserAndFuncs(usuarioFuncionalidades_ADD, user);
-            //            // add usuario_funcionalidade
-            //            if (!_UsuarioFuncionalidadeRepository.AddNewList(usuarioFuncionalidades_ADD, user, out resultado))
-            //            {
-            //                return false;
-            //            }
-            //            else
-            //            {
-            //                foreach (var item in usuarioFuncionalidades_ADD)
-            //                {
-            //                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} associadas ao usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            resultado = "Usuario não localizado.";
-            //            return false;
-            //        }
-
-            //        SaveChanges(transactionScope);
-
-            //        //SaveChanges();
-
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    resultado = ex.Message;
-            //    return false;
-            //}
-            //finally
-            //{
-            //    SaveChanges();
-            //}
-
             return true;
         }
 
@@ -360,16 +320,22 @@ namespace SPD.Services.Services.Model
                 {
                     _HistoricoOperacaoRepository.ExcluiHistoricoUsuario(usuarioDelete);
 
-                    _SessaoUsuarioService.EncerrarSessao(sessao);
+                    if (sessao != null)
+                        _SessaoUsuarioService.EncerrarSessao(sessao);
 
-                    if (!_UsuarioFuncionalidadeRepository.DeleteList(usuarioFuncsDelete, out resultado))
-                    {
-                        return false;
-                    }
+                    SaveChanges(transactionScope);
+                }
+
+                if (!DELUserAndFuncs(usuarioFuncsDelete, usuarioDelete, usuario_logado, out resultado))
+                {
+                    return false;
+                }
+
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    _UsuarioRepository.Remove(usuarioDelete);
 
                     _HistoricoOperacaoRepository.RegistraHistorico(String.Format("Usuário {0} excluído.", usuarioDelete.LOGIN), usuario_logado, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.Usuarios);
-
-                    _UsuarioRepository.Remove(usuarioDelete);
 
                     SaveChanges(transactionScope);
                 }
@@ -384,6 +350,7 @@ namespace SPD.Services.Services.Model
                 SaveChanges();
             }
 
+
             return true;
         }
 
@@ -393,10 +360,10 @@ namespace SPD.Services.Services.Model
 
             foreach (var item in usuarioFuncionalidades_ADD)
             {
-                var func = _FuncionalidadeRepository.Query().Where(a => a.ID == item.FUNCIONALIDADE.ID).FirstOrDefault();
+                var func = _FuncionalidadeRepository.Query().Where(a => a.ID == item.Funcionalidade.ID).FirstOrDefault();
 
-                item.USUARIO = usuario;
-                item.FUNCIONALIDADE = func;
+                item.Usuario = usuario;
+                item.Funcionalidade = func;
 
                 list.Add(item);
             }
@@ -456,7 +423,7 @@ namespace SPD.Services.Services.Model
 
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
-                    usuarioFuncionalidades_DEL = HashEntityForUserAndFuncs(usuarioFuncionalidades_DEL, user);
+                    //  usuarioFuncionalidades_DEL = HashEntityForUserAndFuncs(usuarioFuncionalidades_DEL, user);
 
                     //del usuario_funcionalidade
                     if (!_UsuarioFuncionalidadeRepository.DeleteList(usuarioFuncionalidades_DEL, out resultado))
@@ -467,7 +434,8 @@ namespace SPD.Services.Services.Model
                     {
                         foreach (var item in usuarioFuncionalidades_DEL)
                         {
-                            _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} excluída do usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+                            var func = _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME;
+                            _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} excluída do usuário {1}.", func, usuario.LOGIN), usuario_logado, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.Usuarios);
                         }
                     }
 

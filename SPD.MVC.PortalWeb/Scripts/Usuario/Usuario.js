@@ -45,10 +45,7 @@
     };
 
     DataTable();
-    $('#idGrid tbody').on('click', 'button', function () {
-        var data = table.row($(this).parents('tr')).data();
-        alert(data[0] + "'s salary is: " + data[5]);
-    });
+
 });
 
 function DataTable() {
@@ -148,7 +145,8 @@ function DataTable() {
 
 function Excluir(obj) {
 
-    var valueID = $(obj).attr('ID');
+    var valueID = "";
+    valueID = $(obj).attr('ID').toString();
 
     var urlList = '/Usuario/List';
     var url = '/Usuario/Delete';
@@ -162,35 +160,27 @@ function Excluir(obj) {
         dangerMode: false,
     })
         .then((willDelete) => {
-            if (!willDelete) {
-                return window.location = urlList;
-            }
-
+            if (!willDelete) { return; }
             $.ajax({
                 type: "POST",
-                url: url,
+                url: '/Usuario/Delete',
                 data: { id: valueID },
                 dataType: 'JSON',
-                traditional: true,
-            }).done((result) => {
-                if (result == "Não autorizado.") {
-                    swal("", result, "error");
-                    return;
+                success: function (result) {
+
+                    if (!result.Success) {
+
+                        swal("", result.Response, "error");
+                        return;
+
+                    }
+                    else {
+                        swal("", "Usuário excluído com sucesso.", "success")
+                            .then(() => {
+                                window.location = urlList;
+                            });
+                    }
                 }
-
-                if (!result.Success) {
-
-                    swal("", result.Response, "error");
-                    return;
-
-                } else {
-                    swal("", "Usuário excluído com sucesso.", "success")
-                        .then(() => {
-                            window.location = urlList;
-                        });
-                }
-            }).fail((error) => {
-                console.log(error);
             });
         });
 }

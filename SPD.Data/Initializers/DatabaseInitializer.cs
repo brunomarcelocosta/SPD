@@ -170,8 +170,8 @@ namespace SPD.Data.Initializers
             {
                 userFuncs.Add(new UsuarioFuncionalidade()
                 {
-                    USUARIO = usuario,
-                    FUNCIONALIDADE = item
+                    Usuario = usuario,
+                    Funcionalidade = item
                 });
             }
 
@@ -220,7 +220,6 @@ namespace SPD.Data.Initializers
         /// </summary>
         internal void Initialize()
         {
-
             Usuario usuarioAdministrador = new Usuario()
             {
                 NOME = "Administrador",
@@ -231,33 +230,31 @@ namespace SPD.Data.Initializers
                 IsATIVO = true,
             };
 
-
-
             var funcionalidades = Funcionalidades();
             var usuarioFuncionalidades = ListUsuarioFuncionalidades(usuarioAdministrador, Funcionalidades());
             var tiposOperacoes = this.PreparaTiposOperacoes();
             var estadoCivil = PreparaEstadoCivil();
 
-            this.Context.Set<Usuario>().Add(usuarioAdministrador);
             this.Context.Set<Funcionalidade>().AddRange(funcionalidades);
-            this.Context.Set<UsuarioFuncionalidade>().AddRange(usuarioFuncionalidades);
+            this.Context.Set<Usuario>().Add(usuarioAdministrador);
             this.Context.Set<TipoOperacao>().AddRange(tiposOperacoes);
             this.Context.Set<EstadoCivil>().AddRange(estadoCivil);
+            this.Context.Set<UsuarioFuncionalidade>().AddRange(usuarioFuncionalidades);
 
             try
             {
 
-                Usuario usuarioAdministrador = new Usuario()
-                {
-                    NOME = "Administrador",
-                    EMAIL = "brunomarcelo.1995@gmail.com",
-                    LOGIN = "adminsis",
-                    PASSWORD = Usuario.GerarHash("a12345678"),
-                    TROCA_SENHA_OBRIGATORIA = true,
-                    IsATIVO = true,
-                };
+                //Usuario usuarioAdministrador = new Usuario()
+                //{
+                //    NOME = "Administrador",
+                //    EMAIL = "brunomarcelo.1995@gmail.com",
+                //    LOGIN = "adminsis",
+                //    PASSWORD = Usuario.GerarHash("a12345678"),
+                //    TROCA_SENHA_OBRIGATORIA = true,
+                //    IsATIVO = true,
+                //};
 
-                var funcionalidades = Funcionalidades();
+                //var funcionalidades = Funcionalidades();
 
                 // Salva as alterações no banco de dados
                 this.Context.SaveChanges();
@@ -281,28 +278,28 @@ namespace SPD.Data.Initializers
             this.Initialize();
         }
 
-        internal void SetUsersAndFuncs(Usuario usuarioAdministrador)
-        {
-            try
-            {
-                var funcionalidades = Funcionalidades();
+        //internal void SetUsersAndFuncs(Usuario usuarioAdministrador)
+        //{
+        //    try
+        //    {
+        //        var funcionalidades = Funcionalidades();
 
-                // Salva as alterações no banco de dados
-                this.Context.SaveChanges();
+        //        // Salva as alterações no banco de dados
+        //        this.Context.SaveChanges();
 
-                // Executa scripts sql personalizados
-                ExecuteSqlCommand();
+        //        // Executa scripts sql personalizados
+        //        ExecuteSqlCommand();
 
-                // Chama o restante da seed
-                base.Seed(this.Context);
-            }
-            catch (DbEntityValidationException dbEntityValidationException)
-            {
-                ContextDebugger.ShowInDebugConsole(dbEntityValidationException);
+        //        // Chama o restante da seed
+        //        base.Seed(this.Context);
+        //    }
+        //    catch (DbEntityValidationException dbEntityValidationException)
+        //    {
+        //        ContextDebugger.ShowInDebugConsole(dbEntityValidationException);
 
-                throw dbEntityValidationException;
-            }
-        }
+        //        throw dbEntityValidationException;
+        //    }
+        //}
 
     }
 }

@@ -13,8 +13,6 @@ namespace SPD.Repository.Repository.Model
         {
             try
             {
-
-
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress(emailFrom);
                 mail.To.Add(email);

@@ -62,6 +62,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public virtual List<FuncionalidadeViewModel> ListFuncionalidadeViewModel { get; set; }
 
+        public string NomeFiltro { get; set; }
+        public string EmailFiltro { get; set; }
 
     }
 }

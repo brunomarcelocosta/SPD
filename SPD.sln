@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Model", "1 - Model", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Itens Config", "6 - Itens Config", "{5EFF05F8-FA19-4BE3-8487-AA5E5009B179}"
 	ProjectSection(SolutionItems) = preProject
+		DROP TABLE SQL.txt = DROP TABLE SQL.txt
 		SPD.Data\SPD.Data.ConnectionStrings.config = SPD.Data\SPD.Data.ConnectionStrings.config
 		..\SGTAN\SPD.EmailConfiguracao.config = ..\SGTAN\SPD.EmailConfiguracao.config
 		SPD.MVC.PortalWeb\SPD.MenuConfiguracao.json = SPD.MVC.PortalWeb\SPD.MenuConfiguracao.json

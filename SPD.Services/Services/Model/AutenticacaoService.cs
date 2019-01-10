@@ -74,27 +74,18 @@ namespace SPD.Services.Services.Model
 
                                     if (conexoes.Count > 0)
                                     {
-                                        var usuarioID = Usuario.EncryptID(Convert.ToString(usuario.ID));
-                                        var url = String.Format(CultureInfo.InvariantCulture, "{0}/Login/Logout/?k={1}", autenticacaoUrl, usuarioID);
-
-                                        new Notificacao().NotificarPorEmail(usuario.EMAIL, string.Format("Tentativa de acesso simultâneo do Login {0}. Usuário já está conectado em outra estação de trabalho.<br /><br />Clique <a href='{1}'>aqui</a> para forçar seu logout da outra estação ou acesse o link <a href='{1}'>{1}</a> pelo seu navegador.", usuario.LOGIN, url), "Acesso simultâneo identificado", EmailConfiguration.FromEmailSettings());
-
-                                        // 6.2.Sistema registra o acesso simultâneo [UC02.22 – Registrar Histórico de Operação de Usuário];
-                                        this._HistoricoOperacaoRepository.RegistraHistorico("Usuário conectado em outra estação de trabalho", usuario, Tipo_Operacao.Logoff, Tipo_Funcionalidades.EfetuarLogof);
-
-                                        // 6.3.Sistema exibe a mensagem informando que o usuário já está conectado em outra estação de trabalho;
-                                        throw new Exception("Usuário já está conectado em outra estação de trabalho.");
+                                        _SessaoUsuarioRepository.RemoveRange(conexoes);
+                                        _SessaoUsuarioRepository.SaveChanges();
                                     }
-                                    else
-                                    {
-                                        this._SessaoUsuarioRepository.CriarSessao(usuario, enderecoIP);
 
-                                        this._HistoricoOperacaoRepository.RegistraHistorico("Usuário efetuou login", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+                                    this._SessaoUsuarioRepository.CriarSessao(usuario, enderecoIP);
 
-                                        usuario = this._UsuarioRepository.ZerarTentativas(usuario);
+                                    this._HistoricoOperacaoRepository.RegistraHistorico("Usuário efetuou login", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
-                                        usuario.ListUsuarioFuncionalidade = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID).ToList();
-                                    }
+                                    usuario = this._UsuarioRepository.ZerarTentativas(usuario);
+
+                                    usuario.ListUsuarioFuncionalidade = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID).ToList();
+
                                 }
                                 else
                                 {
