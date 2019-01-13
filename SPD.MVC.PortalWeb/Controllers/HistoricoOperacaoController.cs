@@ -163,7 +163,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 {
                     var descricao = collection["Descricao_Filtro"].ToString();
 
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Descricao.Contains(descricao)).ToList();
+                    ListaFiltrada = ListaFiltrada.Where(a => a.Descricao.ToLower().Contains(descricao.ToLower())).ToList();
                     historicoOperacaoViewModel.Descricao_Filtro = descricao;
                 }
 

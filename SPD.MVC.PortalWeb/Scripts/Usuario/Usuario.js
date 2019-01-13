@@ -49,7 +49,7 @@
 });
 
 function DataTable() {
-
+    var teste = $('#NomeFiltro').val();
     var table = $('#idGrid').DataTable({
         "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-left"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"pull-left"ip>>>',
         //    "info": false,
@@ -66,19 +66,19 @@ function DataTable() {
             "type": "POST",
             "dataType": "JSON",
             "data": {
-                'Nome': $('#Descricao_Filtro').val(),
-                'Email': $('#DataDe').val(),
-                'isAtivo': $('#DataAte').val(),
-                'isBloqueado': $('#TipoOperacao_Filtro').val()
+                'NomeFiltro': $('#NomeFiltro').val(),
+                'EmailFiltro': $('#EmailFiltro').val(),
+                'isAtivoFiltro': $('#isAtivoFiltro').val(),
+                'isBloqueadoFiltro': $('#isBloqueadoFiltro').val()
             }
         },
-        "columnDefs": [
-            {
-                "targets": -1,
-                "data": null,
-                "defaultContent": "<button>Click!</button>"
-            }
-        ],
+        //"columnDefs": [
+        //    {
+        //        "targets": -1,
+        //        "data": null,
+        //        "defaultContent": "<button>Click!</button>"
+        //    }
+        //],
         "displayLength": 100,
         "createdRow": function (row, data, rowIndex) {
             $.each($('td', row), function (colIndex) {

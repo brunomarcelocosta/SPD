@@ -431,34 +431,34 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 if (!string.IsNullOrWhiteSpace(collection["NomeFiltro"]))
                 {
-                    var nome = collection["NomeFiltro"].ToString();
+                    var nome = collection["NomeFiltro"].ToString().Replace(",", "");
 
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Nome.Contains(nome)).ToList();
-                    usuarioViewModel.Nome = nome;
+                    ListaFiltrada = ListaFiltrada.Where(a => a.Nome.ToLower().Contains(nome.ToLower())).ToList();
+                    usuarioViewModel.NomeFiltro = nome;
                 }
 
                 if (!string.IsNullOrWhiteSpace(collection["EmailFiltro"]))
                 {
-                    var email = collection["EmailFiltro"].ToString();
+                    var email = collection["EmailFiltro"].ToString().Replace(",", "");
 
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Email.Contains(email)).ToList();
-                    usuarioViewModel.Nome = email;
+                    ListaFiltrada = ListaFiltrada.Where(a => a.Email.ToLower().Contains(email.ToLower())).ToList();
+                    usuarioViewModel.EmailFiltro = email;
                 }
 
-                if (!string.IsNullOrWhiteSpace(collection["isAtivo"]))
+                if (!string.IsNullOrWhiteSpace(collection["isAtivoFiltro"]))
                 {
-                    var status = collection["isAtivo"].ToString() == "true" ? true : false;
+                    var status = collection["isAtivoFiltro"].ToString().Replace(",", "") == "true" ? true : false;
 
                     ListaFiltrada = ListaFiltrada.Where(a => a.isAtivo == status).ToList();
-                    usuarioViewModel.isAtivo = status;
+                    usuarioViewModel.isAtivoFiltro = status.ToString();
                 }
 
-                if (!string.IsNullOrWhiteSpace(collection["isBloqueado"]))
+                if (!string.IsNullOrWhiteSpace(collection["isBloqueadoFiltro"]))
                 {
-                    var status = collection["isBloqueado"].ToString() == "true" ? true : false;
+                    var status = collection["isBloqueadoFiltro"].ToString().Replace(",", "") == "true" ? true : false;
 
                     ListaFiltrada = ListaFiltrada.Where(a => a.isBloqueado == status).ToList();
-                    usuarioViewModel.isBloqueado = status;
+                    usuarioViewModel.isBloqueadoFiltro = status.ToString();
                 }
             }
 
@@ -467,6 +467,10 @@ namespace SPD.MVC.PortalWeb.Controllers
             return usuarioViewModel;
         }
 
+        //public SelectList ListStatus(object id = null)
+        //{
+
+        //}
         #endregion
 
         #region Validações

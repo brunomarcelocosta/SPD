@@ -64,6 +64,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string NomeFiltro { get; set; }
         public string EmailFiltro { get; set; }
+        public string isAtivoFiltro { get; set; }
+        public string isBloqueadoFiltro { get; set; }
 
     }
 }

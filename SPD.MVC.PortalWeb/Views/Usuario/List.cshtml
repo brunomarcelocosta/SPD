@@ -20,6 +20,8 @@
     <br />
 
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.FieldSort)
+    @Html.HiddenFor(model => model.PageNumber)
 
     <div class="row">
         <div class="col-md-12">
