@@ -21,8 +21,6 @@ namespace SPD.Model.Model
 
         public string EMAIL { get; set; }
 
-        public string DDD { get; set; }
-
         public string CELULAR { get; set; }
 
         public int ID_ESTADO_CIVIL { get; set; }

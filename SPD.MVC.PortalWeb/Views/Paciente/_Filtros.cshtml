@@ -1,0 +1,83 @@
+﻿@model SPD.MVC.PortalWeb.ViewModels.PacienteViewModel
+
+<div class="row alert alert-info" style="margin-left:5px; margin-right:6px;">
+    <h4><span class="glyphicon glyphicon-filter"></span> Filtros </h4>
+    <div class="row" id="linha_ordenada"></div>
+    <div class="row" id="linha">
+
+        <div class="row">
+
+            <div class="form-group col-md-3" id="divNome" style="padding-left:32px;">
+                @Html.Label("Nome")
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @Value = Model.Nome, @class = "form-control input-sm", @style = "width: 200px" } })
+            </div>
+
+            <div class="form-group col-md-3" id="divEmail" style="padding-left:32px;">
+                @Html.Label("E-mail")
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @Value = Model.Email, @class = "form-control input-sm", @style = "width: 200px" } })
+            </div>
+
+            <div class="form-group col-md-3" id="divEmail" style="padding-left:32px;">
+                @Html.Label("CPF")
+                @Html.EditorFor(model => model.Cpf, new { htmlAttributes = new { @Value = Model.Cpf, @class = "form-control input-sm", @style = "width: 200px" } })
+            </div>
+
+            <div class="form-group col-md-3" id="divStatus" style="padding-left:32px;">
+                @Html.Label("Status")
+                @Html.DropDownListFor(model => model.isAtivoFiltro,
+                                         new SelectList(new List<Object>{
+                                              new { value = "" , text = "", Selected=true  },
+                                              new { value = "true" , text = "Ativo"  },
+                                              new { value = "false" , text = "Inativo" }
+                                                         }, "value", "text", string.IsNullOrWhiteSpace(Model.isAtivoFiltro) ? "" : Model.isAtivoFiltro),
+                                         new { @class = "form-control input-sm", @style = "width: 100px" })
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="form-group col-md-3" id="divBloqueado" style="padding-left:32px;">
+                @Html.Label("Tipo")
+                @Html.DropDownListFor(model => model.tipoPacienteFiltro,
+                                         new SelectList(new List<Object>{
+                                              new { value = "" , text = ""  },
+                                              new { value = "true" , text = "Particular"  },
+                                              new { value = "false" , text = "Conveniado" }
+                                                         }, "value", "text", string.IsNullOrWhiteSpace(Model.tipoPacienteFiltro) ? "": Model.tipoPacienteFiltro),
+                                         new { @class = "form-control input-sm", @style = "width: 100px" })
+            </div>
+
+            <div class="form-group col-md-3" id="divDataOper" style="padding-left:5px;">
+                @Html.Label("Data de Nascimento")
+                <div class="input-group input-daterange col-md-12">
+                    @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @class = "form-control data input-sm", @name = "start" } })
+                    <span class="input-group-addon" style="vertical-align: top; height: 18px; font-size:small">até</span>
+                    @Html.EditorFor(model => model.DataAte, new { htmlAttributes = new { @Value = Model.DataAte_Filtro, @class = "form-control data input-sm", @name = "end" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4 col-md-offset-4 text-center" id="divAcoes">
+            <br />
+            <button type="button" ID="btnFiltrar" class="btn btn-sm btn-primary" name="btnFiltrar" value="btnFiltrar" onclick="aplicarFiltro();">Filtrar</button>
+            <button type="button" id="btnLimpar" name="btnLimparFiltro" value="btnLimparFiltro" class="btn btn-sm btn-default" onclick="limpar_Filtros(); aplicarFiltro();">Limpar Filtros</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function aplicarFiltro() {
+        $('#frmPrincipal').submit();
+    }
+
+    function limpar_Filtros() {
+
+        $("#Nome").val("");
+        $("#Email").val("");
+        $("#Ativo").val("");
+    }
+
+</script>

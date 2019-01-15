@@ -539,6 +539,7 @@
     <Content Include="Scripts\Login\AlterarSenha.js" />
     <Content Include="Scripts\Login\Login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Paciente\Paciente.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site.js" />
@@ -579,6 +580,10 @@
     <Content Include="Views\Usuario\Edit.cshtml" />
     <Content Include="Views\Usuario\New.cshtml" />
     <Content Include="Views\Paciente\New.cshtml" />
+    <Content Include="Views\Paciente\List.cshtml" />
+    <Content Include="Views\Paciente\_List.cshtml" />
+    <Content Include="Views\Paciente\_Filtros.cshtml" />
+    <Content Include="Views\Paciente\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

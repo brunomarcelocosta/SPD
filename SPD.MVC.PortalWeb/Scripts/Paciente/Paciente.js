@@ -61,23 +61,19 @@ function DataTable() {
         "order": [[1, 'ASC']],
         "ajax":
         {
-            "url": "/Usuario/Paginacao",
+            "url": "/Paciente/Paginacao",
             "type": "POST",
             "dataType": "JSON",
             "data": {
-                'NomeFiltro': $('#NomeFiltro').val(),
-                'EmailFiltro': $('#EmailFiltro').val(),
+                'Nome': $('#Nome').val(),
+                'Cpf': $('#Cpf').val(),
+                'Email': $('#Email').val(),
                 'isAtivoFiltro': $('#isAtivoFiltro').val(),
-                'isBloqueadoFiltro': $('#isBloqueadoFiltro').val()
+                'tipoPacienteFiltro': $('#tipoPacienteFiltro').val(),
+                'DataDe': $('#DataDe').val(),
+                'DataAte': $('#DataAte').val()
             }
         },
-        //"columnDefs": [
-        //    {
-        //        "targets": -1,
-        //        "data": null,
-        //        "defaultContent": "<button>Click!</button>"
-        //    }
-        //],
         "displayLength": 100,
         "createdRow": function (row, data, rowIndex) {
             $.each($('td', row), function (colIndex) {
@@ -88,8 +84,11 @@ function DataTable() {
             { "data": "ID", "orderable": true, "autoWidth": true },
             { "data": "Nome", "orderable": true, "autoWidth": true },
             { "data": "Email", "orderable": true, "autoWidth": true },
-            { "data": "isAtivo", "orderable": true, "autoWidth": true },
-            { "data": "isBloqueado", "orderable": true, "autoWidth": true },
+            { "data": "Data_Nasc", "orderable": true, "autoWidth": true },
+            { "data": "Cpf", "orderable": true, "autoWidth": true },
+            { "data": "Celular", "orderable": true, "autoWidth": true },
+            { "data": "tpPaciente", "orderable": true, "autoWidth": true },
+            { "data": "Ativo", "orderable": true, "autoWidth": true },
             {
                 "data": null, "render": function (data, type, row) {
                     return '<button type="button" id="' + row.ID + '" class="btn btn-danger btn-sm" onclick="Excluir(this)" >Excluir</button>';
@@ -121,24 +120,9 @@ function DataTable() {
         }
     });
 
-    //$('#idGrid tbody').on('click', '[id*=btnDetails]', function () {
-    //    var data = table.row($(this).parents('tr')).data();
-    //    data.counter++;
-    //    var teste = table.row(this).data(data).draw();
-    //    var _id = data[0].ID();
-    //    var userID = data[0];
-
-    //    Excluir(userID);
-    //});
-
-    //$('#idGrid tbody').on('click', 'button', function () {
-    //    var data = table.row($(this).parents('tr')).data();
-    //    alert(data[0] + "'s salary is: " + data[5]);
-    //});
-
     //DoubleClick outside the grouping
     $('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {
-        Render('Usuario', 'Edit', table.row(this).data().ID);
+        Render('Paciente', 'Edit', table.row(this).data().ID);
     });
 }
 
@@ -147,9 +131,8 @@ function Excluir(obj) {
     var valueID = "";
     valueID = $(obj).attr('ID').toString();
 
-    var urlList = '/Usuario/List';
-    var url = '/Usuario/Delete';
-    var msg = "Deseja realmente excluir o usuário?";
+    var urlList = '/Paciente/List';
+    var msg = "Deseja realmente excluir o Paciente?";
 
     swal({
         title: "Confirmação",
@@ -162,7 +145,7 @@ function Excluir(obj) {
             if (!willDelete) { return; }
             $.ajax({
                 type: "POST",
-                url: '/Usuario/Delete',
+                url: '/Paciente/Delete',
                 data: { id: valueID },
                 dataType: 'JSON',
                 success: function (result) {
@@ -174,7 +157,7 @@ function Excluir(obj) {
 
                     }
                     else {
-                        swal("", "Usuário excluído com sucesso.", "success")
+                        swal("", "Paciente excluído com sucesso.", "success")
                             .then(() => {
                                 window.location = urlList;
                             });

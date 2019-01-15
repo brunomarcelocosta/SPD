@@ -20,8 +20,6 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string Email { get; set; }
 
-        public string DDD { get; set; }
-
         public string Celular { get; set; }
 
         public int ID_Estado_Civil { get; set; }
@@ -56,5 +54,9 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public bool Ativo { get; set; }
 
         public List<PacienteViewModel> ListPacienteViewModel { get; set; }
+
+        public string isAtivoFiltro { get; set; }
+        public string tipoPacienteFiltro { get; set; }
+
     }
 }

@@ -62,19 +62,20 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             List<object> listToView = new List<object>();
 
-            //TO DO LIST FOR VIEW
-
-            //foreach (var item in pacienteViewModel.ListPacienteViewModel)
-            //{
-            //    listToView.Add(new
-            //    {
-            //        item.ID,
-            //        item.Nome,
-            //        item.Email,
-            //        isAtivo = item.isAtivo == true ? "Ativo" : "Inativo",
-            //        isBloqueado = item.isBloqueado == true ? "Sim" : "Não"
-            //    });
-            //}
+            foreach (var item in pacienteViewModel.ListPacienteViewModel)
+            {
+                listToView.Add(new
+                {
+                    item.ID,
+                    item.Nome,
+                    item.Email,
+                    item.Data_Nasc,
+                    item.Cpf,
+                    item.Celular,
+                    tpPaciente = item.Tipo_Paciente == true ? "Particular" : "Convêniado",
+                    Ativo = item.Ativo == true ? "Ativo" : "Inativo"
+                });
+            }
 
             return Json(new
             {
@@ -188,7 +189,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     var cpf = collection["Cpf"].ToString();
 
                     ListaFiltrada = ListaFiltrada.Where(a => a.Cpf.Contains(cpf)).ToList();
-                    pacienteViewModel.Nome = cpf;
+                    pacienteViewModel.Cpf = cpf;
                 }
 
                 if (!string.IsNullOrWhiteSpace(collection["Email"]))
@@ -196,15 +197,23 @@ namespace SPD.MVC.PortalWeb.Controllers
                     var email = collection["Email"].ToString();
 
                     ListaFiltrada = ListaFiltrada.Where(a => a.Email.Contains(email)).ToList();
-                    pacienteViewModel.Nome = email;
+                    pacienteViewModel.Email = email;
                 }
 
-                if (!string.IsNullOrWhiteSpace(collection["Ativo"]))
+                if (!string.IsNullOrWhiteSpace(collection["isAtivoFiltro"]))
                 {
-                    var status = collection["isAtivo"].ToString() == "true" ? true : false;
+                    var status = collection["isAtivoFiltro"].ToString() == "true" ? true : false;
 
                     ListaFiltrada = ListaFiltrada.Where(a => a.Ativo == status).ToList();
-                    pacienteViewModel.Ativo = status;
+                    pacienteViewModel.isAtivoFiltro = status.ToString();
+                }
+
+                if (!string.IsNullOrWhiteSpace(collection["tipoPacienteFiltro"]))
+                {
+                    var status = collection["tipoPacienteFiltro"].ToString() == "true" ? true : false;
+
+                    ListaFiltrada = ListaFiltrada.Where(a => a.Tipo_Paciente == status).ToList();
+                    pacienteViewModel.tipoPacienteFiltro = status.ToString();
                 }
 
                 if (!string.IsNullOrWhiteSpace(collection["DataDe"]) && !string.IsNullOrWhiteSpace(collection["DataAte"]))

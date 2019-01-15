@@ -41,13 +41,9 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .HasColumnName("email")
            .HasMaxLength(50);
 
-            Property(paciente => paciente.DDD)
-           .HasColumnName("ddd")
-           .HasMaxLength(2);
-
             Property(paciente => paciente.CELULAR)
            .HasColumnName("celular")
-           .HasMaxLength(9);
+           .HasMaxLength(15);
 
             Property(paciente => paciente.ID_ESTADO_CIVIL)
            .HasColumnName("fk_id_estado_civil")

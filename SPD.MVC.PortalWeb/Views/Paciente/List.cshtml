@@ -1,0 +1,58 @@
+﻿@model SPD.MVC.PortalWeb.ViewModels.PacienteViewModel
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pacientes</h2>
+
+<hr />
+
+    <p style="margin-left:5px">
+        <input type="button" value="Novo" class="btn btn-warning btn" onclick="javascript: Render('Paciente','New')" />
+    </p>
+
+@using (Html.BeginForm("List", "Paciente", FormMethod.Post, new { name = "frmPrincipal", id = "frmPrincipal" }))
+{
+    @Html.Partial("_Filtros", Model)
+
+    <br />
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.FieldSort)
+    @Html.HiddenFor(model => model.PageNumber)
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("_List", Model)
+        </div>
+    </div>
+    <br />
+    <hr />
+
+}
+
+<style>
+
+    .paginate_button.first {
+        display: none !important;
+    }
+
+    .paginate_button.last {
+        display: none !important;
+    }
+
+    tr.group,
+    tr.group:hover {
+        background-color: #ddd !important;
+    }
+</style>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap.min.js"></script>
+
+    <script src="~/Scripts/Paciente/Paciente.js"></script>
+}
