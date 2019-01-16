@@ -69,7 +69,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     item.ID,
                     item.Nome,
                     item.Email,
-                    item.Data_Nasc,
+                    Data_Nasc = item.Data_Nasc.ToShortDateString(),
                     item.Cpf,
                     item.Celular,
                     tpPaciente = item.Tipo_Paciente == true ? "Particular" : "Convêniado",
@@ -93,27 +93,45 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             try
             {
-                //TO DO 
 
-                // Sorting   
-                //switch (order)
-                //{
-                //    case "1":
-                //        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Nome).ToList() : data.OrderBy(p => p.Nome).ToList();
-                //        break;
+                switch (order)
+                {
+                    case "1":
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ID).ToList() : data.OrderBy(p => p.ID).ToList();
+                        break;
 
-                //    case "2":
-                //        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Data_Nasc).ToList() : data.OrderBy(p => p.Data_Nasc).ToList();
-                //        break;
+                    case "2":
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Nome).ToList() : data.OrderBy(p => p.Nome).ToList();
+                        break;
 
-                //    case "3":
-                //        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Ativo).ToList() : data.OrderBy(p => p.Ativo).ToList();
-                //        break;
+                    case "3":
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Email).ToList() : data.OrderBy(p => p.Email).ToList();
+                        break;
 
-                //    default:
-                //        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Nome).ToList() : data.OrderBy(p => p.Nome).ToList();
-                //        break;
-                //}
+                    case "4":
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Data_Nasc).ToList() : data.OrderBy(p => p.Data_Nasc).ToList();
+                        break;
+
+                    case "5":
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Cpf).ToList() : data.OrderBy(p => p.Cpf).ToList();
+                        break;
+
+                    case "6":
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Celular).ToList() : data.OrderBy(p => p.Celular).ToList();
+                        break;
+
+                    case "7":
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Tipo_Paciente).ToList() : data.OrderBy(p => p.Tipo_Paciente).ToList();
+                        break;
+
+                    case "8":
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Ativo).ToList() : data.OrderBy(p => p.Ativo).ToList();
+                        break;
+
+                    default:
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ID).ToList() : data.OrderBy(p => p.ID).ToList();
+                        break;
+                }
             }
             catch (Exception ex)
             {

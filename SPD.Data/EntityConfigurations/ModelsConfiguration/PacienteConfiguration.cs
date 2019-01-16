@@ -94,8 +94,7 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .IsRequired();
 
             Property(paciente => paciente.FOTO)
-           .HasColumnName("foto")
-           .IsRequired();
+           .HasColumnName("foto");
 
             Property(paciente => paciente.ATIVO)
            .HasColumnName("lg_ativo")
