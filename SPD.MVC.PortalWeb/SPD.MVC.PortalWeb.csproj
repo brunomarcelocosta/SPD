@@ -529,6 +529,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery.mask.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.signalR-2.3.0.js" />
     <Content Include="Scripts\jquery.signalR-2.3.0.min.js" />
@@ -538,8 +539,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Login\AlterarSenha.js" />
     <Content Include="Scripts\Login\Login.js" />
+    <Content Include="Scripts\Mascaras.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Paciente\Paciente.js" />
+    <Content Include="Scripts\Paciente\PacienteNew.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site.js" />
@@ -548,6 +551,9 @@
     <Content Include="Scripts\Usuario\Usuario.js" />
     <Content Include="Scripts\Usuario\UsuarioEdit.js" />
     <Content Include="Scripts\Usuario\UsuarioNew.js" />
+    <Content Include="Scripts\Webcam\jquery.webcam.js" />
+    <Content Include="Scripts\Webcam\jscam.swf" />
+    <Content Include="Scripts\Webcam\jscam_canvas_only.swf" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -587,6 +593,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Captures\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

@@ -46,9 +46,14 @@ namespace SPD.Model.Enums
             Usuarios = 3
         }
 
-        public enum EstadoCivil
+        public enum EstadosCivis
         {
-
+            Solteiro = 1,
+            Casado = 2,
+            Divorciado = 3,
+            Separado = 4,
+            Viúvo = 5,
+            Nenhum = 6
         }
 
         public enum Propagation

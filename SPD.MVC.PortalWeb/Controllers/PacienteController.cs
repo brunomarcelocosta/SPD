@@ -5,9 +5,11 @@ using SPD.MVC.PortalWeb.ViewModels;
 using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static SPD.Model.Enums.SPD_Enums;
 
 namespace SPD.MVC.PortalWeb.Controllers
 {
@@ -160,6 +162,7 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult New()
         {
             PacienteViewModel pacienteViewModel = new PacienteViewModel();
+            pacienteViewModel.ListEstadoCivil = ListEstadoCivil(null);
 
             return View(pacienteViewModel);
         }
@@ -174,6 +177,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             PacienteViewModel pacienteViewModel = new PacienteViewModel();
 
             pacienteViewModel = ToViewModel(_PacienteService.GetById(id));
+            pacienteViewModel.estadoCivil_String = pacienteViewModel.EstadoCivil.Descricao;
 
             return View(pacienteViewModel);
         }
@@ -266,6 +270,62 @@ namespace SPD.MVC.PortalWeb.Controllers
             pacienteViewModel.ListPacienteViewModel = ListaFiltrada;
 
             return pacienteViewModel;
+        }
+
+        #endregion
+
+        #region Select List
+
+        public SelectList ListEstadoCivil(object id = null)
+        {
+            List<string> list = new List<string>();
+
+            foreach (var enums in Enum.GetNames(typeof(EstadosCivis)))
+            {
+                list.Add(enums);
+            }
+
+            return new SelectList(list, id);
+        }
+
+        #endregion
+
+        #region Webcam
+
+        [HttpPost]
+        public ActionResult Capture()
+        {
+            if (Request.InputStream.Length > 0)
+            {
+                using (StreamReader reader = new StreamReader(Request.InputStream))
+                {
+                    string hexString = Server.UrlEncode(reader.ReadToEnd());
+                    string imageName = DateTime.Now.ToString("dd-MM-yy hh-mm-ss");
+                    string imagePath = string.Format("~/Captures/{0}.png", imageName);
+                    System.IO.File.WriteAllBytes(System.Web.HttpContext.Current.Server.MapPath(imagePath), ConvertHexToBytes(hexString));
+                    Session["CapturedImage"] = VirtualPathUtility.ToAbsolute(imagePath);
+                }
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ContentResult GetCapture()
+        {
+            string url = Session["CapturedImage"].ToString();
+            Session["CapturedImage"] = null;
+            return Content(url);
+        }
+
+        private static byte[] ConvertHexToBytes(string hex)
+        {
+            byte[] bytes = new byte[hex.Length / 2];
+            for (int i = 0; i < hex.Length; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            }
+            return bytes;
         }
 
         #endregion

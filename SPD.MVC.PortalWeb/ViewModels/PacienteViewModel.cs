@@ -1,6 +1,7 @@
 ﻿using SPD.MVC.Geral.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string Nome { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime Data_Nasc { get; set; }
 
         public string Cpf { get; set; }
@@ -57,6 +59,10 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string isAtivoFiltro { get; set; }
         public string tipoPacienteFiltro { get; set; }
+        public string estadoCivil_String { get; set; }
+        public bool particular { get; set; }
+        public bool conveniado { get; set; }
+        public string srcImage { get; set; }
 
     }
 }

@@ -7,3 +7,280 @@
 
 <h2>Novo Paciente</h2>
 
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID_Estado_Civil)
+    @Html.HiddenFor(model => model.srcImage)
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Dados Pessoais</b></div>
+                <div class="panel-body">
+                    <div id="dadosPessoais">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                @Html.Label("Nome", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-3">
+                                @Html.Label("Data de Nascimento", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Data_Nasc, new { htmlAttributes = new { @class = "form-control data" } })
+                                @Html.ValidationMessageFor(model => model.Data_Nasc, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>@Html.CheckBoxFor(model => model.particular, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,1);" })</td>
+                                            <td>&nbsp; @Html.Label("Particular ", htmlAttributes: new { @class = "control-label", @style = "font-size: 17px; padding-top:10px;" })</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@Html.CheckBoxFor(model => model.conveniado, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,2);" })</td>
+                                            <td>&nbsp;@Html.Label("Conveniado ", htmlAttributes: new { @class = "control-label", @style = "font-size: 17px; padding-top:10px;" }) </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                @Html.Label("CPF ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Cpf, new { htmlAttributes = new { @class = "form-control cpf", @style = "width: 130px", @maxLength = "15", @onkeypress = "return SomenteNumero(event)" } })
+                                @Html.ValidationMessageFor(model => model.Cpf, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-3">
+                                @Html.Label("RG ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Rg, new { htmlAttributes = new { @class = "form-control rg", @style = "width: 130px", @maxLength = "15", @onkeypress = "return SomenteNumero(event)" } })
+                                @Html.ValidationMessageFor(model => model.Rg, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                                @Html.Label("E-mail ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @maxLength = "53" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                @Html.Label("Celular ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control celular", @style = "width: 130px", @maxLength = "14", @onkeypress = "return SomenteNumero(event)" } })
+                                @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-5">
+                                @Html.Label("Profissão ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Profissao, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Profissao, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-1"></div>
+
+                            <div class="col-md-3">
+                                @Html.Label("Estado Civil ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                @Html.DropDownListFor(model => model.estadoCivil_String, Model.ListEstadoCivil as SelectList,
+                                                       "",  new { @class = "form-control",@style="width:150px" })
+                                @Html.ValidationMessageFor(model => model.estadoCivil_String, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Foto </b></div>
+                <div class="panel-body">
+                    <div id="endereco">
+
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td align="center"><u>Live Camera</u></td>
+                                <td></td>
+                                <td align="center"><u>Captured Picture</u></td>
+                            </tr>
+                            <tr>
+                                <td><div id="webcam"></div> </td>
+                                <td> &nbsp;</td>
+                                <td><img id="imgCapture" style="visibility: hidden; width: 320px;height: 240px" /></td>
+                            </tr>
+                        </table>
+                        <br />
+                        <input type="button" value="Capture" onclick="Capture();" />
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Endereço</b></div>
+                <div class="panel-body">
+                    <div id="endereco">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                @Html.Label("CEP ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control cep", @style = "width:130px", @MaxLength = "9" } })
+                                @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                @Html.Label("Rua ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.End_rua, new { htmlAttributes = new { @class = "form-control", @MaxLength = "100" } })
+                                @Html.ValidationMessageFor(model => model.End_rua, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-2" style="padding-left:20px">
+                                @Html.Label("Número ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.End_Numero, new { htmlAttributes = new { @class = "form-control", @style = "width:100px", @MaxLength = "6" } })
+                                @Html.ValidationMessageFor(model => model.End_Numero, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.Label("Complemento ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.End_Compl, new { htmlAttributes = new { @class = "form-control", @MaxLength = "30" } })
+                                @Html.ValidationMessageFor(model => model.End_Compl, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                @Html.Label("Bairro ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control " } })
+                                @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-5">
+                                @Html.Label("Cidade ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control " } })
+                                @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-1">
+                                @Html.Label("UF ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Uf, new { htmlAttributes = new { @class = "form-control ", @style = "width:50px", @MaxLength = "2" } })
+                                @Html.ValidationMessageFor(model => model.Uf, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-2">
+                                @Html.Label("País ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Pais, new { htmlAttributes = new { @class = "form-control " } })
+                                @Html.ValidationMessageFor(model => model.Pais, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Ações</b></div>
+                <div class="panel-body">
+                    <div id="acoes" class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <input type="submit" value="Salvar" class="btn btn-success" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="Render('Paciente','List')" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerymask")
+    @Scripts.Render("~/bundles/site")
+
+    <script src="~/Scripts/Webcam/jquery.webcam.js"></script>
+
+    <script src="~/Scripts/Paciente/PacienteNew.js"></script>
+
+    <script type="text/javascript">
+        //$(function () {
+
+        //    jQuery("#webcam").webcam({
+        //        width: 320,
+        //        height: 240,
+        //        mode: "save",
+        //        swffile: '/Scripts/Webcam/jscam.swf',
+        //        debug: function (type, status) {
+        //        },
+        //        onSave: function (data, ab) {
+        //            $.ajax({
+        //                type: "POST",
+        //                url: '/Paciente/GetCapture',
+        //                data: '',
+        //                contentType: "application/json; charset=utf-8",
+        //                dataType: "text",
+        //                success: function (r) {
+        //                    $("#imgCapture").css("visibility", "visible");
+        //                    $("#imgCapture").attr("src", r);
+        //                    $("#srcImage").val(r)
+        //                    $("#webcam").css("visibility", "hidden");
+        //                },
+        //                failure: function (response) {
+        //                    alert(response.d);
+        //                }
+        //            });
+        //        },
+        //        onCapture: function () {
+        //            webcam.save('/Paciente/Capture');
+        //        }
+        //    });
+        //});
+    </script>
+
+}

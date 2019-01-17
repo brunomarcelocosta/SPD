@@ -25,6 +25,16 @@ function questionar(action, controller) {
     });
 }
 
+function SomenteNumero(e) {
+    var tecla = (window.event) ? event.keyCode : e.which;
+    if ((tecla > 47 && tecla < 58)) return true;
+    else {
+        if (tecla == 8 || tecla == 0) return true;
+        else return false;
+    }
+}
+
+
 /// <summary>
 /// função para validar dados de relatório antes de abrir modal de exportação ou impressão de pdf
 /// </summary>
@@ -166,27 +176,27 @@ function htmlEncode(value) {
 }
 
 $(document).ready(function () {
-    $('form input, select, textarea').each(function () {
-        // negrito nos labels de campos obrigatórios de acordo com configuração Required da ViewModel
-        var req = $(this).attr('data-val-required');
-        if (undefined != req) {
-            var label = $('label[for="' + $(this).attr('id') + '"]');
-            label.attr('style', 'font-weight: bold');
-            // Caso queira colocar asterisco ao lado do label, remover comentários abaixo
-            //var text = label.text();
-            //if (text.length > 0) {
-            //    label.append('<span style="color: red"> *</span>');
-            //}
-        }
+    //$('form input, select, textarea').each(function () {
+    //    // negrito nos labels de campos obrigatórios de acordo com configuração Required da ViewModel
+    //    var req = $(this).attr('data-val-required');
+    //    if (undefined != req) {
+    //        var label = $('label[for="' + $(this).attr('id') + '"]');
+    //        label.attr('style', 'font-weight: bold');
+    //        // Caso queira colocar asterisco ao lado do label, remover comentários abaixo
+    //        //var text = label.text();
+    //        //if (text.length > 0) {
+    //        //    label.append('<span style="color: red"> *</span>');
+    //        //}
+    //    }
 
-        // setar maxlength dos campos de acordo com configuração MaxLength da ViewModel
-        var max = $(this).attr('data-val-maxlength-max');
-        if (undefined != max) {
-            var $this = $(this);
-            var data = $this.data();
-            $this.attr("maxlength", max);
-        }
-    });
+    //    // setar maxlength dos campos de acordo com configuração MaxLength da ViewModel
+    //    var max = $(this).attr('data-val-maxlength-max');
+    //    if (undefined != max) {
+    //        var $this = $(this);
+    //        var data = $this.data();
+    //        $this.attr("maxlength", max);
+    //    }
+    //});
 });
 
 /// <summary>

@@ -1,0 +1,8 @@
+﻿
+1° = em default projet slecionar o projeto '4-Data\SPD.Data'
+
+2° = enable-migrations
+
+3° = add-migration "name"
+
+4° = update-database -verbose

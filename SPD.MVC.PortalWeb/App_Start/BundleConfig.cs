@@ -12,7 +12,8 @@ namespace SPD.MVC.PortalWeb
                       "~/Scripts/jquery-3.3.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                      "~/Scripts/jquery.validate*"));
+                      "~/Scripts/jquery.validate*",
+                      "~/Scripts/jquery-3.3.1.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                       "~/Scripts/modernizr-*"));
@@ -31,6 +32,10 @@ namespace SPD.MVC.PortalWeb
             bundles.Add(new ScriptBundle("~/bundles/site").Include(
                       "~/Scripts/sitebase.js",
                       "~/Scripts/site.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquerymask").Include(
+                "~/Scripts/jquery.mask*",
+                "~/Scripts/Mascaras.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Styles/bootstrap.css",

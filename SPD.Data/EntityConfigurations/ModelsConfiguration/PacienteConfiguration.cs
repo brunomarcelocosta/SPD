@@ -75,7 +75,7 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
 
             Property(paciente => paciente.BAIRRO)
            .HasColumnName("bairro")
-           .HasMaxLength(25);
+           .HasMaxLength(50);
 
             Property(paciente => paciente.CIDADE)
            .HasColumnName("cidade")
@@ -87,7 +87,7 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
 
             Property(paciente => paciente.PAIS)
            .HasColumnName("pais")
-           .HasMaxLength(25);
+           .HasMaxLength(50);
 
             Property(paciente => paciente.TIPO_PACIENTE)
            .HasColumnName("tipo_paciente")
