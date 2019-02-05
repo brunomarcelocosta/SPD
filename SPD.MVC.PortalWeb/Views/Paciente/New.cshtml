@@ -5,12 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script type="text/javascript" src="~/Scripts/webcam.min.js"></script>
+
+
 <h2>Novo Paciente</h2>
 
 <hr />
 
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ID_Estado_Civil)
     @Html.HiddenFor(model => model.srcImage)
@@ -100,7 +105,7 @@
                             <div class="col-md-3">
                                 @Html.Label("Estado Civil ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
                                 @Html.DropDownListFor(model => model.estadoCivil_String, Model.ListEstadoCivil as SelectList,
-                                                       "",  new { @class = "form-control",@style="width:150px" })
+                            "", new { @class = "form-control", @style = "width:150px" })
                                 @Html.ValidationMessageFor(model => model.estadoCivil_String, "", new { @class = "text-danger" })
                             </div>
 
@@ -117,21 +122,26 @@
                 <div class="panel-body">
                     <div id="endereco">
 
-                        <table border="0" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td align="center"><u>Live Camera</u></td>
-                                <td></td>
-                                <td align="center"><u>Captured Picture</u></td>
-                            </tr>
-                            <tr>
-                                <td><div id="webcam"></div> </td>
-                                <td> &nbsp;</td>
-                                <td><img id="imgCapture" style="visibility: hidden; width: 320px;height: 240px" /></td>
-                            </tr>
-                        </table>
+                        <div id="results"></div>
+
+                        <div id="my_camera"></div>
+
                         <br />
-                        <input type="button" value="Capture" onclick="Capture();" />
-                        <br />
+
+                        <div id="pre_take_buttons">
+                            <input type="button" class="btn btn-default" value="Tirar Foto" onclick="preview_snapshot();" />
+                        </div>
+
+                        <div id="post_take_buttons" style="display:none">
+
+                            <input type=button class="btn btn-default" value="Tirar Outra" onClick="cancel_preview()">
+                            <input type=button class="btn btn-primary" value="Salvar" onClick="save_photo()">
+                        </div>
+
+                        <div id="idButtonCancel" style="display:none">
+                            <input type=button class="btn btn-default" value="Tirar Outra" onClick="cancel_saved()">
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -244,43 +254,7 @@
     @Scripts.Render("~/bundles/jquerymask")
     @Scripts.Render("~/bundles/site")
 
-    <script src="~/Scripts/Webcam/jquery.webcam.js"></script>
-
     <script src="~/Scripts/Paciente/PacienteNew.js"></script>
-
-    <script type="text/javascript">
-        //$(function () {
-
-        //    jQuery("#webcam").webcam({
-        //        width: 320,
-        //        height: 240,
-        //        mode: "save",
-        //        swffile: '/Scripts/Webcam/jscam.swf',
-        //        debug: function (type, status) {
-        //        },
-        //        onSave: function (data, ab) {
-        //            $.ajax({
-        //                type: "POST",
-        //                url: '/Paciente/GetCapture',
-        //                data: '',
-        //                contentType: "application/json; charset=utf-8",
-        //                dataType: "text",
-        //                success: function (r) {
-        //                    $("#imgCapture").css("visibility", "visible");
-        //                    $("#imgCapture").attr("src", r);
-        //                    $("#srcImage").val(r)
-        //                    $("#webcam").css("visibility", "hidden");
-        //                },
-        //                failure: function (response) {
-        //                    alert(response.d);
-        //                }
-        //            });
-        //        },
-        //        onCapture: function () {
-        //            webcam.save('/Paciente/Capture');
-        //        }
-        //    });
-        //});
-    </script>
+    <script src="~/Scripts/Webcam/WebcamFunctions.js"></script>
 
 }

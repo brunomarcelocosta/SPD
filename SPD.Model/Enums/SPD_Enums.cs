@@ -43,7 +43,8 @@ namespace SPD.Model.Enums
         {
             EfetuarLogin = 1,
             EfetuarLogof = 2,
-            Usuarios = 3
+            Usuarios = 3,
+            Pacientes = 4
         }
 
         public enum EstadosCivis

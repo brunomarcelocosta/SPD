@@ -5,6 +5,7 @@ using SPD.MVC.PortalWeb.ViewModels;
 using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -17,12 +18,16 @@ namespace SPD.MVC.PortalWeb.Controllers
     {
         private readonly IPacienteService _PacienteService;
         private readonly IUsuarioService _UsuarioService;
+        private readonly IEstadoCivilService _EstadoCivilService;
 
-        public PacienteController(IPacienteService pacienteService, IUsuarioService usuarioService)
+        public PacienteController(IPacienteService pacienteService,
+                                  IUsuarioService usuarioService,
+                                  IEstadoCivilService estadoCivilService)
                    : base(pacienteService)
         {
             _PacienteService = pacienteService;
             _UsuarioService = usuarioService;
+            _EstadoCivilService = estadoCivilService;
         }
 
         #region List 
@@ -167,6 +172,29 @@ namespace SPD.MVC.PortalWeb.Controllers
             return View(pacienteViewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Add(PacienteViewModel pacienteViewModel)
+        {
+            var resultado = "";
+
+            pacienteViewModel.Foto = Convert.FromBase64String(pacienteViewModel.srcImage.Substring("data:image/jpeg;base64,".Length));
+            pacienteViewModel.Tipo_Paciente = pacienteViewModel.conveniado;
+
+            var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
+
+            var paciente = ToModel(pacienteViewModel);
+            paciente.estadoCivil = _EstadoCivilService.Query().Where(a => a.DESCRICAO.Equals(pacienteViewModel.estadoCivil_String)).FirstOrDefault();
+
+            if (!_PacienteService.AdiocinarPaciente(paciente, user_logado, out resultado))
+            {
+                return Json(new { Success = false, Response = resultado });
+            }
+
+            return Json(new { Success = true });
+
+        }
+
         #endregion
 
         #region Editar
@@ -178,6 +206,11 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             pacienteViewModel = ToViewModel(_PacienteService.GetById(id));
             pacienteViewModel.estadoCivil_String = pacienteViewModel.EstadoCivil.Descricao;
+            pacienteViewModel.srcImage = $"data:image/jpeg;base64,{Convert.ToBase64String(pacienteViewModel.Foto)}";
+
+            //ler image e converter
+            //var base64 = Convert.ToBase64String(Model.ByteArray);
+            //var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
 
             return View(pacienteViewModel);
         }
@@ -292,41 +325,6 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Webcam
 
-        [HttpPost]
-        public ActionResult Capture()
-        {
-            if (Request.InputStream.Length > 0)
-            {
-                using (StreamReader reader = new StreamReader(Request.InputStream))
-                {
-                    string hexString = Server.UrlEncode(reader.ReadToEnd());
-                    string imageName = DateTime.Now.ToString("dd-MM-yy hh-mm-ss");
-                    string imagePath = string.Format("~/Captures/{0}.png", imageName);
-                    System.IO.File.WriteAllBytes(System.Web.HttpContext.Current.Server.MapPath(imagePath), ConvertHexToBytes(hexString));
-                    Session["CapturedImage"] = VirtualPathUtility.ToAbsolute(imagePath);
-                }
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        public ContentResult GetCapture()
-        {
-            string url = Session["CapturedImage"].ToString();
-            Session["CapturedImage"] = null;
-            return Content(url);
-        }
-
-        private static byte[] ConvertHexToBytes(string hex)
-        {
-            byte[] bytes = new byte[hex.Length / 2];
-            for (int i = 0; i < hex.Length; i += 2)
-            {
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-            }
-            return bytes;
-        }
 
         #endregion
     }

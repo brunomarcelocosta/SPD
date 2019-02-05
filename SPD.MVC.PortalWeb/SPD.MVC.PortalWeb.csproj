@@ -85,6 +85,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -551,9 +552,10 @@
     <Content Include="Scripts\Usuario\Usuario.js" />
     <Content Include="Scripts\Usuario\UsuarioEdit.js" />
     <Content Include="Scripts\Usuario\UsuarioNew.js" />
-    <Content Include="Scripts\Webcam\jquery.webcam.js" />
-    <Content Include="Scripts\Webcam\jscam.swf" />
-    <Content Include="Scripts\Webcam\jscam_canvas_only.swf" />
+    <Content Include="Scripts\webcam.js" />
+    <Content Include="Scripts\webcam.min.js" />
+    <Content Include="Scripts\webcam.swf" />
+    <Content Include="Scripts\Webcam\WebcamFunctions.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -594,6 +596,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Captures\" />
+    <Folder Include="Content\Images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

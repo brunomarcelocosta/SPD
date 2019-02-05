@@ -37,6 +37,10 @@ namespace SPD.MVC.PortalWeb
                 "~/Scripts/jquery.mask*",
                 "~/Scripts/Mascaras.js"));
 
+            //bundles.Add(new ScriptBundle("~/bundles/webcam").Include(
+            //          "~/Scripts/webcam.js",
+            //          "~/Scripts/webcam.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Styles/bootstrap.css",
                       "~/Content/bootstrap-select.css",
