@@ -29,13 +29,13 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
 
             Property(paciente => paciente.CPF)
            .HasColumnName("cpf")
-           .HasMaxLength(15)
+           .HasMaxLength(50)
            .IsRequired()
            .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
 
             Property(paciente => paciente.RG)
            .HasColumnName("rg")
-           .HasMaxLength(10);
+           .HasMaxLength(50);
 
             Property(paciente => paciente.EMAIL)
            .HasColumnName("email")
@@ -45,13 +45,9 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .HasColumnName("celular")
            .HasMaxLength(15);
 
-            Property(paciente => paciente.ID_ESTADO_CIVIL)
-           .HasColumnName("fk_id_estado_civil")
-           .IsRequired()
-           .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_PACIENTE_SPD_ESTADO_CIVIL")));
-            HasRequired(paciente => paciente.estadoCivil)
-           .WithMany()
-           .HasForeignKey(paciente => paciente.ID_ESTADO_CIVIL);
+            Property(paciente => paciente.ESTADO_CIVIL)
+           .HasColumnName("estado_civil")
+           .HasMaxLength(50);
 
             Property(paciente => paciente.PROFISSAO)
            .HasColumnName("profissao")
@@ -71,7 +67,7 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
 
             Property(paciente => paciente.CEP)
            .HasColumnName("cep")
-           .HasMaxLength(9);
+           .HasMaxLength(50);
 
             Property(paciente => paciente.BAIRRO)
            .HasColumnName("bairro")

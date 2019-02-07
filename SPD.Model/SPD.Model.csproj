@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="Enums\SPD_Enums.cs" />
     <Compile Include="Model\Context.cs" />
-    <Compile Include="Model\EstadoCivil.cs" />
     <Compile Include="Model\Funcionalidade.cs" />
     <Compile Include="Model\HistoricoOperacao.cs" />
     <Compile Include="Model\Notificacao.cs" />

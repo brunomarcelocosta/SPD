@@ -24,8 +24,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string Celular { get; set; }
 
-        public int ID_Estado_Civil { get; set; }
-        public virtual EstadoCivilViewModel EstadoCivil { get; set; }
+        public string Estado_Civil { get; set; }
 
         public string Profissao { get; set; }
 
@@ -59,10 +58,10 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string isAtivoFiltro { get; set; }
         public string tipoPacienteFiltro { get; set; }
-        public string estadoCivil_String { get; set; }
         public bool particular { get; set; }
         public bool conveniado { get; set; }
         public string srcImage { get; set; }
-
+        public bool ExisteImg { get; set; }
+        public string DataNasc_String { get; set; }
     }
 }
