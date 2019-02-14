@@ -239,20 +239,28 @@
       <DependentUpon>UsuarioResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AlterarSenhaController.cs" />
+    <Compile Include="Controllers\ConsultaController.cs" />
+    <Compile Include="Controllers\DentistaController.cs" />
+    <Compile Include="Controllers\HistoricoConsultaController.cs" />
     <Compile Include="Controllers\HistoricoOperacaoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PacienteController.cs" />
+    <Compile Include="Controllers\PreConsultaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\SistemaHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ConsultaViewModel.cs" />
+    <Compile Include="ViewModels\DentistaViewModel.cs" />
     <Compile Include="ViewModels\FuncionalidadeViewModel.cs" />
+    <Compile Include="ViewModels\HistoricoConsultaViewModel.cs" />
     <Compile Include="ViewModels\HistoricoOperacaoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
     <Compile Include="ViewModels\PacienteViewModel.cs" />
+    <Compile Include="ViewModels\PreConsultaViewModel.cs" />
     <Compile Include="ViewModels\SessaoUsuarioViewModel.cs" />
     <Compile Include="ViewModels\TipoOperacaoViewModel.cs" />
     <Compile Include="ViewModels\UsuarioFuncionalidadeViewModel.cs" />
@@ -597,6 +605,10 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Consulta\" />
+    <Folder Include="Views\Dentista\" />
+    <Folder Include="Views\HistoricoConsulta\" />
+    <Folder Include="Views\PreConsulta\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

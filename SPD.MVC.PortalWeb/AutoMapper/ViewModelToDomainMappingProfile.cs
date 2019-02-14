@@ -17,14 +17,19 @@ namespace SPD.MVC.PortalWeb.AutoMapper
 
         public ViewModelToDomainMappingProfile()
         {
+            this.CreateMap<ConsultaViewModel, Consulta>();
+            this.CreateMap<DentistaViewModel, Dentista>();
             this.CreateMap<FuncionalidadeViewModel, Funcionalidade>();
             this.CreateMap<HistoricoOperacaoViewModel, HistoricoOperacao>();
+            this.CreateMap<HistoricoConsultaViewModel, HistoricoConsulta>();
             this.CreateMap<NotificacaoViewModel, Notificacao>();
             this.CreateMap<PacienteViewModel, Paciente>();
+            this.CreateMap<PreConsultaViewModel, PreConsulta>();
             this.CreateMap<SessaoUsuarioViewModel, SessaoUsuario>();
             this.CreateMap<TipoOperacaoViewModel, TipoOperacao>();
             this.CreateMap<UsuarioViewModel, Usuario>();
             this.CreateMap<UsuarioFuncionalidadeViewModel, UsuarioFuncionalidade>();
+
         }
     }
 }

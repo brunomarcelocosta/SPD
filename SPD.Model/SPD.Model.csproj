@@ -61,11 +61,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SPD_Enums.cs" />
+    <Compile Include="Model\Consulta.cs" />
     <Compile Include="Model\Context.cs" />
+    <Compile Include="Model\Dentista.cs" />
     <Compile Include="Model\Funcionalidade.cs" />
+    <Compile Include="Model\HistoricoConsulta.cs" />
     <Compile Include="Model\HistoricoOperacao.cs" />
     <Compile Include="Model\Notificacao.cs" />
     <Compile Include="Model\Paciente.cs" />
+    <Compile Include="Model\PreConsulta.cs" />
     <Compile Include="Model\SessaoUsuario.cs" />
     <Compile Include="Model\TipoOperacao.cs" />
     <Compile Include="Model\Usuario.cs" />

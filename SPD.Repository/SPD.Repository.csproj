@@ -60,19 +60,27 @@
   <ItemGroup>
     <Compile Include="Hubs\UserConnection.cs" />
     <Compile Include="Interface\IRepositoryBase.cs" />
+    <Compile Include="Interface\Model\IConsultaRepository.cs" />
+    <Compile Include="Interface\Model\IDentistaRepository.cs" />
     <Compile Include="Interface\Model\IFuncionalidadeRepository.cs" />
+    <Compile Include="Interface\Model\IHistoricoConsultaRepository.cs" />
     <Compile Include="Interface\Model\IHistoricoOperacaoRepository.cs" />
     <Compile Include="Interface\Model\INotificacaoRepository.cs" />
     <Compile Include="Interface\Model\IPacienteRepository.cs" />
+    <Compile Include="Interface\Model\IPreConsultaRepository.cs" />
     <Compile Include="Interface\Model\ISessaoUsuarioRepository.cs" />
     <Compile Include="Interface\Model\ITipoOperacaoRepository.cs" />
     <Compile Include="Interface\Model\IUsuarioFuncionalidadeRepository.cs" />
     <Compile Include="Interface\Model\IUsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Model\ConsultaRepository.cs" />
+    <Compile Include="Repository\Model\DentistaRepository.cs" />
     <Compile Include="Repository\Model\FuncionalidadeRepository.cs" />
+    <Compile Include="Repository\Model\HistoricoConsultaRepository.cs" />
     <Compile Include="Repository\Model\HistoricoOperacaoRepository.cs" />
     <Compile Include="Repository\Model\NotificacaoRepository.cs" />
     <Compile Include="Repository\Model\PacienteRepository.cs" />
+    <Compile Include="Repository\Model\PreConsultaRepository.cs" />
     <Compile Include="Repository\Model\SessaoUsuarioRepository.cs" />
     <Compile Include="Repository\Model\TipoOperacaoRepository.cs" />
     <Compile Include="Repository\Model\UsuarioFuncionalidadeRepository.cs" />

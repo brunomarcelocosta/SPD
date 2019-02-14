@@ -26,9 +26,13 @@ namespace SPD.Data.Contexts
         public bool IsDisposable { get; set; }
         public IDataContext DataContext { get; }
 
+        public DbSet<Consulta> Consultas { get; set; }
+        public DbSet<Dentista> Dentistas { get; set; }
         public DbSet<Funcionalidade> Funcionalidades { get; set; }
+        public DbSet<HistoricoConsulta> HistoricoConsultas { get; set; }
         public DbSet<HistoricoOperacao> HistoricoOperacoes { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }
+        public DbSet<PreConsulta> PreConsultas { get; set; }
         public DbSet<SessaoUsuario> SessaoUsuario { get; set; }
         public DbSet<TipoOperacao> TipoOperacao { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }

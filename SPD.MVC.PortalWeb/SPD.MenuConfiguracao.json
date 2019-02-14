@@ -36,6 +36,14 @@
     "SubMenus": [
       {
         "Nivel": 1,
+        "Titulo": "Dentistas",
+        "Modulo": "SPD.MVC.PortalWeb",
+        "Controle": "Dentista",
+        "Acao": "List",
+        "Perfil": "Listar Dentistas"
+      },
+      {
+        "Nivel": 2,
         "Titulo": "Pacientes",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "Paciente",
@@ -51,7 +59,7 @@
     "SubMenus": [
       {
         "Nivel": 1,
-        "Titulo": "Pré-Atendimento",
+        "Titulo": "Pré-Consulta",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "PreConsulta",
         "Acao": "List",
@@ -59,7 +67,7 @@
       },
       {
         "Nivel": 2,
-        "Titulo": "Atendimento",
+        "Titulo": "Consulta",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "Consulta",
         "Acao": "List",
