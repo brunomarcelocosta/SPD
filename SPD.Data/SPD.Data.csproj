@@ -96,6 +96,10 @@
     <Compile Include="Migrations\SqlServer\201902072158261_AlterColumnDataNascToString.Designer.cs">
       <DependentUpon>201902072158261_AlterColumnDataNascToString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\SqlServer\201902142242053_NovasTabelasConsulta.cs" />
+    <Compile Include="Migrations\SqlServer\201902142242053_NovasTabelasConsulta.Designer.cs">
+      <DependentUpon>201902142242053_NovasTabelasConsulta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ContextDebugger.cs" />
     <Compile Include="Utilities\ContextProvider.cs" />
@@ -135,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\SqlServer\201902072158261_AlterColumnDataNascToString.resx">
       <DependentUpon>201902072158261_AlterColumnDataNascToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SqlServer\201902142242053_NovasTabelasConsulta.resx">
+      <DependentUpon>201902142242053_NovasTabelasConsulta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
