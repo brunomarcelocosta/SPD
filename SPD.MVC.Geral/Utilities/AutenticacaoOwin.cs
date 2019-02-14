@@ -13,7 +13,7 @@ namespace SPD.MVC.Geral.Utilities
             applicationBuilder.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                ExpireTimeSpan = TimeSpan.FromMinutes(GlobalConstants.Security.SessionTimeout),
+                ExpireTimeSpan = TimeSpan.FromHours(8),
                 SlidingExpiration = true,
             });
         }

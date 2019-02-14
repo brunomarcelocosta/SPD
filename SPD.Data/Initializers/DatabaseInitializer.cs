@@ -127,41 +127,6 @@ namespace SPD.Data.Initializers
 
         }
 
-        private EstadoCivil[] PreparaEstadoCivil()
-        {
-            EstadoCivil solteiro = new EstadoCivil()
-            {
-                DESCRICAO = "Solteiro"
-            };
-
-            EstadoCivil casado = new EstadoCivil()
-            {
-                DESCRICAO = "Casado"
-            };
-
-            EstadoCivil divorciado = new EstadoCivil()
-            {
-                DESCRICAO = "Divorciado"
-            };
-
-            EstadoCivil separado = new EstadoCivil()
-            {
-                DESCRICAO = "Separado"
-            };
-
-            EstadoCivil viuvo = new EstadoCivil()
-            {
-                DESCRICAO = "Viúvo"
-            };
-
-            EstadoCivil naoAplica = new EstadoCivil()
-            {
-                DESCRICAO = "N/A"
-            };
-
-            return new EstadoCivil[] { solteiro, casado, divorciado, separado, viuvo, naoAplica };
-        }
-
         private List<UsuarioFuncionalidade> ListUsuarioFuncionalidades(Usuario usuario, Funcionalidade[] funcionalidades)
         {
             var userFuncs = new List<UsuarioFuncionalidade>();
@@ -233,12 +198,10 @@ namespace SPD.Data.Initializers
             var funcionalidades = Funcionalidades();
             var usuarioFuncionalidades = ListUsuarioFuncionalidades(usuarioAdministrador, Funcionalidades());
             var tiposOperacoes = this.PreparaTiposOperacoes();
-            var estadoCivil = PreparaEstadoCivil();
 
             //this.Context.Set<Funcionalidade>().AddRange(funcionalidades);
             this.Context.Set<Usuario>().Add(usuarioAdministrador);
             this.Context.Set<TipoOperacao>().AddRange(tiposOperacoes);
-            this.Context.Set<EstadoCivil>().AddRange(estadoCivil);
             this.Context.Set<UsuarioFuncionalidade>().AddRange(usuarioFuncionalidades);
 
             try

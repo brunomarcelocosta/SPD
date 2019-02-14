@@ -13,7 +13,7 @@ namespace SPD.Model.Model
 
         public string NOME { get; set; }
 
-        public DateTime DATA_NASC { get; set; }
+        public string DATA_NASC { get; set; }
 
         public string CPF { get; set; }
 

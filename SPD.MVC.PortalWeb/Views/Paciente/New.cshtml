@@ -17,7 +17,6 @@
     @Html.AntiForgeryToken()
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ID_Estado_Civil)
     @Html.HiddenFor(model => model.srcImage)
 
     <div class="row">
@@ -38,8 +37,7 @@
 
                             <div class="col-md-3">
                                 @Html.Label("Data de Nascimento", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Data_Nasc, new { htmlAttributes = new { @class = "form-control data" } })
-                                @Html.ValidationMessageFor(model => model.Data_Nasc, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Data_Nasc, new { htmlAttributes = new { @class = "form-control date" } })
                             </div>
 
                             <div class="col-md-3">
@@ -104,9 +102,9 @@
 
                             <div class="col-md-3">
                                 @Html.Label("Estado Civil ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.DropDownListFor(model => model.estadoCivil_String, Model.ListEstadoCivil as SelectList,
+                                @Html.DropDownListFor(model => model.Estado_Civil, Model.ListEstadoCivil as SelectList,
                             "", new { @class = "form-control", @style = "width:150px" })
-                                @Html.ValidationMessageFor(model => model.estadoCivil_String, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.Estado_Civil, "", new { @class = "text-danger" })
                             </div>
 
                         </div>
@@ -161,7 +159,7 @@
 
                             <div class="col-md-12">
                                 @Html.Label("CEP ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control cep", @style = "width:130px", @MaxLength = "9" } })
+                                @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control cep", @style = "width:130px", @MaxLength = "9", @onblur= "ws_GetCEP()" } })
                                 @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })
                             </div>
 
@@ -173,7 +171,7 @@
 
                             <div class="col-md-6">
                                 @Html.Label("Rua ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.End_rua, new { htmlAttributes = new { @class = "form-control", @MaxLength = "100" } })
+                                @Html.EditorFor(model => model.End_rua, new { htmlAttributes = new { @class = "form-control rua", @MaxLength = "100" } })
                                 @Html.ValidationMessageFor(model => model.End_rua, "", new { @class = "text-danger" })
                             </div>
 
@@ -197,25 +195,25 @@
 
                             <div class="col-md-4">
                                 @Html.Label("Bairro ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control " } })
+                                @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control bairro" } })
                                 @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="col-md-5">
                                 @Html.Label("Cidade ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control " } })
+                                @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control cidade" } })
                                 @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="col-md-1">
                                 @Html.Label("UF ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Uf, new { htmlAttributes = new { @class = "form-control ", @style = "width:50px", @MaxLength = "2" } })
+                                @Html.EditorFor(model => model.Uf, new { htmlAttributes = new { @class = "form-control uf", @style = "width:50px", @MaxLength = "2" } })
                                 @Html.ValidationMessageFor(model => model.Uf, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="col-md-2">
                                 @Html.Label("País ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Pais, new { htmlAttributes = new { @class = "form-control " } })
+                                @Html.EditorFor(model => model.Pais, new { htmlAttributes = new { @class = "form-control pais" } })
                                 @Html.ValidationMessageFor(model => model.Pais, "", new { @class = "text-danger" })
                             </div>
 

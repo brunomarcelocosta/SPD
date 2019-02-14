@@ -43,5 +43,36 @@
         "Perfil": "Listar Pacientes"
       }
     ]
+  },
+  {
+    "Hierarquia": 3,
+    "Titulo": "Consultas",
+    "IsSubMenu": true,
+    "SubMenus": [
+      {
+        "Nivel": 1,
+        "Titulo": "Pré-Atendimento",
+        "Modulo": "SPD.MVC.PortalWeb",
+        "Controle": "PreConsulta",
+        "Acao": "List",
+        "Perfil": "Listar Pacientes"
+      },
+      {
+        "Nivel": 2,
+        "Titulo": "Atendimento",
+        "Modulo": "SPD.MVC.PortalWeb",
+        "Controle": "Consulta",
+        "Acao": "List",
+        "Perfil": "Listar Consultas"
+      },
+      {
+        "Nivel": 3,
+        "Titulo": "Histórico de Consultas",
+        "Modulo": "SPD.MVC.PortalWeb",
+        "Controle": "HistoricoConsulta",
+        "Acao": "List",
+        "Perfil": "Listar Histórico de Consultas"
+      }
+    ]
   }
 ]

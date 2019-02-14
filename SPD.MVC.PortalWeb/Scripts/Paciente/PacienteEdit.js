@@ -1,7 +1,7 @@
 ﻿$(function () {
 
     var urlList = '/Paciente/List';
-    var msg = "Deseja realmente adicionar o paciente?";
+    var msg = "Deseja realmente atualizar o paciente?";
 
     $('form').not('#Invalidar').submit(function () {
 
@@ -21,7 +21,7 @@
                 return window.location = urlList;
             }
             $.ajax({
-                url: '/Paciente/Add',
+                url: '/Paciente/Update',
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function (result) {
@@ -34,7 +34,7 @@
                     }
                     else {
                         //apresenta mensagem ao usuário e redireciona para a tela de listagem.
-                        swal("Paciente cadastrado com sucesso.", "", "success")
+                        swal("Paciente atualizado com sucesso.", "", "success")
                             .then(() => {
                                 window.location = url;
                             });

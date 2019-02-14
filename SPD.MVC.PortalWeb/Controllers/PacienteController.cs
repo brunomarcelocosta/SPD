@@ -18,16 +18,19 @@ namespace SPD.MVC.PortalWeb.Controllers
     {
         private readonly IPacienteService _PacienteService;
         private readonly IUsuarioService _UsuarioService;
-        private readonly IEstadoCivilService _EstadoCivilService;
+        private readonly IFuncionalidadeService _FuncionalidadeService;
+        private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
 
         public PacienteController(IPacienteService pacienteService,
                                   IUsuarioService usuarioService,
-                                  IEstadoCivilService estadoCivilService)
+                                  IFuncionalidadeService funcionalidadeService,
+                                  IUsuarioFuncionalidadeService usuarioFuncionalidadeService)
                    : base(pacienteService)
         {
             _PacienteService = pacienteService;
             _UsuarioService = usuarioService;
-            _EstadoCivilService = estadoCivilService;
+            _FuncionalidadeService = funcionalidadeService;
+            _UsuarioFuncionalidadeService = usuarioFuncionalidadeService;
         }
 
         #region List 
@@ -76,8 +79,8 @@ namespace SPD.MVC.PortalWeb.Controllers
                     item.ID,
                     item.Nome,
                     item.Email,
-                    Data_Nasc = item.Data_Nasc.ToShortDateString(),
-                    item.Cpf,
+                    Data_Nasc = item.Data_Nasc,
+                    Cpf = Convert.ToUInt64(item.Cpf).ToString(@"000\.000\.000\-00"),
                     item.Celular,
                     tpPaciente = item.Tipo_Paciente == true ? "Particular" : "Convêniado",
                     Ativo = item.Ativo == true ? "Ativo" : "Inativo"
@@ -177,16 +180,20 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult Add(PacienteViewModel pacienteViewModel)
         {
             var resultado = "";
-
-            pacienteViewModel.Foto = Convert.FromBase64String(pacienteViewModel.srcImage.Substring("data:image/jpeg;base64,".Length));
+            if (pacienteViewModel.srcImage != null)
+            {
+                pacienteViewModel.Foto = Convert.FromBase64String(pacienteViewModel.srcImage.Substring("data:image/jpeg;base64,".Length));
+            }
             pacienteViewModel.Tipo_Paciente = pacienteViewModel.conveniado;
+            pacienteViewModel.Rg = pacienteViewModel.Rg.Replace(".", "").Replace("-", "");
+            pacienteViewModel.Cpf = pacienteViewModel.Cpf.Replace(".", "").Replace("-", "");
+            pacienteViewModel.Ativo = true;
 
             var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
             var paciente = ToModel(pacienteViewModel);
-            paciente.estadoCivil = _EstadoCivilService.Query().Where(a => a.DESCRICAO.Equals(pacienteViewModel.estadoCivil_String)).FirstOrDefault();
 
-            if (!_PacienteService.AdiocinarPaciente(paciente, user_logado, out resultado))
+            if (!_PacienteService.Insert(paciente, user_logado, out resultado))
             {
                 return Json(new { Success = false, Response = resultado });
             }
@@ -199,25 +206,76 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Editar
 
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Editar Usuários\"}")]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Editar Pacientes\"}")]
         public ActionResult Edit(int id)
         {
             PacienteViewModel pacienteViewModel = new PacienteViewModel();
 
             pacienteViewModel = ToViewModel(_PacienteService.GetById(id));
-            pacienteViewModel.estadoCivil_String = pacienteViewModel.EstadoCivil.Descricao;
-            pacienteViewModel.srcImage = $"data:image/jpeg;base64,{Convert.ToBase64String(pacienteViewModel.Foto)}";
+            pacienteViewModel.ExisteImg = false;
+            if (pacienteViewModel.Foto.Count() > 0)
+            {
+                pacienteViewModel.srcImage = $"data:image/jpeg;base64,{Convert.ToBase64String(pacienteViewModel.Foto)}";
+                pacienteViewModel.ExisteImg = true;
 
-            //ler image e converter
-            //var base64 = Convert.ToBase64String(Model.ByteArray);
-            //var imgSrc = String.Format("data:image/jpeg;base64,{0}", base64);
+            }
+            pacienteViewModel.ListEstadoCivil = ListEstadoCivil(null);
+            pacienteViewModel.particular = pacienteViewModel.Tipo_Paciente.Value ? true : false;
+            pacienteViewModel.conveniado = pacienteViewModel.Tipo_Paciente.Value ? false : true;
 
             return View(pacienteViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(PacienteViewModel pacienteViewModel)
+        {
+            var resultado = "";
+            if (pacienteViewModel.srcImage != null)
+            {
+                pacienteViewModel.Foto = Convert.FromBase64String(pacienteViewModel.srcImage.Substring("data:image/jpeg;base64,".Length));
+            }
+            pacienteViewModel.Tipo_Paciente = pacienteViewModel.conveniado;
+            pacienteViewModel.Rg = pacienteViewModel.Rg.Replace(".", "").Replace("-", "");
+            pacienteViewModel.Cpf = pacienteViewModel.Cpf.Replace(".", "").Replace("-", "");
+            pacienteViewModel.Ativo = true;
+            var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
+
+            var paciente = ToModel(pacienteViewModel);
+
+            if (!_PacienteService.Update(paciente, user_logado, out resultado))
+            {
+                return Json(new { Success = false, Response = resultado });
+            }
+
+            return Json(new { Success = true });
+
         }
 
         #endregion
 
         #region Excluir
+
+        [HttpPost]
+        public ActionResult Delete(string id)
+        {
+            int idPaciente = int.Parse(id);
+            var resultado = "";
+
+            Usuario usuarioAtual = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
+
+            if (!ReturnPermission(usuarioAtual, "Excluir Pacientes"))
+            {
+                return Json(new { Success = false, Response = "Você não tem permissão para esta funcionalidade." });
+            }
+
+            if (!_PacienteService.Delete(idPaciente, usuarioAtual, out resultado))
+            {
+                return Json(new { Success = false, Response = resultado });
+            }
+
+            return Json(new { Success = true });
+        }
 
         #endregion
 
@@ -276,7 +334,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     var dataDe = Convert.ToDateTime(collection["DataDe"].ToString());
                     var dataAte = Convert.ToDateTime(collection["DataAte"].ToString());
 
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Data_Nasc >= dataDe && a.Data_Nasc < dataAte.AddDays(1)).ToList();
+                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Nasc) >= dataDe && Convert.ToDateTime(a.Data_Nasc) < dataAte.AddDays(1)).ToList();
 
                     pacienteViewModel.DataDe_Filtro = collection["DataDe"];
                     pacienteViewModel.DataAte_Filtro = collection["DataAte"];
@@ -286,7 +344,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 {
                     var dataDe = Convert.ToDateTime(collection["DataDe"].ToString());
 
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Data_Nasc >= dataDe).ToList();
+                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Nasc) >= dataDe).ToList();
                     pacienteViewModel.DataDe_Filtro = collection["DataDe"];
 
                 }
@@ -295,7 +353,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 {
                     var dataAte = Convert.ToDateTime(collection["DataAte"].ToString());
 
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Data_Nasc < dataAte.AddDays(1)).ToList();
+                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Nasc) < dataAte.AddDays(1)).ToList();
                     pacienteViewModel.DataAte_Filtro = collection["DataAte"];
                 }
             }
@@ -323,8 +381,49 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #endregion
 
-        #region Webcam
+        #region Validações
 
+        public bool ReturnPermission(Usuario usuario, string func)
+        {
+            try
+            {
+                var funcionalidade = _FuncionalidadeService.Query().Where(a => a.NOME.Equals(func)).FirstOrDefault();
+                var existeFunc = _UsuarioFuncionalidadeService
+                                .Query()
+                                .Where(a => a.ID_USUARIO == usuario.ID && a.ID_FUNCIONALIDADE == funcionalidade.ID)
+                                .ToList()
+                                .Count() > 0 ?
+                                true :
+                                false;
+
+                return existeFunc;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region WebService CEP
+
+        public ActionResult WS_GetCEP(string cep)
+        {
+            var jsonCEP = WsCEP.GetCEP(cep.Replace("-", ""));
+
+            // obter ID da UF do cep
+            if (jsonCEP.erro && string.IsNullOrEmpty(jsonCEP.uf))
+            {
+
+                if (jsonCEP.erroMsg.ToString().Contains("(404)"))
+                {
+                    jsonCEP.erroMsg = "CEP não encontrado.";
+                }
+            }
+
+            return Json(jsonCEP);
+        }
 
         #endregion
     }

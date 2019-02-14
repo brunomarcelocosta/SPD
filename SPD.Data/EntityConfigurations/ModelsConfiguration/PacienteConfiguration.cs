@@ -25,6 +25,7 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
 
             Property(paciente => paciente.DATA_NASC)
            .HasColumnName("dt_nasc")
+           .HasMaxLength(10)
            .IsRequired();
 
             Property(paciente => paciente.CPF)

@@ -1,5 +1,5 @@
 ﻿
-1° = em default projet slecionar o projeto '4-Data\SPD.Data'
+1° = em default projet selecionar o projeto '4-Data\SPD.Data'
 
 2° = enable-migrations
 

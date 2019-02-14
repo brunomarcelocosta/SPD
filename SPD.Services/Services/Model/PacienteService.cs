@@ -32,7 +32,7 @@ namespace SPD.Services.Services.Model
             return false;
         }
 
-        public bool AdiocinarPaciente(Paciente paciente, Usuario usuario, out string resultado)
+        public bool Insert(Paciente paciente, Usuario usuario, out string resultado)
         {
             resultado = "";
 
@@ -46,10 +46,66 @@ namespace SPD.Services.Services.Model
 
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
-                    
+
                     _PacienteRepository.Add(paciente);
 
                     _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
+
+                    SaveChanges(transactionScope);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+                return false;
+            }
+        }
+
+        public bool Update(Paciente paciente, Usuario usuario, out string resultado)
+        {
+            resultado = "";
+
+            var pacienteBD = _PacienteRepository.Query().Where(a => a.CPF.Equals(paciente.CPF)).FirstOrDefault();
+            if (pacienteBD.ID != paciente.ID)
+            {
+                resultado = "Já existe paciente cadastrado com este CPF.";
+                return false;
+            }
+
+            try
+            {
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    _PacienteRepository.UpdatePaciente(paciente);
+
+                    _HistoricoOperacaoRepository.RegistraHistorico($"Atualizou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Pacientes);
+
+                    SaveChanges(transactionScope);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+                return false;
+            }
+        }
+
+        public bool Delete(int id, Usuario usuario, out string resultado)
+        {
+            resultado = "";
+
+            try
+            {
+                var paciente = GetById(id);
+
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    _PacienteRepository.Remove(paciente);
+
+                    _HistoricoOperacaoRepository.RegistraHistorico($"Inativou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Pacientes);
 
                     SaveChanges(transactionScope);
                 }

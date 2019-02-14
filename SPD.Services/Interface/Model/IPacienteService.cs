@@ -13,6 +13,12 @@ namespace SPD.Services.Interface.Model
         bool ExistePaciente(Paciente paciente);
 
         [Transactional]
-        bool AdiocinarPaciente(Paciente paciente, Usuario usuario, out string resultado);
+        bool Insert(Paciente paciente, Usuario usuario, out string resultado);
+
+        [Transactional]
+        bool Update(Paciente paciente, Usuario usuario, out string resultado);
+
+        [Transactional]
+        bool Delete(int id, Usuario usuario, out string resultado);
     }
 }

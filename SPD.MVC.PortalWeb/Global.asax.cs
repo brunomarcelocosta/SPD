@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace SPD.MVC.PortalWeb
 {
@@ -29,6 +30,8 @@ namespace SPD.MVC.PortalWeb
             base.RegisterIoC();
             base.RegisterTimer(GlobalConstants.Modules.Web.Name);
             base.RegisterDatabase();
+
+
         }
     }
 }

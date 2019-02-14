@@ -13,8 +13,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string Nome { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime Data_Nasc { get; set; }
+        public string Data_Nasc { get; set; }
 
         public string Cpf { get; set; }
 
@@ -62,6 +61,5 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public bool conveniado { get; set; }
         public string srcImage { get; set; }
         public bool ExisteImg { get; set; }
-        public string DataNasc_String { get; set; }
     }
 }
