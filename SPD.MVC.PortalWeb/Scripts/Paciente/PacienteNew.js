@@ -99,6 +99,7 @@ function ws_GetCEP() {
                     $('.cidade').val(result.localidade);
                     $('.uf').val(result.uf);
                     $('.pais').val(result.pais);
+
                 }
             },
             error: function (erro) {
