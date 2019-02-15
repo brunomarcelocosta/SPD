@@ -149,7 +149,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Novo
 
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Adicionar Dentista\"}")]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Adicionar Dentistas\"}")]
         public ActionResult New()
         {
             DentistaViewModel dentistaViewModel = new DentistaViewModel();

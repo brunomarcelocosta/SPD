@@ -9,29 +9,24 @@
 
         <div class="row">
 
-            <div class="form-group col-md-4" id="divNome" style="padding-left:32px;">
+            <div class="form-group col-md-3" id="divNome" style="padding-left:32px;">
                 @Html.Label("Nome")
                 @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @Value = Model.Nome, @class = "form-control ", @style = "width: 250px" } })
             </div>
 
-            <div class="form-group col-md-3" id="divEmail" style="padding-left:32px;">
+            <div class="form-group col-md-2" id="divEmail">
                 @Html.Label("CRO")
-                @Html.EditorFor(model => model.Cro, new { htmlAttributes = new { @Value = Model.Cro, @class = "form-control", @style = "width: 280px" } })
+                @Html.EditorFor(model => model.Cro, new { htmlAttributes = new { @Value = Model.Cro, @class = "form-control", @style = "width: 130px" } })
             </div>
 
-            <div class="form-group col-md-4" id="divEmail" style="padding-left:90px;">
+            <div class="form-group col-md-2" id="divEmail">
                 @Html.Label("Usuário")
                 @Html.DropDownListFor(model=>model.Usuario_string, controller.ListUsuarios() as SelectList,
                                              string.IsNullOrWhiteSpace(Model.Usuario_string)? "": Model.Usuario_string,
                                              new { @class = "form-control " })
-                @*@Html.EditorFor(model => model.Usuario_string, new { htmlAttributes = new { @Value = Model.Usuario_string, @class = "form-control ", @style = "width: 150px" } })*@
             </div>
 
-        </div>
-
-        <div class="row">
-
-            <div class="form-group col-md-3" id="divDataOper" style="padding-left:90px;">
+            <div class="form-group col-md-3" id="divDataOper" >
                 @Html.Label("Data de Criação")
                 <div class="input-group input-daterange col-md-12">
                     @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @class = "form-control data ", @name = "start", @style = "width: 160px" } })
@@ -39,6 +34,11 @@
                     @Html.EditorFor(model => model.DataAte, new { htmlAttributes = new { @Value = Model.DataAte_Filtro, @class = "form-control data ", @name = "end", @style = "width: 160px" } })
                 </div>
             </div>
+
+        </div>
+
+        <div class="row">
+
 
             <div class="form-group col-md-2"></div>
         </div>

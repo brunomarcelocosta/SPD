@@ -76,29 +76,9 @@
     <Compile Include="Initializers\DatabaseInitializer.cs" />
     <Compile Include="Interfaces\Contexts\IDataContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\SqlServer\201901170516282_InitialCreate.cs" />
-    <Compile Include="Migrations\SqlServer\201901170516282_InitialCreate.Designer.cs">
-      <DependentUpon>201901170516282_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\SqlServer\201902062205268_AlterTablePaciente.cs" />
-    <Compile Include="Migrations\SqlServer\201902062205268_AlterTablePaciente.Designer.cs">
-      <DependentUpon>201902062205268_AlterTablePaciente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\SqlServer\201902062210152_DropTableEstadoCivil.cs" />
-    <Compile Include="Migrations\SqlServer\201902062210152_DropTableEstadoCivil.Designer.cs">
-      <DependentUpon>201902062210152_DropTableEstadoCivil.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\SqlServer\201902062220256_AlterCamposStringPaciente.cs" />
-    <Compile Include="Migrations\SqlServer\201902062220256_AlterCamposStringPaciente.Designer.cs">
-      <DependentUpon>201902062220256_AlterCamposStringPaciente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\SqlServer\201902072158261_AlterColumnDataNascToString.cs" />
-    <Compile Include="Migrations\SqlServer\201902072158261_AlterColumnDataNascToString.Designer.cs">
-      <DependentUpon>201902072158261_AlterColumnDataNascToString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\SqlServer\201902142242053_NovasTabelasConsulta.cs" />
-    <Compile Include="Migrations\SqlServer\201902142242053_NovasTabelasConsulta.Designer.cs">
-      <DependentUpon>201902142242053_NovasTabelasConsulta.cs</DependentUpon>
+    <Compile Include="Migrations\SqlServer\201902152037490_InitialMigration.cs" />
+    <Compile Include="Migrations\SqlServer\201902152037490_InitialMigration.Designer.cs">
+      <DependentUpon>201902152037490_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ContextDebugger.cs" />
@@ -125,25 +105,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SqlServer\201901170516282_InitialCreate.resx">
-      <DependentUpon>201901170516282_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SqlServer\201902062205268_AlterTablePaciente.resx">
-      <DependentUpon>201902062205268_AlterTablePaciente.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SqlServer\201902062210152_DropTableEstadoCivil.resx">
-      <DependentUpon>201902062210152_DropTableEstadoCivil.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SqlServer\201902062220256_AlterCamposStringPaciente.resx">
-      <DependentUpon>201902062220256_AlterCamposStringPaciente.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SqlServer\201902072158261_AlterColumnDataNascToString.resx">
-      <DependentUpon>201902072158261_AlterColumnDataNascToString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SqlServer\201902142242053_NovasTabelasConsulta.resx">
-      <DependentUpon>201902142242053_NovasTabelasConsulta.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\SqlServer\201902152037490_InitialMigration.resx">
+      <DependentUpon>201902152037490_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

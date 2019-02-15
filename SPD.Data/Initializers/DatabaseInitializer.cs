@@ -105,6 +105,30 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
+            Funcionalidade dentista = new Funcionalidade()
+            {
+                NOME = "Listar Dentistas",
+                IsATIVO = true
+            };
+
+            Funcionalidade addDentista = new Funcionalidade()
+            {
+                NOME = "Adicionar Dentistas",
+                IsATIVO = true
+            };
+
+            Funcionalidade editDentista = new Funcionalidade()
+            {
+                NOME = "Editar Dentistas",
+                IsATIVO = true
+            };
+
+            Funcionalidade delDentista = new Funcionalidade()
+            {
+                NOME = "Excluir Dentistas",
+                IsATIVO = true
+            };
+
             Funcionalidade consulta = new Funcionalidade()
             {
                 NOME = "Gerenciar Consultas",
@@ -123,7 +147,9 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
-            return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario, redefinirSenha, paciente, addPaciente, editPaciente, delPaciente, consulta, historico, notificacao };
+            return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario,
+                                          redefinirSenha, paciente, addPaciente, editPaciente, delPaciente, dentista, addDentista,
+                                          editDentista, delDentista, consulta, historico, notificacao };
 
         }
 
@@ -205,20 +231,7 @@ namespace SPD.Data.Initializers
             this.Context.Set<UsuarioFuncionalidade>().AddRange(usuarioFuncionalidades);
 
             try
-            {
-
-                //Usuario usuarioAdministrador = new Usuario()
-                //{
-                //    NOME = "Administrador",
-                //    EMAIL = "brunomarcelo.1995@gmail.com",
-                //    LOGIN = "adminsis",
-                //    PASSWORD = Usuario.GerarHash("a12345678"),
-                //    TROCA_SENHA_OBRIGATORIA = true,
-                //    IsATIVO = true,
-                //};
-
-                //var funcionalidades = Funcionalidades();
-
+            {               
                 // Salva as alterações no banco de dados
                 this.Context.SaveChanges();
 

@@ -7,13 +7,13 @@ namespace SPD.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class NovasTabelasConsulta : IMigrationMetadata
+    public sealed partial class InitialMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(NovasTabelasConsulta));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902142242053_NovasTabelasConsulta"; }
+            get { return "201902152037490_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source
