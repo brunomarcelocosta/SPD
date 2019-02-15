@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using SPD.MVC.Geral.ViewModels;
+using System;
 
 namespace SPD.MVC.PortalWeb.ViewModels
 {
-    public class PreConsultaViewModel
+    public class PreConsultaViewModel : ViewModelBase
     {
         public int ID { get; set; }
 

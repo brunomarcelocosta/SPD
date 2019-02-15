@@ -530,6 +530,9 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
+    <Content Include="Scripts\Dentista\Dentista.js" />
+    <Content Include="Scripts\Dentista\DentistaEdit.js" />
+    <Content Include="Scripts\Dentista\DentistaNew.js" />
     <Content Include="Scripts\HistoricoOperacao\HistoricoOperacao.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -600,13 +603,17 @@
     <Content Include="Views\Paciente\_List.cshtml" />
     <Content Include="Views\Paciente\_Filtros.cshtml" />
     <Content Include="Views\Paciente\Edit.cshtml" />
+    <Content Include="Views\Dentista\New.cshtml" />
+    <Content Include="Views\Dentista\Edit.cshtml" />
+    <Content Include="Views\Dentista\List.cshtml" />
+    <Content Include="Views\Dentista\_List.cshtml" />
+    <Content Include="Views\Dentista\_Filtros.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Consulta\" />
-    <Folder Include="Views\Dentista\" />
     <Folder Include="Views\HistoricoConsulta\" />
     <Folder Include="Views\PreConsulta\" />
   </ItemGroup>

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using SPD.MVC.Geral.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SPD.MVC.PortalWeb.ViewModels
 {
-    public class DentistaViewModel
+    public class DentistaViewModel : ViewModelBase
     {
         public int ID { get; set; }
 
@@ -17,5 +16,10 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public virtual UsuarioViewModel Usuario { get; set; }
 
         public DateTime Dt_Insert { get; set; }
+
+        public List<DentistaViewModel> ListDentistaViewModel { get; set; }
+
+        public string Usuario_string { get; set; }
+
     }
 }

@@ -44,7 +44,10 @@ namespace SPD.Model.Enums
             EfetuarLogin = 1,
             EfetuarLogof = 2,
             Usuarios = 3,
-            Pacientes = 4
+            Pacientes = 4,
+            Dentista = 5,
+            Consulta = 6,
+            PreConsulta = 7
         }
 
         public enum EstadosCivis
