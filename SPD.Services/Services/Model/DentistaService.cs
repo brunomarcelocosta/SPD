@@ -91,20 +91,30 @@ namespace SPD.Services.Services.Model
         {
             resultado = "";
 
-            var dentistaBD = _DentistaRepository.Query().Where(a => a.CRO.Equals(dentista.CRO)).FirstOrDefault();
+            var _dentistaBD = _DentistaRepository.Query().ToList();
+
+            var dentistaBD = _dentistaBD.Where(a => a.CRO.Equals(dentista.CRO)).FirstOrDefault();
             if (dentistaBD.ID != dentista.ID)
             {
                 resultado = "Já existe dentista cadastrado com este CRO.";
                 return false;
             }
+            
+            dentistaBD = _dentistaBD.Where(a => a.ID_USUARIO == dentista.USUARIO.ID).FirstOrDefault();
+            if (dentistaBD.ID_USUARIO != dentista.USUARIO.ID)
+            {
+                resultado = "Já existe dentista vinculado com este usuário.";
+                return false;
+            }
 
             try
             {
+                var user = _UsuarioRepository.GetById(dentista.USUARIO.ID);
                 dentista.DT_INSERT = DateTime.Now;
 
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
-                    _DentistaRepository.UpdateDentista(dentista);
+                    _DentistaRepository.UpdateDentista(dentista, user);
 
                     _HistoricoOperacaoRepository.RegistraHistorico($"Atualizou o dentista {dentista.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Dentista);
 

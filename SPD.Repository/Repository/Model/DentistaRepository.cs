@@ -5,16 +5,13 @@ namespace SPD.Repository.Repository.Model
 {
     public class DentistaRepository : RepositoryBase<Dentista>, IDentistaRepository
     {
-        private readonly IUsuarioRepository _UsuarioRepository;
-
-        public void UpdateDentista(Dentista dentista)
+        public void UpdateDentista(Dentista dentista, Usuario usuario)
         {
             var dentistaUpdate = GetById(dentista.ID);
-            var user = _UsuarioRepository.GetById(dentista.ID_USUARIO);
 
             dentistaUpdate.NOME = dentista.NOME;
             dentistaUpdate.CRO = dentista.CRO;
-            dentistaUpdate.USUARIO = user;
+            dentistaUpdate.USUARIO = usuario;
             dentistaUpdate.DT_INSERT = dentista.DT_INSERT;
 
             Update(dentistaUpdate);
