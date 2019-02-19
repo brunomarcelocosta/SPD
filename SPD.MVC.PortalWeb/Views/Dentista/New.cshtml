@@ -1,8 +1,57 @@
-﻿
+﻿@model SPD.MVC.PortalWeb.ViewModels.DentistaViewModel
+
+@{ var controller = ViewContext.Controller as SPD.MVC.PortalWeb.Controllers.DentistaController; }
+
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>New</h2>
+<h2>Novo Dentista</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("Nome", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @style = "width:260px" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("CRO", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cro, new { htmlAttributes = new { @class = "form-control", @style = "width:260px" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Usuário", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Usuario_string, controller.ListUsuarios() as SelectList, "", new { @class = "form-control ", @style = "width:260px" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+                <input type="button" value="Cancelar" class="btn btn-danger" onclick="Render('Dentista','List')" />
+            </div>
+        </div>
+
+    </div>
+
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/site")
+
+    <script src="~/Scripts/Dentista/DentistaNew.js"></script>
+}
 

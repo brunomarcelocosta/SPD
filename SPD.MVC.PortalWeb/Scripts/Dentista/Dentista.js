@@ -81,6 +81,7 @@ function DataTable() {
         "columns": [
             { "data": "ID", "orderable": true, "autoWidth": true },
             { "data": "Nome", "orderable": true, "autoWidth": true },
+            { "data": "Cro", "orderable": true, "autoWidth": true },
             { "data": "Usuario", "orderable": true, "autoWidth": true },
             { "data": "Criado", "orderable": true, "autoWidth": true },
             {

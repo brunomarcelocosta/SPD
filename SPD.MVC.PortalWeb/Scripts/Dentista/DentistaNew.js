@@ -25,12 +25,12 @@
 
                     if (!result.Success) {
                         //Caso não realize a gravação, apresenta mensagem ao usuário.
-                        swal(result.Response, "", "error");
+                        swal("", result.Response, "error");
                         return false;
                     }
                     else {
                         //apresenta mensagem ao usuário e redireciona para a tela de listagem.
-                        swal("Dentista cadastrado com sucesso.", "", "success")
+                        swal("", "Dentista cadastrado com sucesso.", "success")
                             .then(() => {
                                 window.location = url;
                             });

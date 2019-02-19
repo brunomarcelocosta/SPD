@@ -78,7 +78,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     item.Nome,
                     item.Cro,
                     Usuario = item.Usuario.Nome,
-                    Criado = item.Dt_Insert
+                    Criado = item.Dt_Insert.ToString()
                 });
             }
 
