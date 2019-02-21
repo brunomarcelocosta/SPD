@@ -1,5 +1,6 @@
 ﻿using SPD.MVC.Geral.ViewModels;
 using System;
+using System.Collections.Generic;
 
 namespace SPD.MVC.PortalWeb.ViewModels
 {
@@ -24,6 +25,10 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string Tipo_Pagamento { get; set; }
 
-        public DateTime Dt_Insert{ get; set; }
+        public DateTime Dt_Insert { get; set; }
+
+        public List<PreConsultaViewModel> ListPreConsultaViewModel { get; set; }
+        public string Paciente_string { get; set; }
+        public string Autorizado_string { get; set; }
     }
 }

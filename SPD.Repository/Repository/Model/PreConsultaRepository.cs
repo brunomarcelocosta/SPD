@@ -10,5 +10,21 @@ namespace SPD.Repository.Repository.Model
 {
     public class PreConsultaRepository : RepositoryBase<PreConsulta>, IPreConsultaRepository
     {
+        public void UpdatePreConsulta(PreConsulta preConsulta, Paciente paciente)
+        {
+            var preConsultaUpdate = GetById(preConsulta.ID);
+
+            preConsultaUpdate.PACIENTE = paciente;
+            preConsultaUpdate.MAIOR_IDADE = preConsulta.MAIOR_IDADE;
+            preConsultaUpdate.AUTORIZADO = preConsulta.AUTORIZADO;
+            preConsultaUpdate.AUTORIZACAO = preConsulta.AUTORIZACAO;
+            preConsultaUpdate.CONVENIO = preConsulta.CONVENIO;
+            preConsultaUpdate.NUMERO_CARTERINHA = preConsulta.NUMERO_CARTERINHA;
+            preConsultaUpdate.VALOR_CONSULTA = preConsulta.VALOR_CONSULTA;
+            preConsultaUpdate.TIPO_PAGAMENTO = preConsulta.TIPO_PAGAMENTO;
+            preConsultaUpdate.DT_INSERT = preConsulta.DT_INSERT;
+
+            Update(preConsultaUpdate);
+        }
     }
 }

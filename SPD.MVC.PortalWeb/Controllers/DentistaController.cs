@@ -13,7 +13,6 @@ namespace SPD.MVC.PortalWeb.Controllers
 {
     public class DentistaController : MapperController<IDentistaService, Dentista, DentistaViewModel>
     {
-
         private readonly IDentistaService _DentistaService;
         private readonly IUsuarioService _UsuarioService;
         private readonly IFuncionalidadeService _FuncionalidadeService;

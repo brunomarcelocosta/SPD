@@ -129,6 +129,30 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
+            Funcionalidade preConsulta = new Funcionalidade()
+            {
+                NOME = "Listar Pré Consultas",
+                IsATIVO = true
+            };
+
+            Funcionalidade addPreConsulta = new Funcionalidade()
+            {
+                NOME = "Iniciar Pré Consultas",
+                IsATIVO = true
+            };
+
+            Funcionalidade editPreConsulta = new Funcionalidade()
+            {
+                NOME = "Editar Pré Consultas",
+                IsATIVO = true
+            };
+
+            Funcionalidade delPreConsulta = new Funcionalidade()
+            {
+                NOME = "Cancelar Pré Consultas",
+                IsATIVO = true
+            };
+
             Funcionalidade consulta = new Funcionalidade()
             {
                 NOME = "Gerenciar Consultas",
@@ -149,7 +173,8 @@ namespace SPD.Data.Initializers
 
             return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario,
                                           redefinirSenha, paciente, addPaciente, editPaciente, delPaciente, dentista, addDentista,
-                                          editDentista, delDentista, consulta, historico, notificacao };
+                                          editDentista, delDentista,preConsulta, addPreConsulta, editPreConsulta, delPreConsulta,
+                                          consulta, historico, notificacao };
 
         }
 
