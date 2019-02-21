@@ -46,3 +46,43 @@ $(function () {
 
 
 });
+
+$(document).ready(function () {
+
+    $("#Paciente_string").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/PreConsulta/AutoCompletePaciente",
+                type: "POST",
+                dataType: "json",
+                data: { prefix: request.term },
+                //contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        item.label = item.Nome;
+                        item.val = item.ID;
+
+                        //var divsToHide = document.getElementsByClassName("ui-helper-hidden-accessible");
+
+                        //for (var i = 0; i < divsToHide.length; i++) {
+                        //    divsToHide[i].style.visibility = "hidden";
+                        //}
+
+                        return item;
+                    }))
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function (e, i) {
+            $("#Paciente_string").val(i.item.val);
+            // carrega demais informações aqui.
+        },
+        minLength: 1
+    });
+});

@@ -76,10 +76,6 @@
     <Compile Include="Initializers\DatabaseInitializer.cs" />
     <Compile Include="Interfaces\Contexts\IDataContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\SqlServer\201902152037490_InitialMigration.cs" />
-    <Compile Include="Migrations\SqlServer\201902152037490_InitialMigration.Designer.cs">
-      <DependentUpon>201902152037490_InitialMigration.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ContextDebugger.cs" />
     <Compile Include="Utilities\ContextProvider.cs" />
@@ -105,11 +101,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SqlServer\201902152037490_InitialMigration.resx">
-      <DependentUpon>201902152037490_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Migrations\SqlServer\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

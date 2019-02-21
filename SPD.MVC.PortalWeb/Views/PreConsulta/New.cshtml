@@ -1,8 +1,130 @@
-﻿
+﻿@model SPD.MVC.PortalWeb.ViewModels.PreConsultaViewModel
+
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>New</h2>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
+<h2>Iniciar Pré Consulta </h2>
+<hr />
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Dados Pessoais</b></div>
+                <div class="panel-body">
+                    <div id="dadosPessoais">
+
+                        <div class="row">
+
+                            <div class="form-group">
+                                @Html.Label("Nome", htmlAttributes: new { @class = "control-label col-md-2", @style = "font-weight: bold" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Paciente_string, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+                            @*<div class="col-md-3">
+                                    @Html.Label("Data de Nascimento", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Data_Nasc, new { htmlAttributes = new { @class = "form-control date" } })
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Html.CheckBoxFor(model => model.particular, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,1);" })</td>
+                                                <td>&nbsp; @Html.Label("Particular ", htmlAttributes: new { @class = "control-label", @style = "font-size: 17px; padding-top:10px;" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.CheckBoxFor(model => model.conveniado, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,2);" })</td>
+                                                <td>&nbsp;@Html.Label("Conveniado ", htmlAttributes: new { @class = "control-label", @style = "font-size: 17px; padding-top:10px;" }) </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>*@
+
+                        </div>
+
+                        @*<br />
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    @Html.Label("CPF ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Cpf, new { htmlAttributes = new { @class = "form-control cpf", @style = "width: 130px", @maxLength = "15", @onkeypress = "return SomenteNumero(event)" } })
+                                    @Html.ValidationMessageFor(model => model.Cpf, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("RG ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Rg, new { htmlAttributes = new { @class = "form-control rg", @style = "width: 130px", @maxLength = "15", @onkeypress = "return SomenteNumero(event)" } })
+                                    @Html.ValidationMessageFor(model => model.Rg, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-6">
+                                    @Html.Label("E-mail ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @maxLength = "53" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+                            <br />
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    @Html.Label("Celular ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control celular", @style = "width: 130px", @maxLength = "14", @onkeypress = "return SomenteNumero(event)" } })
+                                    @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-5">
+                                    @Html.Label("Profissão ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Profissao, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Profissao, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-1"></div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("Estado Civil ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.DropDownListFor(model => model.Estado_Civil, Model.ListEstadoCivil as SelectList,
+                                "", new { @class = "form-control", @style = "width:150px" })
+                                    @Html.ValidationMessageFor(model => model.Estado_Civil, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+
+    @Scripts.Render("~/bundles/boostrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery-bbq.js"></script>
+
+    <script src="~/Scripts/PreConsulta/PreConsultaNew.js"></script>
+
+    @Styles.Render("~/Content/Styles/jquery-ui.css")
+}

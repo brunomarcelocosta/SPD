@@ -1,4 +1,4 @@
-﻿/**
+/**
  * jquery.mask.js
  * @version: v1.14.0
  * @author: Igor Escobar

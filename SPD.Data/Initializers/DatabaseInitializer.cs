@@ -256,7 +256,7 @@ namespace SPD.Data.Initializers
             this.Context.Set<UsuarioFuncionalidade>().AddRange(usuarioFuncionalidades);
 
             try
-            {               
+            {
                 // Salva as alterações no banco de dados
                 this.Context.SaveChanges();
 
