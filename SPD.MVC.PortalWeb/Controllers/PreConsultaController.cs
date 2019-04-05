@@ -1,4 +1,5 @@
-﻿using SPD.Model.Model;
+﻿using SPD.Model.Enums;
+using SPD.Model.Model;
 using SPD.MVC.Geral.Controllers;
 using SPD.MVC.Geral.Utilities;
 using SPD.MVC.PortalWeb.ViewModels;
@@ -159,8 +160,9 @@ namespace SPD.MVC.PortalWeb.Controllers
             preConsultaViewModel.ListNomePaciente = ListNomePacientes(null);
 
             var mes = DateTime.Now.Month;
+            string string_mes = Enum.GetName(typeof(SPD_Enums.Meses), mes);
 
-            @ViewBag.Mes = 
+            @ViewBag.Mes = string_mes;
 
             return View(preConsultaViewModel);
         }

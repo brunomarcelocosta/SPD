@@ -56,10 +56,10 @@ namespace SPD.Services.Services.Model
                 }
 
                 _PacienteRepository.Add(paciente);
-                _PacienteRepository.SaveChanges();
+                _PacienteRepository.SaveChange();
 
                 _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
-                _HistoricoOperacaoRepository.SaveChanges();
+                _HistoricoOperacaoRepository.SaveChange();
 
                 return true;
             }

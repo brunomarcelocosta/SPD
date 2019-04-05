@@ -251,6 +251,11 @@ namespace SPD.Repository.Repository
             }
         }
         
+        public void SaveChange()
+        {
+            this.DomainContext.DataContext.Entity.SaveChanges();
+        }
+
         public int SaveChanges(bool mustReload = true)
         {
             int result = -1;

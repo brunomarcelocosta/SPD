@@ -69,16 +69,22 @@ $(document).ready(function () {
 
                     $("#idBtnAutorizacao").prop("hidden", m_idade);
                     $("#idNomeResponsavel").prop("hidden", m_idade);
-                    $("#Cpf_Responsavel").prop("hidden", m_idade);
+                    $("#idCpfResponsavel").prop("hidden", m_idade);
 
 
                     $("#idIdade").prop("hidden", false);
                     $("label[for='IdadeValue']").text(idade);
 
+
+                    $("#divButtons").prop("hidden", false);
+
                 } else {
                     $("#idTpPaciente").prop("hidden", true);
                     $("#idIdade").prop("hidden", true);
                     $("#idBtnAutorizacao").prop("hidden", true);
+                    $("#idNomeResponsavel").prop("hidden", true);
+                    $("#idCpfResponsavel").prop("hidden", true);
+                    $("#divButtons").prop("hidden", true);
 
                     swal("", result.Response, "error");
                     return false;
