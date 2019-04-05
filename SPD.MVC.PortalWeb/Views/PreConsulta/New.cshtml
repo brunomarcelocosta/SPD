@@ -77,13 +77,17 @@
                                 @Html.Label("IdadeValue", htmlAttributes: new { @id = "IdadeValue", @class = "control-label", @style = "font-size: 17px;" })
                             </div>
 
-                            <div class="col-md-4">
-                                @Html.Label("Responsável", htmlAttributes: new { @name = "lblIdade", @id = "lblIdade", @class = "control-label", @style = "font-weight: bold;font-size: 17px;" }) &nbsp;&nbsp;
-                                @HtmlEditorFor()
+                            <div class="col-md-3" id="idNomeResponsavel" hidden="hidden">
+                                @Html.Label("Nome do Responsável", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Nome_Responsavel, new { htmlAttributes = new { @class = "form-control", @style = "width:200px" } })
+                            </div>
+
+                            <div class="col-md-3" id="idCpfResponsavel" hidden="hidden">
+                                @Html.Label("CPF do Responsável", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Cpf_Responsavel, new { htmlAttributes = new { @class = "form-controlcpf", @style = "width: 130px", @maxLength = "15", @onkeypress = "return SomenteNumero(event)" } })
                             </div>
 
                             <div class="col-md-6" id="idBtnAutorizacao" hidden="hidden">
-
                                 <input type="button" id="idAutorizarConsulta" value="Autorizar Consulta" class="btn btn-primary" onclick="javascript: AutorizarConsulta();" />
                             </div>
 
@@ -122,12 +126,12 @@
                                     As técnicas´ de controle de voz e estabilização protetora serão realizadas pelo profissional em casos
                                     absolutamente necessários e quando outras técnicas de preparo psicológico se mostrarem insuficientes.<br />
 
-                                    Eu,______________________________________________________, após ter sido esclarecido a
-                                    respeito dos objetivos e indicações da estabilização protetora e o controle de voz, autorizo sua
-                                    execução em meu/minha filho(a)/neto(a) conforme as necessidades de tratamento. Sendo o paciente
-                                    incapaz de consentir legalmente, pois apresenta idade menor de 18 anos, eu autorizo para o mesmo.<br /><br />
+                                    Após ter sido esclarecido a respeito dos objetivos e indicações da estabilização protetora e o controle
+                                    de voz, autorizo sua execução em meu/minha filho(a)/neto(a) conforme as necessidades de tratamento.
+                                    Sendo o paciente incapaz de consentir legalmente, pois apresenta idade menor de 18 anos, eu autorizo
+                                    para o mesmo.<br /><br />
 
-                                    São José dos Campos, @DateTime.Now.Day.ToString() de @ViewBag.Mes @DateTime.Now.Year.ToString() <br />
+                                    São José dos Campos, @DateTime.Now.Day.ToString() de @ViewBag.Mes @DateTime.Now.Year.ToString() <br /><br />
 
                                     _______________________________________
                                     (Assinatura)
@@ -156,6 +160,8 @@
     @Scripts.Render("~/bundles/boostrap")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerymask")
+    @Scripts.Render("~/bundles/site")
 
     <script src="~/Scripts/PreConsulta/PreConsultaNew.js"></script>
 }

@@ -30,7 +30,7 @@ $(function () {
                     }
                     else {
                         //apresenta mensagem ao usuário e redireciona para a tela de listagem.
-                        swal("", "Pré Consulta cadastrado com sucesso.", "success")
+                        swal("", "Pré Consulta realizada com sucesso.", "success")
                             .then(() => {
                                 window.location = urlList;
                             });
@@ -68,13 +68,12 @@ $(document).ready(function () {
                     $("#idTpPaciente").prop("hidden", false);
 
                     $("#idBtnAutorizacao").prop("hidden", m_idade);
+                    $("#idNomeResponsavel").prop("hidden", m_idade);
+                    $("#Cpf_Responsavel").prop("hidden", m_idade);
+
 
                     $("#idIdade").prop("hidden", false);
-
                     $("label[for='IdadeValue']").text(idade);
-
-                    //$("#Idade").prop("value", idade);//.val(result.Idade);
-
 
                 } else {
                     $("#idTpPaciente").prop("hidden", true);

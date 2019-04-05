@@ -34,5 +34,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public bool Conveniado { get; set; }
         public string Idade { get; set; }
         public bool particular { get; set; }
+        public string Nome_Responsavel { get; set; }
+        public string Cpf_Responsavel { get; set; }
+        public byte Ass_Responsavel { get; set; }
     }
 }
