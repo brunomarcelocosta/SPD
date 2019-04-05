@@ -45,8 +45,6 @@ namespace SPD.Model.Model
 
         public byte[] FOTO { get; set; }
 
-        public bool? TIPO_PACIENTE { get; set; }
-
         //public bool? INDICACAO { get; set; }
 
         //public string NOME_INDICACAO { get; set; }

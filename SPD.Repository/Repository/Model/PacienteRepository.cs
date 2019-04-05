@@ -18,7 +18,6 @@ namespace SPD.Repository.Repository.Model
             pacienteUpdate.CELULAR = paciente.CELULAR;
             pacienteUpdate.ESTADO_CIVIL = paciente.ESTADO_CIVIL;
             pacienteUpdate.PROFISSAO = paciente.PROFISSAO;
-            pacienteUpdate.TIPO_PACIENTE = paciente.TIPO_PACIENTE;
             pacienteUpdate.FOTO = paciente.FOTO;
             pacienteUpdate.END_RUA = paciente.END_RUA;
             pacienteUpdate.END_NUMERO = paciente.END_NUMERO;

@@ -21,7 +21,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string Numero_Carterinha { get; set; }
 
-        public string Valor_Consulta { get; set; }
+        public int? ID_Assinatura { get; set; }
+        public AssinaturaViewModel Assinatura { get; set; }
 
         public string Tipo_Pagamento { get; set; }
 
@@ -30,5 +31,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public List<PreConsultaViewModel> ListPreConsultaViewModel { get; set; }
         public string Paciente_string { get; set; }
         public string Autorizado_string { get; set; }
+        public bool Conveniado { get; set; }
+        public string Idade { get; set; }
+        public bool particular { get; set; }
     }
 }

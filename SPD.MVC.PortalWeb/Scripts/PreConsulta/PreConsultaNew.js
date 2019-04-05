@@ -49,40 +49,70 @@ $(function () {
 
 $(document).ready(function () {
 
-    $("#Paciente_string").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: "/PreConsulta/AutoCompletePaciente",
-                type: "POST",
-                dataType: "json",
-                data: { prefix: request.term },
-                //contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        item.label = item.Nome;
-                        item.val = item.ID;
+    $("#Paciente_string").change(function () {
+        var _nome = $("#Paciente_string").val();
 
-                        //var divsToHide = document.getElementsByClassName("ui-helper-hidden-accessible");
+        $.ajax({
+            url: "/PreConsulta/GetPaciente",
+            data: { nome: _nome },
+            type: "post",
+            success: function (result) {
+                if (result.Success) {
+                    var m_idade = true;
+                    var idade = result.Idade + " anos";
 
-                        //for (var i = 0; i < divsToHide.length; i++) {
-                        //    divsToHide[i].style.visibility = "hidden";
-                        //}
+                    if (!result.MaiorIdade) {
+                        m_idade = false
+                    }
 
-                        return item;
-                    }))
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                },
-                failure: function (response) {
-                    alert(response.responseText);
+                    $("#idTpPaciente").prop("hidden", false);
+
+                    $("#idBtnAutorizacao").prop("hidden", m_idade);
+
+                    $("#idIdade").prop("hidden", false);
+
+                    $("label[for='IdadeValue']").text(idade);
+
+                    //$("#Idade").prop("value", idade);//.val(result.Idade);
+
+
+                } else {
+                    $("#idTpPaciente").prop("hidden", true);
+                    $("#idIdade").prop("hidden", true);
+                    $("#idBtnAutorizacao").prop("hidden", true);
+
+                    swal("", result.Response, "error");
+                    return false;
                 }
-            });
-        },
-        select: function (e, i) {
-            $("#Paciente_string").val(i.item.val);
-            // carrega demais informações aqui.
-        },
-        minLength: 1
+            },
+            error: function (erro) {
+                swal("", erro.Response, "error");
+                return false;
+            }
+        });
+
     });
 });
+
+function AutorizarConsulta() {
+    $("#divTermo").prop("hidden", false);
+    $("#idBtnAutorizacao").prop("hidden", true);
+
+}
+
+function ValidaCheckBox(check, tipo) {
+
+    if (check.checked) {
+        if (tipo == 1) {
+            $("#particular").prop("checked", true);
+            $("#Conveniado").prop("checked", false);
+            $("#idNomeConvenio").prop("hidden", true);
+            $("#idNrCarterinha").prop("hidden", true);
+        } else {
+            $("#particular").prop("checked", false);
+            $("#Conveniado").prop("checked", true);
+            $("#idNomeConvenio").prop("hidden", false);
+            $("#idNrCarterinha").prop("hidden", false);
+        }
+    }
+}

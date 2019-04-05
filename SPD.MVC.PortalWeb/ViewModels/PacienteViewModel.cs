@@ -45,8 +45,6 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public byte[] Foto { get; set; }
 
-        public bool? Tipo_Paciente { get; set; }
-
         //public bool? INDICACAO { get; set; }
 
         //public string NOME_INDICACAO { get; set; }
@@ -57,8 +55,6 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string isAtivoFiltro { get; set; }
         public string tipoPacienteFiltro { get; set; }
-        public bool particular { get; set; }
-        public bool conveniado { get; set; }
         public string srcImage { get; set; }
         public bool ExisteImg { get; set; }
     }

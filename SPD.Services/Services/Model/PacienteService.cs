@@ -27,7 +27,18 @@ namespace SPD.Services.Services.Model
             var list = _PacienteRepository.Query().Where(a => a.CPF.Equals(paciente.CPF)).ToList();
 
             if (list.Count > 0)
+            {
                 return true;
+            }
+            else
+            {
+                list = _PacienteRepository.Query().Where(a => a.NOME.Equals(paciente.NOME)).ToList();
+
+                if (list.Count > 0)
+                {
+                    return true;
+                }
+            }
 
             return false;
         }
@@ -40,19 +51,15 @@ namespace SPD.Services.Services.Model
             {
                 if (ExistePaciente(paciente))
                 {
-                    resultado = "Já existe paciente cadastrado com este CPF.";
+                    resultado = "Já existe paciente cadastrado com este CPF ou com este nome.";
                     return false;
                 }
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
+                _PacienteRepository.Add(paciente);
+                _PacienteRepository.SaveChanges();
 
-                    _PacienteRepository.Add(paciente);
-
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
-
-                    SaveChanges(transactionScope);
-                }
+                _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
+                _HistoricoOperacaoRepository.SaveChanges();
 
                 return true;
             }
@@ -67,10 +74,10 @@ namespace SPD.Services.Services.Model
         {
             resultado = "";
 
-            var pacienteBD = _PacienteRepository.Query().Where(a => a.CPF.Equals(paciente.CPF)).FirstOrDefault();
+            var pacienteBD = _PacienteRepository.Query().Where(a => a.CPF.Equals(paciente.CPF) || a.NOME.Equals(paciente.NOME)).FirstOrDefault();
             if (pacienteBD.ID != paciente.ID)
             {
-                resultado = "Já existe paciente cadastrado com este CPF.";
+                resultado = "Já existe paciente cadastrado com este CPF ou com este Nome.";
                 return false;
             }
 

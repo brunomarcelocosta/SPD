@@ -156,6 +156,12 @@ namespace SPD.MVC.PortalWeb.Controllers
         {
             PreConsultaViewModel preConsultaViewModel = new PreConsultaViewModel();
 
+            preConsultaViewModel.ListNomePaciente = ListNomePacientes(null);
+
+            var mes = DateTime.Now.Month;
+
+            @ViewBag.Mes = 
+
             return View(preConsultaViewModel);
         }
 
@@ -331,6 +337,16 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Select List 
 
+        public SelectList ListNomePacientes(object id = null)
+        {
+            List<string> list = new List<string>();
+            var pacientes = _PacienteService.Query().Select(a => a.NOME).ToList();
+
+            list = pacientes.Distinct().ToList();
+
+            return new SelectList(list, id);
+        }
+
         #endregion
 
         #region Validações 
@@ -353,6 +369,33 @@ namespace SPD.MVC.PortalWeb.Controllers
             catch
             {
                 return false;
+            }
+        }
+
+        #endregion
+
+        #region Outros
+
+        [HttpPost]
+        public JsonResult GetPaciente(string nome)
+        {
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                return Json(new { Success = false, Response = "Selecione um paciente." });
+            }
+            else
+            {
+                var paciente = ToViewModel<Paciente, PacienteViewModel>(_PacienteService.Query().Where(a => a.NOME.Equals(nome)).FirstOrDefault());
+
+                var dt_nasc = Convert.ToDateTime(paciente.Data_Nasc);
+
+                int idade = DateTime.Now.Year - dt_nasc.Year;
+                if (DateTime.Now.Month < dt_nasc.Month || (DateTime.Now.Month == dt_nasc.Month && DateTime.Now.Day < dt_nasc.Day))
+                    idade--;
+
+                var maiorIdade = idade >= 18 ? true : false;
+
+                return Json(new { Success = true, Response = "", Idade = idade, MaiorIdade = maiorIdade });
             }
         }
 

@@ -86,10 +86,6 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .HasColumnName("pais")
            .HasMaxLength(50);
 
-            Property(paciente => paciente.TIPO_PACIENTE)
-           .HasColumnName("tipo_paciente")
-           .IsRequired();
-
             Property(paciente => paciente.FOTO)
            .HasColumnName("foto");
 

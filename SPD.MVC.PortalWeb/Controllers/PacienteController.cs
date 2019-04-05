@@ -82,7 +82,6 @@ namespace SPD.MVC.PortalWeb.Controllers
                     Data_Nasc = item.Data_Nasc,
                     Cpf = Convert.ToUInt64(item.Cpf).ToString(@"000\.000\.000\-00"),
                     item.Celular,
-                    tpPaciente = item.Tipo_Paciente == true ? "Particular" : "Convêniado",
                     Ativo = item.Ativo == true ? "Ativo" : "Inativo"
                 });
             }
@@ -131,10 +130,6 @@ namespace SPD.MVC.PortalWeb.Controllers
                         break;
 
                     case "7":
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Tipo_Paciente).ToList() : data.OrderBy(p => p.Tipo_Paciente).ToList();
-                        break;
-
-                    case "8":
                         lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Ativo).ToList() : data.OrderBy(p => p.Ativo).ToList();
                         break;
 
@@ -184,7 +179,6 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 pacienteViewModel.Foto = Convert.FromBase64String(pacienteViewModel.srcImage.Substring("data:image/jpeg;base64,".Length));
             }
-            pacienteViewModel.Tipo_Paciente = pacienteViewModel.conveniado;
             pacienteViewModel.Rg = pacienteViewModel.Rg.Replace(".", "").Replace("-", "");
             pacienteViewModel.Cpf = pacienteViewModel.Cpf.Replace(".", "").Replace("-", "");
             pacienteViewModel.Ativo = true;
@@ -220,8 +214,6 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             }
             pacienteViewModel.ListEstadoCivil = ListEstadoCivil(null);
-            pacienteViewModel.particular = pacienteViewModel.Tipo_Paciente.Value ? true : false;
-            pacienteViewModel.conveniado = pacienteViewModel.Tipo_Paciente.Value ? false : true;
 
             return View(pacienteViewModel);
         }
@@ -235,7 +227,6 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 pacienteViewModel.Foto = Convert.FromBase64String(pacienteViewModel.srcImage.Substring("data:image/jpeg;base64,".Length));
             }
-            pacienteViewModel.Tipo_Paciente = pacienteViewModel.conveniado;
             pacienteViewModel.Rg = pacienteViewModel.Rg.Replace(".", "").Replace("-", "");
             pacienteViewModel.Cpf = pacienteViewModel.Cpf.Replace(".", "").Replace("-", "");
             pacienteViewModel.Ativo = true;
@@ -319,14 +310,6 @@ namespace SPD.MVC.PortalWeb.Controllers
 
                     ListaFiltrada = ListaFiltrada.Where(a => a.Ativo == status).ToList();
                     pacienteViewModel.isAtivoFiltro = status.ToString();
-                }
-
-                if (!string.IsNullOrWhiteSpace(collection["tipoPacienteFiltro"]))
-                {
-                    var status = collection["tipoPacienteFiltro"].ToString() == "true" ? true : false;
-
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Tipo_Paciente == status).ToList();
-                    pacienteViewModel.tipoPacienteFiltro = status.ToString();
                 }
 
                 if (!string.IsNullOrWhiteSpace(collection["DataDe"]) && !string.IsNullOrWhiteSpace(collection["DataAte"]))

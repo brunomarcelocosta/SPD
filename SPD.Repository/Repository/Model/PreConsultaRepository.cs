@@ -20,8 +20,8 @@ namespace SPD.Repository.Repository.Model
             preConsultaUpdate.AUTORIZACAO = preConsulta.AUTORIZACAO;
             preConsultaUpdate.CONVENIO = preConsulta.CONVENIO;
             preConsultaUpdate.NUMERO_CARTERINHA = preConsulta.NUMERO_CARTERINHA;
-            preConsultaUpdate.VALOR_CONSULTA = preConsulta.VALOR_CONSULTA;
-            preConsultaUpdate.TIPO_PAGAMENTO = preConsulta.TIPO_PAGAMENTO;
+            //preConsultaUpdate.VALOR_CONSULTA = preConsulta.VALOR_CONSULTA;
+            //preConsultaUpdate.TIPO_PAGAMENTO = preConsulta.TIPO_PAGAMENTO;
             preConsultaUpdate.DT_INSERT = preConsulta.DT_INSERT;
 
             Update(preConsultaUpdate);

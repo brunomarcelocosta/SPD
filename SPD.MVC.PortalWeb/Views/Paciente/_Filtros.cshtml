@@ -37,17 +37,6 @@
                                          new { @class = "form-control", @style = "width: 150px" })
             </div>
 
-            <div class="form-group col-md-3" id="divBloqueado" style="padding-left:32px;">
-                @Html.Label("Tipo")
-                @Html.DropDownListFor(model => model.tipoPacienteFiltro,
-                                         new SelectList(new List<Object>{
-                                              new { value = "" , text = ""  },
-                                              new { value = "true" , text = "Particular"  },
-                                              new { value = "false" , text = "Conveniado" }
-                                                         }, "value", "text", string.IsNullOrWhiteSpace(Model.tipoPacienteFiltro) ? "": Model.tipoPacienteFiltro),
-                                         new { @class = "form-control", @style = "width: 150px" })
-            </div>
-
             <div class="form-group col-md-3" id="divDataOper" style="padding-left:90px;">
                 @Html.Label("Data de Nascimento")
                 <div class="input-group input-daterange col-md-12">

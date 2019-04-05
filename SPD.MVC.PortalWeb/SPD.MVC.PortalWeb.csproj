@@ -253,6 +253,7 @@
     </Compile>
     <Compile Include="Hubs\SistemaHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AssinaturaViewModel.cs" />
     <Compile Include="ViewModels\ConsultaViewModel.cs" />
     <Compile Include="ViewModels\DentistaViewModel.cs" />
     <Compile Include="ViewModels\FuncionalidadeViewModel.cs" />
@@ -618,6 +619,7 @@
     <Content Include="Views\PreConsulta\_Filtros.cshtml" />
     <Content Include="Views\PreConsulta\New.cshtml" />
     <Content Include="Views\PreConsulta\Edit.cshtml" />
+    <Content Include="Views\Shared\_modalAutorizarConsulta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,6 +15,8 @@ namespace SPD.MVC.Geral.ViewModels
         public virtual SelectList ListUsuario { get; set; }
         public virtual SelectList ListTipoOperacao { get; set; }
         public virtual SelectList ListEstadoCivil { get; set; }
+        public virtual SelectList ListNomePaciente { get; set; }
+
 
         public string FieldSort { get; set; }
         public int PageNumber { get; set; }

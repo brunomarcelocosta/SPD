@@ -42,18 +42,6 @@
 
                             <div class="col-md-3">
 
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>@Html.CheckBoxFor(model => model.particular, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,1);" })</td>
-                                            <td>&nbsp; @Html.Label("Particular ", htmlAttributes: new { @class = "control-label", @style = "font-size: 14px; padding-top:10px;" })</td>
-                                        </tr>
-                                        <tr>
-                                            <td>@Html.CheckBoxFor(model => model.conveniado, new { @class = "form-control checkbox", @value = "", @onchange = "ValidaCheckBox(this,2);" })</td>
-                                            <td>&nbsp;@Html.Label("Conveniado ", htmlAttributes: new { @class = "control-label", @style = "font-size: 14px; padding-top:10px;" }) </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
 
                         </div>

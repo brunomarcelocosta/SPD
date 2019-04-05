@@ -69,7 +69,6 @@ function DataTable() {
                 'Cpf': $('#Cpf').val(),
                 'Email': $('#Email').val(),
                 'isAtivoFiltro': $('#isAtivoFiltro').val(),
-                'tipoPacienteFiltro': $('#tipoPacienteFiltro').val(),
                 'DataDe': $('#DataDe').val(),
                 'DataAte': $('#DataAte').val()
             }
@@ -87,7 +86,6 @@ function DataTable() {
             { "data": "Data_Nasc", "orderable": true, "autoWidth": true },
             { "data": "Cpf", "orderable": true, "autoWidth": true },
             { "data": "Celular", "orderable": true, "autoWidth": true },
-            { "data": "tpPaciente", "orderable": true, "autoWidth": true },
             { "data": "Ativo", "orderable": true, "autoWidth": true },
             {
                 "data": null, "render": function (data, type, row) {
