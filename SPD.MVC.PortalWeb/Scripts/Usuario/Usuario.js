@@ -155,7 +155,7 @@ function Excluir(obj) {
         title: "Confirmação",
         text: msg,
         icon: "warning",
-        buttons: ["Não", "Sim"],
+        buttons: [ "Não", "Sim"],
         dangerMode: false,
     })
         .then((willDelete) => {

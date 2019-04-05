@@ -33,6 +33,12 @@ namespace SPD.MVC.PortalWeb.Controllers
             _UsuarioFuncionalidadeService = usuarioFuncionalidadeService;
         }
 
+        public ActionResult Teste()
+        {
+
+            return View();
+        }
+
         #region List
 
         [UseAuthorization(Funcionalidades = "{\"Nome\":\"Listar Pré Consultas\"}")]

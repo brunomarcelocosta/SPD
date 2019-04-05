@@ -10,7 +10,7 @@
                 title: "Confirmação",
                 text: msg,
                 icon: "warning",
-                buttons: ["Não", "Sim"],
+                buttons: [ "Não", "Sim"],
                 dangerMode: false,
             }).then((willDelete) => {
                 if (!willDelete) {
@@ -58,7 +58,7 @@ function resetarSenha(login) {
         title: "Redefinição de senha.",
         text: msg,
         icon: "warning",
-        buttons: ["Não", "Sim"],
+        buttons: [ "Não", "Sim"],
         dangerMode: false,
     })
         .then(
@@ -94,7 +94,7 @@ function desBloquearUsuario() {
         title: "Desbloqueio de Usuário.",
         text: msg,
         icon: "warning",
-        buttons: ["Não", "Sim"],
+        buttons: [ "Não", "Sim"],
         dangerMode: false,
     })
         .then(

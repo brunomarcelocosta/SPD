@@ -6,7 +6,7 @@
                 title: "Deseja confirmar a alteração da senha?",
                 text: "",
                 icon: "warning",
-                buttons: ["Não", "Sim"],
+                buttons: [ "Não", "Sim"],
                 dangerMode: false,
             }).then((isConfirm) => {
                 if (!isConfirm) { return false; }

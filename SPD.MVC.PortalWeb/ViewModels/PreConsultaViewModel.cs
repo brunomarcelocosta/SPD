@@ -1,6 +1,7 @@
 ﻿using SPD.MVC.Geral.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SPD.MVC.PortalWeb.ViewModels
 {
@@ -36,6 +37,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public bool particular { get; set; }
         public string Nome_Responsavel { get; set; }
         public string Cpf_Responsavel { get; set; }
+
+        [UIHint("SignaturePad")]
         public byte Ass_Responsavel { get; set; }
     }
 }

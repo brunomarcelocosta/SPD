@@ -1,52 +1,4 @@
-﻿//Pré Consulta
-$(function () {
-
-    var urlList = '/PreConsulta/List';
-    var msg = "Deseja realmente adicionar a Pré Consulta?";
-
-    $('form').not('#Invalidar').submit(function () {
-
-        //if ($(this).valid()) {
-        swal({
-            title: "Confirmação",
-            text: msg,
-            icon: "warning",
-            buttons: ["Não", "Sim"],
-            dangerMode: false,
-        }).then((willDelete) => {
-            if (!willDelete) {
-                return window.location = urlList;
-            }
-            $.ajax({
-                url: '/PreConsulta/Add',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function (result) {
-
-                    if (!result.Success) {
-                        //Caso não realize a gravação, apresenta mensagem ao usuário.
-                        swal("", result.Response, "error");
-                        return false;
-                    }
-                    else {
-                        //apresenta mensagem ao usuário e redireciona para a tela de listagem.
-                        swal("", "Pré Consulta realizada com sucesso.", "success")
-                            .then(() => {
-                                window.location = urlList;
-                            });
-                    }
-                }
-            });
-
-        });
-
-        return false;
-
-    });
-
-
-});
-
+﻿
 $(document).ready(function () {
 
     $("#Paciente_string").change(function () {
@@ -97,6 +49,8 @@ $(document).ready(function () {
         });
 
     });
+
+
 });
 
 function AutorizarConsulta() {
@@ -119,5 +73,62 @@ function ValidaCheckBox(check, tipo) {
             $("#idNomeConvenio").prop("hidden", false);
             $("#idNrCarterinha").prop("hidden", false);
         }
+    } else {
+
+        if (tipo == 1) {
+            $("#particular").prop("checked", false);
+            $("#idNomeConvenio").prop("hidden", true);
+            $("#idNrCarterinha").prop("hidden", true);
+        } else {
+            $("#Conveniado").prop("checked", false);
+            $("#idNomeConvenio").prop("hidden", true);
+            $("#idNrCarterinha").prop("hidden", true);
+        }
+
     }
+}
+
+function SalvarPreConsulta() {
+    var urlList = '/PreConsulta/List';
+    var msg = "Deseja realmente adicionar a Pré Consulta?";
+
+    swal({
+        title: "Confirmação",
+        text: msg,
+        icon: "warning",
+        buttons: [ "Não", "Sim"],
+        dangerMode: false,
+    }).then((willDelete) => {
+        if (!willDelete) {
+            return window.location = urlList;
+        }
+        $.ajax({
+            url: '/PreConsulta/Add',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (result) {
+
+                if (!result.Success) {
+                    //Caso não realize a gravação, apresenta mensagem ao usuário.
+                    swal("", result.Response, "error");
+                    return false;
+                }
+                else {
+                    //apresenta mensagem ao usuário e redireciona para a tela de listagem.
+                    swal("", "Pré Consulta realizada com sucesso.", "success")
+                        .then(() => {
+                            window.location = urlList;
+                        });
+                }
+            }
+        });
+
+    });
+
+    return false;
+
+}
+
+function Cancel() {
+    window.location = '/PreConsulta/List';
 }

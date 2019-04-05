@@ -55,12 +55,15 @@ namespace SPD.Services.Services.Model
                     return false;
                 }
 
-                _PacienteRepository.Add(paciente);
-                _PacienteRepository.SaveChange();
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    _PacienteRepository.Add(paciente);
 
-                _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
-                _HistoricoOperacaoRepository.SaveChange();
+                    _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
 
+                    this.SaveChanges(transactionScope);
+
+                }
                 return true;
             }
             catch (Exception ex)

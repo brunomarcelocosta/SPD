@@ -133,8 +133,22 @@
                                     <br />
                                     São José dos Campos, @DateTime.Now.Day.ToString() de @ViewBag.Mes @DateTime.Now.Year.ToString() <br /><br />
 
-                                    _______________________________________<br />
-                                    (Assinatura)
+                                    <div class="assinatura">
+                                        <canvas class="panel panel-default" width="400" height="100" id="signature"></canvas>
+
+                                        <br />
+
+                                        <button class="btn" id="accept"><span class="glyphicon glyphicon-ok" style="color:green"></span></button>
+                                        <button class="btn" id="clear"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>
+
+
+                                        @Html.HiddenFor(model => model.Ass_Responsavel, new { @class = "assResponsavel" })
+                                    </div>
+
+                                    <div id="idimgAssinatura" style="padding-left:560px;">
+                                        _______________________________________<br />
+                                        <div style="padding-left:140px;">(Assinatura)</div>
+                                    </div>
                                 </p>
 
                             </div>
@@ -144,9 +158,9 @@
                         <br />
                         <br />
 
-                        <div class="row" id="divButtons" style="padding-left:880px;" hidden="hidden">
-                            <input type=button class="btn btn-success" value="Salvar Pré Consulta" onClick="SalvarPreConsulta()">
-                            <input type=button class="btn btn-danger" value="Cancelar" onClick="Cancel()">
+                        <div class="row" id="divButtons" style="padding-left:875px;" hidden="hidden">
+                            <input type=button class="btn btn-success" value="Salvar Pré Consulta" onClick="SalvarPreConsulta();">
+                            <input type=button class="btn btn-danger" value="Cancelar" onClick="Cancel();">
                         </div>
 
                     </div>
@@ -162,5 +176,25 @@
     @*@Scripts.Render("~/bundles/jquerymask")*@
     @Scripts.Render("~/bundles/site")
 
+    <script src="~/Scripts/signature_pad.min.js"></script>
     <script src="~/Scripts/PreConsulta/PreConsultaNew.js"></script>
+
+    <script>
+        $(function () {
+            var canvas = document.querySelector('#signature');
+            var pad = new SignaturePad(canvas);
+            $('#accept').click(function () {
+                var data = pad.toDataURL();
+                $('#savetarget').attr('src', data);
+                $('#SignatureDataUrl').val(data);
+                pad.off();
+            });
+
+            $("#clear").click(function () {
+                const context = canvas.getContext('2d');
+
+                context.clearRect(0, 0, canvas.width, canvas.height);
+            });
+        });
+    </script>
 }

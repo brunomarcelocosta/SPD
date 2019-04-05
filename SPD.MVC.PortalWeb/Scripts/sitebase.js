@@ -113,7 +113,7 @@ function excluir(action, controller, dado, tipo) {
         title: "Confirmação",
         text: msg,
         icon: "warning",
-        buttons: ["Não", "Sim"],
+        buttons: [ "Não", "Sim"],
         dangerMode: false,
     })
         .then((willDelete) => {
@@ -335,7 +335,7 @@ function setupLogoff() {
         swal({
             title: "Deseja realmente sair?",
             icon: "warning",
-            buttons: ["Não", "Sim"],
+            buttons: [ "Não", "Sim"],
             dangerMode: false
         }).then((Ok) => {
             if (Ok) {

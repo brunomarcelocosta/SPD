@@ -426,6 +426,7 @@
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\odontograma.png" />
     <Content Include="Content\Styles\bootstrap-select.css" />
     <Content Include="Content\Styles\bootstrap-select.min.css" />
     <Content Include="Content\Styles\bootstrap-theme.css" />
@@ -563,6 +564,8 @@
     <Content Include="Scripts\PreConsulta\PreConsultaNew.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\signature_pad.js" />
+    <Content Include="Scripts\signature_pad.min.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\sitebase.js" />
     <Content Include="Scripts\sweetalert.min.js" />
@@ -623,7 +626,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Consulta\" />
     <Folder Include="Views\HistoricoConsulta\" />
