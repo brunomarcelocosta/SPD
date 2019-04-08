@@ -40,5 +40,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         [UIHint("SignaturePad")]
         public byte Ass_Responsavel { get; set; }
+
+        public string SignatureDataUrl { get; set; }
     }
 }

@@ -151,10 +151,11 @@
                                         <button class="btn" id="clear"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>
 
 
-                                        @Html.HiddenFor(model => model.Ass_Responsavel, new { @class = "assResponsavel" })
                                     </div>
 
                                     <div id="idimgAssinatura" style="padding-left:560px;">
+                                        <input type="text" asp-for="@Model.SignatureDataUrl">
+
                                         <img width="350" height="100" id="savetarget" hidden="hidden" />
                                         _______________________________________<br />
                                         <div style="padding-left:140px;">(Assinatura)</div>
