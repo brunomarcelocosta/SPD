@@ -19,6 +19,15 @@
     @Html.HiddenFor(model => model.Maior_Idade)
     @Html.HiddenFor(model => model.Idade)
 
+    <input type="text" id="paciente_string_value" name="paciente_string_value" hidden="hidden" value="@ViewBag.paciente" />
+    <input type="text" id="convenio_string_value" name="convenio_string_value" hidden="hidden" value="@ViewBag.convenio" />
+    <input type="text" id="nomeConvenio_string_value" name="nomeConvenio_string_value" hidden="hidden" value="@ViewBag.nomeConvenio" />
+    <input type="text" id="nrCarterinha_string_value" name="nrCarterinha_string_value" hidden="hidden" value="@ViewBag.nrCarterinha" />
+    <input type="text" id="nomeResp_string_value" name="nomeResp_string_value" hidden="hidden" value="@ViewBag.NomeResponsavel" />
+    <input type="text" id="cpfResp_string_value" name="cpfResp_string_value" hidden="hidden" value="@ViewBag.CpfResponsavel" />
+    <input type="text" id="img_string_value" name="img_string_value" hidden="hidden" value="@ViewBag.Img" />
+
+
     <div class="row">
 
         <div class="col-md-12">
@@ -134,7 +143,7 @@
                                     São José dos Campos, @DateTime.Now.Day.ToString() de @ViewBag.Mes @DateTime.Now.Year.ToString() <br /><br />
 
                                     <div class="assinatura">
-                                        <canvas class="panel panel-default" width="400" height="100" id="signature"></canvas>
+                                        <canvas class="panel panel-default" width="350" height="100" id="signature"></canvas>
 
                                         <br />
 
@@ -146,6 +155,7 @@
                                     </div>
 
                                     <div id="idimgAssinatura" style="padding-left:560px;">
+                                        <img width="350" height="100" id="savetarget" hidden="hidden" />
                                         _______________________________________<br />
                                         <div style="padding-left:140px;">(Assinatura)</div>
                                     </div>
@@ -170,6 +180,7 @@
     </div>
 }
 
+
 @section Scripts{
 
     @Scripts.Render("~/bundles/jqueryval")
@@ -179,21 +190,5 @@
     <script src="~/Scripts/signature_pad.min.js"></script>
     <script src="~/Scripts/PreConsulta/PreConsultaNew.js"></script>
 
-    <script>
-        $(function () {
-            var canvas = document.querySelector('#signature');
-            var pad = new SignaturePad(canvas);
-            $('#accept').click(function () {
-                var data = pad.toDataURL();
-                $('#savetarget').attr('src', data);
-                $('#SignatureDataUrl').val(data);
-            });
 
-            $("#clear").click(function () {
-                const context = canvas.getContext('2d');
-                pad.clear();
-                context.clearRect(0, 0, canvas.width, canvas.height);
-            });
-        });
-    </script>
 }

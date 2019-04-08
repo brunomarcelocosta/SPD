@@ -1,57 +1,106 @@
 ﻿
-$(document).ready(function () {
+$(function () {
+    var canvas = document.querySelector('#signature');
+    var pad = new SignaturePad(canvas);
+    $('#accept').click(function () {
+        var data = pad.toDataURL();
+        $('#savetarget').attr('src', data);
+        $("#img_string_value").val()
+        $('#SignatureDataUrl').val(data);
+        pad.off();
+    });
 
-    $("#Paciente_string").change(function () {
-        var _nome = $("#Paciente_string").val();
-
-        $.ajax({
-            url: "/PreConsulta/GetPaciente",
-            data: { nome: _nome },
-            type: "post",
-            success: function (result) {
-                if (result.Success) {
-                    var m_idade = true;
-                    var idade = result.Idade + " anos";
-
-                    if (!result.MaiorIdade) {
-                        m_idade = false
-                    }
-
-                    $("#idTpPaciente").prop("hidden", false);
-
-                    $("#idBtnAutorizacao").prop("hidden", m_idade);
-                    $("#idNomeResponsavel").prop("hidden", m_idade);
-                    $("#idCpfResponsavel").prop("hidden", m_idade);
-
-
-                    $("#idIdade").prop("hidden", false);
-                    $("label[for='IdadeValue']").text(idade);
-
-
-                    $("#divButtons").prop("hidden", false);
-
-                } else {
-                    $("#idTpPaciente").prop("hidden", true);
-                    $("#idIdade").prop("hidden", true);
-                    $("#idBtnAutorizacao").prop("hidden", true);
-                    $("#idNomeResponsavel").prop("hidden", true);
-                    $("#idCpfResponsavel").prop("hidden", true);
-                    $("#divButtons").prop("hidden", true);
-
-                    swal("", result.Response, "error");
-                    return false;
-                }
-            },
-            error: function (erro) {
-                swal("", erro.Response, "error");
-                return false;
-            }
-        });
-
+    $("#clear").click(function () {
+        pad.clear();
     });
 
 
 });
+
+$(document).ready(function () {
+    var paciente = $("#paciente_string_value").val();
+    var convenio = $("#convenio_string_value").val();
+    var nome_convenio = $("#nomeConvenio_string_value").val();
+    var nr_carterinha = $("#nrCarterinha_string_value").val();
+    var nome_resp = $("#nomeResp_string_value").val();
+    var cpf_resp = $("#cpfResp_string_value").val();
+
+    if (paciente != "" && paciente != null) {
+        GetPaciente(paciente);
+        $("#Paciente_string").val(paciente);
+
+        if (convenio == "true") {
+            $("#Conveniado").click();
+            $("#Convenio").val(nome_convenio);
+            $("#Numero_Carterinha").val(nr_carterinha);
+        } else {
+            $("#particular").click();
+        }
+
+        $("#Nome_Responsavel").val(nome_resp);
+        $("#Cpf_Responsavel").val(cpf_resp);
+        $("#idBtnAutorizacao").hide();
+        $("#divTermo").show();
+
+
+    }
+
+    else {
+        $("#Paciente_string").change(function () {
+            _nome = $("#Paciente_string").val();
+            GetPaciente(_nome);
+        });
+    }
+
+});
+
+function GetPaciente(_nome) {
+
+    $.ajax({
+        url: "/PreConsulta/GetPaciente",
+        data: { nome: _nome },
+        type: "post",
+        success: function (result) {
+            if (result.Success) {
+                var m_idade = true;
+                var idade = result.Idade + " anos";
+
+                if (!result.MaiorIdade) {
+                    m_idade = false
+                }
+
+                $("#idTpPaciente").prop("hidden", false);
+
+                $("#idBtnAutorizacao").prop("hidden", m_idade);
+                $("#idNomeResponsavel").prop("hidden", m_idade);
+                $("#idCpfResponsavel").prop("hidden", m_idade);
+
+
+                $("#idIdade").prop("hidden", false);
+                $("label[for='IdadeValue']").text(idade);
+
+
+                $("#divButtons").prop("hidden", false);
+
+            } else {
+                $("#idTpPaciente").prop("hidden", true);
+                $("#idIdade").prop("hidden", true);
+                $("#idBtnAutorizacao").prop("hidden", true);
+                $("#idNomeResponsavel").prop("hidden", true);
+                $("#idCpfResponsavel").prop("hidden", true);
+                $("#divButtons").prop("hidden", true);
+
+                swal("", result.Response, "error");
+                return false;
+            }
+        },
+        error: function (erro) {
+            swal("", erro.Response, "error");
+            return false;
+        }
+    });
+
+}
 
 function AutorizarConsulta() {
     $("#divTermo").prop("hidden", false);
@@ -96,7 +145,7 @@ function SalvarPreConsulta() {
         title: "Confirmação",
         text: msg,
         icon: "warning",
-        buttons: [ "Não", "Sim"],
+        buttons: ["Não", "Sim"],
         dangerMode: false,
     }).then((willDelete) => {
         if (!willDelete) {

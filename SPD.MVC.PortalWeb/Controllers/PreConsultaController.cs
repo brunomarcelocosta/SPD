@@ -159,16 +159,23 @@ namespace SPD.MVC.PortalWeb.Controllers
         #region New 
 
         [UseAuthorization(Funcionalidades = "{\"Nome\":\"Iniciar Pré Consultas\"}")]
-        public ActionResult New()
+        public ActionResult New(FormCollection collection = null)
         {
             PreConsultaViewModel preConsultaViewModel = new PreConsultaViewModel();
+
+            ViewBag.paciente = collection["Paciente_string"] == null ? "" : collection["Paciente_string"].ToString();
+            ViewBag.convenio = collection["Conveniado"] == null ? "false" : collection["Conveniado"].ToString().Substring(0, 5).Replace(",", "");
+            ViewBag.nomeConvenio = collection["Convenio"] == null ? "" : collection["Convenio"].ToString();
+            ViewBag.nrCarterinha = collection["Numero_Carterinha"] == null ? "" : collection["Numero_Carterinha"].ToString();
+            ViewBag.NomeResponsavel = collection["Nome_Responsavel"] == null ? "" : collection["Nome_Responsavel"].ToString();
+            ViewBag.CpfResponsavel = collection["Cpf_Responsavel"] == null ? "" : collection["Cpf_Responsavel"].ToString();
 
             preConsultaViewModel.ListNomePaciente = ListNomePacientes(null);
 
             var mes = DateTime.Now.Month;
             string string_mes = Enum.GetName(typeof(SPD_Enums.Meses), mes);
 
-            @ViewBag.Mes = string_mes;
+            ViewBag.Mes = string_mes;
 
             return View(preConsultaViewModel);
         }
