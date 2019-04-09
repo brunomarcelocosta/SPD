@@ -5,15 +5,15 @@ $(function () {
     $('#accept').click(function () {
         var data = pad.toDataURL();
         $('#savetarget').attr('src', data);
-        $("#img_string_value").val()
         $('#SignatureDataUrl').val(data);
+        $('#img_string_value').val(data);
+        $('#accept_string_value').val(1);
         pad.off();
     });
 
     $("#clear").click(function () {
         pad.clear();
     });
-
 
 });
 
@@ -24,6 +24,7 @@ $(document).ready(function () {
     var nr_carterinha = $("#nrCarterinha_string_value").val();
     var nome_resp = $("#nomeResp_string_value").val();
     var cpf_resp = $("#cpfResp_string_value").val();
+    var accept = $("#accept_string_value").val();
 
     if (paciente != "" && paciente != null) {
         GetPaciente(paciente);
@@ -42,6 +43,16 @@ $(document).ready(function () {
         $("#idBtnAutorizacao").hide();
         $("#divTermo").show();
 
+        if (accept == "1") {
+            var data = $('#img_string_value').val();
+            $('#savetarget').attr('src', data);
+            $("#idimg").show();
+            $("#assinatura").hide();
+        } else {
+            $("#idimg").hide();
+            $("#assinatura").show();
+        }
+
 
     }
 
@@ -53,6 +64,12 @@ $(document).ready(function () {
     }
 
 });
+
+function NewCanvas() {
+    $('#savetarget').attr('src', '');
+    $("#idimg").hide();
+    $("#assinatura").show();
+}
 
 function GetPaciente(_nome) {
 

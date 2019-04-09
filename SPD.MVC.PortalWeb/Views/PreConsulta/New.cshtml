@@ -26,6 +26,7 @@
     <input type="text" id="nomeResp_string_value" name="nomeResp_string_value" hidden="hidden" value="@ViewBag.NomeResponsavel" />
     <input type="text" id="cpfResp_string_value" name="cpfResp_string_value" hidden="hidden" value="@ViewBag.CpfResponsavel" />
     <input type="text" id="img_string_value" name="img_string_value" hidden="hidden" value="@ViewBag.Img" />
+    <input type="text" id="accept_string_value" name="img_string_value" hidden="hidden" value="@ViewBag.Accept" />
 
 
     <div class="row">
@@ -154,9 +155,12 @@
                                     </div>
 
                                     <div id="idimgAssinatura" style="padding-left:560px;">
-                                        <input type="text" asp-for="@Model.SignatureDataUrl">
 
-                                        <img width="350" height="100" id="savetarget" hidden="hidden" />
+                                        <div id="idimg" hidden="hidden">
+                                            <button class="btn" id="idnewSignature" onclick="NewCanvas();"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>
+                                            <br />
+                                            <img width="350" height="100" id="savetarget" />
+                                        </div>
                                         _______________________________________<br />
                                         <div style="padding-left:140px;">(Assinatura)</div>
                                     </div>

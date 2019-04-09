@@ -169,6 +169,8 @@ namespace SPD.MVC.PortalWeb.Controllers
             ViewBag.nrCarterinha = collection["Numero_Carterinha"] == null ? "" : collection["Numero_Carterinha"].ToString();
             ViewBag.NomeResponsavel = collection["Nome_Responsavel"] == null ? "" : collection["Nome_Responsavel"].ToString();
             ViewBag.CpfResponsavel = collection["Cpf_Responsavel"] == null ? "" : collection["Cpf_Responsavel"].ToString();
+            ViewBag.Img = collection["img_string_value"] == null ? "" : collection["img_string_value"].ToString();
+            ViewBag.Accept = collection["accept_string_value"] == null ? "" : collection["accept_string_value"].ToString();
 
             preConsultaViewModel.ListNomePaciente = ListNomePacientes(null);
 
