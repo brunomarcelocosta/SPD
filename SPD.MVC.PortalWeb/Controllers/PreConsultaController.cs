@@ -186,7 +186,6 @@ namespace SPD.MVC.PortalWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add(PreConsultaViewModel preConsultaViewModel)
         {
-            var resultado = "";
 
             var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
@@ -195,7 +194,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             var preConsulta = ToModel(preConsultaViewModel);
 
-            if (!_PreConsultaService.Insert(preConsulta, user_logado, out resultado))
+            if (!_PreConsultaService.Insert(preConsulta, user_logado, out string resultado))
             {
                 return Json(new { Success = false, Response = resultado });
             }
