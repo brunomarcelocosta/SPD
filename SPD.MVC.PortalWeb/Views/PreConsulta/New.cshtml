@@ -26,7 +26,7 @@
     <input type="text" id="nomeResp_string_value" name="nomeResp_string_value" hidden="hidden" value="@ViewBag.NomeResponsavel" />
     <input type="text" id="cpfResp_string_value" name="cpfResp_string_value" hidden="hidden" value="@ViewBag.CpfResponsavel" />
     <input type="text" id="img_string_value" name="img_string_value" hidden="hidden" value="@ViewBag.Img" />
-    <input type="text" id="accept_string_value" name="img_string_value" hidden="hidden" value="@ViewBag.Accept" />
+    <input type="text" id="accept_string_value" name="accept_string_value" hidden="hidden" value="@ViewBag.Accept" />
 
 
     <div class="row">
@@ -41,7 +41,7 @@
 
                             <div class="col-md-12">
                                 @Html.DropDownListFor(model => model.Paciente_string, Model.ListNomePaciente as SelectList,
-                           "", new { @class = "form-control", @style = "width:260px" })
+                           "", new { @class = "form-control", @style = "width:260px", @onchange = "OnChange();" })
                             </div>
 
                         </div>
@@ -50,7 +50,7 @@
 
                         <div class="row">
 
-                            <div class="col-md-4" id="idTpPaciente" hidden="hidden">
+                            <div class="col-md-3" id="idTpPaciente" hidden="hidden">
 
                                 <table>
                                     <tbody>
@@ -73,7 +73,7 @@
 
                             <div class="col-md-4" id="idNrCarterinha" hidden="hidden">
                                 @Html.Label("Número da Carterinha", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Numero_Carterinha, new { htmlAttributes = new { @class = "form-control", @style = "width:200px" } })
+                                @Html.EditorFor(model => model.Numero_Carterinha, new { htmlAttributes = new { @class = "form-control", @style = "width:200px", @onkeypress = "return SomenteNumero(event)" } })
                             </div>
 
                         </div>
@@ -94,7 +94,7 @@
 
                             <div class="col-md-4" id="idCpfResponsavel" hidden="hidden">
                                 @Html.Label("CPF do Responsável", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Cpf_Responsavel, new { htmlAttributes = new { @class = "form-control cpf", @style = "width: 200px", @maxLength = "15", @onkeypress = "return SomenteNumero(event)" } })
+                                @Html.EditorFor(model => model.Cpf_Responsavel, new { htmlAttributes = new { @class = "form-control cpf", @style = "width: 200px", @maxLength = "15", @onkeypress = "MascaraCPF(event);" } })
                             </div>
 
                             <div class="col-md-6" id="idBtnAutorizacao" hidden="hidden">
@@ -143,7 +143,7 @@
                                     <br />
                                     São José dos Campos, @DateTime.Now.Day.ToString() de @ViewBag.Mes @DateTime.Now.Year.ToString() <br /><br />
 
-                                    <div class="assinatura">
+                                    <div id="assinatura">
                                         <canvas class="panel panel-default" width="350" height="100" id="signature"></canvas>
 
                                         <br />
@@ -174,7 +174,7 @@
                         <br />
 
                         <div class="row" id="divButtons" style="padding-left:875px;" hidden="hidden">
-                            <input type=button class="btn btn-success" value="Salvar Pré Consulta" onClick="SalvarPreConsulta();">
+                            <input type=button id="btnSalvarPreConsulta" class="btn btn-success" value="Salvar Pré Consulta" onClick="SalvarPreConsulta();" hidden="hidden">
                             <input type=button class="btn btn-danger" value="Cancelar" onClick="Cancel();">
                         </div>
 

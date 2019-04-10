@@ -2,12 +2,14 @@
 $(function () {
     var canvas = document.querySelector('#signature');
     var pad = new SignaturePad(canvas);
+    var num = "1";
+
     $('#accept').click(function () {
         var data = pad.toDataURL();
         $('#savetarget').attr('src', data);
         $('#SignatureDataUrl').val(data);
         $('#img_string_value').val(data);
-        $('#accept_string_value').val(1);
+        $('#accept_string_value').val(num);
         pad.off();
     });
 
@@ -27,7 +29,7 @@ $(document).ready(function () {
     var accept = $("#accept_string_value").val();
 
     if (paciente != "" && paciente != null) {
-        GetPaciente(paciente);
+        GetPaciente(paciente, 0);
         $("#Paciente_string").val(paciente);
 
         if (convenio == "true") {
@@ -47,31 +49,38 @@ $(document).ready(function () {
             var data = $('#img_string_value').val();
             $('#savetarget').attr('src', data);
             $("#idimg").show();
+            $("#btnSalvarPreConsulta").show();
             $("#assinatura").hide();
-        } else {
+        }
+
+        else {
             $("#idimg").hide();
             $("#assinatura").show();
+            $("#btnSalvarPreConsulta").hide();
         }
 
 
     }
-
-    else {
-        $("#Paciente_string").change(function () {
-            _nome = $("#Paciente_string").val();
-            GetPaciente(_nome);
-        });
-    }
-
 });
 
 function NewCanvas() {
     $('#savetarget').attr('src', '');
+    $('#img_string_value').val("");
+    $('#accept_string_value').val("");
     $("#idimg").hide();
+    $("#btnSalvarPreConsulta").hide();
     $("#assinatura").show();
 }
 
-function GetPaciente(_nome) {
+function OnChange() {
+
+    CleanVariavel();
+
+    var _nome = $('#Paciente_string').val();
+    GetPaciente(_nome, 1);
+}
+
+function GetPaciente(_nome, tipo) {
 
     $.ajax({
         url: "/PreConsulta/GetPaciente",
@@ -96,7 +105,6 @@ function GetPaciente(_nome) {
                 $("#idIdade").prop("hidden", false);
                 $("label[for='IdadeValue']").text(idade);
 
-
                 $("#divButtons").prop("hidden", false);
 
             } else {
@@ -116,6 +124,16 @@ function GetPaciente(_nome) {
             return false;
         }
     });
+
+    if (tipo == 1) {
+        $("#btnSalvarPreConsulta").show();
+        $("#particular").prop("checked", false);
+        $("#Conveniado").prop("checked", false);
+        $("#idNomeConvenio").prop("hidden", true);
+        $("#idNrCarterinha").prop("hidden", true);
+        $("#divTermo").hide();
+
+    }
 
 }
 
@@ -197,4 +215,14 @@ function SalvarPreConsulta() {
 
 function Cancel() {
     window.location = '/PreConsulta/List';
+}
+
+function CleanVariavel() {
+    $("#paciente_string_value").val("");
+    $("#convenio_string_value").val("");
+    $("#nomeConvenio_string_value").val("");
+    $("#nrCarterinha_string_value").val("");
+    $("#nomeResp_string_value").val("");
+    $("#cpfResp_string_value").val("");
+    $("#accept_string_value").val("");
 }
