@@ -61,7 +61,7 @@ $(document).ready(function () {
             $("#btnSalvarPreConsulta").hide();
         }
 
-       
+
     }
 
 
@@ -83,6 +83,13 @@ function OnChange() {
 
     var _nome = $('#Paciente_string').val();
     GetPaciente(_nome, 1);
+
+    var idade = $("#IdadeValue").val();
+    if (idade > 18) {
+        $("#btnSalvarPreConsulta").show();
+    } else {
+        $("#btnSalvarPreConsulta").hideo();
+    }
 }
 
 function GetPaciente(_nome, tipo) {
@@ -111,11 +118,6 @@ function GetPaciente(_nome, tipo) {
                 $("label[for='IdadeValue']").text(idade);
 
                 $("#divButtons").prop("hidden", false);
-
-                if (idade >= 18) {
-                    $("#btnSalvarPreConsulta").show();
-
-                }
 
 
             } else {
