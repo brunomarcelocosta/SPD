@@ -33,12 +33,6 @@ namespace SPD.MVC.PortalWeb.Controllers
             _UsuarioFuncionalidadeService = usuarioFuncionalidadeService;
         }
 
-        public ActionResult Teste()
-        {
-
-            return View();
-        }
-
         #region List
 
         [UseAuthorization(Funcionalidades = "{\"Nome\":\"Listar Pré Consultas\"}")]
@@ -182,8 +176,6 @@ namespace SPD.MVC.PortalWeb.Controllers
             return View(preConsultaViewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Add(PreConsultaViewModel preConsultaViewModel)
         {
 
@@ -202,18 +194,6 @@ namespace SPD.MVC.PortalWeb.Controllers
             return Json(new { Success = true });
 
 
-        }
-
-        [HttpPost]
-        public JsonResult AutoCompletePaciente(string prefix)
-        {
-            //Note : you can bind same list from database  
-            var listPaciente = ToListViewModel<Paciente, PacienteViewModel>(_PacienteService.QueryAsNoTracking().ToList());
-
-            listPaciente = listPaciente.Where(a => a.Nome.ToUpper().StartsWith(prefix.ToUpper())).ToList();
-
-
-            return Json(listPaciente);
         }
 
         #endregion

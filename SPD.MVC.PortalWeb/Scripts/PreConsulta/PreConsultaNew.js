@@ -7,7 +7,7 @@ $(function () {
     $('#accept').click(function () {
         var data = pad.toDataURL();
         $('#savetarget').attr('src', data);
-        $('#SignatureDataUrl').val(data);
+        $("#Img_string").val(data);
         $('#img_string_value').val(data);
         $('#accept_string_value').val(num);
         pad.off();
@@ -20,6 +20,7 @@ $(function () {
 });
 
 $(document).ready(function () {
+
     var paciente = $("#paciente_string_value").val();
     var convenio = $("#convenio_string_value").val();
     var nome_convenio = $("#nomeConvenio_string_value").val();
@@ -48,6 +49,7 @@ $(document).ready(function () {
         if (accept == "1") {
             var data = $('#img_string_value').val();
             $('#savetarget').attr('src', data);
+            $("#Img_string").val(data);
             $("#idimg").show();
             $("#btnSalvarPreConsulta").show();
             $("#assinatura").hide();
@@ -59,8 +61,10 @@ $(document).ready(function () {
             $("#btnSalvarPreConsulta").hide();
         }
 
-
+       
     }
+
+
 });
 
 function NewCanvas() {
@@ -75,6 +79,7 @@ function NewCanvas() {
 function OnChange() {
 
     CleanVariavel();
+    $("#btnSalvarPreConsulta").hide();
 
     var _nome = $('#Paciente_string').val();
     GetPaciente(_nome, 1);
@@ -107,6 +112,12 @@ function GetPaciente(_nome, tipo) {
 
                 $("#divButtons").prop("hidden", false);
 
+                if (idade >= 18) {
+                    $("#btnSalvarPreConsulta").show();
+
+                }
+
+
             } else {
                 $("#idTpPaciente").prop("hidden", true);
                 $("#idIdade").prop("hidden", true);
@@ -114,6 +125,7 @@ function GetPaciente(_nome, tipo) {
                 $("#idNomeResponsavel").prop("hidden", true);
                 $("#idCpfResponsavel").prop("hidden", true);
                 $("#divButtons").prop("hidden", true);
+                $("#btnSalvarPreConsulta").hide();
 
                 swal("", result.Response, "error");
                 return false;
@@ -126,7 +138,6 @@ function GetPaciente(_nome, tipo) {
     });
 
     if (tipo == 1) {
-        $("#btnSalvarPreConsulta").show();
         $("#particular").prop("checked", false);
         $("#Conveniado").prop("checked", false);
         $("#idNomeConvenio").prop("hidden", true);
@@ -138,8 +149,8 @@ function GetPaciente(_nome, tipo) {
 }
 
 function AutorizarConsulta() {
-    $("#divTermo").prop("hidden", false);
-    $("#idBtnAutorizacao").prop("hidden", true);
+    $("#divTermo").show();
+    $("#idBtnAutorizacao").hide();
 
 }
 
@@ -176,6 +187,19 @@ function SalvarPreConsulta() {
     var urlList = '/PreConsulta/List';
     var msg = "Deseja realmente adicionar a Pré Consulta?";
 
+    var data = {
+        Paciente_string: $("#Paciente_string").val(),
+        Conveniado: $("#Conveniado").val(),
+        particular: $("#particular").val(),
+        Idade: $("#Idade").val(),
+        Maior_Idade: $("#Maior_Idade").val(),
+        Convenio: $("#Convenio").val(),
+        Numero_Carterinha: $("#Numero_Carterinha").val(),
+        Nome_Responsavel: $("#Nome_Responsavel").val(),
+        Cpf_Responsavel: $("#Cpf_Responsavel").val(),
+        Img_string: $("#Img_string").val()
+    }
+
     swal({
         title: "Confirmação",
         text: msg,
@@ -189,7 +213,8 @@ function SalvarPreConsulta() {
         $.ajax({
             url: '/PreConsulta/Add',
             type: 'POST',
-            data: $(this).serialize(),
+            dataType: "JSON",
+            data: { 'preConsultaViewModel': data },
             success: function (result) {
 
                 if (!result.Success) {

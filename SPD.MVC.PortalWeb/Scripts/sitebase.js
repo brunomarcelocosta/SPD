@@ -13,11 +13,27 @@ if (!String.format) {
     };
 }
 
-function MascaraCPF(cpf) {
-    if (mascaraInteiro(cpf) == false) {
-        event.returnValue = false;
+function formatarCpf() {
+    var cpf = $("#Cpf_Responsavel").val();
+
+    cpf = cpf.replace(".", "").replace(".", "").replace("-", "");
+
+    var cpf_format = "";
+
+    for (var i = 0; i < cpf.length; i++) {
+        cpf_format += cpf.charAt(i);
+
+        if (i == 2) {
+            cpf_format = cpf_format + '.';
+        }
+        else if (i == 5) {
+            cpf_format = cpf_format + '.';
+        } else if (i == 8) {
+            cpf_format = cpf_format + '-';
+        }
     }
-    return formataCampo(cpf, '000.000.000-00', event);
+
+    $("#Cpf_Responsavel").val(cpf_format);
 }
 
 /// <summary>
@@ -49,7 +65,7 @@ function ValidaDados(controller, action, value) {
 
     var data = $("form").serialize();
 
-    RenderPartial(controller, action, data, "post", "json").done(function (result) {       
+    RenderPartial(controller, action, data, "post", "json").done(function (result) {
     });
 }
 
@@ -120,7 +136,7 @@ function excluir(action, controller, dado, tipo) {
         title: "Confirmação",
         text: msg,
         icon: "warning",
-        buttons: [ "Não", "Sim"],
+        buttons: ["Não", "Sim"],
         dangerMode: false,
     })
         .then((willDelete) => {
@@ -342,7 +358,7 @@ function setupLogoff() {
         swal({
             title: "Deseja realmente sair?",
             icon: "warning",
-            buttons: [ "Não", "Sim"],
+            buttons: ["Não", "Sim"],
             dangerMode: false
         }).then((Ok) => {
             if (Ok) {
