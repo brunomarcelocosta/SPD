@@ -17,26 +17,43 @@ namespace SPD.Services.Services.Model
         private readonly IHistoricoOperacaoRepository _HistoricoOperacaoRepository;
         private readonly IPacienteRepository _PacienteRepository;
         private readonly IPreConsultaRepository _PreConsultaRepository;
+        private readonly IAssinaturaRepository _AssinaturaRepository;
+        private readonly IHistoricoAutorizacaoPacienteRepository _HistoricoAutorizacaoPacienteRepository;
 
         public PreConsultaService(IHistoricoOperacaoRepository historicoOperacaoRepository,
                                   IPacienteRepository pacienteRepository,
-                                  IPreConsultaRepository preConsultaRepository)
+                                  IPreConsultaRepository preConsultaRepository,
+                                  IAssinaturaRepository assinaturaRepository,
+                                  IHistoricoAutorizacaoPacienteRepository historicoAutorizacaoPacienteRepository)
             : base(preConsultaRepository)
         {
             _PacienteRepository = pacienteRepository;
             _PreConsultaRepository = preConsultaRepository;
             _HistoricoOperacaoRepository = historicoOperacaoRepository;
+            _AssinaturaRepository = assinaturaRepository;
+            _HistoricoAutorizacaoPacienteRepository = historicoAutorizacaoPacienteRepository;
         }
 
         public bool ExistePreConsulta(PreConsulta preConsulta)
         {
-            var list = _PreConsultaRepository.Query().Where(a => a.PACIENTE.Equals(preConsulta.PACIENTE.NOME)).ToList();
+            var list = _PreConsultaRepository.Query().Where(a => a.ID_PACIENTE == preConsulta.ID_PACIENTE).ToList();
 
             if (list.Count > 0)
                 return true;
 
             return false;
         }
+
+        public bool ExisteAssinatura(Assinatura assinatura)
+        {
+            var list = _AssinaturaRepository.Query().Where(a => a.CPF_RESPONSAVEL == assinatura.CPF_RESPONSAVEL).ToList();
+
+            if (list.Count > 0)
+                return true;
+
+            return false;
+        }
+
 
         public bool Insert(PreConsulta preConsulta, Usuario usuario, out string resultado)
         {
@@ -46,24 +63,38 @@ namespace SPD.Services.Services.Model
             {
                 if (ExistePreConsulta(preConsulta))
                 {
-                    resultado = "Já existe paciente com este nome em uma Pré Consulta iniciada.";
-                    return false; 
+                    resultado = "Já existe uma Pré Consulta para este paciente.";
+                    return false;
                 }
 
                 var paciente = _PacienteRepository.GetById(preConsulta.PACIENTE.ID);
-                preConsulta.PACIENTE = paciente;
-                preConsulta.DT_INSERT = DateTime.Now;
 
-
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                if (preConsulta.Assinatura != null)
                 {
+                    var assinatura = _AssinaturaRepository.GetAssinatura(preConsulta.Assinatura, ExisteAssinatura(preConsulta.Assinatura));
 
-                    _PreConsultaRepository.Add(preConsulta);
+                    var historicoAssinatura = new HistoricoAutorizacaoPaciente()
+                    {
+                        PACIENTE = paciente,
+                        ASSINATURA = assinatura,
+                        DT_INSERT = DateTime.Now
+                    };
 
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Iniciou a Pré Consulta do paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
-
-                    SaveChanges(transactionScope);
+                    _HistoricoAutorizacaoPacienteRepository.InsertHistorico(historicoAssinatura);
                 }
+
+                preConsulta.PACIENTE = paciente;
+
+                //using (var transactionScope = new TransactionScope())
+                //{
+                _PreConsultaRepository.Add(preConsulta);
+                _PreConsultaRepository.SaveChange();
+
+                _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou a Pré Consulta ao paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
+                _HistoricoOperacaoRepository.SaveChanges();
+
+
+                //}
 
                 return true;
             }
@@ -124,6 +155,13 @@ namespace SPD.Services.Services.Model
                 resultado = ex.Message;
                 return false;
             }
+        }
+
+        private Assinatura GetAssinatura(Assinatura assinatura)
+        {
+            var assinaturaReturn = _AssinaturaRepository.GetAssinatura(assinatura, ExisteAssinatura(assinatura));
+
+            return assinaturaReturn;
         }
     }
 }

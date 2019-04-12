@@ -16,8 +16,6 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public bool? Autorizado { get; set; }
 
-        public byte[] Autorizacao { get; set; }
-
         public string Convenio { get; set; }
 
         public string Numero_Carterinha { get; set; }

@@ -13,8 +13,6 @@ namespace SPD.Model.Model
 
         public bool? AUTORIZADO { get; set; }
 
-        public byte[] AUTORIZACAO { get; set; }
-
         public string CONVENIO { get; set; }
 
         public string NUMERO_CARTERINHA { get; set; }

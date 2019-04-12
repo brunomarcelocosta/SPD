@@ -27,48 +27,22 @@ $(document).ready(function () {
     var nr_carterinha = $("#nrCarterinha_string_value").val();
     var nome_resp = $("#nomeResp_string_value").val();
     var cpf_resp = $("#cpfResp_string_value").val();
-    var accept = $("#accept_string_value").val();
 
     if (paciente != "" && paciente != null) {
-        GetPaciente(paciente, 0);
+
+        GetPaciente(paciente);
+
         $("#Paciente_string").val(paciente);
 
         if (convenio == "true") {
-            $("#Conveniado").click();
-            $("#Convenio").val(nome_convenio);
-            $("#Numero_Carterinha").val(nr_carterinha);
-        } else {
+
+            IsConvenio(nome_convenio, nr_carterinha);
+        }
+        else {
             $("#particular").click();
         }
 
-        $("#Nome_Responsavel").val(nome_resp);
-        $("#Cpf_Responsavel").val(cpf_resp);
-        $("#idBtnAutorizacao").hide();
-        $("#divTermo").show();
-
-        if (accept == "1") {
-            var data = $('#img_string_value').val();
-            $('#savetarget').attr('src', data);
-            $("#Img_string").val(data);
-            $("#idimg").show();
-            $("#btnSalvarPreConsulta").show();
-            $("#assinatura").hide();
-        }
-
-        else {
-            $("#idimg").hide();
-            $("#assinatura").show();
-            $("#btnSalvarPreConsulta").hide();
-        }
-
-
-    }
-
-    var idade = $("#IdadeValue").val();
-    if (idade > 18) {
-        $("#btnSalvarPreConsulta").show();
-    } else {
-        $("#btnSalvarPreConsulta").hide();
+        ShowItensCriancas(nome_resp, cpf_resp);
     }
 
 });
@@ -85,15 +59,15 @@ function NewCanvas() {
 function OnChange() {
 
     CleanVariavel();
-    $("#btnSalvarPreConsulta").hide();
+    CleanViewModel();
+    HideHiddens();
 
     var _nome = $('#Paciente_string').val();
-    GetPaciente(_nome, 1);
-
+    GetPaciente(_nome);
 
 }
 
-function GetPaciente(_nome, tipo) {
+function GetPaciente(_nome) {
 
     $.ajax({
         url: "/PreConsulta/GetPaciente",
@@ -108,47 +82,95 @@ function GetPaciente(_nome, tipo) {
                     m_idade = false
                 }
 
-                $("#idTpPaciente").prop("hidden", false);
+                $("#Maior_Idade").val(m_idade);
 
-                $("#idBtnAutorizacao").prop("hidden", m_idade);
-                $("#idNomeResponsavel").prop("hidden", m_idade);
-                $("#idCpfResponsavel").prop("hidden", m_idade);
+                ShowHiddens(m_idade, idade);
 
+                var accept = $("#accept_string_value").val();
 
-                $("#idIdade").prop("hidden", false);
-                $("label[for='IdadeValue']").text(idade);
-
-                $("#divButtons").prop("hidden", false);
-
+                if (accept == "1") {
+                    IsAccept();
+                }
+                else {
+                    IsCleanAssinatura();
+                    ValidaIdade(result.Idade);
+                }
 
             } else {
-                $("#idTpPaciente").prop("hidden", true);
-                $("#idIdade").prop("hidden", true);
-                $("#idBtnAutorizacao").prop("hidden", true);
-                $("#idNomeResponsavel").prop("hidden", true);
-                $("#idCpfResponsavel").prop("hidden", true);
-                $("#divButtons").prop("hidden", true);
-                $("#btnSalvarPreConsulta").hide();
+                HideHiddens();
 
                 swal("", result.Response, "error");
                 return false;
             }
         },
         error: function (erro) {
+            ShowHiddens(m_idade, idade);
+
             swal("", erro.Response, "error");
             return false;
         }
     });
+}
 
-    if (tipo == 1) {
-        $("#particular").prop("checked", false);
-        $("#Conveniado").prop("checked", false);
-        $("#idNomeConvenio").prop("hidden", true);
-        $("#idNrCarterinha").prop("hidden", true);
-        $("#divTermo").hide();
+function HideHiddens() {
 
-    }
+    $("#idTpPaciente").prop("hidden", true);
+    $("#idIdade").prop("hidden", true);
+    $("#idBtnAutorizacao").prop("hidden", true);
+    $("#particular").prop("checked", false);
+    $("#Conveniado").prop("checked", false);
+    $("#idNomeConvenio").prop("hidden", true);
+    $("#idNrCarterinha").prop("hidden", true);
+    $("#divButtons").prop("hidden", true);
+    $("#divTermo").hide();
+    $("#btnSalvarPreConsulta").hide();
+}
 
+function ShowHiddens(m_idade, idade) {
+
+    $("#idTpPaciente").prop("hidden", false);
+
+    $("#idBtnAutorizacao").prop("hidden", m_idade);
+    $("#idNomeResponsavel").prop("hidden", m_idade);
+    $("#idCpfResponsavel").prop("hidden", m_idade);
+
+
+    $("#idIdade").prop("hidden", false);
+    $("label[for='IdadeValue']").text(idade);
+
+    $("#divButtons").prop("hidden", false);
+}
+
+function IsConvenio(nome_convenio, nr_carterinha) {
+
+    $("#Conveniado").click();
+    $("#Convenio").val(nome_convenio);
+    $("#Numero_Carterinha").val(nr_carterinha);
+}
+
+function IsAccept() {
+
+    var data = $('#img_string_value').val();
+    $('#savetarget').attr('src', data);
+    $("#Img_string").val(data);
+    $("#idimg").show();
+    $("#btnSalvarPreConsulta").show();
+    $("#assinatura").hide();
+}
+
+function IsCleanAssinatura() {
+
+    $("#idimg").hide();
+    $("#assinatura").show();
+    $("#btnSalvarPreConsulta").hide();
+}
+
+function ShowItensCriancas(nome_resp, cpf_resp) {
+
+    $("#Nome_Responsavel").val(nome_resp);
+    $("#Cpf_Responsavel").val(cpf_resp);
+    $("#idBtnAutorizacao").hide();
+    $("#divTermo").show();
 }
 
 function AutorizarConsulta() {
@@ -253,4 +275,24 @@ function CleanVariavel() {
     $("#nomeResp_string_value").val("");
     $("#cpfResp_string_value").val("");
     $("#accept_string_value").val("");
+}
+
+function CleanViewModel() {
+
+    $("#Nome_Responsavel").val("");
+    $("#Cpf_Responsavel").val("");
+    $("#Img_string").val("");
+    $("#Convenio").val("");
+    $("#Numero_Carterinha").val("");
+    $("label[for='IdadeValue']").text("");
+
+}
+
+function ValidaIdade(idade) {
+
+    if (idade >= 18) {
+        $("#btnSalvarPreConsulta").show();
+    } else {
+        $("#btnSalvarPreConsulta").hide();
+    }
 }

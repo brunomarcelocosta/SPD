@@ -178,13 +178,36 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         public ActionResult Add(PreConsultaViewModel preConsultaViewModel)
         {
+            var paciente = ToViewModel<Paciente, PacienteViewModel>
+                         (_PacienteService
+                          .Query()
+                          .Where(a => a.NOME.Equals(preConsultaViewModel.Paciente_string))
+                          .FirstOrDefault()
+                         );
+            var assinatura = new AssinaturaViewModel();
+
+            if (!preConsultaViewModel.Maior_Idade)
+            {
+                assinatura.NOME_RESPONSAVEL = preConsultaViewModel.Nome_Responsavel;
+                assinatura.CPF_RESPONSAVEL = preConsultaViewModel.Cpf_Responsavel;
+                assinatura.ASSINATURA = Convert.FromBase64String(preConsultaViewModel.Img_string.Substring("data:image/jpeg;base64,".Length));
+                assinatura.DT_INSERT = DateTime.Now;
+            }
+
+            var viewModelToBD = new PreConsultaViewModel
+            {
+                Paciente = paciente,
+                Assinatura = assinatura.ASSINATURA == null ? null : assinatura,
+                Maior_Idade = preConsultaViewModel.Maior_Idade,
+                Autorizado = true,
+                Convenio = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? "" : preConsultaViewModel.Convenio,
+                Numero_Carterinha = string.IsNullOrWhiteSpace(preConsultaViewModel.Numero_Carterinha) ? "" : preConsultaViewModel.Numero_Carterinha,
+                Dt_Insert = DateTime.Now
+            };
 
             var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
-            var paciente = ToViewModel<Paciente, PacienteViewModel>(_PacienteService.Query().Where(a => a.NOME.Equals(preConsultaViewModel.Paciente_string)).FirstOrDefault());
-            preConsultaViewModel.Paciente = paciente;
-
-            var preConsulta = ToModel(preConsultaViewModel);
+            var preConsulta = ToModel(viewModelToBD);
 
             if (!_PreConsultaService.Insert(preConsulta, user_logado, out string resultado))
             {

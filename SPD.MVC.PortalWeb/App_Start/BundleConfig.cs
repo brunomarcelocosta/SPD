@@ -24,7 +24,7 @@ namespace SPD.MVC.PortalWeb
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/sweetalert").Include(
-                      "~/Scripts/sweetalert.min.js"));
+                     "~/Scripts/sweetalert.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
                       "~/Scripts/jquery.signalR-{version}.js"));

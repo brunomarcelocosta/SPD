@@ -66,6 +66,7 @@
     <Compile Include="Model\Context.cs" />
     <Compile Include="Model\Dentista.cs" />
     <Compile Include="Model\Funcionalidade.cs" />
+    <Compile Include="Model\HistoricoAutorizacaoPaciente.cs" />
     <Compile Include="Model\HistoricoConsulta.cs" />
     <Compile Include="Model\HistoricoOperacao.cs" />
     <Compile Include="Model\Notificacao.cs" />

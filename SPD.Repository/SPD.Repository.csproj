@@ -60,9 +60,11 @@
   <ItemGroup>
     <Compile Include="Hubs\UserConnection.cs" />
     <Compile Include="Interface\IRepositoryBase.cs" />
+    <Compile Include="Interface\Model\IAssinaturaRepository.cs" />
     <Compile Include="Interface\Model\IConsultaRepository.cs" />
     <Compile Include="Interface\Model\IDentistaRepository.cs" />
     <Compile Include="Interface\Model\IFuncionalidadeRepository.cs" />
+    <Compile Include="Interface\Model\IHistoricoAutorizacaoPacienteRepository.cs" />
     <Compile Include="Interface\Model\IHistoricoConsultaRepository.cs" />
     <Compile Include="Interface\Model\IHistoricoOperacaoRepository.cs" />
     <Compile Include="Interface\Model\INotificacaoRepository.cs" />
@@ -73,9 +75,11 @@
     <Compile Include="Interface\Model\IUsuarioFuncionalidadeRepository.cs" />
     <Compile Include="Interface\Model\IUsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Model\AssinaturaRepository.cs" />
     <Compile Include="Repository\Model\ConsultaRepository.cs" />
     <Compile Include="Repository\Model\DentistaRepository.cs" />
     <Compile Include="Repository\Model\FuncionalidadeRepository.cs" />
+    <Compile Include="Repository\Model\HistoricoAutorizacaoPacienteRepository.cs" />
     <Compile Include="Repository\Model\HistoricoConsultaRepository.cs" />
     <Compile Include="Repository\Model\HistoricoOperacaoRepository.cs" />
     <Compile Include="Repository\Model\NotificacaoRepository.cs" />

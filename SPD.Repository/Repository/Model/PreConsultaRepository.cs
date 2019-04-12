@@ -17,7 +17,6 @@ namespace SPD.Repository.Repository.Model
             preConsultaUpdate.PACIENTE = paciente;
             preConsultaUpdate.MAIOR_IDADE = preConsulta.MAIOR_IDADE;
             preConsultaUpdate.AUTORIZADO = preConsulta.AUTORIZADO;
-            preConsultaUpdate.AUTORIZACAO = preConsulta.AUTORIZACAO;
             preConsultaUpdate.CONVENIO = preConsulta.CONVENIO;
             preConsultaUpdate.NUMERO_CARTERINHA = preConsulta.NUMERO_CARTERINHA;
             //preConsultaUpdate.VALOR_CONSULTA = preConsulta.VALOR_CONSULTA;
