@@ -233,7 +233,7 @@ function SalvarPreConsulta() {
         dangerMode: false,
     }).then((willDelete) => {
         if (!willDelete) {
-            return window.location = urlList;
+            return false;
         }
         $.ajax({
             url: '/PreConsulta/Add',

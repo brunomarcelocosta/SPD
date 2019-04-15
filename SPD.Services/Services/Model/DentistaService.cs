@@ -71,9 +71,9 @@ namespace SPD.Services.Services.Model
 
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
-                    _DentistaRepository.Add(dentista);
-
                     _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou o dentista {dentista.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Dentista);
+
+                    _DentistaRepository.Add(dentista);
 
                     SaveChanges(transactionScope);
                 }
@@ -99,7 +99,7 @@ namespace SPD.Services.Services.Model
                 resultado = "Já existe dentista cadastrado com este CRO.";
                 return false;
             }
-            
+
             dentistaBD = _dentistaBD.Where(a => a.ID_USUARIO == dentista.USUARIO.ID).FirstOrDefault();
             if (dentistaBD.ID_USUARIO != dentista.USUARIO.ID)
             {
@@ -112,14 +112,15 @@ namespace SPD.Services.Services.Model
                 var user = _UsuarioRepository.GetById(dentista.USUARIO.ID);
                 dentista.DT_INSERT = DateTime.Now;
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _DentistaRepository.UpdateDentista(dentista, user);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                _DentistaRepository.UpdateDentista(dentista, user);
+                _DentistaRepository.SaveChanges();
 
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Atualizou o dentista {dentista.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Dentista);
+                _HistoricoOperacaoRepository.RegistraHistoricoSC($"Atualizou o dentista {dentista.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Dentista);
 
-                    SaveChanges(transactionScope);
-                }
+                //    SaveChanges(transactionScope);
+                //}
                 return true;
             }
             catch (Exception ex)
@@ -139,9 +140,9 @@ namespace SPD.Services.Services.Model
 
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
-                    _DentistaRepository.Remove(dentista);
-
                     _HistoricoOperacaoRepository.RegistraHistorico($"Excluiu o dentista {dentista.NOME}", usuario, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.Dentista);
+
+                    _DentistaRepository.Remove(dentista);
 
                     SaveChanges(transactionScope);
                 }

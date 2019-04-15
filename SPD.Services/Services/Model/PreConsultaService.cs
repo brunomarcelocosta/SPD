@@ -54,7 +54,6 @@ namespace SPD.Services.Services.Model
             return false;
         }
 
-
         public bool Insert(PreConsulta preConsulta, Usuario usuario, out string resultado)
         {
             resultado = "";
@@ -68,6 +67,7 @@ namespace SPD.Services.Services.Model
                 }
 
                 var paciente = _PacienteRepository.GetById(preConsulta.PACIENTE.ID);
+                preConsulta.PACIENTE = paciente;
 
                 if (preConsulta.Assinatura != null)
                 {
@@ -81,20 +81,20 @@ namespace SPD.Services.Services.Model
                     };
 
                     _HistoricoAutorizacaoPacienteRepository.InsertHistorico(historicoAssinatura);
+
+                    preConsulta.ID_ASSINATURA = assinatura.ID;
                 }
 
                 preConsulta.PACIENTE = paciente;
 
-                //using (var transactionScope = new TransactionScope())
-                //{
-                _PreConsultaRepository.Add(preConsulta);
-                _PreConsultaRepository.SaveChange();
+                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                {
+                    _PreConsultaRepository.Add(preConsulta);
 
-                _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou a Pré Consulta ao paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
-                _HistoricoOperacaoRepository.SaveChanges();
+                    _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou a Pré Consulta ao paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
 
-
-                //}
+                    SaveChanges(transactionScope);
+                }
 
                 return true;
             }
@@ -138,12 +138,15 @@ namespace SPD.Services.Services.Model
             try
             {
                 var preConsulta = GetById(id);
+                preConsulta.PACIENTE = _PacienteRepository.GetById(preConsulta.ID_PACIENTE);
+
+                var nome = preConsulta.PACIENTE.NOME;
 
                 using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 {
                     _PreConsultaRepository.Remove(preConsulta);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Cancelou a Pré Consulta do paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.PreConsulta);
+                    _HistoricoOperacaoRepository.RegistraHistorico($"Cancelou a Pré Consulta do paciente {nome}", usuario, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.PreConsulta);
 
                     SaveChanges(transactionScope);
                 }

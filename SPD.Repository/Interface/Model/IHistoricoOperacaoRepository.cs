@@ -17,5 +17,7 @@ namespace SPD.Repository.Interface.Model
         bool RegistraHistoricoRepository(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, out string resultado);
 
         void ExcluiHistoricoUsuario(Usuario usuario);
+
+        void RegistraHistoricoSC(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores);
     }
 }

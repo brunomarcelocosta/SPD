@@ -18,7 +18,7 @@ namespace SPD.Model.Model
         public string NUMERO_CARTERINHA { get; set; }
 
         public int? ID_ASSINATURA { get; set; }
-        public Assinatura Assinatura { get; set; }
+        public virtual Assinatura Assinatura { get; set; }
 
         //public string VALOR_CONSULTA { get; set; }
 

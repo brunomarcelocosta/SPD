@@ -65,6 +65,22 @@ namespace SPD.Repository.Repository.Model
             historicoOperacao.RegistraHistorico(this.Context as Context, valor, usuario, tipoOperacao, funcionalidade, valores);
 
             this.Add(historicoOperacao);
+            this.SaveChanges();
+        }
+
+        public void RegistraHistoricoSC(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores)
+        {
+            var id = (int)Enum.Parse(typeof(Tipo_Operacao), kindtipoOperacao.ToString(), true);  //(int)kindtipoOperacao;
+
+            var tipoOperacao = this._TipoOperacaoRepository.GetById(id);
+            var funcionalidade = this._FuncionalidadeRepository.GetById((int)kindfuncionalidade);
+
+            var historicoOperacao = new HistoricoOperacao();
+
+            historicoOperacao.RegistraHistorico(this.Context as Context, valor, usuario, tipoOperacao, funcionalidade, valores);
+
+            this.Add(historicoOperacao);
+            this.SaveChanges();
         }
 
         public void ExcluiHistoricoUsuario(Usuario usuario)
@@ -74,5 +90,6 @@ namespace SPD.Repository.Repository.Model
                 this.Remove(historico);
             }
         }
+
     }
 }

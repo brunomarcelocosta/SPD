@@ -20,9 +20,14 @@ namespace SPD.Repository.Repository.Model
                 Add(assinatura);
                 SaveChanges();
 
+                return GetById(assinatura.ID);
+
             }
 
-            assinaturaReturn = Query().Where(a => a.CPF_RESPONSAVEL == assinatura.CPF_RESPONSAVEL).FirstOrDefault();
+            assinaturaReturn = Query()
+                              .Where(a => a.CPF_RESPONSAVEL == assinatura.CPF_RESPONSAVEL 
+                                       && a.NOME_RESPONSAVEL == assinatura.NOME_RESPONSAVEL)
+                              .FirstOrDefault();
 
             return assinaturaReturn;
         }

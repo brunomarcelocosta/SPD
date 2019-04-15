@@ -44,21 +44,12 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
             Property(pre => pre.ID_ASSINATURA)
            .HasColumnName("fk_id_assinatura")
            .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_PRE_CONSULTA_SPD_ASSINATURA_FK")));
-            HasRequired(pre => pre.Assinatura)
-           .WithMany()
-           .HasForeignKey(pre => pre.ID_ASSINATURA);
-
-            // Property(pre => pre.VALOR_CONSULTA)
-            //.HasColumnName("vl_consulta")
-            //.HasMaxLength(15);
-
-            // Property(pre => pre.TIPO_PAGAMENTO)
-            //.HasColumnName("tp_pagamento")
-            //.HasMaxLength(50);
 
             Property(pre => pre.DT_INSERT)
            .HasColumnName("dt_insert")
            .IsRequired();
+
+            Ignore(pre => pre.Assinatura);
         }
     }
 }

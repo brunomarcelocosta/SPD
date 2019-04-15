@@ -7,6 +7,7 @@ using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 
 namespace SPD.MVC.PortalWeb.Controllers
@@ -190,7 +191,10 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 assinatura.NOME_RESPONSAVEL = preConsultaViewModel.Nome_Responsavel;
                 assinatura.CPF_RESPONSAVEL = preConsultaViewModel.Cpf_Responsavel;
-                assinatura.ASSINATURA = Convert.FromBase64String(preConsultaViewModel.Img_string.Substring("data:image/jpeg;base64,".Length));
+
+                var img = preConsultaViewModel.Img_string.Substring("data:image/jpeg;base64,".Length);
+
+                assinatura.ASSINATURA = Encoding.ASCII.GetBytes(img);
                 assinatura.DT_INSERT = DateTime.Now;
             }
 
@@ -200,7 +204,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 Assinatura = assinatura.ASSINATURA == null ? null : assinatura,
                 Maior_Idade = preConsultaViewModel.Maior_Idade,
                 Autorizado = true,
-                Convenio = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? "" : preConsultaViewModel.Convenio,
+                Convenio = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? "Particular" : preConsultaViewModel.Convenio,
                 Numero_Carterinha = string.IsNullOrWhiteSpace(preConsultaViewModel.Numero_Carterinha) ? "" : preConsultaViewModel.Numero_Carterinha,
                 Dt_Insert = DateTime.Now
             };
@@ -269,7 +273,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             Usuario usuarioAtual = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
-            if (!ReturnPermission(usuarioAtual, "Excluir Pré Consultas"))
+            if (!ReturnPermission(usuarioAtual, "Cancelar Pré Consultas"))
             {
                 return Json(new { Success = false, Response = "Você não tem permissão para esta funcionalidade." });
             }
