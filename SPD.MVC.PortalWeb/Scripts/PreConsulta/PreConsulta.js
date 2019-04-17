@@ -127,7 +127,7 @@ function Excluir(obj) {
     valueID = $(obj).attr('ID').toString();
 
     var urlList = '/PreConsulta/List';
-    var msg = "Deseja realmente cancelar a Pré Consulta?";
+    var msg = "Deseja realmente excluir o Pré Atendimento?";
 
     swal({
         title: "Confirmação",
@@ -152,7 +152,7 @@ function Excluir(obj) {
 
                     }
                     else {
-                        swal("", "Pré Consulta cancelada com sucesso.", "success")
+                        swal("", "Pré Atendimento exluída com sucesso.", "success")
                             .then(() => {
                                 window.location = urlList;
                             });

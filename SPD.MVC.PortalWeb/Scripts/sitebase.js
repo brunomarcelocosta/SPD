@@ -36,6 +36,10 @@ function formatarCpf() {
     $("#Cpf_Responsavel").val(cpf_format);
 }
 
+function CancelPreConsulta() {
+    window.location = '/PreConsulta/List';
+}
+
 /// <summary>
 /// função para abrir modal genérico
 /// </summary>

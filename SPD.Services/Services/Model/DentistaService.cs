@@ -117,7 +117,7 @@ namespace SPD.Services.Services.Model
                 _DentistaRepository.UpdateDentista(dentista, user);
                 _DentistaRepository.SaveChanges();
 
-                _HistoricoOperacaoRepository.RegistraHistoricoSC($"Atualizou o dentista {dentista.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Dentista);
+                _HistoricoOperacaoRepository.Insert($"Atualizou o dentista {dentista.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Dentista);
 
                 //    SaveChanges(transactionScope);
                 //}

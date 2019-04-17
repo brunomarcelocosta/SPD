@@ -131,25 +131,25 @@ namespace SPD.Data.Initializers
 
             Funcionalidade preConsulta = new Funcionalidade()
             {
-                NOME = "Listar Pré Consultas",
+                NOME = "Listar Pré Atendimentos",
                 IsATIVO = true
             };
 
             Funcionalidade addPreConsulta = new Funcionalidade()
             {
-                NOME = "Iniciar Pré Consultas",
+                NOME = "Iniciar Pré Atendimentos",
                 IsATIVO = true
             };
 
             Funcionalidade editPreConsulta = new Funcionalidade()
             {
-                NOME = "Editar Pré Consultas",
+                NOME = "Consultar Pré Atendimentos",
                 IsATIVO = true
             };
 
             Funcionalidade delPreConsulta = new Funcionalidade()
             {
-                NOME = "Cancelar Pré Consultas",
+                NOME = "Excluir Pré Atendimentos",
                 IsATIVO = true
             };
 

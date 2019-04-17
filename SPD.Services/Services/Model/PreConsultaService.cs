@@ -62,7 +62,7 @@ namespace SPD.Services.Services.Model
             {
                 if (ExistePreConsulta(preConsulta))
                 {
-                    resultado = "Já existe uma Pré Consulta para este paciente.";
+                    resultado = "Já existe um Pré Atendimento para este paciente.";
                     return false;
                 }
 
@@ -87,41 +87,15 @@ namespace SPD.Services.Services.Model
 
                 preConsulta.PACIENTE = paciente;
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _PreConsultaRepository.Add(preConsulta);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                _PreConsultaRepository.Insert(preConsulta);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou a Pré Consulta ao paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
+                _HistoricoOperacaoRepository.Insert($"Adicionou o Pré Atendimento ao paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
 
-                    SaveChanges(transactionScope);
-                }
+                //    SaveChanges(transactionScope);
+                //}
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                resultado = ex.Message;
-                return false;
-            }
-        }
-
-        public bool Update(PreConsulta preConsulta, Usuario usuario, out string resultado)
-        {
-            resultado = "";
-
-            try
-            {
-                var paciente = _PacienteRepository.GetById(preConsulta.PACIENTE.ID);
-                preConsulta.DT_INSERT = DateTime.Now;
-
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _PreConsultaRepository.UpdatePreConsulta(preConsulta, paciente);
-
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Atualizou a Pré Consulta do paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.PreConsulta);
-
-                    SaveChanges(transactionScope);
-                }
                 return true;
             }
             catch (Exception ex)
@@ -142,14 +116,14 @@ namespace SPD.Services.Services.Model
 
                 var nome = preConsulta.PACIENTE.NOME;
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _PreConsultaRepository.Remove(preConsulta);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                _PreConsultaRepository.Delete(preConsulta);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Cancelou a Pré Consulta do paciente {nome}", usuario, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.PreConsulta);
+                _HistoricoOperacaoRepository.Insert($"Excluiu o Pré Atendimento do paciente {nome}", usuario, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.PreConsulta);
 
-                    SaveChanges(transactionScope);
-                }
+                //SaveChanges(transactionScope);
+                //}
 
                 return true;
             }

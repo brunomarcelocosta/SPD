@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IServiceBase.cs" />
+    <Compile Include="Interface\Model\IAssinaturaService.cs" />
     <Compile Include="Interface\Model\IAutenticacaoService.cs" />
     <Compile Include="Interface\Model\IConsultaService.cs" />
     <Compile Include="Interface\Model\IDentistaService.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Interface\Model\IUsuarioFuncionalidadeService.cs" />
     <Compile Include="Interface\Model\IUsuarioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Model\AssinaturaService.cs" />
     <Compile Include="Services\Model\AutenticacaoService.cs" />
     <Compile Include="Services\Model\ConsultaService.cs" />
     <Compile Include="Services\Model\DentistaService.cs" />

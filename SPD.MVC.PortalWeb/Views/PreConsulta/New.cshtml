@@ -9,7 +9,7 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-<h2>Iniciar Pré Consulta </h2>
+<h2>Adicionar Pré Atendimento </h2>
 <hr />
 <br />
 
@@ -84,7 +84,7 @@
 
                             <div class="col-md-3">
                                 @Html.Label("Idade: ", htmlAttributes: new { @name = "lblIdade", @id = "lblIdade", @class = "control-label", @style = "font-weight: bold;font-size: 17px;" }) &nbsp;&nbsp;
-                                @Html.Label("IdadeValue", htmlAttributes: new { @id = "IdadeValue", @class = "control-label", @style = "font-size: 17px;" })
+                                <u> @Html.Label("IdadeValue", htmlAttributes: new { @id = "IdadeValue", @class = "control-label", @style = "font-size: 17px;" })</u>
                             </div>
 
                             <div class="col-md-4" id="idNomeResponsavel" hidden="hidden">
@@ -175,7 +175,7 @@
                         <br />
 
                         <div class="row" id="divButtons" style="padding-left:875px;" hidden="hidden">
-                            <input type=button id="btnSalvarPreConsulta" class="btn btn-success" value="Salvar Pré Consulta" onClick="SalvarPreConsulta();" hidden="hidden">
+                            <input type=button id="btnSalvarPreConsulta" class="btn btn-success" value="Salvar" onClick="SalvarPreConsulta();" hidden="hidden">
                             <input type=button class="btn btn-danger" value="Cancelar" onClick="Cancel();">
                         </div>
 

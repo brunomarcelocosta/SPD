@@ -19,12 +19,13 @@ namespace SPD.MVC.PortalWeb.Controllers
         private readonly IUsuarioService _UsuarioService;
         private readonly IFuncionalidadeService _FuncionalidadeService;
         private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
-
+        private readonly IAssinaturaService _AssinaturaService;
         public PreConsultaController(IPreConsultaService preConsultaService,
                                      IPacienteService pacienteService,
                                      IUsuarioService usuarioService,
                                      IFuncionalidadeService funcionalidadeService,
-                                     IUsuarioFuncionalidadeService usuarioFuncionalidadeService)
+                                     IUsuarioFuncionalidadeService usuarioFuncionalidadeService,
+                                     IAssinaturaService assinaturaService)
             : base(preConsultaService)
         {
             _PreConsultaService = preConsultaService;
@@ -32,11 +33,12 @@ namespace SPD.MVC.PortalWeb.Controllers
             _UsuarioService = usuarioService;
             _FuncionalidadeService = funcionalidadeService;
             _UsuarioFuncionalidadeService = usuarioFuncionalidadeService;
+            _AssinaturaService = assinaturaService;
         }
 
         #region List
 
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Listar Pré Consultas\"}")]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Listar Pré Atendimentos\"}")]
         public ActionResult List(FormCollection collection = null)
         {
             PreConsultaViewModel preConsultaViewModel = new PreConsultaViewModel();
@@ -153,7 +155,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region New 
 
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Iniciar Pré Consultas\"}")]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Iniciar Pré Atendimentos\"}")]
         public ActionResult New(FormCollection collection = null)
         {
             PreConsultaViewModel preConsultaViewModel = new PreConsultaViewModel();
@@ -192,9 +194,11 @@ namespace SPD.MVC.PortalWeb.Controllers
                 assinatura.NOME_RESPONSAVEL = preConsultaViewModel.Nome_Responsavel;
                 assinatura.CPF_RESPONSAVEL = preConsultaViewModel.Cpf_Responsavel;
 
-                var img = preConsultaViewModel.Img_string.Substring("data:image/jpeg;base64,".Length);
+                var img = preConsultaViewModel.Img_string.Substring("data:image/png;base64,".Length);
 
-                assinatura.ASSINATURA = Encoding.ASCII.GetBytes(img);
+                var TESTE = Convert.FromBase64String(img);
+
+                assinatura.ASSINATURA = Convert.FromBase64String(img);
                 assinatura.DT_INSERT = DateTime.Now;
             }
 
@@ -227,7 +231,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Edit 
 
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Editar Pré Consultas\"}")]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Consultar Pré Atendimentos\"}")]
         public ActionResult Edit(int id)
         {
             PreConsultaViewModel preConsultaViewModel = new PreConsultaViewModel();
@@ -235,31 +239,57 @@ namespace SPD.MVC.PortalWeb.Controllers
             preConsultaViewModel = ToViewModel(_PreConsultaService.GetById(id));
 
             preConsultaViewModel.Paciente_string = preConsultaViewModel.Paciente.Nome;
+            preConsultaViewModel.Conveniado = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? false : preConsultaViewModel.Convenio.Equals("Particular") ? false : true;
+            preConsultaViewModel.particular = preConsultaViewModel.Conveniado ? false : true;
+
+            var dt_nasc = Convert.ToDateTime(preConsultaViewModel.Paciente.Data_Nasc);
+
+            int idade = DateTime.Now.Year - dt_nasc.Year;
+            if (DateTime.Now.Month < dt_nasc.Month || (DateTime.Now.Month == dt_nasc.Month && DateTime.Now.Day < dt_nasc.Day))
+                idade--;
+
+            preConsultaViewModel.Idade = idade + " anos";
+
+            if (preConsultaViewModel.ID_Assinatura != 0 && preConsultaViewModel.ID_Assinatura != null)
+            {
+                var assinatura = ToViewModel<Assinatura, AssinaturaViewModel>(_AssinaturaService.GetById(preConsultaViewModel.ID_Assinatura.Value));
+
+                var teste = Convert.ToBase64String(assinatura.ASSINATURA);
+
+                preConsultaViewModel.Nome_Responsavel = assinatura.NOME_RESPONSAVEL;
+                preConsultaViewModel.Cpf_Responsavel = assinatura.CPF_RESPONSAVEL;
+                preConsultaViewModel.Img_string = $"data:image/png;base64,{Convert.ToBase64String(assinatura.ASSINATURA)}";
+            }
+
+            var mes = DateTime.Now.Month;
+            string string_mes = Enum.GetName(typeof(SPD_Enums.Meses), mes);
+
+            ViewBag.Mes = string_mes;
 
             return View(preConsultaViewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Update(PreConsultaViewModel preConsultaViewModel)
-        {
-            var resultado = "";
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Update(PreConsultaViewModel preConsultaViewModel)
+        //{
+        //    var resultado = "";
 
-            var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
+        //    var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
-            var paciente = ToViewModel<Paciente, PacienteViewModel>(_PacienteService.Query().Where(a => a.NOME.Equals(preConsultaViewModel.Paciente_string)).FirstOrDefault());
-            preConsultaViewModel.Paciente = paciente;
+        //    var paciente = ToViewModel<Paciente, PacienteViewModel>(_PacienteService.Query().Where(a => a.NOME.Equals(preConsultaViewModel.Paciente_string)).FirstOrDefault());
+        //    preConsultaViewModel.Paciente = paciente;
 
-            var preConsulta = ToModel(preConsultaViewModel);
+        //    var preConsulta = ToModel(preConsultaViewModel);
 
-            if (!_PreConsultaService.Update(preConsulta, user_logado, out resultado))
-            {
-                return Json(new { Success = false, Response = resultado });
-            }
+        //    if (!_PreConsultaService.Update(preConsulta, user_logado, out resultado))
+        //    {
+        //        return Json(new { Success = false, Response = resultado });
+        //    }
 
-            return Json(new { Success = true });
+        //    return Json(new { Success = true });
 
-        }
+        //}
 
         #endregion
 
@@ -273,7 +303,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             Usuario usuarioAtual = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
-            if (!ReturnPermission(usuarioAtual, "Cancelar Pré Consultas"))
+            if (!ReturnPermission(usuarioAtual, "Excluir Pré Atendimentos"))
             {
                 return Json(new { Success = false, Response = "Você não tem permissão para esta funcionalidade." });
             }
@@ -410,6 +440,12 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 var paciente = ToViewModel<Paciente, PacienteViewModel>(_PacienteService.Query().Where(a => a.NOME.Equals(nome)).FirstOrDefault());
 
+                //var pre_consultaList = ToListViewModel(_PreConsultaService.Query().Where(a => a.ID_PACIENTE == paciente.ID).ToList());
+
+                //var pre_consulta = pre_consultaList.Count() > 0 ? pre_consultaList.OrderByDescending(a => a.Dt_Insert).FirstOrDefault() : new PreConsultaViewModel();
+
+                //var existePreConsulta = pre_consulta.ID != 0 ? true : false;
+
                 var dt_nasc = Convert.ToDateTime(paciente.Data_Nasc);
 
                 int idade = DateTime.Now.Year - dt_nasc.Year;
@@ -418,9 +454,24 @@ namespace SPD.MVC.PortalWeb.Controllers
 
                 var maiorIdade = idade >= 18 ? true : false;
 
+                //if (existePreConsulta)
+                //{
+                //    if (maiorIdade)
+                //    {
+                //        return Json(new { Success = true, Response = "", Idade = idade, MaiorIdade = maiorIdade, PreConsulta = true,  });
+                //    }
+                //    else
+                //    {
+                //        return Json(new { Success = true, Response = "", Idade = idade, MaiorIdade = maiorIdade, PreConsulta = true, });
+                //    }
+
+                //}
+
                 return Json(new { Success = true, Response = "", Idade = idade, MaiorIdade = maiorIdade });
             }
         }
+
+
 
         #endregion
     }

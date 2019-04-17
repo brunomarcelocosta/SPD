@@ -6,5 +6,8 @@ namespace SPD.Repository.Interface.Model
     {
         void UpdatePaciente(Paciente paciente);
 
+        void Insert(Paciente paciente);
+
+        void Delete(Paciente paciente);
     }
 }

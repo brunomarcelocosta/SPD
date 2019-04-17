@@ -13,7 +13,14 @@ namespace SPD.Repository.Repository.Model
         public void InsertHistorico(HistoricoAutorizacaoPaciente historico)
         {
             Add(historico);
-            SaveChanges();
+            try
+            {
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

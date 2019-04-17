@@ -15,6 +15,8 @@ namespace SPD.Repository.Interface
 
         void Add(TEntity entity);
 
+        void AddEntity(TEntity entity);
+
         TEntity GetById(int id);
 
         IEnumerable<TEntity> GetAll();
@@ -28,6 +30,8 @@ namespace SPD.Repository.Interface
         void Update(TEntity entity);
 
         void Remove(TEntity entity);
+
+        void DeleteEntity(TEntity entity);
 
         void SaveChange();
 

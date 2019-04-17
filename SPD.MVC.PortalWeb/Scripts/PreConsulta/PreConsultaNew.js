@@ -210,7 +210,7 @@ function ValidaCheckBox(check, tipo) {
 
 function SalvarPreConsulta() {
     var urlList = '/PreConsulta/List';
-    var msg = "Deseja realmente adicionar a Pré Consulta?";
+    var msg = "Deseja realmente adicionar o Pré Atendimento?";
 
     var data = {
         Paciente_string: $("#Paciente_string").val(),
@@ -249,7 +249,7 @@ function SalvarPreConsulta() {
                 }
                 else {
                     //apresenta mensagem ao usuário e redireciona para a tela de listagem.
-                    swal("", "Pré Consulta realizada com sucesso.", "success")
+                    swal("", "Pré Atendimento realizado com sucesso.", "success")
                         .then(() => {
                             window.location = urlList;
                         });

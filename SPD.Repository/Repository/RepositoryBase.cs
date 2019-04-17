@@ -38,9 +38,9 @@ namespace SPD.Repository.Repository
         /// The domain context.
         /// </summary>
         protected DomainContext DomainContext { get; }
-        
+
         public Transactional Transactional { get; set; }
-        
+
         public RepositoryBase()
         {
             // Define the domain context to be used
@@ -123,7 +123,12 @@ namespace SPD.Repository.Repository
                 this.DomainContext.DataContext.Entity.Set<TEntity>().Add(entity);
             }
         }
-        
+
+        public void AddEntity(TEntity entity)
+        {
+            this.DomainContext.DataContext.Entity.Set<TEntity>().Add(entity);
+        }
+
         public TEntity GetById(int id)
         {
             return this.DomainContext.DataContext.Entity.Set<TEntity>().Find(id);
@@ -143,24 +148,24 @@ namespace SPD.Repository.Repository
 
             return entidade;
         }
-        
+
         public IEnumerable<TEntity> GetAllAsNoTracking()
         {
             return this.DomainContext.DataContext.Entity.Set<TEntity>().AsNoTracking().ToList();
         }
-        
+
         public IQueryable<TEntity> Query()
         {
             RefreshDatabaseCache();
             var query = this.DomainContext.DataContext.Entity.Set<TEntity>().AsQueryable();
             return query;
         }
-        
+
         public IQueryable<TEntity> QueryAsNoTracking()
         {
             return this.DomainContext.DataContext.Entity.Set<TEntity>().AsNoTracking().AsQueryable();
         }
-        
+
         public void Update(TEntity entity)
         {
             if (this.Transactional != null)
@@ -195,7 +200,12 @@ namespace SPD.Repository.Repository
                 this.DomainContext.DataContext.Entity.Entry(entity).State = EntityState.Modified;
             }
         }
-        
+
+        public void UpdateEntity(TEntity entity)
+        {
+            this.DomainContext.DataContext.Entity.Entry(entity).State = EntityState.Modified;
+        }
+
         public void Save(TEntity entity, Expression<Func<TEntity, bool>> where)
         {
             foreach (var foundEntity in this.DomainContext.DataContext.Entity.Set<TEntity>().Where(where))
@@ -214,7 +224,7 @@ namespace SPD.Repository.Repository
                 }
             }
         }
-        
+
         public void Remove(TEntity entity)
         {
             if (this.Transactional != null)
@@ -250,7 +260,12 @@ namespace SPD.Repository.Repository
                 this.SaveChanges();
             }
         }
-        
+
+        public void DeleteEntity(TEntity entity)
+        {
+            this.DomainContext.DataContext.Entity.Set<TEntity>().Remove(entity);
+        }
+
         public void SaveChange()
         {
             this.DomainContext.DataContext.Entity.SaveChanges();
@@ -295,7 +310,7 @@ namespace SPD.Repository.Repository
         {
 
         }
-        
+
         public void Dispose()
         {
             if (this.DomainContext != null)
@@ -307,7 +322,7 @@ namespace SPD.Repository.Repository
             // For garbage collection optimization 
             GC.SuppressFinalize(this);
         }
-        
+
         public void RemoveRange(List<TEntity> listaEntity)
         {
             if (this.Transactional != null)
@@ -352,7 +367,7 @@ namespace SPD.Repository.Repository
                 }
             }
         }
-        
+
         public void AddRange(List<TEntity> listaEntity)
         {
             if (this.Transactional != null)

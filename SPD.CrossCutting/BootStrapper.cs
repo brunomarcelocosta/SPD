@@ -18,6 +18,7 @@ namespace SPD.CrossCutting
             #region Service
 
             container.Register(typeof(IServiceBase<>), typeof(ServiceBase<>), Lifestyle.Scoped);
+            container.Register(typeof(IAssinaturaService), typeof(AssinaturaService), Lifestyle.Scoped);
             container.Register(typeof(IAutenticacaoService), typeof(AutenticacaoService), Lifestyle.Scoped);
             container.Register(typeof(IConsultaService), typeof(ConsultaService), Lifestyle.Scoped);
             container.Register(typeof(IDentistaService), typeof(DentistaService), Lifestyle.Scoped);

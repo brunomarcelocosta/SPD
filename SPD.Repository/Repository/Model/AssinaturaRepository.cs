@@ -17,15 +17,21 @@ namespace SPD.Repository.Repository.Model
 
             if (!existe)
             {
-                Add(assinatura);
-                SaveChanges();
+                try
+                {
+                    AddEntity(assinatura);
+                    SaveChange();
 
-                return GetById(assinatura.ID);
-
+                    return GetById(assinatura.ID);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
             assinaturaReturn = Query()
-                              .Where(a => a.CPF_RESPONSAVEL == assinatura.CPF_RESPONSAVEL 
+                              .Where(a => a.CPF_RESPONSAVEL == assinatura.CPF_RESPONSAVEL
                                        && a.NOME_RESPONSAVEL == assinatura.NOME_RESPONSAVEL)
                               .FirstOrDefault();
 

@@ -1,5 +1,6 @@
 ﻿using SPD.Model.Model;
 using SPD.Repository.Interface.Model;
+using System;
 
 namespace SPD.Repository.Repository.Model
 {
@@ -8,13 +9,49 @@ namespace SPD.Repository.Repository.Model
         public void UpdateDentista(Dentista dentista, Usuario usuario)
         {
             var dentistaUpdate = GetById(dentista.ID);
+            try
+            {
+                dentistaUpdate.NOME = dentista.NOME;
+                dentistaUpdate.CRO = dentista.CRO;
+                dentistaUpdate.USUARIO = usuario;
+                dentistaUpdate.DT_INSERT = dentista.DT_INSERT;
 
-            dentistaUpdate.NOME = dentista.NOME;
-            dentistaUpdate.CRO = dentista.CRO;
-            dentistaUpdate.USUARIO = usuario;
-            dentistaUpdate.DT_INSERT = dentista.DT_INSERT;
+                UpdateEntity(dentistaUpdate);
 
-            Update(dentistaUpdate);
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Insert(Dentista dentista)
+        {
+            try
+            {
+                AddEntity(dentista);
+
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Delete(Dentista dentista)
+        {
+            try
+            {
+                DeleteEntity(dentista);
+
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

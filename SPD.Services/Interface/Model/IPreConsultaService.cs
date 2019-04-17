@@ -7,13 +7,10 @@ namespace SPD.Services.Interface.Model
     {
         bool ExistePreConsulta(PreConsulta preConsulta);
 
-        [Transactional]
+        //[Transactional]
         bool Insert(PreConsulta preConsulta, Usuario usuario, out string resultado);
 
-        [Transactional]
-        bool Update(PreConsulta preConsulta, Usuario usuario, out string resultado);
-
-        [Transactional]
+        //[Transactional]
         bool Delete(int id, Usuario usuario, out string resultado);
     }
 }

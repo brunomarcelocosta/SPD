@@ -20,39 +20,6 @@ namespace SPD.Repository.Repository.Model
             _FuncionalidadeRepository = funcionalidadeRepository;
         }
 
-        public void RegistraHistoricoSistema(string valor)
-        {
-            var historicoOperacao = new HistoricoOperacao();
-
-            historicoOperacao.RegistraHistoricoSistema(valor);
-
-            this.Add(historicoOperacao);
-        }
-
-        public bool RegistraHistoricoRepository(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, out string resultado)
-        {
-            resultado = "";
-
-            try
-            {
-                var tipoOperacao = this._TipoOperacaoRepository.GetById((int)kindtipoOperacao);
-                var funcionalidade = this._FuncionalidadeRepository.GetById((int)kindfuncionalidade);
-
-                var historicoOperacao = new HistoricoOperacao();
-
-                historicoOperacao.RegistraHistorico(this.Context as Context, valor, usuario, tipoOperacao, funcionalidade, null);
-
-                this.Add(historicoOperacao);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                resultado = ex.Message;
-                return false;
-            }
-        }
-
         public void RegistraHistorico(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores)
         {
             var id = (int)Enum.Parse(typeof(Tipo_Operacao), kindtipoOperacao.ToString(), true);  //(int)kindtipoOperacao;
@@ -68,7 +35,7 @@ namespace SPD.Repository.Repository.Model
             this.SaveChanges();
         }
 
-        public void RegistraHistoricoSC(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores)
+        public void Insert(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores)
         {
             var id = (int)Enum.Parse(typeof(Tipo_Operacao), kindtipoOperacao.ToString(), true);  //(int)kindtipoOperacao;
 
@@ -78,18 +45,15 @@ namespace SPD.Repository.Repository.Model
             var historicoOperacao = new HistoricoOperacao();
 
             historicoOperacao.RegistraHistorico(this.Context as Context, valor, usuario, tipoOperacao, funcionalidade, valores);
-
-            this.Add(historicoOperacao);
-            this.SaveChanges();
-        }
-
-        public void ExcluiHistoricoUsuario(Usuario usuario)
-        {
-            foreach (var historico in this.DomainContext.DataContext.Entity.Set<HistoricoOperacao>().Where(hist => hist.ID_USUARIO == usuario.ID).ToList())
+            try
             {
-                this.Remove(historico);
+                this.AddEntity(historicoOperacao);
+                this.SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
-
     }
 }
