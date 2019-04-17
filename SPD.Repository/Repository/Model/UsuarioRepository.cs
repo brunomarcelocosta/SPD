@@ -21,22 +21,77 @@ namespace SPD.Repository.Repository.Model
 
         public void Atualizar(Usuario usuario)
         {
-            this.Save(usuario, where => where.ID.Equals(usuario.ID));
+            try
+            {
+                var usuario_bd = GetById(usuario.ID);
+
+                usuario_bd.NOME = usuario.NOME;
+                usuario_bd.EMAIL = usuario.EMAIL;
+                usuario_bd.LOGIN = usuario.LOGIN;
+                usuario_bd.PASSWORD = usuario.PASSWORD;
+                usuario_bd.TENTATIVAS_LOGIN = usuario.TENTATIVAS_LOGIN;
+                usuario_bd.IsATIVO = usuario.IsATIVO;
+                usuario_bd.IsBLOQUEADO = usuario.IsBLOQUEADO;
+                usuario_bd.TROCA_SENHA_OBRIGATORIA = usuario.TROCA_SENHA_OBRIGATORIA;
+
+                UpdateEntity(usuario_bd);
+
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void AtualizarUsuario(Usuario usuario)
         {
-            var usuarioUpdate = GetById(usuario.ID);
+            try
+            {
+                var usuarioUpdate = GetById(usuario.ID);
 
-            usuarioUpdate.NOME = usuario.NOME;
-            usuarioUpdate.EMAIL = usuario.EMAIL;
-            usuarioUpdate.IsATIVO = usuario.IsATIVO;
-            usuarioUpdate.IsBLOQUEADO = usuario.IsBLOQUEADO;
+                usuarioUpdate.NOME = usuario.NOME;
+                usuarioUpdate.EMAIL = usuario.EMAIL;
+                usuarioUpdate.IsATIVO = usuario.IsATIVO;
+                usuarioUpdate.IsBLOQUEADO = usuario.IsBLOQUEADO;
 
-            Update(usuarioUpdate);
+                UpdateEntity(usuarioUpdate);
 
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
+        public void Delete(Usuario usuario)
+        {
+            try
+            {
+                DeleteEntity(usuario);
+
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Insert(Usuario usuario)
+        {
+            try
+            {
+                AddEntity(usuario);
+
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public Usuario GetByLoginSenha(string login, string password)
         {

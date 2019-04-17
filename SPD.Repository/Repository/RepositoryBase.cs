@@ -305,7 +305,6 @@ namespace SPD.Repository.Repository
             return result;
         }
 
-
         public void RefreshDatabaseCache()
         {
 
@@ -321,6 +320,14 @@ namespace SPD.Repository.Repository
 
             // For garbage collection optimization 
             GC.SuppressFinalize(this);
+        }
+
+        public void RemoveEntityRange(List<TEntity> listaEntity)
+        {
+            foreach (var entity in listaEntity)
+            {
+                this.DomainContext.DataContext.Entity.Set<TEntity>().Remove(entity);
+            }
         }
 
         public void RemoveRange(List<TEntity> listaEntity)
@@ -365,6 +372,14 @@ namespace SPD.Repository.Repository
                 {
                     this.DomainContext.DataContext.Entity.Set<TEntity>().Remove(entity);
                 }
+            }
+        }
+
+        public void AddEntityRange(List<TEntity> listaEntity)
+        {
+            foreach (var entity in listaEntity)
+            {
+                this.DomainContext.DataContext.Entity.Set<TEntity>().Add(entity);
             }
         }
 

@@ -17,10 +17,9 @@ namespace SPD.Repository.Repository.Model
 
             try
             {
-                foreach (var item in usuarioFuncionalidades)
-                {
-                    Add(item);
-                }
+                AddEntityRange(usuarioFuncionalidades);
+
+                SaveChange();
             }
             catch (Exception ex)
             {
@@ -68,7 +67,8 @@ namespace SPD.Repository.Repository.Model
                     list.Add(user);
                 }
 
-                RemoveRange(list);
+                RemoveEntityRange(list);
+                SaveChange();
             }
             catch (Exception ex)
             {

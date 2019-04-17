@@ -48,50 +48,47 @@ namespace SPD.Services.Services.Model
 
                     if (usuario != null)
                     {
-                        string novaSenha;
 
-                        if (RedefinirSenha(usuario, out novaSenha))
+                        if (RedefinirSenha(usuario, out string novaSenha))
                         {
-                            this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha do usuário {0} redefinida.", usuario.LOGIN), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
+                            this._HistoricoOperacaoRepository.Insert($"Senha do usuário {usuario.LOGIN} redefinida.", usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
 
                             try
                             {
-                                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                                {
-                                    this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) {0}. Durante o login será solicitada uma nova senha, esta é sua senha provisória {1}", usuario.LOGIN, novaSenha), "Redefinição de Senha", emailFrom, pwdFrom);
+                                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                                //{
+                                this._NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) {0}. Durante o login será solicitada uma nova senha, esta é sua senha provisória {1}", usuario.LOGIN, novaSenha), "Redefinição de Senha", emailFrom, pwdFrom);
 
-                                    this.SaveChanges(transactionScope);
-                                }
+                                //this.SaveChanges(transactionScope);
+                                //}
                             }
                             catch (SmtpException Exception)
                             {
                                 return 2;
                             }
-                            finally
-                            {
-                                this.SaveChanges();
-                            }
+
 
                             return 1;
                         }
+
                         else
                         {
                             //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                             //{
-                            this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Não foi possível alterar a senha do usuário: \"{0}\".", usuario.LOGIN), usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
+                            this._HistoricoOperacaoRepository.Insert($"Não foi possível alterar a senha do usuário: \"{usuario.LOGIN}\".", usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
 
-                            this.SaveChanges();
+                            //this.SaveChanges();
                             //}
                         }
                     }
                     else
                     {
-                        throw new Exception(String.Format(CultureInfo.InvariantCulture, "O usuário \"{0}\" não está cadastrado no banco de dados do sistema.", login));
+                        throw new Exception($"O usuário \"{login}\" não está cadastrado no banco de dados do sistema.");
                     }
                 }
                 else
                 {
-                    throw new Exception(String.Format(CultureInfo.InvariantCulture, "Login inválido."));
+                    throw new Exception($"Login inválido.");
                 }
             }
             catch (Exception exception)
@@ -122,26 +119,26 @@ namespace SPD.Services.Services.Model
 
             try
             {
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                usuario.PASSWORD = Usuario.GerarHash(password);
+
+                if (usuario.TROCA_SENHA_OBRIGATORIA)
                 {
-                    usuario.PASSWORD = Usuario.GerarHash(password);
-
-                    if (usuario.TROCA_SENHA_OBRIGATORIA)
-                    {
-                        mensagemHistorico = "Alteração obrigatória da senha do usuário";
-                    }
-                    else
-                    {
-                        mensagemHistorico = "Alteração da senha do usuário";
-                    }
-
-                    usuario.TROCA_SENHA_OBRIGATORIA = false;
-                    _UsuarioRepository.Atualizar(usuario);
-
-                    _HistoricoOperacaoRepository.RegistraHistorico(mensagemHistorico, usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
-
-                    SaveChanges(transactionScope);
+                    mensagemHistorico = "Alteração obrigatória da senha do usuário";
                 }
+                else
+                {
+                    mensagemHistorico = "Alteração da senha do usuário";
+                }
+
+                usuario.TROCA_SENHA_OBRIGATORIA = false;
+                _UsuarioRepository.Atualizar(usuario);
+
+                _HistoricoOperacaoRepository.Insert(mensagemHistorico, usuario, Tipo_Operacao.Senha, Tipo_Funcionalidades.Usuarios);
+
+                //  SaveChanges(transactionScope);
+                //}
             }
             catch (Exception ex)
             {
@@ -157,17 +154,17 @@ namespace SPD.Services.Services.Model
         {
             try
             {
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    Usuario usuarioAtual = this._UsuarioRepository.GetById(idUsuarioAtual);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                Usuario usuarioAtual = this._UsuarioRepository.GetById(idUsuarioAtual);
 
-                    if (this._UsuarioRepository.DesBloquear(usuarioDesbloqueio)) //executa o desbloqueio
-                    {
-                        //Registra desbloqueio no histórico de operações
-                        this._HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Desbloqueou o usuário: \"{0}\".", usuarioDesbloqueio.LOGIN), usuarioAtual, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Usuarios);
-                    }
-                    this.SaveChanges(transactionScope);
+                if (this._UsuarioRepository.DesBloquear(usuarioDesbloqueio)) //executa o desbloqueio
+                {
+                    //Registra desbloqueio no histórico de operações
+                    this._HistoricoOperacaoRepository.Insert($"Desbloqueou o usuário: \"{usuarioDesbloqueio.LOGIN}\".", usuarioAtual, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Usuarios);
                 }
+                // this.SaveChanges(transactionScope);
+                // }
 
             }
             catch
@@ -186,21 +183,17 @@ namespace SPD.Services.Services.Model
         {
             try
             {
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    this._SessaoUsuarioService.EncerrarSessao(usuario.ID, String.Format("Usuário {0} desconectado do sistema.", usuario.LOGIN));
-                    this.SaveChanges(transactionScope);
-                }
+                // using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                this._SessaoUsuarioService.EncerrarSessao(usuario.ID, $"Usuário {usuario.LOGIN} desconectado do sistema.");
+                //this.SaveChanges(transactionScope);
+                // }
             }
             catch
             {
                 return false;
             }
-            finally
-            {
-                this.SaveChanges();
 
-            }
             return true;
         }
 
@@ -210,15 +203,15 @@ namespace SPD.Services.Services.Model
 
             try
             {
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    // atualizar usuario
-                    _UsuarioRepository.AtualizarUsuario(usuario);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                // atualizar usuario
+                _UsuarioRepository.AtualizarUsuario(usuario);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Atualizou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Usuarios);
+                _HistoricoOperacaoRepository.Insert($"Atualizou o registro {usuario.LOGIN} referente à Usuário", usuario_logado, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Usuarios);
 
-                    SaveChanges(transactionScope);
-                }
+                //   SaveChanges(transactionScope);
+                // }
             }
             catch (Exception ex)
             {
@@ -273,27 +266,23 @@ namespace SPD.Services.Services.Model
 
             try
             {
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, String.Format("Prezado(a) Usuário(a) esta é sua senha provisória {0} . Durante o login, será solicitada uma nova senha.", senha), "Senha de acesso ao sistema SPD", emailFrom, pwdFrom);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                _NotificacaoRepository.NotificarPorEmail(usuario.EMAIL, $"Prezado(a) Usuário(a) esta é sua senha provisória {senha} . Durante o login, será solicitada uma nova senha.", "Senha de acesso ao sistema SPD", emailFrom, pwdFrom);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Senha gerada com sucesso, e enviada ao e-mail do usuário {0}.", usuario.LOGIN.ToUpper()), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+                _HistoricoOperacaoRepository.Insert($"Senha gerada com sucesso, e enviada ao e-mail do usuário {usuario.LOGIN.ToUpper()}.", usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
 
-                    _UsuarioRepository.Add(usuario);
+                _UsuarioRepository.Insert(usuario);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Adicionou o registro {0} referente à Usuário", usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+                _HistoricoOperacaoRepository.Insert($"Adicionou o registro {usuario.LOGIN} referente à Usuário", usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
 
-                    SaveChanges(transactionScope);
-                }
+                // SaveChanges(transactionScope);
+                // }
             }
             catch (Exception ex)
             {
                 resultado = ex.Message;
                 return false;
-            }
-            finally
-            {
-                this.SaveChanges();
             }
 
             var user = _UsuarioRepository.Query().Where(a => a.LOGIN == usuario.LOGIN).FirstOrDefault();
@@ -316,40 +305,38 @@ namespace SPD.Services.Services.Model
                 var usuarioFuncsDelete = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == id).ToList();
                 var sessao = _SessaoUsuarioService.GetSessaoByUsuarioID(id);
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _HistoricoOperacaoRepository.ExcluiHistoricoUsuario(usuarioDelete);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
 
-                    if (sessao != null)
-                        _SessaoUsuarioService.EncerrarSessao(sessao);
+                _HistoricoOperacaoRepository.Delete(usuarioDelete);
 
-                    SaveChanges(transactionScope);
-                }
+                if (sessao != null)
+                    _SessaoUsuarioService.EncerrarSessao(sessao);
+
+                //    SaveChanges(transactionScope);
+                //}
 
                 if (!DELUserAndFuncs(usuarioFuncsDelete, usuarioDelete, usuario_logado, out resultado))
                 {
                     return false;
                 }
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _UsuarioRepository.Remove(usuarioDelete);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                var login = usuarioDelete.LOGIN;
 
-                    _HistoricoOperacaoRepository.RegistraHistorico(String.Format("Usuário {0} excluído.", usuarioDelete.LOGIN), usuario_logado, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.Usuarios);
+                _UsuarioRepository.Delete(usuarioDelete);
 
-                    SaveChanges(transactionScope);
-                }
+                _HistoricoOperacaoRepository.Insert($"Usuário {login} excluído.", usuario_logado, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.Usuarios);
+
+                // SaveChanges(transactionScope);
+                //}
             }
             catch (Exception ex)
             {
                 resultado = ex.Message;
                 return false;
             }
-            finally
-            {
-                SaveChanges();
-            }
-
 
             return true;
         }
@@ -379,26 +366,26 @@ namespace SPD.Services.Services.Model
             {
                 var user = _UsuarioRepository.GetById(usuario.ID);
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                usuarioFuncionalidades_ADD = HashEntityForUserAndFuncs(usuarioFuncionalidades_ADD, user);
+                //usuarioFuncionalidades_DEL = HashEntityForUserAndFuncs(usuarioFuncionalidades_DEL, user);
+
+                // add usuario_funcionalidade
+                if (!_UsuarioFuncionalidadeRepository.AddList(usuarioFuncionalidades_ADD, out resultado))
                 {
-                    usuarioFuncionalidades_ADD = HashEntityForUserAndFuncs(usuarioFuncionalidades_ADD, user);
-                    //usuarioFuncionalidades_DEL = HashEntityForUserAndFuncs(usuarioFuncionalidades_DEL, user);
-
-                    // add usuario_funcionalidade
-                    if (!_UsuarioFuncionalidadeRepository.AddList(usuarioFuncionalidades_ADD, out resultado))
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        foreach (var item in usuarioFuncionalidades_ADD)
-                        {
-                            _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} associadas ao usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
-                        }
-                    }
-
-                    SaveChanges(transactionScope);
+                    return false;
                 }
+                else
+                {
+                    foreach (var item in usuarioFuncionalidades_ADD)
+                    {
+                        _HistoricoOperacaoRepository.Insert(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} associadas ao usuário {1}.", _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME, usuario.LOGIN), usuario_logado, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Usuarios);
+                    }
+                }
+
+                //    SaveChanges(transactionScope);
+                //}
             }
             catch (Exception ex)
             {
@@ -421,36 +408,33 @@ namespace SPD.Services.Services.Model
             {
                 var user = _UsuarioRepository.GetById(usuario.ID);
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                // using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                // {
+                //  usuarioFuncionalidades_DEL = HashEntityForUserAndFuncs(usuarioFuncionalidades_DEL, user);
+
+                //del usuario_funcionalidade
+                if (!_UsuarioFuncionalidadeRepository.DeleteList(usuarioFuncionalidades_DEL, out resultado))
                 {
-                    //  usuarioFuncionalidades_DEL = HashEntityForUserAndFuncs(usuarioFuncionalidades_DEL, user);
-
-                    //del usuario_funcionalidade
-                    if (!_UsuarioFuncionalidadeRepository.DeleteList(usuarioFuncionalidades_DEL, out resultado))
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        foreach (var item in usuarioFuncionalidades_DEL)
-                        {
-                            var func = _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME;
-                            _HistoricoOperacaoRepository.RegistraHistorico(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} excluída do usuário {1}.", func, usuario.LOGIN), usuario_logado, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.Usuarios);
-                        }
-                    }
-
-                    SaveChanges(transactionScope);
+                    return false;
                 }
+                else
+                {
+                    foreach (var item in usuarioFuncionalidades_DEL)
+                    {
+                        var func = _FuncionalidadeRepository.GetById(item.ID_FUNCIONALIDADE).NOME;
+                        _HistoricoOperacaoRepository.Insert(String.Format(CultureInfo.InvariantCulture, "Funcionalidade {0} excluída do usuário {1}.", func, usuario.LOGIN), usuario_logado, Tipo_Operacao.Exclusao, Tipo_Funcionalidades.Usuarios);
+                    }
+                }
+
+                //SaveChanges(transactionScope);
+                //}
             }
             catch (Exception ex)
             {
                 resultado = ex.Message;
                 return false;
             }
-            finally
-            {
-                this.SaveChanges();
-            }
+
 
             return true;
         }

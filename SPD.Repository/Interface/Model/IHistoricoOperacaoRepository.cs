@@ -10,8 +10,10 @@ namespace SPD.Repository.Interface.Model
 {
     public interface IHistoricoOperacaoRepository : IRepositoryBase<HistoricoOperacao>
     {
-        void RegistraHistorico(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores);
-
         void Insert(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores);
+
+        void Delete(Usuario usuario);
+
+        void InsertHistoricoSistema(string valor);
     }
 }

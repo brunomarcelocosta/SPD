@@ -37,7 +37,11 @@ namespace SPD.Repository.Interface
 
         int SaveChanges(bool mustReload = true);
 
+        void RemoveEntityRange(List<TEntity> listaEntity);
+
         void RemoveRange(List<TEntity> listaEntity);
+
+        void AddEntityRange(List<TEntity> listaEntity);
 
         void AddRange(List<TEntity> listaEntity);
 

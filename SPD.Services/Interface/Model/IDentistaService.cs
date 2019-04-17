@@ -9,13 +9,13 @@ namespace SPD.Services.Interface.Model
 
         bool ExisteDentistaUsuario(Dentista dentista);
 
-        [Transactional]
+        //[Transactional]
         bool Insert(Dentista dentista, Usuario usuario, out string resultado);
 
-        [Transactional]
+        //[Transactional]
         bool Update(Dentista dentista, Usuario usuario, out string resultado);
 
-        [Transactional]
+        //[Transactional]
         bool Delete(int id, Usuario usuario, out string resultado);
     }
 }

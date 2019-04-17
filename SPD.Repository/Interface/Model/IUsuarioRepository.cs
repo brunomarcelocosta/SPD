@@ -15,6 +15,10 @@ namespace SPD.Repository.Interface.Model
 
         void Atualizar(Usuario usuario);
 
+        void Delete(Usuario usuario);
+
+        void Insert(Usuario usuario);
+
         void AtualizarUsuario(Usuario usuario);
 
         bool NomeJaUtilizado(string nome);

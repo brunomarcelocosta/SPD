@@ -55,15 +55,16 @@ namespace SPD.Services.Services.Model
                     return false;
                 }
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _PacienteRepository.Add(paciente);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                _PacienteRepository.Insert(paciente);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
+                _HistoricoOperacaoRepository.Insert($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
 
-                    this.SaveChanges(transactionScope);
+                //    this.SaveChanges(transactionScope);
 
-                }
+                //}
+
                 return true;
             }
             catch (Exception ex)
@@ -86,14 +87,14 @@ namespace SPD.Services.Services.Model
 
             try
             {
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _PacienteRepository.UpdatePaciente(paciente);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                _PacienteRepository.UpdatePaciente(paciente);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Atualizou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Pacientes);
+                _HistoricoOperacaoRepository.Insert($"Atualizou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Pacientes);
 
-                    SaveChanges(transactionScope);
-                }
+                //    SaveChanges(transactionScope);
+                //}
                 return true;
             }
             catch (Exception ex)
@@ -110,15 +111,16 @@ namespace SPD.Services.Services.Model
             try
             {
                 var paciente = GetById(id);
+                var nome = paciente.NOME;
 
-                using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                {
-                    _PacienteRepository.Remove(paciente);
+                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
+                //{
+                _PacienteRepository.Delete(paciente);
 
-                    _HistoricoOperacaoRepository.RegistraHistorico($"Inativou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Pacientes);
+                _HistoricoOperacaoRepository.Insert($"Inativou o paciente {nome}", usuario, Tipo_Operacao.Alteracao, Tipo_Funcionalidades.Pacientes);
 
-                    SaveChanges(transactionScope);
-                }
+                //    SaveChanges(transactionScope);
+                //}
 
                 return true;
             }

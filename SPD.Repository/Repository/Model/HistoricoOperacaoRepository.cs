@@ -20,21 +20,6 @@ namespace SPD.Repository.Repository.Model
             _FuncionalidadeRepository = funcionalidadeRepository;
         }
 
-        public void RegistraHistorico(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores)
-        {
-            var id = (int)Enum.Parse(typeof(Tipo_Operacao), kindtipoOperacao.ToString(), true);  //(int)kindtipoOperacao;
-
-            var tipoOperacao = this._TipoOperacaoRepository.GetById(id);
-            var funcionalidade = this._FuncionalidadeRepository.GetById((int)kindfuncionalidade);
-
-            var historicoOperacao = new HistoricoOperacao();
-
-            historicoOperacao.RegistraHistorico(this.Context as Context, valor, usuario, tipoOperacao, funcionalidade, valores);
-
-            this.Add(historicoOperacao);
-            this.SaveChanges();
-        }
-
         public void Insert(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores)
         {
             var id = (int)Enum.Parse(typeof(Tipo_Operacao), kindtipoOperacao.ToString(), true);  //(int)kindtipoOperacao;
@@ -45,10 +30,45 @@ namespace SPD.Repository.Repository.Model
             var historicoOperacao = new HistoricoOperacao();
 
             historicoOperacao.RegistraHistorico(this.Context as Context, valor, usuario, tipoOperacao, funcionalidade, valores);
+
             try
             {
                 this.AddEntity(historicoOperacao);
                 this.SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Delete(Usuario usuario)
+        {
+            try
+            {
+                var historico = Query().Where(a => a.ID_USUARIO == usuario.ID).ToList();
+
+                RemoveEntityRange(historico);
+
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void InsertHistoricoSistema(string valor)
+        {
+            try
+            {
+                var historicoOperacao = new HistoricoOperacao();
+
+                historicoOperacao.RegistraHistoricoSistema(valor);
+
+                AddEntity(historicoOperacao);
+
+                SaveChange();
             }
             catch (Exception ex)
             {

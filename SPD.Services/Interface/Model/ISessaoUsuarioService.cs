@@ -16,7 +16,7 @@ namespace SPD.Services.Interface.Model
 
         bool EncerrarSessao(SessaoUsuario sessaoUsuario);
 
-        [Transactional]
+        //[Transactional]
         bool EncerrarSessao(int usuarioID, string valor);
 
         void DesconetarSessaoUsuarios(Usuario usuario);

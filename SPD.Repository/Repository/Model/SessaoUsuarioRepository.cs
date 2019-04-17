@@ -11,22 +11,33 @@ namespace SPD.Repository.Repository.Model
     {
         public void CriarSessao(Usuario usuario, string enderecoIP)
         {
-            var sessaoUsuario = new SessaoUsuario(usuario, enderecoIP);
+            try
+            {
+                var sessaoUsuario = new SessaoUsuario(usuario, enderecoIP);
 
-            sessaoUsuario.CriarSessao(this.Context as Context);
+                sessaoUsuario.CriarSessao(this.Context as Context);
 
-            this.Add(sessaoUsuario);
+                this.AddEntity(sessaoUsuario);
+
+                SaveChange();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool EncerrarSessao(SessaoUsuario sessaoUsuario)
         {
             try
             {
-                this.Remove(sessaoUsuario);
+                this.DeleteEntity(sessaoUsuario);
+
+                SaveChange();
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }
