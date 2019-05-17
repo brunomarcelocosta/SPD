@@ -22,5 +22,11 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public string Comentarios { get; set; }
 
         public DateTime Dt_Consulta { get; set; }
+
+
+        public string Paciente_string { get; set; }
+        public string Dentista_string { get; set; }
+        public string Img_string { get; set; }
+
     }
 }
