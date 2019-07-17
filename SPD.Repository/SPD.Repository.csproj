@@ -75,6 +75,8 @@
     <Compile Include="Interface\Model\IUsuarioFuncionalidadeRepository.cs" />
     <Compile Include="Interface\Model\IUsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interface\Model\IAgendaRepository.cs" />
+    <Compile Include="Repository\Model\AgendaRepository.cs" />
     <Compile Include="Repository\Model\AssinaturaRepository.cs" />
     <Compile Include="Repository\Model\ConsultaRepository.cs" />
     <Compile Include="Repository\Model\DentistaRepository.cs" />

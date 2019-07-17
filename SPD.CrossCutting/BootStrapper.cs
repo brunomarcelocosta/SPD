@@ -18,6 +18,7 @@ namespace SPD.CrossCutting
             #region Service
 
             container.Register(typeof(IServiceBase<>), typeof(ServiceBase<>), Lifestyle.Scoped);
+            container.Register(typeof(IAgendaService), typeof(AgendaService), Lifestyle.Scoped);
             container.Register(typeof(IAssinaturaService), typeof(AssinaturaService), Lifestyle.Scoped);
             container.Register(typeof(IAutenticacaoService), typeof(AutenticacaoService), Lifestyle.Scoped);
             container.Register(typeof(IConsultaService), typeof(ConsultaService), Lifestyle.Scoped);
@@ -37,6 +38,7 @@ namespace SPD.CrossCutting
             #region Repository
 
             container.Register(typeof(IRepositoryBase<>), typeof(RepositoryBase<>), Lifestyle.Scoped);
+            container.Register(typeof(IAgendaRepository), typeof(AgendaRepository), Lifestyle.Scoped);
             container.Register(typeof(IAssinaturaRepository), typeof(AssinaturaRepository), Lifestyle.Scoped);
             container.Register(typeof(IConsultaRepository), typeof(ConsultaRepository), Lifestyle.Scoped);
             container.Register(typeof(IDentistaRepository), typeof(DentistaRepository), Lifestyle.Scoped);

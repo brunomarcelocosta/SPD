@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SPD_Enums.cs" />
+    <Compile Include="Model\Agenda.cs" />
     <Compile Include="Model\Assinatura.cs" />
     <Compile Include="Model\Consulta.cs" />
     <Compile Include="Model\Context.cs" />

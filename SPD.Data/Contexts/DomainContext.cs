@@ -26,6 +26,7 @@ namespace SPD.Data.Contexts
         public bool IsDisposable { get; set; }
         public IDataContext DataContext { get; }
 
+        public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Assinatura> Assinaturas { get; set; }
         public DbSet<Consulta> Consultas { get; set; }
         public DbSet<Dentista> Dentistas { get; set; }
