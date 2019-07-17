@@ -14,14 +14,14 @@ namespace SPD.Model.Model
         public virtual Dentista DENTISTA { get; set; }
 
         public int? ID_PACIENTE { get; set; }
-        public virtual Paciente Paciente { get; set; }
+        public virtual Paciente PACIENTE { get; set; }
 
         public string NOME_PACIENTE { get; set; }
 
-        public DateTime Data_Consulta { get; set; }
+        public DateTime DATA_CONSULTA { get; set; }
 
         public int ID_USUARIO { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public virtual Usuario USUARIO { get; set; }
 
         public DateTime DT_INSERT { get; set; }
     }

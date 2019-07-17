@@ -61,6 +61,7 @@
     <Compile Include="Contexts\BaseContext.cs" />
     <Compile Include="Contexts\DomainContext.cs" />
     <Compile Include="Contexts\SqlServerContext.cs" />
+    <Compile Include="EntityConfigurations\ModelsConfiguration\AgendaConfiguration.cs" />
     <Compile Include="EntityConfigurations\ModelsConfiguration\AssinaturaConfiguration.cs" />
     <Compile Include="EntityConfigurations\ModelsConfiguration\ConsultaConfiguration.cs" />
     <Compile Include="EntityConfigurations\ModelsConfiguration\DentistaConfiguration.cs" />
