@@ -1,27 +1,31 @@
-﻿using System;
+﻿using SPD.MVC.Geral.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SPD.MVC.PortalWeb.ViewModels
 {
-    public class AgendaViewModel
+    public class AgendaViewModel : ViewModelBase
     {
         public int ID { get; set; }
 
-        public int ID_DENTISTA { get; set; }
-        public virtual DentistaViewModel DENTISTA { get; set; }
+        public int ID_Dentista { get; set; }
+        public virtual DentistaViewModel Dentista { get; set; }
 
-        public int? ID_PACIENTE { get; set; }
+        public int? ID_Paciente { get; set; }
         public virtual PacienteViewModel Paciente { get; set; }
 
-        public string NOME_PACIENTE { get; set; }
+        public string Nome_Paciente { get; set; }
 
         public DateTime Data_Consulta { get; set; }
 
-        public int ID_USUARIO { get; set; }
+        public int ID_Usuario { get; set; }
         public virtual UsuarioViewModel Usuario { get; set; }
 
-        public DateTime DT_INSERT { get; set; }
+        public DateTime Dt_Insert { get; set; }
+
+        public List<AgendaViewModel> ListAgendaViewModel { get; set; }
+        public string Dentista_string { get; set; }
+
+
     }
 }

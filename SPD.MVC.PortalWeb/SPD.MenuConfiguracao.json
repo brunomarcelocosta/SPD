@@ -59,6 +59,14 @@
     "SubMenus": [
       {
         "Nivel": 1,
+        "Titulo": "Agenda",
+        "Modulo": "SPD.MVC.PortalWeb",
+        "Controle": "Agenda",
+        "Acao": "INdex",
+        "Perfil": "Listar Agenda"
+      },
+      {
+        "Nivel": 2,
         "Titulo": "Pré-Consulta",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "PreConsulta",
@@ -66,11 +74,11 @@
         "Perfil": "Listar Pacientes"
       },
       {
-        "Nivel": 2,
+        "Nivel": 3,
         "Titulo": "Consulta",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "Consulta",
-        "Acao": "List",
+        "Acao": "Index",
         "Perfil": "Listar Consultas"
       },
       {

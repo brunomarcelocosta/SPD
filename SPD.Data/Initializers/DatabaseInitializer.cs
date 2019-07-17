@@ -81,6 +81,30 @@ namespace SPD.Data.Initializers
                 IsATIVO = true
             };
 
+            Funcionalidade agenda = new Funcionalidade()
+            {
+                NOME = "Listar Agenda",
+                IsATIVO = true
+            };
+
+            Funcionalidade agendaADD = new Funcionalidade()
+            {
+                NOME = "Adicionar Agenda",
+                IsATIVO = true
+            };
+
+            Funcionalidade agendaEDIT = new Funcionalidade()
+            {
+                NOME = "Editar Agenda",
+                IsATIVO = true
+            };
+
+            Funcionalidade agendaDEL = new Funcionalidade()
+            {
+                NOME = "Excluir Agenda",
+                IsATIVO = true
+            };
+
             Funcionalidade paciente = new Funcionalidade()
             {
                 NOME = "Listar Pacientes",
@@ -172,7 +196,7 @@ namespace SPD.Data.Initializers
             };
 
             return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario,
-                                          redefinirSenha, paciente, addPaciente, editPaciente, delPaciente, dentista, addDentista,
+                                          redefinirSenha, agenda,agendaADD,agendaEDIT, agendaDEL, paciente, addPaciente, editPaciente, delPaciente, dentista, addDentista,
                                           editDentista, delDentista,preConsulta, addPreConsulta, editPreConsulta, delPreConsulta,
                                           consulta, historico, notificacao };
 

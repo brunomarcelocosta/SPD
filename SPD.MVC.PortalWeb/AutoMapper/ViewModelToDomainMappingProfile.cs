@@ -17,6 +17,7 @@ namespace SPD.MVC.PortalWeb.AutoMapper
 
         public ViewModelToDomainMappingProfile()
         {
+            this.CreateMap<AgendaViewModel, Agenda>();
             this.CreateMap<ConsultaViewModel, Consulta>();
             this.CreateMap<DentistaViewModel, Dentista>();
             this.CreateMap<FuncionalidadeViewModel, Funcionalidade>();

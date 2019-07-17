@@ -238,6 +238,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsuarioResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\AlterarSenhaController.cs" />
     <Compile Include="Controllers\ConsultaController.cs" />
     <Compile Include="Controllers\DentistaController.cs" />
@@ -631,6 +632,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Captures\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Agenda\" />
     <Folder Include="Views\HistoricoConsulta\" />
   </ItemGroup>
   <ItemGroup>
