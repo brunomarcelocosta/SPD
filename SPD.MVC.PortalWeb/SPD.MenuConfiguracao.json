@@ -62,7 +62,7 @@
         "Titulo": "Agenda",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "Agenda",
-        "Acao": "INdex",
+        "Acao": "List",
         "Perfil": "Listar Agenda"
       },
       {

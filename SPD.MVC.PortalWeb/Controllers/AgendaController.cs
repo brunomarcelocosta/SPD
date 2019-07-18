@@ -72,7 +72,9 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 listToView.Add(new
                 {
+                    item.ID,
                     //ToDo: agrupar por hora
+                    Hora_string = $" Hora: {item.Data_Consulta.Hour}",
                     Hora = item.Data_Consulta.Hour,
                     Dentista = item.Dentista.Nome,
                     Paciente = item.Nome_Paciente,

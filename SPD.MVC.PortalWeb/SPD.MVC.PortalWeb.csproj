@@ -441,6 +441,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Styles\site.css" />
+    <Content Include="Scripts\Agenda\Agenda.js" />
+    <Content Include="Scripts\Agenda\AgendaEdit.js" />
+    <Content Include="Scripts\Agenda\AgendaNew.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.pt-BR.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -627,12 +630,14 @@
     <Content Include="Views\PreConsulta\Edit.cshtml" />
     <Content Include="Views\Shared\_modalAutorizarConsulta.cshtml" />
     <Content Include="Views\Consulta\Index.cshtml" />
+    <Content Include="Views\Agenda\List.cshtml" />
+    <Content Include="Views\Agenda\_List.cshtml" />
+    <Content Include="Views\Agenda\_Filtros.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Captures\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Agenda\" />
     <Folder Include="Views\HistoricoConsulta\" />
   </ItemGroup>
   <ItemGroup>
