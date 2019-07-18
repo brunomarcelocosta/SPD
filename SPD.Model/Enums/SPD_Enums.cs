@@ -63,7 +63,8 @@ namespace SPD.Model.Enums
             Pacientes = 4,
             Dentista = 5,
             Consulta = 6,
-            PreConsulta = 7
+            PreConsulta = 7,
+            Agenda = 8
         }
 
         public enum EstadosCivis

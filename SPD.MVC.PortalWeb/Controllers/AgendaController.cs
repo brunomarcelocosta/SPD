@@ -220,6 +220,17 @@ namespace SPD.MVC.PortalWeb.Controllers
             return new SelectList(list, id);
         }
 
+        public SelectList ListHoraDisponivel(object id = null)
+        {
+            List<string> list = new List<string>();
+            // var hora = _AgendaService.Query().Select(a => a.NOME).ToList();
+
+            // list = hora.Distinct().ToList();
+
+            return new SelectList(list, id);
+        }
+
+
         #endregion
 
         #region Validações 

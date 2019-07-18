@@ -25,7 +25,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public List<AgendaViewModel> ListAgendaViewModel { get; set; }
         public string Dentista_string { get; set; }
-
+        public string Hora_string { get; set; }
 
     }
 }
