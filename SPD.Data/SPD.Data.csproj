@@ -78,6 +78,10 @@
     <Compile Include="EntityConfigurations\ModelsConfiguration\UsuarioFuncionalidadeConfiguration.cs" />
     <Compile Include="Initializers\DatabaseInitializer.cs" />
     <Compile Include="Interfaces\Contexts\IDataContext.cs" />
+    <Compile Include="Migrations\201907181418480_Agenda.cs" />
+    <Compile Include="Migrations\201907181418480_Agenda.Designer.cs">
+      <DependentUpon>201907181418480_Agenda.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ContextDebugger.cs" />
@@ -103,6 +107,9 @@
     <EmbeddedResource Include="Content\Texts\ErrorResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907181418480_Agenda.resx">
+      <DependentUpon>201907181418480_Agenda.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

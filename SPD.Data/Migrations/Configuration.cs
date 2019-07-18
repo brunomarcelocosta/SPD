@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace SPD.Data.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<Contexts.SqlServerContext>
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<SPD.Data.Contexts.SqlServerContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            MigrationsDirectory = @"Migrations\SqlServer";
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Contexts.SqlServerContext context)
+        protected override void Seed(SPD.Data.Contexts.SqlServerContext context)
         {
             //  This method will be called after migrating to the latest version.
 

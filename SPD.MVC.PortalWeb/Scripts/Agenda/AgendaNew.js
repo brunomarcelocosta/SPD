@@ -1,4 +1,26 @@
-﻿$(function () {
+﻿$(document).ready(function () {
+    $("#Nome_Paciente").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Agenda/BuscaPaciente",
+                type: "POST",
+                dataType: "json",
+                data: { Prefix: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Nome_Paciente, value: item.Nome_Paciente };
+                    }))
+
+                }
+            })
+        },
+        messages: {
+            noResults: "", results: ""
+        }
+    });
+})  
+
+$(function () {
 
     var url = '/Agenda/List';
     var msg = "Deseja realmente agendar este horário?";
