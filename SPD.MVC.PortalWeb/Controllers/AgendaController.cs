@@ -183,6 +183,23 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             if (collection != null)
             {
+
+                if (!string.IsNullOrWhiteSpace(collection["DataDe"]))
+                {
+                    var dataDe = Convert.ToDateTime(collection["DataDe"].ToString());
+
+                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Consulta).Date == dataDe.Date).ToList();
+                    agendaViewModel.DataDe_Filtro = collection["DataDe"];
+
+                }
+                else
+                {
+                    var dataDe = DateTime.Now;
+
+                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Consulta).Date == dataDe.Date).ToList();
+                    agendaViewModel.DataDe_Filtro = dataDe.ToShortDateString();
+                }
+
                 if (!string.IsNullOrWhiteSpace(collection["Dentista_string"]))
                 {
                     var nome = collection["Dentista_string"].ToString();
@@ -191,14 +208,20 @@ namespace SPD.MVC.PortalWeb.Controllers
                     agendaViewModel.Dentista_string = nome;
                 }
 
-                if (!string.IsNullOrWhiteSpace(collection["DataDe"]))
+                if (!string.IsNullOrWhiteSpace(collection["Nome_Paciente"]))
                 {
-                    var dataDe = Convert.ToDateTime(collection["DataDe"].ToString());
+                    var paciente = collection["Nome_Paciente"].ToString();
 
-                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Dt_Insert).Date == dataDe.Date).ToList();
-                    agendaViewModel.DataDe_Filtro = collection["DataDe"];
-
+                    ListaFiltrada = ListaFiltrada.Where(a => a.Nome_Paciente.Contains(paciente)).ToList();
+                    agendaViewModel.Nome_Paciente = paciente;
                 }
+            }
+            else
+            {
+                var dataDe = DateTime.Now;
+
+                ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Consulta).Date == dataDe.Date).ToList();
+                agendaViewModel.DataDe_Filtro = dataDe.ToShortDateString();
             }
 
             agendaViewModel.ListAgendaViewModel = ListaFiltrada;
