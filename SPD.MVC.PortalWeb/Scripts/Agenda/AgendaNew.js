@@ -1,24 +1,46 @@
-﻿$(document).ready(function () {
-    $("#Nome_Paciente").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: "/Agenda/BuscaPaciente",
-                type: "POST",
-                dataType: "json",
-                data: { Prefix: request.term },
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        return { label: item.Nome_Paciente, value: item.Nome_Paciente };
-                    }))
+﻿var textbox;
+var selectValue;
 
-                }
-            })
-        },
-        messages: {
-            noResults: "", results: ""
-        }
+$(function () {
+    textbox = $("#Nome_Paciente");
+    selectValue = $('ul#selectedValue');
+
+    textbox.on("input", function () {
+        ValidaAC();
+        getAutoComplete(textbox.val());
     });
-})  
+});
+
+function ValidaAC() {
+    var id = $('#id_ac').val();
+
+    if (id == 1) {
+        $('ul#selectedValue').show();
+    }
+}
+
+function getAutoComplete(countryName) {
+    $('#id_ac').val("");
+
+    var uri = "../../Agenda/BuscaPaciente";
+    $.getJSON(uri, { prefix: countryName })
+        .done(function (data) {
+            selectValue.html("");
+            var count = 0;
+            $.each(data, function (key, item) {
+                var li = $('<li/>').addClass('ui-menu-item').attr('role', 'menuitem')
+                    .html("<a href='#' onclick=\"setText('" + item + "') \">" + item + "</a>")
+                    .appendTo(selectValue);
+
+                count++;
+            });
+        });
+}
+function setText(text) {
+    textbox.val(text);
+    $('#id_ac').val(1);
+    $('ul#selectedValue').hide();
+}
 
 $(function () {
 

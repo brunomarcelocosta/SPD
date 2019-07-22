@@ -49,16 +49,19 @@
 });
 
 function DataTable() {
+
+    var groupColumn = 0;
+
     var table = $('#idGrid').DataTable({
         "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-left"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"pull-left"ip>>>',
-        //    "info": false,
         "sPaginationType": "full_numbers_no_ellipses",
+        "pageLength": 100,
         "serverSide": true,
         "searching": false,
         "processing": true,
-        "stateSave": false,
+        "stateSave": true,
         "ordering": false,
-        //"order": [[1, 'ASC']],
+        "order": [[groupColumn, 'asc']],
         "ajax":
         {
             "url": "/Agenda/Paginacao",
@@ -73,17 +76,15 @@ function DataTable() {
 
         "columnDefs": [
             {
-                "type": "num",
                 "visible": false,
                 "targets": groupColumn
             },
             {
                 "className": "text-center",
-                "targets": [1, 2, 3, 4, 5]
+                "targets": [1, 2, 3]
             }
         ],
 
-        "displayLength": 100,
         "drawCallback": function (settings) {
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
@@ -92,7 +93,7 @@ function DataTable() {
             api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
-                        '<tr><td colspan="11" style="background-color: #dddddd !important;"><b>' + group + '</b></td></tr>'
+                        '<tr><td colspan="3" style="background-color: #dddddd !important;"><b>' + group + '</b></td></tr>'
                     );
 
                     last = group;
@@ -101,13 +102,13 @@ function DataTable() {
         },
         "createdRow": function (row, data, rowIndex) {
             $.each($('td', row), function (colIndex) {
-                $(this).attr("title", "Duplo clique para editar");
+                $(this).attr("title", "Clique 2x para editar");
             });
         },
         "columns": [
-            { "data": "Hora", "orderable": true, "autoWidth": true },
-            { "data": "Dentista", "orderable": true, "autoWidth": true },
-            { "data": "Paciente", "orderable": true, "autoWidth": true },
+            { "data": "Dentista", "orderable": false, "autoWidth": true },
+            { "data": "Hora", "orderable": false, "autoWidth": true },
+            { "data": "Paciente", "orderable": false, "autoWidth": true },
             {
                 "data": null, "render": function (data, type, row) {
                     return '<button type="button" id="' + row.ID + '" class="btn btn-danger btn-sm" onclick="Excluir(this)" >Excluir</button>';
@@ -116,9 +117,8 @@ function DataTable() {
         ],
         "language": {
             "sEmptyTable": "Nenhum registro encontrado",
-            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+            "sInfo": " _TOTAL_ registros encontrados",
+            "sInfoEmpty": "0 registro encontrado.",
             "sInfoPostFix": "",
             "sInfoThousands": ".",
             "sLengthMenu": "Mostrar _MENU_ registros por página",
@@ -131,15 +131,10 @@ function DataTable() {
                 "sPrevious": "<",
                 "sFirst": "«",
                 "sLast": "»"
-            },
-            "oAria": {
-                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                "sSortDescending": ": Ordenar colunas de forma descendente"
             }
         }
     });
 
-    //DoubleClick outside the grouping
     $('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {
         Render('Agenda', 'Edit', table.row(this).data().ID);
     });

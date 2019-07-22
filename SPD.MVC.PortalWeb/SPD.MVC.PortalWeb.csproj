@@ -589,6 +589,7 @@
     <Content Include="Scripts\webcam.js" />
     <Content Include="Scripts\webcam.min.js" />
     <Content Include="Scripts\webcam.swf" />
+    <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\Webcam\WebcamFunctions.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

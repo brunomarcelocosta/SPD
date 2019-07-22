@@ -13,12 +13,15 @@
     <title>@GlobalResource.ApplicationTitle - @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/multileveldropdown")
-    @Scripts.Render("~/bundles/sweetalert")
-    @Scripts.Render("~/bundles/modernizr")
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/signalr")
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/sweetalert")
     @Scripts.Render("~/bundles/site")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/signalr")
+
     @RenderSection("scripts", required: false)
     <script>
             function getAuthentication() {

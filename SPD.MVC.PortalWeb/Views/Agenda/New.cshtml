@@ -10,18 +10,21 @@
 
 <h2>Agendar Novo Horário</h2>
 <hr />
-<br />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
+    <input type="hidden" />
+    <input type="text" id="id_ac" hidden="hidden" />
+
+
     <div class="form-horizontal">
 
         <div class="form-group">
             @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="input-group input-daterange col-md-10">
-                @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @class = "form-control data ", @name = "start", @style = "width: 160px" } })
+            <div class=" input-daterange col-md-10">
+                @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @class = "form-control data ", @style = "width: 200px" } })
             </div>
         </div>
 
@@ -30,7 +33,7 @@
         <div class="form-group">
             @Html.Label("Dentista", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @class = "form-control ", @style = "width:260px" })
+                @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @class = "form-control ", @style = "width:200px" })
             </div>
         </div>
 
@@ -38,8 +41,9 @@
 
         <div class="form-group">
             @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @class = "form-control", @style = "width:260px" } })
+            <div class="col-md-10" id="nav">
+                @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @class = "form-control", @style = "width:200px" } })
+                <ul id="selectedValue"></ul>
             </div>
         </div>
 
@@ -48,7 +52,7 @@
         <div class="form-group">
             @Html.Label("Horário", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Hora_string, controller.ListHoraDisponivel() as SelectList, "", new { @class = "form-control ", @style = "width:260px" })
+                @Html.DropDownListFor(model => model.Hora_string, controller.ListHoraDisponivel() as SelectList, "", new { @class = "form-control ", @style = "width:200px" })
             </div>
         </div>
 
@@ -65,13 +69,35 @@
 
 }
 
+<style>
+    select {
+        width: 200px;
+    }
+
+    a:link, a:active, a:visited, a:hover {
+        text-decoration: none;
+        color: black;
+    }
+    /*--- DROPDOWN ---*/
+    #nav ul {
+        list-style: none;
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+</style>
+
+@*<script src="~/Scripts/jquery-2.0.3.min.js"></script>*@
+
+
+
 @section Scripts{
 
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/site")
 
     <script src="~/Scripts/jquery-1.10.2.js"></script>
-    <script src="~/Scripts/jquery-ui.js"></script>
 
     <script src="~/Scripts/Agenda/AgendaNew.js"></script>
 

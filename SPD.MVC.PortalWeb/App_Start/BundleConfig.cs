@@ -9,7 +9,9 @@ namespace SPD.MVC.PortalWeb
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                     "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-{version}.min.js",
+                        "~/Scripts/jquery-ui.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                       "~/Scripts/jquery.validate*",
@@ -37,9 +39,9 @@ namespace SPD.MVC.PortalWeb
                 "~/Scripts/jquery.mask*",
                 "~/Scripts/Mascaras.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/webcam").Include(
-            //          "~/Scripts/webcam.js",
-            //          "~/Scripts/webcam.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
+                     "~/Scripts/DataTables/jquery.dataTables.js",
+                    "~/Scripts/DataTables/dataTables.bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Styles/bootstrap.css",

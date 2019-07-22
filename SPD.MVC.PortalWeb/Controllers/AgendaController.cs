@@ -17,12 +17,14 @@ namespace SPD.MVC.PortalWeb.Controllers
         private readonly IDentistaService _DentistaService;
         private readonly IUsuarioService _UsuarioService;
         private readonly IFuncionalidadeService _FuncionalidadeService;
+        private readonly IPacienteService _PacienteService;
         private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
 
         public AgendaController(IAgendaService agendaService,
                                 IDentistaService dentistaService,
                                 IUsuarioService usuarioService,
                                 IFuncionalidadeService funcionalidadeService,
+                                IPacienteService pacienteService,
                                 IUsuarioFuncionalidadeService usuarioFuncionalidadeService)
             : base(agendaService)
         {
@@ -30,6 +32,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             _DentistaService = dentistaService;
             _UsuarioService = usuarioService;
             _FuncionalidadeService = funcionalidadeService;
+            _PacienteService = pacienteService;
             _UsuarioFuncionalidadeService = usuarioFuncionalidadeService;
         }
 
@@ -197,7 +200,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     var dataDe = DateTime.Now;
 
                     ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Consulta).Date == dataDe.Date).ToList();
-                    agendaViewModel.DataDe_Filtro = dataDe.ToShortDateString();
+                    agendaViewModel.DataDe_Filtro = dataDe.ToString("yyyy-MM-dd");
                 }
 
                 if (!string.IsNullOrWhiteSpace(collection["Dentista_string"]))
@@ -251,6 +254,18 @@ namespace SPD.MVC.PortalWeb.Controllers
             // list = hora.Distinct().ToList();
 
             return new SelectList(list, id);
+        }
+
+        public JsonResult BuscaPaciente(string prefix)
+        {
+            var PacienteList = _PacienteService
+                               .QueryAsNoTracking()
+                               .Where(a => a.NOME.ToLower().StartsWith(prefix.ToLower()))
+                               .Select(a => a.NOME)
+                               .Distinct()
+                               .ToList();
+
+            return Json(PacienteList, JsonRequestBehavior.AllowGet);
         }
 
 
