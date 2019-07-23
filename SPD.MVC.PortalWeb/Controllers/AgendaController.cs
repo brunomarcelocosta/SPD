@@ -246,12 +246,17 @@ namespace SPD.MVC.PortalWeb.Controllers
             return new SelectList(list, id);
         }
 
-        public SelectList ListHoraDisponivel(object id = null)
+        public SelectList ListHoraDisponivel(string data, string dentista, object id = null)
         {
             List<string> list = new List<string>();
-            // var hora = _AgendaService.Query().Select(a => a.NOME).ToList();
 
-            // list = hora.Distinct().ToList();
+            var model = new AgendaViewModel();
+
+            list.AddRange(model.ListHorarios());
+
+            var horarios = _AgendaService.QueryAsNoTracking().Select(a => a.DATA_CONSULTA.ToShortTimeString()).ToList();
+
+            list = list.Where(a => !horarios.Contains(a)).ToList();
 
             return new SelectList(list, id);
         }
