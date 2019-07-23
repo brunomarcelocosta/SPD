@@ -33,7 +33,7 @@
         <div class="form-group">
             @Html.Label("Dentista", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @class = "form-control ", @style = "width:200px" })
+                @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @class = "form-control ", @style = "width:200px", @onchange = "BuscaHorarios" })
             </div>
         </div>
 
