@@ -47,8 +47,11 @@ namespace SPD.Services.Services.Model
                 var dentista = _DentistaRepository.GetById(agenda.DENTISTA.ID);
                 agenda.DENTISTA = dentista;
 
-                var paciente = _PacienteRepository.GetById(agenda.PACIENTE.ID);
+                var paciente = agenda.PACIENTE == null ? null : _PacienteRepository.GetById(agenda.PACIENTE.ID);
                 agenda.PACIENTE = paciente;
+
+                var user = _UsuarioRepository.GetById(usuario.ID);
+                agenda.USUARIO = user;
 
                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 //{

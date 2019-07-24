@@ -119,8 +119,26 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         public ActionResult Add(AgendaViewModel agendaViewModel)
         {
+            var dentista = ToViewModel<Dentista, DentistaViewModel>(_DentistaService.QueryAsNoTracking().Where(a => a.NOME.Equals(agendaViewModel.Dentista_string)).FirstOrDefault());
+            var paciente = ToViewModel<Paciente, PacienteViewModel>(_PacienteService.QueryAsNoTracking().Where(a => a.NOME.Equals(agendaViewModel.Nome_Paciente)).FirstOrDefault());
+
+            agendaViewModel.Hora_Fim = Convert.ToDateTime(agendaViewModel.Hora_Inicio)
+                                              .AddMinutes(Convert.ToDouble(agendaViewModel.Tempo_Consulta))
+                                              .ToShortTimeString();
 
             var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
+
+            var viewModelToBD = new AgendaViewModel
+            {
+                Dentista = dentista,
+                Paciente = paciente,
+                Nome_Paciente = agendaViewModel.Nome_Paciente,
+                Data_Consulta = agendaViewModel.Data_Consulta,
+                Hora_Inicio = agendaViewModel.Hora_Inicio,
+                Hora_Fim = agendaViewModel.Hora_Fim,
+                Usuario = ToViewModel<Usuario, UsuarioViewModel>(user_logado),
+                Dt_Insert = DateTime.Now
+            };
 
             var agenda = ToModel(agendaViewModel);
 
@@ -249,20 +267,30 @@ namespace SPD.MVC.PortalWeb.Controllers
         public JsonResult ListHoraDisponivel(string data, string dentista)
         {
             List<string> list = new List<string>();
+            List<string> list_horas = new List<string>();
 
             var id_dentista = _DentistaService.QueryAsNoTracking().Where(a => a.NOME.Equals(dentista)).FirstOrDefault().ID;
 
             var model = new AgendaViewModel();
 
-            list.AddRange(model.ListHorarios());
+            list_horas.AddRange(model.ListHorarios());
 
             var horarios = _AgendaService
                            .QueryAsNoTracking()
-                           .Where(a => a.ID_DENTISTA == id_dentista)
-                           //.Select(a => a.HORA_FIM.ToShortTimeString())
+                           .Where(a => a.ID_DENTISTA == id_dentista && a.DATA_CONSULTA.Equals(data))
                            .ToList();
 
-            //list = list.Where(a => horarios.Contains(a)).ToList();
+            foreach (var item in list_horas)
+            {
+                var count = horarios.Where(b => Convert.ToDateTime(item) >= Convert.ToDateTime(b.HORA_INICIO)
+                                             && Convert.ToDateTime(item) < Convert.ToDateTime(b.HORA_FIM)
+                                          ).ToList().Count();
+
+                if (count == 0)
+                {
+                    list.Add(item);
+                }
+            }
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
