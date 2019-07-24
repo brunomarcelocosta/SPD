@@ -24,7 +24,7 @@
         <div class="form-group">
             @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class=" input-daterange col-md-10">
-                @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @class = "form-control data ", @style = "width: 200px" } })
+                @Html.EditorFor(model => model.Data_Consulta, new { htmlAttributes = new { @Value = Model.Data_Consulta, @class = "form-control data ", @style = "width: 200px", @onchange = "HabilitaCampos()" } })
             </div>
         </div>
 
@@ -33,7 +33,7 @@
         <div class="form-group">
             @Html.Label("Dentista", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @class = "form-control ", @style = "width:200px", @onchange = "BuscaHorarios" })
+                @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @readonly = "readonly", @class = "form-control ", @style = "width:200px", @onchange = "HabilitaHorario()" })
             </div>
         </div>
 
@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" id="nav">
-                @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @class = "form-control", @style = "width:200px" } })
+                @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", @style = "width:200px" } })
                 <ul id="selectedValue"></ul>
             </div>
         </div>
@@ -52,7 +52,35 @@
         <div class="form-group">
             @Html.Label("Horário", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Hora_string, controller.ListHoraDisponivel() as SelectList, "", new { @class = "form-control ", @style = "width:200px" })
+                @Html.DropDownListFor(model => model.Hora_Inicio, new SelectList(new List<Object> { }), "", new { @readonly = "readonly", @class = "form-control ", @style = "width:200px" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Duração", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Tempo_Consulta,
+                                               new SelectList ( new List<Object>
+                                               {
+                                                   new { value = "", text = "", Selected = true},
+                                                   new { value = "15", text = "15 minutos"},
+                                                   new { value = "30", text = "30 minutos"},
+                                                   new { value = "45", text = "45 minutos"},
+                                                   new { value = "60", text = "1 hora"},
+                                                   new { value = "75", text = "1 hora e 15 minutos"},
+                                                   new { value = "90", text = "1 hora e 30 minutos"},
+                                                   new { value = "105", text = "1 hora e 45 minutos"},
+                                                   new { value = "120", text = "2 horas"},
+                                                   new { value = "135", text = "2 horas e 15 minutos"},
+                                                   new { value = "150", text = "2 horas e 30 minutos"},
+                                                   new { value = "165", text = "2 horas e 45 minutos"},
+                                                   new { value = "180", text = "3 horas"},
+                                                   new { value = "195", text = "3 horas e 15 minutos"},
+                                                   new { value = "210", text = "3 horas e 30 minutos"},
+                                                   new { value = "225", text = "3 horas e 45 minutos"},
+                                                   new { value = "240", text = "4 horas"}
+                                               }, "value","text", ""),
+                                          new { htmlAttributes = new { @readonly = "readonly", @class = "form-control ", @style = "width:200px" } })
             </div>
         </div>
 
@@ -87,10 +115,6 @@
         list-style-type: none;
     }
 </style>
-
-@*<script src="~/Scripts/jquery-2.0.3.min.js"></script>*@
-
-
 
 @section Scripts{
 

@@ -36,6 +36,7 @@ function getAutoComplete(countryName) {
             });
         });
 }
+
 function setText(text) {
     textbox.val(text);
     $('#id_ac').val(1);
@@ -89,3 +90,49 @@ $(function () {
 
 
 });
+
+function HabilitaCampos() {
+    var data = $("DataDe").val();
+
+    if (data != null && data != "" && data != "yyyy-MM-dd") {
+
+        $("#Dentista_string").prop("readonly", false);
+        $("#Nome_Paciente").prop("readonly", false);
+    }
+    else {
+
+        $("#Dentista_string").prop("readonly", true);
+        $("#Nome_Paciente").prop("readonly", true);
+        $("#Hora_string").prop("readonly", true);
+        $("#Tempo_Consulta").prop("readonly", true);
+    }
+}
+
+function HabilitaHorario() {
+    var data = $("DataDe").val();
+    var dentista = $("#Dentista_string").val();
+    var uri = "../../Agenda/ListHoraDisponivel";
+
+    if (dentista != "" && dentista != null) {
+
+        $.getJSON(uri, { data: data, dentista: dentista })
+            .done(function (list) {
+
+                var select = $("#Hora_string");
+
+                select.empty();
+
+                select.append($('<option/>', {
+                    value: "",
+                    text: "Selecione um horário"
+                }));
+
+                $.each(list, function (index, item) {
+                    select.append($('<option/>', {
+                        value: item,
+                        text: item
+                    }));
+                });
+            });
+    }
+}

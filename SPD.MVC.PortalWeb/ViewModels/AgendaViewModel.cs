@@ -16,7 +16,11 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public string Nome_Paciente { get; set; }
 
-        public DateTime Data_Consulta { get; set; }
+        public string Data_Consulta { get; set; }
+
+        public string Hora_Inicio { get; set; }
+
+        public string Hora_Fim { get; set; }
 
         public int ID_Usuario { get; set; }
         public virtual UsuarioViewModel Usuario { get; set; }
@@ -26,6 +30,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public List<AgendaViewModel> ListAgendaViewModel { get; set; }
         public string Dentista_string { get; set; }
         public string Hora_string { get; set; }
+        public string Tempo_Consulta { get; set; }
 
     }
 }

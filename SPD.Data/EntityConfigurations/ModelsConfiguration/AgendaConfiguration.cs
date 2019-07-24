@@ -38,6 +38,14 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .HasColumnName("dt_consulta")
            .IsRequired();
 
+            Property(pre => pre.HORA_INICIO)
+           .HasColumnName("hora_inicio")
+           .IsRequired();
+
+            Property(pre => pre.HORA_FIM)
+           .HasColumnName("hora_fim")
+           .IsRequired();
+
             Property(ag => ag.ID_USUARIO)
            .HasColumnName("fk_id_usuario")
            .IsRequired()

@@ -18,7 +18,11 @@ namespace SPD.Model.Model
 
         public string NOME_PACIENTE { get; set; }
 
-        public DateTime DATA_CONSULTA { get; set; }
+        public string DATA_CONSULTA { get; set; }
+
+        public string HORA_INICIO { get; set; }
+
+        public string HORA_FIM { get; set; }
 
         public int ID_USUARIO { get; set; }
         public virtual Usuario USUARIO { get; set; }

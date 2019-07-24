@@ -77,8 +77,8 @@ namespace SPD.MVC.PortalWeb.Controllers
                 {
                     item.ID,
                     //ToDo: agrupar por hora
-                    Hora_string = $" Hora: {item.Data_Consulta.Hour}",
-                    Hora = item.Data_Consulta.Hour,
+                    Hora_string = $" Hora: {item.Hora_Inicio}",
+                    Hora = item.Hora_Inicio,
                     Dentista = item.Dentista.Nome,
                     Paciente = item.Nome_Paciente,
                 });
@@ -187,12 +187,12 @@ namespace SPD.MVC.PortalWeb.Controllers
             if (collection != null)
             {
 
-                if (!string.IsNullOrWhiteSpace(collection["DataDe"]))
+                if (!string.IsNullOrWhiteSpace(collection["Data_Consulta"]))
                 {
-                    var dataDe = Convert.ToDateTime(collection["DataDe"].ToString());
+                    var dataDe = Convert.ToDateTime(collection["Data_Consulta"].ToString());
 
                     ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Consulta).Date == dataDe.Date).ToList();
-                    agendaViewModel.DataDe_Filtro = collection["DataDe"];
+                    agendaViewModel.Data_Consulta = collection["Data_Consulta"];
 
                 }
                 else
@@ -200,7 +200,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     var dataDe = DateTime.Now;
 
                     ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Consulta).Date == dataDe.Date).ToList();
-                    agendaViewModel.DataDe_Filtro = dataDe.ToString("yyyy-MM-dd");
+                    agendaViewModel.Data_Consulta = dataDe.ToString("yyyy-MM-dd");
                 }
 
                 if (!string.IsNullOrWhiteSpace(collection["Dentista_string"]))
@@ -224,7 +224,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 var dataDe = DateTime.Now;
 
                 ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Data_Consulta).Date == dataDe.Date).ToList();
-                agendaViewModel.DataDe_Filtro = dataDe.ToShortDateString();
+                agendaViewModel.Data_Consulta = dataDe.ToShortDateString();
             }
 
             agendaViewModel.ListAgendaViewModel = ListaFiltrada;
@@ -246,26 +246,32 @@ namespace SPD.MVC.PortalWeb.Controllers
             return new SelectList(list, id);
         }
 
-        public SelectList ListHoraDisponivel(string data, string dentista, object id = null)
+        public JsonResult ListHoraDisponivel(string data, string dentista)
         {
             List<string> list = new List<string>();
+
+            var id_dentista = _DentistaService.QueryAsNoTracking().Where(a => a.NOME.Equals(dentista)).FirstOrDefault().ID;
 
             var model = new AgendaViewModel();
 
             list.AddRange(model.ListHorarios());
 
-            var horarios = _AgendaService.QueryAsNoTracking().Select(a => a.DATA_CONSULTA.ToShortTimeString()).ToList();
+            var horarios = _AgendaService
+                           .QueryAsNoTracking()
+                           .Where(a => a.ID_DENTISTA == id_dentista)
+                           //.Select(a => a.HORA_FIM.ToShortTimeString())
+                           .ToList();
 
-            list = list.Where(a => !horarios.Contains(a)).ToList();
+            //list = list.Where(a => horarios.Contains(a)).ToList();
 
-            return new SelectList(list, id);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult BuscaPaciente(string prefix)
         {
             var PacienteList = _PacienteService
                                .QueryAsNoTracking()
-                               .Where(a => a.NOME.ToLower().StartsWith(prefix.ToLower()))
+                               .Where(a => a.NOME.ToLower().Contains(prefix.ToLower()))
                                .Select(a => a.NOME)
                                .Distinct()
                                .ToList();
