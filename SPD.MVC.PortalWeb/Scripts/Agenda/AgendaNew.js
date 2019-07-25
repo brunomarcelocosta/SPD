@@ -50,66 +50,67 @@ $(function () {
 
     $('form').not('#Invalidar').submit(function () {
 
-        if ($(this).valid()) {
-            swal({
-                title: "Confirmação",
-                text: msg,
-                icon: "warning",
-                buttons: ["Não", "Sim"],
-                dangerMode: false,
-            }).then((willDelete) => {
-                if (!willDelete) {
-                    return false;
-                }
-                $.ajax({
-                    url: '/Agenda/Add',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function (result) {
+        swal({
+            title: "Confirmação",
+            text: msg,
+            icon: "warning",
+            buttons: ["Não", "Sim"],
+            dangerMode: false,
+        }).then((willDelete) => {
+            if (!willDelete) {
+                return false;
+            }
+            $.ajax({
+                url: '/Agenda/Add',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (result) {
 
-                        if (!result.Success) {
-                            //Caso não realize a gravação, apresenta mensagem ao usuário.
-                            swal("", result.Response, "error");
-                            return false;
-                        }
-                        else {
-                            //apresenta mensagem ao usuário e redireciona para a tela de listagem.
-                            swal("", "Horário agendado com sucesso.", "success")
-                                .then(() => {
-                                    window.location = url;
-                                });
-                        }
+                    if (!result.Success) {
+                        //Caso não realize a gravação, apresenta mensagem ao usuário.
+                        swal("", result.Response, "error");
+                        return false;
                     }
-                });
 
+                    else {
+                        //apresenta mensagem ao usuário e redireciona para a tela de listagem.
+                        swal("", "Horário agendado com sucesso.", "success")
+                            .then(() => {
+                                window.location = url;
+                            });
+                    }
+                }
             });
-        }
+
+        });
+
         return false;
 
     });
-
-
 });
 
+
 function HabilitaCampos() {
-    var data = $("DataDe").val();
+    var data = $("#DataDe").val();
 
     if (data != null && data != "" && data != "yyyy-MM-dd") {
 
-        $("#Dentista_string").prop("readonly", false);
-        $("#Nome_Paciente").prop("readonly", false);
+        $("#Dentista_string").prop("disabled", false);
+        $("#Nome_Paciente").prop("disabled", true);
+        $("#Hora_Inicio").prop("disabled", true);
+        $("#Tempo_Consulta").prop("disabled", true);
     }
     else {
 
-        $("#Dentista_string").prop("readonly", true);
-        $("#Nome_Paciente").prop("readonly", true);
-        $("#Hora_string").prop("readonly", true);
-        $("#Tempo_Consulta").prop("readonly", true);
+        $("#Dentista_string").prop("disabled", true);
+        $("#Nome_Paciente").prop("disabled", true);
+        $("#Hora_Inicio").prop("disabled", true);
+        $("#Tempo_Consulta").prop("disabled", true);
     }
 }
 
 function HabilitaHorario() {
-    var data = $("DataDe").val();
+    var data = $("#DataDe").val();
     var dentista = $("#Dentista_string").val();
     var uri = "../../Agenda/ListHoraDisponivel";
 
@@ -118,7 +119,12 @@ function HabilitaHorario() {
         $.getJSON(uri, { data: data, dentista: dentista })
             .done(function (list) {
 
-                var select = $("#Hora_string");
+
+                $("#Hora_Inicio").prop("disabled", false);
+                $("#Tempo_Consulta").prop("disabled", false);
+                $("#Nome_Paciente").prop("disabled", false);
+
+                var select = $("#Hora_Inicio");
 
                 select.empty();
 

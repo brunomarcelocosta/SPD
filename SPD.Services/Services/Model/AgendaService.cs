@@ -38,29 +38,16 @@ namespace SPD.Services.Services.Model
 
             try
             {
-                //if (ExistePreConsulta(preConsulta))
-                //{
-                //    resultado = "Já existe um Pré Atendimento para este paciente.";
-                //    return false;
-                //}
 
                 var dentista = _DentistaRepository.GetById(agenda.DENTISTA.ID);
                 agenda.DENTISTA = dentista;
 
-                var paciente = agenda.PACIENTE == null ? null : _PacienteRepository.GetById(agenda.PACIENTE.ID);
-                agenda.PACIENTE = paciente;
-
                 var user = _UsuarioRepository.GetById(usuario.ID);
                 agenda.USUARIO = user;
 
-                //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
-                //{
                 _AgendaRepository.Insert(agenda);
 
-                _HistoricoOperacaoRepository.Insert($"Agendou uma consulta para o paciente {agenda.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Agenda);
-
-                //    SaveChanges(transactionScope);
-                //}
+                _HistoricoOperacaoRepository.Insert($"Agendou uma consulta para o paciente {agenda.NOME_PACIENTE}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Agenda);
 
                 return true;
             }
