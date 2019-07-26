@@ -15,7 +15,6 @@
 {
     @Html.AntiForgeryToken()
 
-    <input type="hidden" />
     <input type="text" id="id_ac" hidden="hidden" />
 
 
@@ -24,7 +23,7 @@
         <div class="form-group">
             @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class=" input-daterange col-md-10">
-                @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new {  @class = "form-control data ", @style = "width: 200px", @onchange = "HabilitaCampos()", @required = "required" } })
+                @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @class = "form-control data ", @style = "width: 200px", @onchange = "HabilitaCampos()" } })
             </div>
         </div>
 
@@ -33,7 +32,7 @@
         <div class="form-group">
             @Html.Label("Dentista", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @disabled = "disabled", @class = "form-control ", @style = "width:200px", @onchange = "HabilitaHorario()", @required = "required" })
+                @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @disabled = "disabled", @class = "form-control ", @style = "width:200px", @onchange = "HabilitaHorario()" })
             </div>
         </div>
 
@@ -42,8 +41,17 @@
         <div class="form-group">
             @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" id="nav">
-                @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control", @style = "width:200px", @required = "required" } })
+                @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control", @style = "width:200px" } })
                 <ul id="selectedValue"></ul>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.Label("Celular", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" id="nav">
+                @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control", @style = "width:200px" } })
             </div>
         </div>
 
@@ -52,7 +60,7 @@
         <div class="form-group">
             @Html.Label("Horário", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Hora_Inicio, new SelectList(new List<Object> { }), "", new { @disabled = "@disabled", @class = "form-control ", @style = "width:200px", @required = "required" })
+                @Html.DropDownListFor(model => model.Hora_Inicio, new SelectList(new List<Object> { }), "", new { @disabled = "@disabled", @class = "form-control ", @style = "width:200px" })
             </div>
         </div>
 
@@ -82,7 +90,8 @@
                                                    new { value = "225", text = "3 horas e 45 minutos"},
                                                    new { value = "240", text = "4 horas"}
                                                }, "value","text", ""),
-                                           new { @disabled = "disabled", @class = "form-control ", @style = "width:200px", @required = "required" } )
+                                           new { @disabled = "disabled", @class = "form-control ", @style = "width:200px" } )
+
             </div>
         </div>
 
@@ -90,7 +99,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Salvar" class="btn btn-success" />
+                <input type="submit" value="Salvar" id="btnSalvar" class="btn btn-success" disabled="disabled" />
                 <input type="button" value="Cancelar" class="btn btn-danger" onclick="Render('Agenda','List')" />
             </div>
         </div>

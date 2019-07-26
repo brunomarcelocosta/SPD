@@ -50,6 +50,15 @@ $(function () {
 
     $('form').not('#Invalidar').submit(function () {
 
+        var paciente = $("#Nome_Paciente").val();
+        var horario = $("#Hora_Inicio").val();
+        var duracao = $("#Tempo_Consulta").val();
+
+        if (!ValidaCampos(paciente, horario, duracao)) {
+            swal("", "Todos os campos devem estar preenchidos.", "error");
+            return;
+        }
+
         swal({
             title: "Confirmação",
             text: msg,
@@ -89,23 +98,24 @@ $(function () {
     });
 });
 
-
 function HabilitaCampos() {
+
     var data = $("#DataDe").val();
 
-    if (data != null && data != "" && data != "yyyy-MM-dd") {
+    if (ValidaData(data)) {
 
         $("#Dentista_string").prop("disabled", false);
-        $("#Nome_Paciente").prop("disabled", true);
-        $("#Hora_Inicio").prop("disabled", true);
-        $("#Tempo_Consulta").prop("disabled", true);
-    }
-    else {
+
+        DesabledCampos();
+
+    } else {
 
         $("#Dentista_string").prop("disabled", true);
-        $("#Nome_Paciente").prop("disabled", true);
-        $("#Hora_Inicio").prop("disabled", true);
-        $("#Tempo_Consulta").prop("disabled", true);
+
+        DesabledCampos();
+
+        swal("", "A data selecionada é inválida.", "error");
+        return;
     }
 }
 
@@ -119,10 +129,7 @@ function HabilitaHorario() {
         $.getJSON(uri, { data: data, dentista: dentista })
             .done(function (list) {
 
-
-                $("#Hora_Inicio").prop("disabled", false);
-                $("#Tempo_Consulta").prop("disabled", false);
-                $("#Nome_Paciente").prop("disabled", false);
+                EnabledCampos();
 
                 var select = $("#Hora_Inicio");
 
@@ -140,5 +147,71 @@ function HabilitaHorario() {
                     }));
                 });
             });
+    } else {
+
+        DesabledCampos();
+
+        LimpaCampos();
+
+        return;
     }
+}
+
+function ValidaData(date_) {
+
+    var data = new Date(date_);
+    var today = new Date();
+
+    var dia = data.getDate() + 1;
+    var mes = data.getMonth() + 1;
+    var ano = data.getFullYear();
+    var _data = dia + '/' + mes + '/' + ano;
+
+    var dia_ = today.getDate();
+    var mes_ = today.getMonth() + 1;
+    var ano_ = today.getFullYear();
+    var _today = dia_ + '/' + mes_ + '/' + ano_;
+
+    var result = _data >= _today ? true : false;
+
+    return result;
+}
+
+function ValidaCampos(paciente, horario, duracao, celular) {
+
+    if ((paciente == null || paciente == "") ||
+        (horario == null || horario == "") ||
+        (duracao == null || duracao == "") ||
+        (celular == null || celular == "")
+    ) {
+        return false;
+    }
+
+    return true;
+}
+
+function DesabledCampos() {
+
+    $("#Nome_Paciente").prop("disabled", true);
+    $("#Hora_Inicio").prop("disabled", true);
+    $("#Tempo_Consulta").prop("disabled", true);
+    $("#btnSalvar").prop("disabled", true);
+    $("#Celular").prop("disabled", true);
+}
+
+function EnabledCampos() {
+
+    $("#Nome_Paciente").prop("disabled", true);
+    $("#Hora_Inicio").prop("disabled", true);
+    $("#Tempo_Consulta").prop("disabled", true);
+    $("#btnSalvar").prop("disabled", true);
+    $("#Celular").prop("disabled", true);
+}
+
+function LimpaCampos() {
+
+    $("#Nome_Paciente").val("");
+    $("#Hora_Inicio").val("");
+    $("#Tempo_Consulta").val("");
+    $("#Celular").val("");
 }

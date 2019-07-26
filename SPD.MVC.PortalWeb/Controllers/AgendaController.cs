@@ -156,22 +156,6 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #endregion
 
-        #region Edit 
-
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Editar Agenda\"}")]
-        public ActionResult Edit(int id)
-        {
-            AgendaViewModel agendaViewModel = new AgendaViewModel();
-
-            agendaViewModel = ToViewModel(_AgendaService.GetById(id));
-
-            agendaViewModel.Dentista_string = agendaViewModel.Dentista.Nome;
-
-            return View(agendaViewModel);
-        }
-
-        #endregion
-
         #region Delete 
 
         [HttpPost]

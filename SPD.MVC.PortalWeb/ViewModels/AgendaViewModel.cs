@@ -15,13 +15,12 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public int? ID_Paciente { get; set; }
         public virtual PacienteViewModel Paciente { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório")]
         public string Nome_Paciente { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório")]
+        public string Celular { get; set; }
+
         public string Data_Consulta { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório")]
         public string Hora_Inicio { get; set; }
 
         public string Hora_Fim { get; set; }
@@ -33,10 +32,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public List<AgendaViewModel> ListAgendaViewModel { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório")]
         public string Dentista_string { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório")]
         public string Tempo_Consulta { get; set; }
 
     }

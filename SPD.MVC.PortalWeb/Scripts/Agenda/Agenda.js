@@ -100,11 +100,6 @@ function DataTable() {
                 }
             });
         },
-        "createdRow": function (row, data, rowIndex) {
-            $.each($('td', row), function (colIndex) {
-                $(this).attr("title", "Clique 2x para editar");
-            });
-        },
         "columns": [
             { "data": "Dentista", "orderable": false, "autoWidth": true },
             { "data": "Hora", "orderable": false, "autoWidth": true },
