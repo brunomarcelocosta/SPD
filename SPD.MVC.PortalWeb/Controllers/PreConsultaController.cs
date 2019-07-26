@@ -20,12 +20,15 @@ namespace SPD.MVC.PortalWeb.Controllers
         private readonly IFuncionalidadeService _FuncionalidadeService;
         private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
         private readonly IAssinaturaService _AssinaturaService;
+        private readonly IAgendaService _AgendaService;
+
         public PreConsultaController(IPreConsultaService preConsultaService,
                                      IPacienteService pacienteService,
                                      IUsuarioService usuarioService,
                                      IFuncionalidadeService funcionalidadeService,
                                      IUsuarioFuncionalidadeService usuarioFuncionalidadeService,
-                                     IAssinaturaService assinaturaService)
+                                     IAssinaturaService assinaturaService,
+                                     IAgendaService agendaService)
             : base(preConsultaService)
         {
             _PreConsultaService = preConsultaService;
@@ -34,6 +37,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             _FuncionalidadeService = funcionalidadeService;
             _UsuarioFuncionalidadeService = usuarioFuncionalidadeService;
             _AssinaturaService = assinaturaService;
+            _AgendaService = agendaService;
         }
 
         #region List

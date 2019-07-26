@@ -13,13 +13,16 @@ namespace SPD.Services.Services.Model
     {
         private readonly IPacienteRepository _PacienteRepository;
         private readonly IHistoricoOperacaoRepository _HistoricoOperacaoRepository;
+        private readonly IAgendaRepository _AgendaRepository;
 
         public PacienteService(IPacienteRepository pacienteRepository,
-                               IHistoricoOperacaoRepository historicoOperacaoRepository)
+                               IHistoricoOperacaoRepository historicoOperacaoRepository,
+                               IAgendaRepository agendaRepository)
             : base(pacienteRepository)
         {
             _PacienteRepository = pacienteRepository;
             _HistoricoOperacaoRepository = historicoOperacaoRepository;
+            _AgendaRepository = agendaRepository;
         }
 
         public bool ExistePaciente(Paciente paciente)
@@ -43,7 +46,7 @@ namespace SPD.Services.Services.Model
             return false;
         }
 
-        public bool Insert(Paciente paciente, Usuario usuario, out string resultado)
+        public bool Insert(Paciente paciente, Usuario usuario, int id_agenda, out string resultado)
         {
             resultado = "";
 
@@ -64,6 +67,13 @@ namespace SPD.Services.Services.Model
                 //    this.SaveChanges(transactionScope);
 
                 //}
+
+                var _paciente = _PacienteRepository.QueryAsNoTracking().Where(a => a.NOME.Equals(paciente.NOME) && a.CPF.Equals(paciente.CPF)).FirstOrDefault();
+
+                if (!_AgendaRepository.UpdateAgenda(id_agenda, _paciente.ID, _paciente.NOME, _paciente.CELULAR, out resultado))
+                {
+                    return false;
+                }
 
                 return true;
             }
