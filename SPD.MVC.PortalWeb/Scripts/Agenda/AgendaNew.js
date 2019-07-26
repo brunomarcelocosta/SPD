@@ -53,8 +53,9 @@ $(function () {
         var paciente = $("#Nome_Paciente").val();
         var horario = $("#Hora_Inicio").val();
         var duracao = $("#Tempo_Consulta").val();
+        var celular = $("#Celular").val();
 
-        if (!ValidaCampos(paciente, horario, duracao)) {
+        if (!ValidaCampos(paciente, horario, duracao, celular)) {
             swal("", "Todos os campos devem estar preenchidos.", "error");
             return;
         }
@@ -201,11 +202,11 @@ function DesabledCampos() {
 
 function EnabledCampos() {
 
-    $("#Nome_Paciente").prop("disabled", true);
-    $("#Hora_Inicio").prop("disabled", true);
-    $("#Tempo_Consulta").prop("disabled", true);
-    $("#btnSalvar").prop("disabled", true);
-    $("#Celular").prop("disabled", true);
+    $("#Nome_Paciente").prop("disabled", false);
+    $("#Hora_Inicio").prop("disabled", false);
+    $("#Tempo_Consulta").prop("disabled", false);
+    $("#btnSalvar").prop("disabled", false);
+    $("#Celular").prop("disabled", false);
 }
 
 function LimpaCampos() {

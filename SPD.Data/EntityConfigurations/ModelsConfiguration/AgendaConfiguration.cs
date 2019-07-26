@@ -32,7 +32,13 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
 
             Property(ag => ag.NOME_PACIENTE)
            .HasColumnName("nm_paciente")
-           .HasMaxLength(50);
+           .HasMaxLength(50)
+           .IsRequired();
+
+            Property(ag => ag.CELULAR)
+           .HasColumnName("celular")
+           .HasMaxLength(50)
+           .IsRequired();
 
             Property(pre => pre.DATA_CONSULTA)
            .HasColumnName("dt_consulta")

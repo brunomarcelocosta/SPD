@@ -71,16 +71,15 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             List<object> listToView = new List<object>();
 
-            foreach (var item in agendaViewModel.ListAgendaViewModel.OrderBy(a => a.Data_Consulta).ToList())
+            foreach (var item in agendaViewModel.ListAgendaViewModel.OrderBy(a => a.Dentista.Nome).ThenBy(a => a.Hora_Inicio).ToList())
             {
                 listToView.Add(new
                 {
                     item.ID,
-                    //ToDo: agrupar por hora
-                    Hora_string = $" Hora: {item.Hora_Inicio}",
-                    Hora = item.Hora_Inicio,
                     Dentista = item.Dentista.Nome,
+                    Hora = item.Hora_Inicio,
                     Paciente = item.Nome_Paciente,
+                    item.Celular
                 });
             }
 
@@ -120,7 +119,8 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult Add(AgendaViewModel agendaViewModel)
         {
             var dentista = ToViewModel<Dentista, DentistaViewModel>(_DentistaService.QueryAsNoTracking().Where(a => a.NOME.Equals(agendaViewModel.Dentista_string)).FirstOrDefault());
-            var paciente = _PacienteService.QueryAsNoTracking().Where(a => a.NOME.Equals(agendaViewModel.Nome_Paciente)).FirstOrDefault().ID;
+            var pacientes = _PacienteService.QueryAsNoTracking().Where(a => a.NOME.Equals(agendaViewModel.Nome_Paciente)).ToList();//.FirstOrDefault().ID;
+            var paciente = pacientes.Count() > 0 ? pacientes.FirstOrDefault().ID : 0;
 
             agendaViewModel.Hora_Fim = Convert.ToDateTime(agendaViewModel.Hora_Inicio)
                                               .AddMinutes(Convert.ToDouble(agendaViewModel.Tempo_Consulta))
@@ -132,6 +132,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 Dentista = dentista,
                 Nome_Paciente = agendaViewModel.Nome_Paciente,
+                Celular = agendaViewModel.Celular,
                 Data_Consulta = agendaViewModel.DataDe.Value.ToShortDateString(),
                 Hora_Inicio = agendaViewModel.Hora_Inicio,
                 Hora_Fim = agendaViewModel.Hora_Fim,

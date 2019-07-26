@@ -81,7 +81,7 @@ function DataTable() {
             },
             {
                 "className": "text-center",
-                "targets": [1, 2, 3]
+                "targets": [1, 2, 3, 4]
             }
         ],
 
@@ -93,7 +93,7 @@ function DataTable() {
             api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
-                        '<tr><td colspan="3" style="background-color: #dddddd !important;"><b>' + group + '</b></td></tr>'
+                        '<tr><td colspan="4" style="background-color: #dddddd !important;"><b>' + group + '</b></td></tr>'
                     );
 
                     last = group;
@@ -104,8 +104,9 @@ function DataTable() {
             { "data": "Dentista", "orderable": false, "autoWidth": true },
             { "data": "Hora", "orderable": false, "autoWidth": true },
             { "data": "Paciente", "orderable": false, "autoWidth": true },
+            { "data": "Celular", "orderable": false, "autoWidth": true },
             {
-                "data": null, "render": function (data, type, row) {
+                "data": null, "orderable": false, "autoWidth": true, "render": function (data, type, row) {
                     return '<button type="button" id="' + row.ID + '" class="btn btn-danger btn-sm" onclick="Excluir(this)" >Excluir</button>';
                 }
             }

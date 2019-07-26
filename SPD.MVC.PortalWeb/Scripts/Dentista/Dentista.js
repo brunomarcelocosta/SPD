@@ -72,6 +72,12 @@ function DataTable() {
                 'DataAte': $('#DataAte').val()
             }
         },
+        "columnDefs": [
+            {
+                "className": "text-center",
+                "targets": [5]
+            }
+        ],
         "displayLength": 100,
         "createdRow": function (row, data, rowIndex) {
             $.each($('td', row), function (colIndex) {
@@ -133,7 +139,7 @@ function Excluir(obj) {
         title: "Confirmação",
         text: msg,
         icon: "warning",
-        buttons: [ "Não", "Sim"],
+        buttons: ["Não", "Sim"],
         dangerMode: false,
     })
         .then((willDelete) => {

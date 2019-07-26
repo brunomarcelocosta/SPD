@@ -18,6 +18,8 @@ namespace SPD.Model.Model
 
         public string NOME_PACIENTE { get; set; }
 
+        public string CELULAR { get; set; }
+
         public string DATA_CONSULTA { get; set; }
 
         public string HORA_INICIO { get; set; }

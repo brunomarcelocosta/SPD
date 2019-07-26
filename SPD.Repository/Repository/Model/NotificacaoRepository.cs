@@ -13,8 +13,10 @@ namespace SPD.Repository.Repository.Model
         {
             try
             {
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress(emailFrom);
+                MailMessage mail = new MailMessage
+                {
+                    From = new MailAddress(emailFrom)
+                };
                 mail.To.Add(email);
                 mail.Subject = assunto;
                 mail.Body = valor;
@@ -26,11 +28,10 @@ namespace SPD.Repository.Repository.Model
                     EnableSsl = true,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(emailFrom, pwdFrom)
                 };
 
-                //SmtpServer.Credentials = new System.Net.NetworkCredential(emailFrom, pwdFrom);
-                //SmtpServer.EnableSsl = true;
+                SmtpServer.Credentials = new NetworkCredential(emailFrom, pwdFrom);
+                SmtpServer.EnableSsl = true;
                 SmtpServer.Send(mail);
             }
             catch (Exception ex)
