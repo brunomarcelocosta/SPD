@@ -57,5 +57,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public string tipoPacienteFiltro { get; set; }
         public string srcImage { get; set; }
         public bool ExisteImg { get; set; }
+
+        public string Agenda { get; set; }
     }
 }

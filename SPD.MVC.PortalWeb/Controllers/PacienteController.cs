@@ -16,17 +16,20 @@ namespace SPD.MVC.PortalWeb.Controllers
 {
     public class PacienteController : MapperController<IPacienteService, Paciente, PacienteViewModel>
     {
+        private readonly IAgendaService _AgendaService;
         private readonly IPacienteService _PacienteService;
         private readonly IUsuarioService _UsuarioService;
         private readonly IFuncionalidadeService _FuncionalidadeService;
         private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
 
-        public PacienteController(IPacienteService pacienteService,
+        public PacienteController(IAgendaService agendaService,
+                                  IPacienteService pacienteService,
                                   IUsuarioService usuarioService,
                                   IFuncionalidadeService funcionalidadeService,
                                   IUsuarioFuncionalidadeService usuarioFuncionalidadeService)
                    : base(pacienteService)
         {
+            _AgendaService = agendaService;
             _PacienteService = pacienteService;
             _UsuarioService = usuarioService;
             _FuncionalidadeService = funcionalidadeService;
@@ -187,7 +190,9 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             var paciente = ToModel(pacienteViewModel);
 
-            if (!_PacienteService.Insert(paciente, user_logado, out resultado))
+            var id_agenda = _AgendaService.GetById(int.Parse(pacienteViewModel.Agenda)).ID;
+
+            if (!_PacienteService.Insert(paciente, user_logado, id_agenda, out resultado))
             {
                 return Json(new { Success = false, Response = resultado });
             }
