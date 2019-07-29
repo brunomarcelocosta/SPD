@@ -80,5 +80,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
         [Required(ErrorMessage = "Campo obrigatório.")]
         public string Horario { get; set; }
 
+        [Required(ErrorMessage = "Campo obrigatório.")]
+        public string Nome_Paciente { get; set; }
+
     }
 }

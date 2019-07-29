@@ -110,6 +110,65 @@ function ws_GetCEP() {
     }
 }
 
-function ValidarCampos() {
+function BuscaHorarioPaciente(data) {
 
+    var dia = data.val();
+
+    var uri = "../../Paciente/BuscaHorarioPaciente";
+
+    if (dia != "" && dia != null) {
+
+        $.getJSON(uri, { dia: dia })
+            .done(function (list) {
+
+                var select = $("#Horario");
+
+                select.empty();
+
+                select.append($('<option/>', {
+                    value: "",
+                    text: "Selecione um horário"
+                }));
+
+                var count = list.count();
+                if (count > 0) {
+                    $("#Horario").prop("disabled", false);
+                }
+
+                $.each(list, function (index, item) {
+                    select.append($('<option/>', {
+                        value: item,
+                        text: item
+                    }));
+                });
+
+
+            });
+    }
+
+    return false;
+
+}
+
+function BuscaPacienteAgenda(horario) {
+
+    var dia = $("#Agenda_Dia").val();
+    var hora = horario.val();
+
+    var uri = "../../Paciente/BuscaPacienteAgenda";
+
+    if (hora != "" && hora != null) {
+
+        $.getJSON(uri, { hora: hora, dia: dia })
+            .done(function (item) {
+
+                if (item != "" && item != null) {
+
+                    $("#Nome_Paciente").val(item
+                    );
+                }
+            });
+    }
+
+    return false;
 }

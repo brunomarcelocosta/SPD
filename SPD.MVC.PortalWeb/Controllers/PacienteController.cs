@@ -366,6 +366,43 @@ namespace SPD.MVC.PortalWeb.Controllers
             return new SelectList(list, id);
         }
 
+        public SelectList BuscaAgenda(object id = null)
+        {
+            List<string> list = new List<string>();
+            var agenda = _AgendaService
+                         .QueryAsNoTracking()
+                         .Where(a => Convert.ToDateTime(a.DATA_CONSULTA) >= DateTime.Now)
+                         .OrderBy(a => a.DATA_CONSULTA)
+                         .Select(a => a.DATA_CONSULTA)
+                         .ToList();
+
+            list = agenda.Distinct().ToList();
+
+            return new SelectList(list, id);
+        }
+
+        public JsonResult BuscaHorarioPaciente(string dia)
+        {
+            var horarios = _AgendaService
+                           .QueryAsNoTracking()
+                           .Where(a => a.DATA_CONSULTA.Equals(dia))
+                           .OrderBy(a => a.HORA_INICIO)
+                           .Select(a => a.HORA_INICIO)
+                           .ToList();
+
+            return Json(horarios, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult BuscaHorarioPaciente(string hora, string dia)
+        {
+            var paciente = _AgendaService
+                           .QueryAsNoTracking()
+                           .Where(a => a.HORA_INICIO.Equals(hora) && a.DATA_CONSULTA.Equals(dia))
+                           .FirstOrDefault();
+
+            return Json(paciente, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Validações
