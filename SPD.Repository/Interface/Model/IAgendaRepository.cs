@@ -13,7 +13,5 @@ namespace SPD.Repository.Interface.Model
         void Insert(Agenda agenda);
 
         void Delete(Agenda agenda);
-
-        bool UpdateAgenda(int id_agenda, int id_paciente, string nome, string celular, out string resultado);
     }
 }

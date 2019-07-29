@@ -33,6 +33,7 @@
             @Html.Label("Dentista", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Dentista_string, controller.ListNomeDentistas() as SelectList, "", new { @disabled = "disabled", @class = "form-control ", @style = "width:200px", @onchange = "HabilitaHorario()" })
+                @Html.ValidationMessageFor(model => model.Dentista_string, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -42,6 +43,7 @@
             @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" id="nav">
                 @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control", @style = "width:200px" } })
+                @Html.ValidationMessageFor(model => model.Nome_Paciente, "", new { @class = "text-danger" })
                 <ul id="selectedValue"></ul>
             </div>
         </div>
@@ -52,6 +54,7 @@
             @Html.Label("Celular", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" id="nav">
                 @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control celular", @maxLength = "14", @style = "width:200px", @onkeypress = "return SomenteNumero(event)" } })
+                @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -61,6 +64,7 @@
             @Html.Label("Horário", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Hora_Inicio, new SelectList(new List<Object> { }), "", new { @disabled = "@disabled", @class = "form-control ", @style = "width:200px" })
+                @Html.ValidationMessageFor(model => model.Hora_Inicio, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -91,6 +95,7 @@
                                                    new { value = "240", text = "4 horas"}
                                                }, "value","text", ""),
                                            new { @disabled = "disabled", @class = "form-control ", @style = "width:200px" } )
+                @Html.ValidationMessageFor(model => model.Tempo_Consulta, "", new { @class = "text-danger" })
 
             </div>
         </div>

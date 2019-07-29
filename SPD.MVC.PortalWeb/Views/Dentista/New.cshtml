@@ -20,6 +20,7 @@
             @Html.Label("Nome", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @style = "width:260px" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -27,6 +28,7 @@
             @Html.Label("CRO", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Cro, new { htmlAttributes = new { @class = "form-control", @style = "width:260px" } })
+                @Html.ValidationMessageFor(model => model.Cro, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -34,6 +36,7 @@
             @Html.Label("Usuário", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Usuario_string, controller.ListUsuarios() as SelectList, "", new { @class = "form-control ", @style = "width:260px" })
+                @Html.ValidationMessageFor(model => model.Usuario_string, "", new { @class = "text-danger" })
             </div>
         </div>
 

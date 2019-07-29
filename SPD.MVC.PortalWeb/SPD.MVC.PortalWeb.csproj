@@ -450,7 +450,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Styles\site.css" />
     <Content Include="Scripts\Agenda\Agenda.js" />
-    <Content Include="Scripts\Agenda\AgendaEdit.js" />
     <Content Include="Scripts\Agenda\AgendaNew.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.pt-BR.js" />

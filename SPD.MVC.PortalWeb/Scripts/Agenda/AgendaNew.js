@@ -50,50 +50,44 @@ $(function () {
 
     $('form').not('#Invalidar').submit(function () {
 
-        var paciente = $("#Nome_Paciente").val();
-        var horario = $("#Hora_Inicio").val();
-        var duracao = $("#Tempo_Consulta").val();
-        var celular = $("#Celular").val();
 
-        if (!ValidaCampos(paciente, horario, duracao, celular)) {
-            swal("", "Todos os campos devem estar preenchidos.", "error");
-            return;
-        }
+        if ($(this).valid()) {
 
-        swal({
-            title: "Confirmação",
-            text: msg,
-            icon: "warning",
-            buttons: ["Não", "Sim"],
-            dangerMode: false,
-        }).then((willDelete) => {
-            if (!willDelete) {
-                return false;
-            }
-            $.ajax({
-                url: '/Agenda/Add',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function (result) {
-
-                    if (!result.Success) {
-                        //Caso não realize a gravação, apresenta mensagem ao usuário.
-                        swal("", result.Response, "error");
-                        return false;
-                    }
-
-                    else {
-                        //apresenta mensagem ao usuário e redireciona para a tela de listagem.
-                        swal("", "Horário agendado com sucesso.", "success")
-                            .then(() => {
-                                window.location = url;
-                            });
-                    }
+            swal({
+                title: "Confirmação",
+                text: msg,
+                icon: "warning",
+                buttons: ["Não", "Sim"],
+                dangerMode: false,
+            }).then((willDelete) => {
+                if (!willDelete) {
+                    return false;
                 }
+                $.ajax({
+                    url: '/Agenda/Add',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (result) {
+
+                        if (!result.Success) {
+                            //Caso não realize a gravação, apresenta mensagem ao usuário.
+                            swal("", result.Response, "error");
+                            return false;
+                        }
+
+                        else {
+                            //apresenta mensagem ao usuário e redireciona para a tela de listagem.
+                            swal("", "Horário agendado com sucesso.", "success")
+                                .then(() => {
+                                    window.location = url;
+                                });
+                        }
+                    }
+                });
+
             });
 
-        });
-
+        }
         return false;
 
     });
@@ -176,19 +170,6 @@ function ValidaData(date_) {
     var result = _data >= _today ? true : false;
 
     return result;
-}
-
-function ValidaCampos(paciente, horario, duracao, celular) {
-
-    if ((paciente == null || paciente == "") ||
-        (horario == null || horario == "") ||
-        (duracao == null || duracao == "") ||
-        (celular == null || celular == "")
-    ) {
-        return false;
-    }
-
-    return true;
 }
 
 function DesabledCampos() {

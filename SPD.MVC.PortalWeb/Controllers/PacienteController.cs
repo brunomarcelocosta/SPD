@@ -189,9 +189,9 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             var paciente = ToModel(pacienteViewModel);
 
-            var id_agenda = _AgendaService.GetById(int.Parse(pacienteViewModel.Agenda)).ID;
+            //var id_agenda = _AgendaService.GetById(int.Parse(pacienteViewModel.Agenda)).ID;
 
-            if (!_PacienteService.Insert(paciente, user_logado, id_agenda, out string resultado))
+            if (!_PacienteService.Insert(paciente, user_logado, out string resultado))
             {
                 return Json(new { Success = false, Response = resultado });
             }

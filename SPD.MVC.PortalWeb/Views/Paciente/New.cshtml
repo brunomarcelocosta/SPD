@@ -38,6 +38,7 @@
                             <div class="col-md-3">
                                 @Html.Label("Data de Nascimento", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
                                 @Html.EditorFor(model => model.Data_Nasc, new { htmlAttributes = new { @class = "form-control date" } })
+                                @Html.ValidationMessageFor(model => model.Data_Nasc, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="col-md-3">
@@ -97,57 +98,13 @@
 
                         </div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading"> <b> Foto </b></div>
-                <div class="panel-body">
-                    <div id="endereco">
-
-                        <div id="results"></div>
-
-                        <div id="my_camera"></div>
-
                         <br />
-
-                        <div id="pre_take_buttons">
-                            <input type="button" class="btn btn-default" value="Tirar Foto" onclick="preview_snapshot();" />
-                        </div>
-
-                        <div id="post_take_buttons" style="display:none">
-
-                            <input type=button class="btn btn-default" value="Tirar Outra" onClick="cancel_preview()">
-                            <input type=button class="btn btn-primary" value="Salvar" onClick="save_photo()">
-                        </div>
-
-                        <div id="idButtonCancel" style="display:none">
-                            <input type=button class="btn btn-default" value="Tirar Outra" onClick="cancel_saved()">
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row">
-
-        <div class="col-md-9">
-            <div class="panel panel-default">
-                <div class="panel-heading"> <b> Endereço</b></div>
-                <div class="panel-body">
-                    <div id="endereco">
 
                         <div class="row">
 
                             <div class="col-md-12">
                                 @Html.Label("CEP ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control cep", @style = "width:130px", @MaxLength = "9", @onblur= "ws_GetCEP()" } })
+                                @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control cep", @style = "width:130px", @MaxLength = "9", @onblur = "ws_GetCEP()" } })
                                 @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })
                             </div>
 
@@ -206,6 +163,75 @@
                             </div>
 
                         </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Foto </b></div>
+                <div class="panel-body">
+                    <div id="endereco">
+
+                        <div id="results"></div>
+
+                        <div id="my_camera"></div>
+
+                        <br />
+
+                        <div id="pre_take_buttons">
+                            <input type="button" class="btn btn-default" value="Tirar Foto" onclick="preview_snapshot();" />
+                        </div>
+
+                        <div id="post_take_buttons" style="display:none">
+
+                            <input type=button class="btn btn-default" value="Tirar Outra" onClick="cancel_preview()">
+                            <input type=button class="btn btn-primary" value="Salvar" onClick="save_photo()">
+                        </div>
+
+                        <div id="idButtonCancel" style="display:none">
+                            <input type=button class="btn btn-default" value="Tirar Outra" onClick="cancel_saved()">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Dados da Consulta</b></div>
+                <div class="panel-body">
+                    <div id="agenda">
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                @Html.Label("Dia", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Agenda_Dia, new { htmlAttributes = new { @class = "form-control date" } })
+                                @Html.ValidationMessageFor(model => model.Agenda_Dia, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-3">
+                            </div>
+
+                            <div class="col-md-3" style="padding-left:20px">
+                                @Html.Label("Horário ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Horario, new { htmlAttributes = new { @class = "form-control", @style = "width:100px", @MaxLength = "6" } })
+                                @Html.ValidationMessageFor(model => model.Horario, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-3">
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>

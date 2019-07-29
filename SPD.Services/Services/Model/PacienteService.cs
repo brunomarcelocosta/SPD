@@ -46,7 +46,7 @@ namespace SPD.Services.Services.Model
             return false;
         }
 
-        public bool Insert(Paciente paciente, Usuario usuario, int id_agenda, out string resultado)
+        public bool Insert(Paciente paciente, Usuario usuario, out string resultado)
         {
             resultado = "";
 
@@ -68,12 +68,6 @@ namespace SPD.Services.Services.Model
 
                 //}
 
-                var _paciente = _PacienteRepository.QueryAsNoTracking().Where(a => a.NOME.Equals(paciente.NOME) && a.CPF.Equals(paciente.CPF)).FirstOrDefault();
-
-                if (!_AgendaRepository.UpdateAgenda(id_agenda, _paciente.ID, _paciente.NOME, _paciente.CELULAR, out resultado))
-                {
-                    return false;
-                }
 
                 return true;
             }

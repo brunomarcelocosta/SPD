@@ -33,30 +33,5 @@ namespace SPD.Repository.Repository.Model
                 throw ex;
             }
         }
-
-        public bool UpdateAgenda(int id_agenda, int id_paciente, string nome, string celular, out string resultado)
-        {
-            resultado = "";
-
-            try
-            {
-                var agendaUpdate = GetById(id_agenda);
-
-                agendaUpdate.ID_PACIENTE = id_paciente;
-                agendaUpdate.NOME_PACIENTE = nome;
-                agendaUpdate.CELULAR = celular;
-
-                UpdateEntity(agendaUpdate);
-
-                SaveChange();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                resultado = ex.Message;
-                return false;
-            }
-        }
     }
 }
