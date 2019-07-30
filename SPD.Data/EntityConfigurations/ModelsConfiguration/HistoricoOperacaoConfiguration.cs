@@ -56,10 +56,6 @@ namespace SPD.Infrastructure.Data.EntityConfigurations.Administracao
                 .WithMany()
                 .HasForeignKey(historicoOperacao => historicoOperacao.ID_FUNCIONALIDADE);
 
-            this.Property(historicoOperacao => historicoOperacao.DUMP)
-                .HasColumnName("de_dump")
-                .HasMaxLength(4000);
-
         }
     }
 }

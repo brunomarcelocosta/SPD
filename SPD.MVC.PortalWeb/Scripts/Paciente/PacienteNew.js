@@ -155,7 +155,7 @@ function BuscaPacienteAgenda(horario) {
     var dia = $("#Agenda_Dia").val();
     var hora = horario.val();
 
-    var uri = "../../Paciente/BuscaPacienteAgenda";
+    var uri = "../../Paciente/c";
 
     if (hora != "" && hora != null) {
 
@@ -164,8 +164,7 @@ function BuscaPacienteAgenda(horario) {
 
                 if (item != "" && item != null) {
 
-                    $("#Nome_Paciente").val(item
-                    );
+                    $("#Nome_Paciente").val(item);
                 }
             });
     }

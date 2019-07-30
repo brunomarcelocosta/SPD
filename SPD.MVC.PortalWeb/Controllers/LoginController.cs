@@ -74,12 +74,8 @@ namespace SPD.MVC.PortalWeb.Controllers
                     authenticationViewModel.TrocaSenhaObrigatoria = usuario.TROCA_SENHA_OBRIGATORIA;
                     authenticationViewModel.EnderecoIP = enderecoIP;
                     authenticationViewModel.SessionID = this._SessaoUsuarioService.GetSessaoByUsuarioID(usuario.ID).ID;
-
-                    foreach (var item in usuario.ListUsuarioFuncionalidade)
-                    {
-                        authenticationViewModel.FuncionalidadesUsuarioIDs.Add(item.ID_FUNCIONALIDADE);
-                        authenticationViewModel.FuncionalidadesUsuarioNomes.Add(item.Funcionalidade.NOME);
-                    }
+                    authenticationViewModel.FuncionalidadesUsuarioIDs = usuario.FuncionalidadesUsuarioIDs;
+                    authenticationViewModel.FuncionalidadesUsuarioNomes = usuario.FuncionalidadesUsuarioNomes;
 
                     this.StoreAuthenticationInSession(authenticationViewModel);
 
@@ -92,7 +88,6 @@ namespace SPD.MVC.PortalWeb.Controllers
                     {
                         Funcionalidade funcionalidade = funcionalidadesUsuario.Funcionalidade;
 
-                        if (!funcionalidade.IsATIVO) { continue; }
                         string jsonClaim = new JavaScriptSerializer().Serialize(new UseAuthorization.FuncionalidadeClaim(funcionalidadesUsuario));
                         identity.AddClaim(new Claim(ClaimTypes.Role, jsonClaim));
                     }

@@ -24,10 +24,6 @@ namespace SPD.Data.EntityConfigurations.Administracao
                 .IsRequired();
                 //.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
 
-            this.Property(funcionalidade => funcionalidade.IsATIVO)
-                .HasColumnName("lg_ativo")
-                .IsRequired();
-
         }
     }
 }

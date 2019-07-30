@@ -2,6 +2,9 @@
 using SPD.Repository.Interface.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,24 +25,33 @@ namespace SPD.Repository.Repository.Model
 
         public void Insert(string valor, Usuario usuario, Tipo_Operacao kindtipoOperacao, Tipo_Funcionalidades kindfuncionalidade, params string[] valores)
         {
-            var id = (int)Enum.Parse(typeof(Tipo_Operacao), kindtipoOperacao.ToString(), true);  //(int)kindtipoOperacao;
-
-            var tipoOperacao = this._TipoOperacaoRepository.GetById(id);
-            var funcionalidade = this._FuncionalidadeRepository.GetById((int)kindfuncionalidade);
-
             var historicoOperacao = new HistoricoOperacao();
 
-            historicoOperacao.RegistraHistorico(this.Context as Context, valor, usuario, tipoOperacao, funcionalidade, valores);
+            var id_operacao = (int)Enum.Parse(typeof(Tipo_Operacao), kindtipoOperacao.ToString(), true);
+            var id_funcionalidade = (int)kindfuncionalidade;
+            var ip = historicoOperacao.ReturnIP(this.Context);
+            ip = string.IsNullOrWhiteSpace(ip) ? "" : ip;
 
-            try
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlServer"].ToString()))
             {
-                this.AddEntity(historicoOperacao);
-                this.SaveChange();
+                conn.Open();
+
+                var cmd = new SqlCommand("SP_INSERT_HISTORICO_OPERACAO", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                cmd.Parameters.Add(new SqlParameter("@ip", ip));
+                cmd.Parameters.Add(new SqlParameter("@descricao", valor));
+                cmd.Parameters.Add(new SqlParameter("@fk_id_usuario", usuario.ID));
+                cmd.Parameters.Add(new SqlParameter("@fk_id_tipo_operacao", id_operacao));
+                cmd.Parameters.Add(new SqlParameter("@fk_id_funcionalidade", id_funcionalidade));
+
+                cmd.CommandTimeout = 0;
+
+                cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
         }
 
         public void Delete(Usuario usuario)

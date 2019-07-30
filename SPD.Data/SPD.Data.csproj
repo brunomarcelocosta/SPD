@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201907261259069_add_campo_celular_paciente.Designer.cs">
       <DependentUpon>201907261259069_add_campo_celular_paciente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907301804273_drop_column_dump_and_isativoFuncionalidade.cs" />
+    <Compile Include="Migrations\201907301804273_drop_column_dump_and_isativoFuncionalidade.Designer.cs">
+      <DependentUpon>201907301804273_drop_column_dump_and_isativoFuncionalidade.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ContextDebugger.cs" />
@@ -108,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Migrations\Comando Migrations.txt" />
+    <Content Include="Procedures\SP_INSERT_HISTORICO_OPERACAO.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SPD.Model\SPD.Model.csproj">
@@ -131,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907261259069_add_campo_celular_paciente.resx">
       <DependentUpon>201907261259069_add_campo_celular_paciente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907301804273_drop_column_dump_and_isativoFuncionalidade.resx">
+      <DependentUpon>201907301804273_drop_column_dump_and_isativoFuncionalidade.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

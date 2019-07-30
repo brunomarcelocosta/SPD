@@ -12,7 +12,7 @@ namespace SPD.Model.Model
 
         public string NOME { get; set; }
 
-        public bool IsATIVO { get; set; }
+        //public bool IsATIVO { get; set; }
 
         public virtual ICollection<UsuarioFuncionalidade> usuarioFuncionalidade { get; set; } // UML - (1..*) Perfil é associado com (0..*) Usuario. Virtual para lazy load
 

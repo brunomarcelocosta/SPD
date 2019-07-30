@@ -25,6 +25,10 @@ namespace SPD.Model.Model
         public virtual ICollection<UsuarioFuncionalidade> ListUsuarioFuncionalidade { get; set; }
         public virtual SessaoUsuario sessaoUsuario { get; set; } // UML - (1) Usuario é associado com (1) SessaoUsuario. Virtual para lazy load
 
+        public List<int> FuncionalidadesUsuarioIDs { get; set; }
+        public List<string> FuncionalidadesUsuarioNomes { get; set; }
+
+
         public IList<Funcionalidade> FUNCIONALIDADES
         {
             get

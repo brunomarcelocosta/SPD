@@ -53,40 +53,50 @@ namespace SPD.Services.Services.Model
                     throw new Exception("Login e Senha são obrigatórios");
                 }
 
-                bool existeUser = false;
-                var user = _UsuarioRepository.GetByLogin(auxUsuario.LOGIN);
-                var funcionalidades = _FuncionalidadeRepository.Query().Where(a => a.NOME.Equals("Efetuar Login")).ToList().Count();
+                var user = _UsuarioRepository.QueryAsNoTracking().Where(a => a.LOGIN.ToUpper().Equals(auxUsuario.LOGIN.ToUpper())).FirstOrDefault();
 
-                if (user != null)
-                    existeUser = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID && funcionalidades > 0).ToList().Count() > 0 ? true : false;
+                var funcionalidades = _FuncionalidadeRepository.QueryAsNoTracking().Where(a => a.NOME.Equals("Efetuar Login")).FirstOrDefault();
+
+                if (user == null)
+                {
+                    throw new Exception("Não existe este usuário no sistema.");
+                }
+
+                var existeUser = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID && a.ID_FUNCIONALIDADE == funcionalidades.ID).ToList().Count() > 0 ? true : false;
 
                 if (existeUser)
                 {
-                    usuario = this._UsuarioRepository.GetByLoginSenha(usuario.LOGIN, Usuario.GerarHash(usuario.PASSWORD));
+                    var senha_hash = Usuario.GerarHash(usuario.PASSWORD);
 
-                    if (usuario != null)
+                    var senha_correta = user.PASSWORD.Equals(senha_hash) ? true : false;
+
+                    if (senha_correta)
                     {
-                        if (this._UsuarioRepository.IsAtivo(usuario))
+                        if (user.IsATIVO)
                         {
-                            if (!this._UsuarioRepository.IsBloqueado(usuario))
+                            if (!user.IsBLOQUEADO)
                             {
-                                var conexoes = this._SessaoUsuarioRepository.VerificaConexoesSimultaneas(usuario);
+                                var conexoes = this._SessaoUsuarioRepository.QueryAsNoTracking().Where(sessaoUsuario => sessaoUsuario.ID_USUARIO.Equals(user.ID)).ToList();
 
                                 if (conexoes.Count > 0)
                                 {
-                                    _SessaoUsuarioRepository.RemoveEntityRange(conexoes);
-                                    _SessaoUsuarioRepository.SaveChange();
+                                    _SessaoUsuarioRepository.DeleteSessao(user.ID);
                                 }
 
-                                this._SessaoUsuarioRepository.CriarSessao(usuario, enderecoIP);
+                                this._SessaoUsuarioRepository.InsertSessao(user.ID, enderecoIP);
 
-                                this._HistoricoOperacaoRepository.Insert("Usuário efetuou login", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+                                this._HistoricoOperacaoRepository.Insert("Usuário efetuou login", user, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
-                                usuario = this._UsuarioRepository.ZerarTentativas(usuario);
+                                usuario = user;
 
-                                usuario.ListUsuarioFuncionalidade = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID).ToList();
+                                var list = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID).ToList();
 
+                                usuario.ListUsuarioFuncionalidade = list;
+
+                                usuario.FuncionalidadesUsuarioIDs = list.Select(a => a.ID_FUNCIONALIDADE).ToList();
+                                usuario.FuncionalidadesUsuarioNomes = list.Select(a => a.Funcionalidade.NOME).ToList();
                             }
+
                             else
                             {
                                 this._HistoricoOperacaoRepository.Insert("Tentativa de acesso de usuário bloqueado.", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
@@ -98,78 +108,22 @@ namespace SPD.Services.Services.Model
                         {
                             this._HistoricoOperacaoRepository.Insert("Tentativa de acesso de usuário inativo", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
 
-                            usuario = this._UsuarioRepository.IncrementarTentativas(usuario);
-
                             throw new Exception("Usuário inativo. Contate o administrador.");
                         }
                     }
                     else
                     {
-                        usuario = this._UsuarioRepository.GetByLogin(auxUsuario.LOGIN);
-
-                        if (usuario == null)
-                        {
-                            this._HistoricoOperacaoRepository.InsertHistoricoSistema("Login Inexistente");
-
-                            throw new Exception("Login e/ou senha inválidos.");
-                        }
-                        else
-                        {
-                            this._HistoricoOperacaoRepository.Insert("Senha inválida para o login informado", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
-
-                            if (!this._UsuarioRepository.IsBloqueado(usuario))
-                            {
-                                usuario = this._UsuarioRepository.IncrementarTentativas(usuario);
-
-                                if (usuario.TENTATIVAS_LOGIN == 3)
-                                {
-                                    throw new Exception("Resta apenas uma tentativa incorreta de acesso antes que o login seja bloqueado.");
-                                }
-                                else if (usuario.TENTATIVAS_LOGIN > 3)
-                                {
-                                    this._UsuarioRepository.Bloquear(usuario);
-
-                                    this._HistoricoOperacaoRepository.Insert("Usuário foi bloqueado", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
-
-                                    List<Funcionalidade> recipients = new List<Funcionalidade>();
-
-                                    recipients = _FuncionalidadeRepository.Query().ToList<Funcionalidade>();
-
-                                    foreach (var item in recipients)
-                                    {
-                                        if (item.NOME.Equals("Efetuar Login"))
-                                        {
-                                            foreach (var subItem in item.USUARIOS)
-                                            {
-                                                try
-                                                {
-                                                    new Notificacao().NotificarPorEmail(subItem.EMAIL, "Login do usuário " + subItem.LOGIN + " bloqueado por 3 tentativas inválidas de acesso.", "Bloqueio de usuário", EmailConfiguration.FromEmailSettings());
-                                                }
-                                                catch (SmtpException Exception)
-                                                {
-                                                    throw new Exception("Login bloqueado por 3 tentativas inválidas de acesso, porém nem todos os administradores foram notificados.");
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    throw new Exception("Login bloqueado por 3 tentativas inválidas de acesso.");
-                                }
-                            }
-                            else
-                            {
-                                this._HistoricoOperacaoRepository.Insert("Tentativa de acesso de usuário bloqueado.", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
-
-                                throw new Exception("Login e/ou senha inválidos.");
-                            }
-
-                            throw new Exception("Login e/ou senha inválidos.");
-                        }
+                        throw new Exception("Senha inválida.");
                     }
+
+                }
+                else
+                {
+                    // this._HistoricoOperacaoRepository.InsertHistoricoSistema("Usuário não possui esta funcionalidade.");
+
+                    throw new Exception("Usuário não possui esta funcionalidade.");
                 }
 
-                // this.SaveChanges(transactionScope);
-                //}
             }
             catch (Exception exception)
             {

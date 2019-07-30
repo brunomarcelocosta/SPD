@@ -17,8 +17,6 @@ namespace SPD.Model.Model
 
         public string DESCRICAO { get; set; }
 
-        public string DUMP { get; set; }
-
         public int? ID_USUARIO { get; set; }
         public virtual Usuario USUARIO { get; set; }
 
@@ -75,7 +73,6 @@ namespace SPD.Model.Model
             this.ENDERECO_IP = context.usuarioIP;
             this.DESCRICAO = valor;
             this.DT_OPERACAO = DateTime.Now;
-            this.DUMP = dump.ToString();
             this.SessaoUID = context.usuarioSessionID;
 
             //Wendel 10/01/2018 - retirado pois criava um novo registro na tabela de tipo de operação. Atribuído ID na service.
@@ -108,7 +105,6 @@ namespace SPD.Model.Model
             this.ENDERECO_IP = context.usuarioIP;
             this.DESCRICAO = valor;
             this.DT_OPERACAO = DateTime.Now;
-            this.DUMP = dump.ToString();
             this.SessaoUID = context.usuarioSessionID;
 
             this.tipoOperacao = tipoOperacao;
@@ -123,24 +119,8 @@ namespace SPD.Model.Model
             this.tipoOperacao = new TipoOperacao(SPD_Enums.Tipo_Operacao.Sistema);
         }
 
-        public string ReturnIP(Context context, string valores, out string Dump)
+        public string ReturnIP(Context context)
         {
-            StringBuilder dump = new StringBuilder();
-
-            if (valores != null)
-            {
-                foreach (var valorDump in valores)
-                {
-                    dump.AppendFormat(CultureInfo.InvariantCulture, "{0};", valorDump);
-                }
-            }
-            else
-            {
-                dump.AppendFormat(CultureInfo.InvariantCulture, "{0};", "");
-            }
-
-            Dump = dump.ToString();
-
             return context.usuarioIP;
         }
 

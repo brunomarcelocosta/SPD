@@ -6,6 +6,7 @@ using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -369,14 +370,19 @@ namespace SPD.MVC.PortalWeb.Controllers
         public SelectList BuscaAgenda(object id = null)
         {
             List<string> list = new List<string>();
+
+            var teste = _AgendaService
+                         .QueryAsNoTracking()
+                         .Where(a => DateTime.ParseExact(a.DATA_CONSULTA, "dd/MM/yyyy", null) >= DateTime.Now.Date).ToList();
+
             var agenda = _AgendaService
                          .QueryAsNoTracking()
-                         .Where(a => Convert.ToDateTime(a.DATA_CONSULTA) >= DateTime.Now)
-                         .OrderBy(a => a.DATA_CONSULTA)
-                         .Select(a => a.DATA_CONSULTA)
+                         .Where(a => DateTime.Parse(a.DATA_CONSULTA, CultureInfo.InvariantCulture).Date >= DateTime.Now)
+                         //.OrderBy(a => a.DATA_CONSULTA)
+                         //.Select(a => a.DATA_CONSULTA)
                          .ToList();
 
-            list = agenda.Distinct().ToList();
+            //list = agenda.Distinct().ToList();
 
             return new SelectList(list, id);
         }
@@ -393,14 +399,14 @@ namespace SPD.MVC.PortalWeb.Controllers
             return Json(horarios, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult BuscaHorarioPaciente(string hora, string dia)
+        public JsonResult BuscaPacienteAgenda(string hora, string dia)
         {
             var paciente = _AgendaService
                            .QueryAsNoTracking()
                            .Where(a => a.HORA_INICIO.Equals(hora) && a.DATA_CONSULTA.Equals(dia))
                            .FirstOrDefault();
 
-            return Json(paciente, JsonRequestBehavior.AllowGet);
+            return Json(paciente.NOME_PACIENTE, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

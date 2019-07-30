@@ -12,7 +12,7 @@ namespace SPD.MVC.Geral.Controllers
         {
             Context context = null;
 
-            if (usuarioID.HasValue)
+            if (usuarioID.HasValue && usuarioID.Value != 0)
             {
                 context = new Context() { usuarioID = usuarioID.Value, usuarioIP = enderecoIP, usuarioSessionID = this.Session.SessionID };
             }

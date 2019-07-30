@@ -29,170 +29,170 @@ namespace SPD.Data.Initializers
         {
             Funcionalidade login = new Funcionalidade()
             {
-                NOME = "Efetuar Login",
-                IsATIVO = true
+                NOME = "Efetuar Login"
+
             };
 
             Funcionalidade logoff = new Funcionalidade()
             {
-                NOME = "Efetuar Logoff",
-                IsATIVO = true
+                NOME = "Efetuar Logoff"
+
             };
 
             Funcionalidade usuario = new Funcionalidade()
             {
-                NOME = "Listar Usuários",
-                IsATIVO = true
+                NOME = "Listar Usuários"
+
             };
 
             Funcionalidade editusuario = new Funcionalidade()
             {
-                NOME = "Editar Usuários",
-                IsATIVO = true
+                NOME = "Editar Usuários"
+
             };
 
             Funcionalidade deleteusuario = new Funcionalidade()
             {
-                NOME = "Excluir Usuários",
-                IsATIVO = true
+                NOME = "Excluir Usuários"
+
             };
 
             Funcionalidade addusuario = new Funcionalidade()
             {
-                NOME = "Novos Usuários",
-                IsATIVO = true
+                NOME = "Novos Usuários"
+
             };
 
             Funcionalidade descusuario = new Funcionalidade()
             {
-                NOME = "Desconectar Usuários",
-                IsATIVO = true
+                NOME = "Desconectar Usuários"
+
             };
 
             Funcionalidade desblusuario = new Funcionalidade()
             {
-                NOME = "Desbloquear Usuários",
-                IsATIVO = true
+                NOME = "Desbloquear Usuários"
+
             };
 
             Funcionalidade redefinirSenha = new Funcionalidade()
             {
-                NOME = "Redefinir Senha",
-                IsATIVO = true
+                NOME = "Redefinir Senha"
+
             };
 
             Funcionalidade agenda = new Funcionalidade()
             {
-                NOME = "Listar Agenda",
-                IsATIVO = true
+                NOME = "Listar Agenda"
+
             };
 
             Funcionalidade agendaADD = new Funcionalidade()
             {
-                NOME = "Adicionar Agenda",
-                IsATIVO = true
+                NOME = "Adicionar Agenda"
+
             };
 
             Funcionalidade agendaEDIT = new Funcionalidade()
             {
-                NOME = "Editar Agenda",
-                IsATIVO = true
+                NOME = "Editar Agenda"
+
             };
 
             Funcionalidade agendaDEL = new Funcionalidade()
             {
-                NOME = "Excluir Agenda",
-                IsATIVO = true
+                NOME = "Excluir Agenda"
+
             };
 
             Funcionalidade paciente = new Funcionalidade()
             {
-                NOME = "Listar Pacientes",
-                IsATIVO = true
+                NOME = "Listar Pacientes"
+
             };
 
             Funcionalidade addPaciente = new Funcionalidade()
             {
-                NOME = "Adicionar Pacientes",
-                IsATIVO = true
+                NOME = "Adicionar Pacientes"
+
             };
 
             Funcionalidade editPaciente = new Funcionalidade()
             {
-                NOME = "Editar Pacientes",
-                IsATIVO = true
+                NOME = "Editar Pacientes"
+
             };
 
             Funcionalidade delPaciente = new Funcionalidade()
             {
-                NOME = "Excluir Pacientes",
-                IsATIVO = true
+                NOME = "Excluir Pacientes"
+
             };
 
             Funcionalidade dentista = new Funcionalidade()
             {
-                NOME = "Listar Dentistas",
-                IsATIVO = true
+                NOME = "Listar Dentistas"
+
             };
 
             Funcionalidade addDentista = new Funcionalidade()
             {
-                NOME = "Adicionar Dentistas",
-                IsATIVO = true
+                NOME = "Adicionar Dentistas"
+
             };
 
             Funcionalidade editDentista = new Funcionalidade()
             {
-                NOME = "Editar Dentistas",
-                IsATIVO = true
+                NOME = "Editar Dentistas"
+
             };
 
             Funcionalidade delDentista = new Funcionalidade()
             {
-                NOME = "Excluir Dentistas",
-                IsATIVO = true
+                NOME = "Excluir Dentistas"
+
             };
 
             Funcionalidade preConsulta = new Funcionalidade()
             {
-                NOME = "Listar Pré Atendimentos",
-                IsATIVO = true
+                NOME = "Listar Pré Atendimentos"
+
             };
 
             Funcionalidade addPreConsulta = new Funcionalidade()
             {
-                NOME = "Iniciar Pré Atendimentos",
-                IsATIVO = true
+                NOME = "Iniciar Pré Atendimentos"
+
             };
 
             Funcionalidade editPreConsulta = new Funcionalidade()
             {
-                NOME = "Consultar Pré Atendimentos",
-                IsATIVO = true
+                NOME = "Consultar Pré Atendimentos"
+
             };
 
             Funcionalidade delPreConsulta = new Funcionalidade()
             {
-                NOME = "Excluir Pré Atendimentos",
-                IsATIVO = true
+                NOME = "Excluir Pré Atendimentos"
+
             };
 
             Funcionalidade consulta = new Funcionalidade()
             {
-                NOME = "Gerenciar Consultas",
-                IsATIVO = true
+                NOME = "Gerenciar Consultas"
+
             };
 
             Funcionalidade historico = new Funcionalidade()
             {
-                NOME = "Visualizar Histórico de Operação",
-                IsATIVO = true
+                NOME = "Visualizar Histórico de Operação"
+
             };
 
             Funcionalidade notificacao = new Funcionalidade()
             {
-                NOME = "Receber Notificações",
-                IsATIVO = true
+                NOME = "Receber Notificações"
+
             };
 
             return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario,
