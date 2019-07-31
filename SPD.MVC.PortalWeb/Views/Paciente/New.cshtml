@@ -93,8 +93,7 @@
 
                             <div class="col-md-3">
                                 @Html.Label("Estado Civil ", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.DropDownListFor(model => model.Estado_Civil, Model.ListEstadoCivil as SelectList,
-                            "", new { @class = "form-control", @style = "width:150px" })
+                                @Html.DropDownListFor(model => model.Estado_Civil, Model.ListEstadoCivil as SelectList, "", new { @class = "form-control", @style = "width:150px" })
                                 @Html.ValidationMessageFor(model => model.Estado_Civil, "", new { @class = "text-danger" })
                             </div>
 
@@ -216,25 +215,22 @@
 
                             <div class="col-md-3">
                                 @Html.Label("Dia", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.DropDownListFor(model => model.Agenda_Dia, controller.BuscaAgenda() as SelectList, "", new { @class = "form-control date", @onchange = "BuscaHorarioPaciente(this)" })
+                                @Html.DropDownListFor(model => model.Agenda_Dia, Model.ListAgendaDia as SelectList, "", new { @class = "form-control", @onchange = "BuscaHorarioPaciente()" })
                                 @Html.ValidationMessageFor(model => model.Agenda_Dia, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="col-md-1">
                             </div>
 
-                            <div class="col-md-3" style="padding-left:20px">
+                            <div class="col-md-4" style="padding-left:20px">
                                 @Html.Label("Horário ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.DropDownListFor(model => model.Horario, new SelectList(new List<Object> { }), "", new { @disabled = "@disabled", @class = "form-control ", @onchange = "BuscaPacienteAgenda(this)" })
+                                @Html.DropDownListFor(model => model.Horario, new SelectList(new List<Object> { }), "", new { @disabled = "@disabled", @class = "form-control ", @onchange = "BuscaPacienteAgenda()" })
                                 @Html.ValidationMessageFor(model => model.Horario, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="col-md-1">
                             </div>
 
                             <div class="col-md-4">
                                 @Html.Label("Paciente ", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control", @style = "width:100px", @MaxLength = "6" } })
+                                @Html.EditorFor(model => model.Nome_Paciente, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Nome_Paciente, "", new { @class = "text-danger" })
                             </div>
 

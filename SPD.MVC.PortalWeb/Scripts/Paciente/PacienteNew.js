@@ -110,9 +110,9 @@ function ws_GetCEP() {
     }
 }
 
-function BuscaHorarioPaciente(data) {
+function BuscaHorarioPaciente() {
 
-    var dia = data.val();
+    var dia = $("#Agenda_Dia").val();
 
     var uri = "../../Paciente/BuscaHorarioPaciente";
 
@@ -130,7 +130,7 @@ function BuscaHorarioPaciente(data) {
                     text: "Selecione um horário"
                 }));
 
-                var count = list.count();
+                var count = list.length;
                 if (count > 0) {
                     $("#Horario").prop("disabled", false);
                 }
@@ -150,10 +150,10 @@ function BuscaHorarioPaciente(data) {
 
 }
 
-function BuscaPacienteAgenda(horario) {
+function BuscaPacienteAgenda() {
 
     var dia = $("#Agenda_Dia").val();
-    var hora = horario.val();
+    var hora = $("#Horario").val();
 
     var uri = "../../Paciente/c";
 

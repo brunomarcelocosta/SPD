@@ -170,6 +170,7 @@ namespace SPD.MVC.PortalWeb.Controllers
         {
             PacienteViewModel pacienteViewModel = new PacienteViewModel();
             pacienteViewModel.ListEstadoCivil = ListEstadoCivil(null);
+            pacienteViewModel.ListAgendaDia = BuscaAgenda(null);
 
             return View(pacienteViewModel);
         }
@@ -370,19 +371,19 @@ namespace SPD.MVC.PortalWeb.Controllers
         public SelectList BuscaAgenda(object id = null)
         {
             List<string> list = new List<string>();
+            var list_dt = new List<DateTime>();
 
-            var teste = _AgendaService
-                         .QueryAsNoTracking()
-                         .Where(a => DateTime.ParseExact(a.DATA_CONSULTA, "dd/MM/yyyy", null) >= DateTime.Now.Date).ToList();
+            var list_dt_string = _AgendaService
+                                 .QueryAsNoTracking()
+                                 .Select(a => a.DATA_CONSULTA)
+                                 .Distinct()
+                                 .ToList();
 
-            var agenda = _AgendaService
-                         .QueryAsNoTracking()
-                         .Where(a => DateTime.Parse(a.DATA_CONSULTA, CultureInfo.InvariantCulture).Date >= DateTime.Now)
-                         //.OrderBy(a => a.DATA_CONSULTA)
-                         //.Select(a => a.DATA_CONSULTA)
-                         .ToList();
+            list_dt_string.ToList().ForEach(a => list_dt.Add(Convert.ToDateTime(a).Date));
 
-            //list = agenda.Distinct().ToList();
+            list_dt = list_dt.Where(a => a >= DateTime.Now.Date).ToList();
+
+            list = list_dt.Select(a => a.ToShortDateString()).ToList();
 
             return new SelectList(list, id);
         }

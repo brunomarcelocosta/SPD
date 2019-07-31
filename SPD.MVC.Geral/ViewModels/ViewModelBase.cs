@@ -18,6 +18,7 @@ namespace SPD.MVC.Geral.ViewModels
         public virtual SelectList ListEstadoCivil { get; set; }
         public virtual SelectList ListNomePaciente { get; set; }
         public virtual SelectList ListNomeDentista { get; set; }
+        public virtual SelectList ListAgendaDia { get; set; }
 
 
         public string FieldSort { get; set; }
