@@ -68,8 +68,7 @@ function DataTable() {
                 'Paciente_string': $('#Paciente_string').val(),
                 'Convenio': $('#Convenio').val(),
                 'Autorizado_string': $('#Autorizado_string').val(),
-                'DataDe': $('#DataDe').val(),
-                'DataAte': $('#DataAte').val()
+                'DataDe': $('#DataDe').val()
             }
         },
         "displayLength": 100,
@@ -78,12 +77,39 @@ function DataTable() {
                 $(this).attr("title", "Duplo clique para editar");
             });
         },
+
+        "columnDefs": [
+            {
+                "visible": false,
+                "targets": groupColumn
+            },
+            {
+                "className": "text-center",
+                "targets": [1, 2, 3, 4, 5]
+            }
+        ],
+
+        "drawCallback": function (settings) {
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+
+            api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                if (last !== group) {
+                    $(rows).eq(i).before(
+                        '<tr><td colspan="5" style="background-color: #dddddd !important;"><b>' + group + '</b></td></tr>'
+                    );
+
+                    last = group;
+                }
+            });
+        },
         "columns": [
-            { "data": "ID", "orderable": true, "autoWidth": true },
-            { "data": "Paciente", "orderable": true, "autoWidth": true },
-            { "data": "Autorizado", "orderable": true, "autoWidth": true },
-            { "data": "Convenio", "orderable": true, "autoWidth": true },
-            { "data": "Data", "orderable": true, "autoWidth": true },
+            { "data": "Dentista", "orderable": false, "autoWidth": true },
+            { "data": "Paciente", "orderable": false, "autoWidth": true },
+            { "data": "Horario", "orderable": false, "autoWidth": true },
+            { "data": "Autorizado", "orderable": false, "autoWidth": true },
+            { "data": "Convenio", "orderable": false, "autoWidth": true },
             {
                 "data": null, "render": function (data, type, row) {
                     return '<button type="button" id="' + row.ID + '" class="btn btn-danger btn-sm" onclick="Excluir(this)" >Excluir</button>';
@@ -107,10 +133,6 @@ function DataTable() {
                 "sPrevious": "<",
                 "sFirst": "«",
                 "sLast": "»"
-            },
-            "oAria": {
-                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                "sSortDescending": ": Ordenar colunas de forma descendente"
             }
         }
     });
@@ -133,7 +155,7 @@ function Excluir(obj) {
         title: "Confirmação",
         text: msg,
         icon: "warning",
-        buttons: [ "Não", "Sim"],
+        buttons: ["Não", "Sim"],
         dangerMode: false,
     })
         .then((willDelete) => {

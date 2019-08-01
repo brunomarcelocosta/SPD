@@ -100,6 +100,7 @@ function DataTable() {
                 }
             });
         },
+
         "columns": [
             { "data": "Dentista", "orderable": false, "autoWidth": true },
             { "data": "Hora", "orderable": false, "autoWidth": true },

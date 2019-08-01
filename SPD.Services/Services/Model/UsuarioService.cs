@@ -62,7 +62,7 @@ namespace SPD.Services.Services.Model
                                 //this.SaveChanges(transactionScope);
                                 //}
                             }
-                            catch (SmtpException Exception)
+                            catch (SmtpException)
                             {
                                 return 2;
                             }

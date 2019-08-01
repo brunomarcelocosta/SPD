@@ -63,7 +63,7 @@ namespace SPD.Services.Services.Model
 
                 return result;
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return false;
             }

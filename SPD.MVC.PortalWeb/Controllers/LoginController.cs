@@ -204,7 +204,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
                 return View();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //_SysLogApplicationService.Registrar(ex.Message + ex.StackTrace);
                 return View("LogoutError");

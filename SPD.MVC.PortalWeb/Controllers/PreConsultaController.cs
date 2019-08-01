@@ -146,9 +146,10 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         public PreConsultaViewModel ReturnPreConsulta(FormCollection collection = null)
         {
-            PreConsultaViewModel preConsultaViewModel = new PreConsultaViewModel();
-
-            preConsultaViewModel.ListPreConsultaViewModel = ToListViewModel(_PreConsultaService.QueryAsNoTracking().ToList());
+            PreConsultaViewModel preConsultaViewModel = new PreConsultaViewModel
+            {
+                ListPreConsultaViewModel = ToListViewModel(_PreConsultaService.QueryAsNoTracking().ToList())
+            };
 
             preConsultaViewModel = Filtrar(preConsultaViewModel, collection);
 
@@ -397,7 +398,20 @@ namespace SPD.MVC.PortalWeb.Controllers
         public SelectList ListNomePacientes(object id = null)
         {
             List<string> list = new List<string>();
-            var pacientes = _PacienteService.Query().Select(a => a.NOME).ToList();
+
+            var datenow = DateTime.Now.ToShortDateString();
+
+            var listIDS = _AgendaService
+                          .QueryAsNoTracking()
+                          .Where(a => a.DATA_CONSULTA.Equals(datenow))
+                          .Select(a => a.ID_PACIENTE)
+                          .ToList();
+
+            var pacientes = _PacienteService
+                            .QueryAsNoTracking()
+                            .Where(a => listIDS.Contains(a.ID))
+                            .Select(a => a.NOME)
+                            .ToList();
 
             list = pacientes.Distinct().ToList();
 

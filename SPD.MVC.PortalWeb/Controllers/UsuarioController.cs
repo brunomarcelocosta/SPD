@@ -369,7 +369,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { Success = false, Response = "Não foi possível redefinir a senha." });
             }
@@ -397,7 +397,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { Success = false, Response = "Não foi possível desbloquear o usuário." });
             }

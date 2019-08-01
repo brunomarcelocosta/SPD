@@ -40,7 +40,7 @@ namespace SPD.Repository.Repository.Model
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

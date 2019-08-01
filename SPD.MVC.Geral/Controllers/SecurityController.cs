@@ -22,9 +22,6 @@ namespace SPD.MVC.Geral.Controllers
         private readonly IAutenticacaoService _AutenticacaoService;
         private readonly IUsuarioService _UsuarioService;
         private readonly ISessaoUsuarioService _SessaoUsuarioService;
-        private readonly IFuncionalidadeService _FuncionalidadeService;
-        private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
-
         protected UserManager<Usuario> UsuarioManager { get; private set; }       
 
         /// <summary>
