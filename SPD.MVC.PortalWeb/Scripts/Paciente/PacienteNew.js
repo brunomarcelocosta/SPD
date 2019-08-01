@@ -125,22 +125,24 @@ function BuscaHorarioPaciente() {
 
                 select.empty();
 
-                select.append($('<option/>', {
-                    value: "",
-                    text: "Selecione um horário"
-                }));
-
                 var count = list.length;
                 if (count > 0) {
+
+                    select.append($('<option/>', {
+                        value: "",
+                        text: "Selecione um horário"
+                    }));
+
                     $("#Horario").prop("disabled", false);
+
+                    $.each(list, function (index, item) {
+                        select.append($('<option/>', {
+                            value: item,
+                            text: item
+                        }));
+                    });
                 }
 
-                $.each(list, function (index, item) {
-                    select.append($('<option/>', {
-                        value: item,
-                        text: item
-                    }));
-                });
 
 
             });
@@ -155,7 +157,7 @@ function BuscaPacienteAgenda() {
     var dia = $("#Agenda_Dia").val();
     var hora = $("#Horario").val();
 
-    var uri = "../../Paciente/c";
+    var uri = "../../Paciente/BuscaPacienteAgenda";
 
     if (hora != "" && hora != null) {
 

@@ -46,7 +46,7 @@ namespace SPD.Services.Services.Model
             return false;
         }
 
-        public bool Insert(Paciente paciente, Usuario usuario, out string resultado)
+        public bool Insert(Paciente paciente, Usuario usuario, int id_agenda, out string resultado)
         {
             resultado = "";
 
@@ -63,6 +63,10 @@ namespace SPD.Services.Services.Model
                 _PacienteRepository.Insert(paciente);
 
                 _HistoricoOperacaoRepository.Insert($"Adicionou o paciente {paciente.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.Pacientes);
+
+                var id_paciente = _PacienteRepository.QueryAsNoTracking().Where(a => a.CPF.Equals(paciente.CPF)).FirstOrDefault();
+
+                _AgendaRepository.UpdateAgenda(id_agenda, id_paciente.ID, id_paciente.NOME);
 
                 //    this.SaveChanges(transactionScope);
 

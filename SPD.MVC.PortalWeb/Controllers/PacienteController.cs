@@ -191,9 +191,14 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             var paciente = ToModel(pacienteViewModel);
 
-            //var id_agenda = _AgendaService.GetById(int.Parse(pacienteViewModel.Agenda)).ID;
+            var agenda = _AgendaService
+                         .QueryAsNoTracking()
+                         .Where(a => a.DATA_CONSULTA.Equals(pacienteViewModel.Agenda_Dia) && a.HORA_INICIO.Equals(pacienteViewModel.Horario))
+                         .FirstOrDefault();
 
-            if (!_PacienteService.Insert(paciente, user_logado, out string resultado))
+            var id_agenda = agenda.ID;
+
+            if (!_PacienteService.Insert(paciente, user_logado, id_agenda, out string resultado))
             {
                 return Json(new { Success = false, Response = resultado });
             }
@@ -257,7 +262,6 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult Delete(string id)
         {
             int idPaciente = int.Parse(id);
-            var resultado = "";
 
             Usuario usuarioAtual = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
@@ -266,7 +270,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 return Json(new { Success = false, Response = "Você não tem permissão para esta funcionalidade." });
             }
 
-            if (!_PacienteService.Delete(idPaciente, usuarioAtual, out resultado))
+            if (!_PacienteService.Delete(idPaciente, usuarioAtual, out string resultado))
             {
                 return Json(new { Success = false, Response = resultado });
             }

@@ -41,7 +41,6 @@ namespace SPD.MVC.PortalWeb.ViewModels
         [Required(ErrorMessage = "Campo obrigatório.")]
         public string End_Numero { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório.")]
         public string End_Compl { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório.")]
