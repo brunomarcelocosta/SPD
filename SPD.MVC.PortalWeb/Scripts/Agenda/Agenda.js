@@ -130,10 +130,6 @@ function DataTable() {
             }
         }
     });
-
-    $('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {
-        Render('Agenda', 'Edit', table.row(this).data().ID);
-    });
 }
 
 

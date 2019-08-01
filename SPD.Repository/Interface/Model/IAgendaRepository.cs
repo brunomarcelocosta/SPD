@@ -14,6 +14,6 @@ namespace SPD.Repository.Interface.Model
 
         void Delete(Agenda agenda);
 
-        void UpdateAgenda(int id_agenda, int id_paciente, string nome_paciente)
+        void UpdateAgenda(int id_agenda, int id_paciente, string nome_paciente);
     }
 }
