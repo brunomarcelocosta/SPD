@@ -67,7 +67,6 @@ function DataTable() {
             "data": {
                 'Paciente_string': $('#Paciente_string').val(),
                 'Convenio': $('#Convenio').val(),
-                'Autorizado_string': $('#Autorizado_string').val(),
                 'DataDe': $('#DataDe').val()
             }
         },
@@ -106,8 +105,8 @@ function DataTable() {
         },
         "columns": [
             { "data": "Dentista", "orderable": false, "autoWidth": true },
-            { "data": "Paciente", "orderable": false, "autoWidth": true },
             { "data": "Horario", "orderable": false, "autoWidth": true },
+            { "data": "Paciente", "orderable": false, "autoWidth": true },
             { "data": "Autorizado", "orderable": false, "autoWidth": true },
             { "data": "Convenio", "orderable": false, "autoWidth": true },
             {

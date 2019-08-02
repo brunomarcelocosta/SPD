@@ -6,8 +6,8 @@ namespace SPD.Model.Model
     {
         public int ID { get; set; }
 
-        public int ID_PACIENTE { get; set; }
-        public virtual Paciente PACIENTE { get; set; }
+        public int ID_AGENDA { get; set; }
+        public virtual Agenda AGENDA { get; set; }
 
         public bool MAIOR_IDADE { get; set; }
 

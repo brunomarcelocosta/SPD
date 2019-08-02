@@ -18,13 +18,13 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .HasColumnName("id_pre_consulta")
            .IsRequired();
 
-            Property(pre => pre.ID_PACIENTE)
-           .HasColumnName("fk_id_paciente")
+            Property(pre => pre.ID_AGENDA)
+           .HasColumnName("fk_id_agenda")
            .IsRequired()
            .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_CONSULTA_SPD_PACIENTE_FK")));
-            HasRequired(pre => pre.PACIENTE)
+            HasRequired(pre => pre.AGENDA)
            .WithMany()
-           .HasForeignKey(pre => pre.ID_PACIENTE);
+           .HasForeignKey(pre => pre.ID_AGENDA);
 
             Property(pre => pre.MAIOR_IDADE)
            .HasColumnName("maior_idade")

@@ -9,8 +9,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
     {
         public int ID { get; set; }
 
-        public int ID_Paciente { get; set; }
-        public virtual PacienteViewModel Paciente { get; set; }
+        public int ID_Agenda { get; set; }
+        public virtual AgendaViewModel Agenda { get; set; }
 
         public bool Maior_Idade { get; set; }
 
@@ -37,5 +37,8 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public string Cpf_Responsavel { get; set; }
 
         public string Img_string { get; set; }
+
+        public string Dentista { get; set; }
+        public string Horario { get; set; }
     }
 }

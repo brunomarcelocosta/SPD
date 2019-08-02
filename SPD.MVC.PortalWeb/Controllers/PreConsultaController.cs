@@ -71,8 +71,6 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             int totalRecords = preConsultaViewModel.ListPreConsultaViewModel.Count;
 
-            preConsultaViewModel.ListPreConsultaViewModel = Ordenacao(order, orderDir, preConsultaViewModel.ListPreConsultaViewModel);
-
             int recFilter = preConsultaViewModel.ListPreConsultaViewModel.Count;
 
             preConsultaViewModel.ListPreConsultaViewModel = preConsultaViewModel.ListPreConsultaViewModel.Skip(startRec).Take(pageSize).ToList();
@@ -83,12 +81,11 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 listToView.Add(new
                 {
-                    item.ID,
-                    Paciente = item.Paciente.Nome,
+                    Dentista = item.Agenda.Dentista.Nome,
+                    Horario = item.Agenda.Hora_Inicio,
+                    Paciente = item.Agenda.Paciente.Nome,
                     Autorizado = item.Autorizado == true ? "Sim" : "Não",
                     item.Convenio,
-                    Data = item.Dt_Insert.ToString()
-
                 });
             }
 
@@ -99,49 +96,6 @@ namespace SPD.MVC.PortalWeb.Controllers
                 recordsFiltered = recFilter,
                 data = listToView
             }, JsonRequestBehavior.AllowGet);
-        }
-
-        private List<PreConsultaViewModel> Ordenacao(string order, string orderDir, List<PreConsultaViewModel> data)
-        {
-            // Initialization
-            List<PreConsultaViewModel> lst = new List<PreConsultaViewModel>();
-
-            try
-            {
-
-                switch (order)
-                {
-                    case "1":
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ID).ToList() : data.OrderBy(p => p.ID).ToList();
-                        break;
-
-                    case "2":
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Paciente.Nome).ToList() : data.OrderBy(p => p.Paciente.Nome).ToList();
-                        break;
-
-                    case "3":
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Autorizado).ToList() : data.OrderBy(p => p.Autorizado).ToList();
-                        break;
-
-                    case "4":
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Convenio).ToList() : data.OrderBy(p => p.Convenio).ToList();
-                        break;
-
-                    case "5":
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Dt_Insert).ToList() : data.OrderBy(p => p.Dt_Insert).ToList();
-                        break;
-
-                    default:
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ID).ToList() : data.OrderBy(p => p.ID).ToList();
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-            }
-
-            return lst;
         }
 
         public PreConsultaViewModel ReturnPreConsulta(FormCollection collection = null)
@@ -186,12 +140,21 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         public ActionResult Add(PreConsultaViewModel preConsultaViewModel)
         {
-            var paciente = ToViewModel<Paciente, PacienteViewModel>
-                         (_PacienteService
+            var datenow = DateTime.Now.ToShortDateString();
+
+            var id_paciente = _PacienteService
                           .Query()
                           .Where(a => a.NOME.Equals(preConsultaViewModel.Paciente_string))
-                          .FirstOrDefault()
-                         );
+                          .FirstOrDefault().ID;
+
+            var agenda = ToViewModel<Agenda, AgendaViewModel>
+            (
+                         _AgendaService
+                         .QueryAsNoTracking()
+                         .Where(a => a.ID_PACIENTE == id_paciente && a.DATA_CONSULTA.Equals(datenow))
+                         .FirstOrDefault()
+            );
+
             var assinatura = new AssinaturaViewModel();
 
             if (!preConsultaViewModel.Maior_Idade)
@@ -201,15 +164,13 @@ namespace SPD.MVC.PortalWeb.Controllers
 
                 var img = preConsultaViewModel.Img_string.Substring("data:image/png;base64,".Length);
 
-                var TESTE = Convert.FromBase64String(img);
-
                 assinatura.ASSINATURA = Convert.FromBase64String(img);
                 assinatura.DT_INSERT = DateTime.Now;
             }
 
             var viewModelToBD = new PreConsultaViewModel
             {
-                Paciente = paciente,
+                Agenda = agenda,
                 Assinatura = assinatura.ASSINATURA == null ? null : assinatura,
                 Maior_Idade = preConsultaViewModel.Maior_Idade,
                 Autorizado = true,
@@ -243,11 +204,11 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             preConsultaViewModel = ToViewModel(_PreConsultaService.GetById(id));
 
-            preConsultaViewModel.Paciente_string = preConsultaViewModel.Paciente.Nome;
+            preConsultaViewModel.Paciente_string = preConsultaViewModel.Agenda.Paciente.Nome;
             preConsultaViewModel.Conveniado = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? false : preConsultaViewModel.Convenio.Equals("Particular") ? false : true;
             preConsultaViewModel.particular = preConsultaViewModel.Conveniado ? false : true;
 
-            var dt_nasc = Convert.ToDateTime(preConsultaViewModel.Paciente.Data_Nasc);
+            var dt_nasc = Convert.ToDateTime(preConsultaViewModel.Agenda.Paciente.Data_Nasc);
 
             int idade = DateTime.Now.Year - dt_nasc.Year;
             if (DateTime.Now.Month < dt_nasc.Month || (DateTime.Now.Month == dt_nasc.Month && DateTime.Now.Day < dt_nasc.Day))
@@ -337,16 +298,8 @@ namespace SPD.MVC.PortalWeb.Controllers
                 {
                     var nome = collection["Paciente_string"].ToString();
 
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Paciente.Nome.Contains(nome)).ToList();
+                    ListaFiltrada = ListaFiltrada.Where(a => a.Agenda.Paciente.Nome.Contains(nome)).ToList();
                     preConsultaViewModel.Paciente_string = nome;
-                }
-
-                if (!string.IsNullOrWhiteSpace(collection["Autorizado_string"]))
-                {
-                    var status = collection["Autorizado_string"].ToString().Replace(",", "") == "true" ? true : false;
-
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Autorizado == status).ToList();
-                    preConsultaViewModel.Autorizado_string = status.ToString();
                 }
 
                 if (!string.IsNullOrWhiteSpace(collection["Convenio"]))
@@ -357,34 +310,12 @@ namespace SPD.MVC.PortalWeb.Controllers
                     preConsultaViewModel.Convenio = convenio;
                 }
 
-                if (!string.IsNullOrWhiteSpace(collection["DataDe"]) && !string.IsNullOrWhiteSpace(collection["DataAte"]))
-                {
-                    var dataDe = Convert.ToDateTime(collection["DataDe"].ToString());
-                    var dataAte = Convert.ToDateTime(collection["DataAte"].ToString());
-
-                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Dt_Insert) >= dataDe && Convert.ToDateTime(a.Dt_Insert) < dataAte.AddDays(1)).ToList();
-
-                    preConsultaViewModel.DataDe_Filtro = collection["DataDe"];
-                    preConsultaViewModel.DataAte_Filtro = collection["DataAte"];
-                }
-
-                else if (!string.IsNullOrWhiteSpace(collection["DataDe"]))
-                {
-                    var dataDe = Convert.ToDateTime(collection["DataDe"].ToString());
-
-                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Dt_Insert) >= dataDe).ToList();
-                    preConsultaViewModel.DataDe_Filtro = collection["DataDe"];
-
-                }
-
-                else if (!string.IsNullOrWhiteSpace(collection["DataAte"]))
-                {
-                    var dataAte = Convert.ToDateTime(collection["DataAte"].ToString());
-
-                    ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Dt_Insert) < dataAte.AddDays(1)).ToList();
-                    preConsultaViewModel.DataAte_Filtro = collection["DataAte"];
-                }
             }
+
+            var datenow = DateTime.Now.ToShortDateString();
+
+            ListaFiltrada = ListaFiltrada.Where(a => a.Agenda.Data_Consulta.Equals(datenow)).ToList();
+            preConsultaViewModel.DataDe_Filtro = datenow;
 
             preConsultaViewModel.ListPreConsultaViewModel = ListaFiltrada;
 
@@ -401,19 +332,19 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             var datenow = DateTime.Now.ToShortDateString();
 
-            var listIDS = _AgendaService
+            var pacientes = _AgendaService
                           .QueryAsNoTracking()
                           .Where(a => a.DATA_CONSULTA.Equals(datenow))
-                          .Select(a => a.ID_PACIENTE)
+                          .Select(a => a.PACIENTE.NOME)
                           .ToList();
 
-            var pacientes = _PacienteService
-                            .QueryAsNoTracking()
-                            .Where(a => listIDS.Contains(a.ID))
-                            .Select(a => a.NOME)
-                            .ToList();
+            //var pacientes = _PacienteService
+            //                .QueryAsNoTracking()
+            //                .Where(a => listIDS.Contains(a.ID))
+            //                .Select(a => a.NOME)
+            //                .ToList();
 
-            list = pacientes.Distinct().ToList();
+            list = pacientes.Distinct().OrderBy(a => a).ToList();
 
             return new SelectList(list, id);
         }

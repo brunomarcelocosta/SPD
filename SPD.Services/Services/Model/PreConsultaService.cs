@@ -15,19 +15,19 @@ namespace SPD.Services.Services.Model
     public class PreConsultaService : ServiceBase<PreConsulta>, IPreConsultaService
     {
         private readonly IHistoricoOperacaoRepository _HistoricoOperacaoRepository;
-        private readonly IPacienteRepository _PacienteRepository;
+        private readonly IAgendaRepository _AgendaRepository;
         private readonly IPreConsultaRepository _PreConsultaRepository;
         private readonly IAssinaturaRepository _AssinaturaRepository;
         private readonly IHistoricoAutorizacaoPacienteRepository _HistoricoAutorizacaoPacienteRepository;
 
         public PreConsultaService(IHistoricoOperacaoRepository historicoOperacaoRepository,
-                                  IPacienteRepository pacienteRepository,
+                                  IAgendaRepository agendaRepository,
                                   IPreConsultaRepository preConsultaRepository,
                                   IAssinaturaRepository assinaturaRepository,
                                   IHistoricoAutorizacaoPacienteRepository historicoAutorizacaoPacienteRepository)
             : base(preConsultaRepository)
         {
-            _PacienteRepository = pacienteRepository;
+            _AgendaRepository = agendaRepository;
             _PreConsultaRepository = preConsultaRepository;
             _HistoricoOperacaoRepository = historicoOperacaoRepository;
             _AssinaturaRepository = assinaturaRepository;
@@ -36,7 +36,7 @@ namespace SPD.Services.Services.Model
 
         public bool ExistePreConsulta(PreConsulta preConsulta)
         {
-            var list = _PreConsultaRepository.Query().Where(a => a.ID_PACIENTE == preConsulta.ID_PACIENTE).ToList();
+            var list = _PreConsultaRepository.Query().Where(a => a.ID_AGENDA == preConsulta.ID_AGENDA).ToList();
 
             if (list.Count > 0)
                 return true;
@@ -66,8 +66,8 @@ namespace SPD.Services.Services.Model
                     return false;
                 }
 
-                var paciente = _PacienteRepository.GetById(preConsulta.PACIENTE.ID);
-                preConsulta.PACIENTE = paciente;
+                var agenda = _AgendaRepository.GetById(preConsulta.AGENDA.ID);
+                preConsulta.AGENDA = agenda;
 
                 if (preConsulta.Assinatura != null)
                 {
@@ -75,7 +75,7 @@ namespace SPD.Services.Services.Model
 
                     var historicoAssinatura = new HistoricoAutorizacaoPaciente()
                     {
-                        PACIENTE = paciente,
+                        PACIENTE = agenda.PACIENTE,
                         ASSINATURA = assinatura,
                         DT_INSERT = DateTime.Now
                     };
@@ -85,13 +85,13 @@ namespace SPD.Services.Services.Model
                     preConsulta.ID_ASSINATURA = assinatura.ID;
                 }
 
-                preConsulta.PACIENTE = paciente;
+                preConsulta.AGENDA = agenda;
 
                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 //{
                 _PreConsultaRepository.Insert(preConsulta);
 
-                _HistoricoOperacaoRepository.Insert($"Adicionou o Pré Atendimento ao paciente {preConsulta.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
+                _HistoricoOperacaoRepository.Insert($"Adicionou o Pré Atendimento ao paciente {preConsulta.AGENDA.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
 
                 //    SaveChanges(transactionScope);
                 //}
@@ -112,9 +112,9 @@ namespace SPD.Services.Services.Model
             try
             {
                 var preConsulta = GetById(id);
-                preConsulta.PACIENTE = _PacienteRepository.GetById(preConsulta.ID_PACIENTE);
+                preConsulta.AGENDA = _AgendaRepository.GetById(preConsulta.ID_AGENDA);
 
-                var nome = preConsulta.PACIENTE.NOME;
+                var nome = preConsulta.AGENDA.PACIENTE.NOME;
 
                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 //{

@@ -4,7 +4,7 @@ namespace SPD.Repository.Interface.Model
 {
     public interface IPreConsultaRepository : IRepositoryBase<PreConsulta>
     {
-        void UpdatePreConsulta(PreConsulta preConsulta, Paciente paciente);
+        void UpdatePreConsulta(PreConsulta preConsulta, Agenda agenda);
 
         void Insert(PreConsulta preConsulta);
 

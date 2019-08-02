@@ -10,12 +10,12 @@ namespace SPD.Repository.Repository.Model
 {
     public class PreConsultaRepository : RepositoryBase<PreConsulta>, IPreConsultaRepository
     {
-        public void UpdatePreConsulta(PreConsulta preConsulta, Paciente paciente)
+        public void UpdatePreConsulta(PreConsulta preConsulta, Agenda agenda)
         {
             var preConsultaUpdate = GetById(preConsulta.ID);
             try
             {
-                preConsultaUpdate.PACIENTE = paciente;
+                preConsultaUpdate.AGENDA = agenda;
                 preConsultaUpdate.MAIOR_IDADE = preConsulta.MAIOR_IDADE;
                 preConsultaUpdate.AUTORIZADO = preConsulta.AUTORIZADO;
                 preConsultaUpdate.CONVENIO = preConsulta.CONVENIO;
