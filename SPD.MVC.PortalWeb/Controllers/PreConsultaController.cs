@@ -56,8 +56,6 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult Paginacao(FormCollection collection = null)
         {
             string draw = Request.Form.GetValues("draw")[0];
-            string order = Request.Form.GetValues("order[0][column]")[0];
-            string orderDir = Request.Form.GetValues("order[0][dir]")[0];
             int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
             if (pageSize == -1)
@@ -81,9 +79,10 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 listToView.Add(new
                 {
+                    item.ID,
                     Dentista = item.Agenda.Dentista.Nome,
                     Horario = item.Agenda.Hora_Inicio,
-                    Paciente = item.Agenda.Paciente.Nome,
+                    Paciente = item.Agenda.Nome_Paciente,
                     Autorizado = item.Autorizado == true ? "Sim" : "Não",
                     item.Convenio,
                 });
@@ -204,11 +203,12 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             preConsultaViewModel = ToViewModel(_PreConsultaService.GetById(id));
 
-            preConsultaViewModel.Paciente_string = preConsultaViewModel.Agenda.Paciente.Nome;
+            preConsultaViewModel.Paciente_string = preConsultaViewModel.Agenda.Nome_Paciente;
+            var paciete = _PacienteService.GetById(preConsultaViewModel.Agenda.ID_Paciente.Value);
             preConsultaViewModel.Conveniado = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? false : preConsultaViewModel.Convenio.Equals("Particular") ? false : true;
             preConsultaViewModel.particular = preConsultaViewModel.Conveniado ? false : true;
 
-            var dt_nasc = Convert.ToDateTime(preConsultaViewModel.Agenda.Paciente.Data_Nasc);
+            var dt_nasc = Convert.ToDateTime(paciete.DATA_NASC);
 
             int idade = DateTime.Now.Year - dt_nasc.Year;
             if (DateTime.Now.Month < dt_nasc.Month || (DateTime.Now.Month == dt_nasc.Month && DateTime.Now.Day < dt_nasc.Day))
@@ -313,9 +313,10 @@ namespace SPD.MVC.PortalWeb.Controllers
             }
 
             var datenow = DateTime.Now.ToShortDateString();
+            var date_string = DateTime.Now.ToString("yyyy-MM-dd");
 
             ListaFiltrada = ListaFiltrada.Where(a => a.Agenda.Data_Consulta.Equals(datenow)).ToList();
-            preConsultaViewModel.DataDe_Filtro = datenow;
+            preConsultaViewModel.DataDe_Filtro = date_string;
 
             preConsultaViewModel.ListPreConsultaViewModel = ListaFiltrada;
 
@@ -332,17 +333,17 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             var datenow = DateTime.Now.ToShortDateString();
 
-            var pacientes = _AgendaService
-                          .QueryAsNoTracking()
-                          .Where(a => a.DATA_CONSULTA.Equals(datenow))
-                          .Select(a => a.PACIENTE.NOME)
-                          .ToList();
+            var ids_paciente = _AgendaService
+                               .QueryAsNoTracking()
+                               .Where(a => a.DATA_CONSULTA.Equals(datenow))
+                               .Select(a => a.ID_PACIENTE)
+                               .ToList();
 
-            //var pacientes = _PacienteService
-            //                .QueryAsNoTracking()
-            //                .Where(a => listIDS.Contains(a.ID))
-            //                .Select(a => a.NOME)
-            //                .ToList();
+            var pacientes = _PacienteService
+                            .QueryAsNoTracking()
+                            .Where(a => ids_paciente.Contains(a.ID))
+                            .Select(a => a.NOME)
+                            .ToList();
 
             list = pacientes.Distinct().OrderBy(a => a).ToList();
 

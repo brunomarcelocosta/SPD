@@ -49,16 +49,18 @@
 });
 
 function DataTable() {
+    var groupColumn = 1;
+
     var table = $('#idGrid').DataTable({
         "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-left"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"pull-left"ip>>>',
-        //    "info": false,
         "sPaginationType": "full_numbers_no_ellipses",
+        "pageLength": 100,
         "serverSide": true,
         "searching": false,
         "processing": true,
-        "stateSave": false,
-        //    "ordering": true,
-        "order": [[1, 'ASC']],
+        "stateSave": true,
+        "ordering": false,
+        "order": [[groupColumn, 'asc']],
         "ajax":
         {
             "url": "/PreConsulta/Paginacao",
@@ -70,7 +72,7 @@ function DataTable() {
                 'DataDe': $('#DataDe').val()
             }
         },
-        "displayLength": 100,
+
         "createdRow": function (row, data, rowIndex) {
             $.each($('td', row), function (colIndex) {
                 $(this).attr("title", "Duplo clique para editar");
@@ -80,11 +82,11 @@ function DataTable() {
         "columnDefs": [
             {
                 "visible": false,
-                "targets": groupColumn
+                "targets": [0,1]
             },
             {
                 "className": "text-center",
-                "targets": [1, 2, 3, 4, 5]
+                "targets": [2, 3, 4, 5, 6]
             }
         ],
 
@@ -104,6 +106,7 @@ function DataTable() {
             });
         },
         "columns": [
+            { "data": "ID", "orderable": false, "autoWidth": true },
             { "data": "Dentista", "orderable": false, "autoWidth": true },
             { "data": "Horario", "orderable": false, "autoWidth": true },
             { "data": "Paciente", "orderable": false, "autoWidth": true },
@@ -117,9 +120,8 @@ function DataTable() {
         ],
         "language": {
             "sEmptyTable": "Nenhum registro encontrado",
-            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+            "sInfo": " _TOTAL_ registros encontrados",
+            "sInfoEmpty": "0 registro encontrado.",
             "sInfoPostFix": "",
             "sInfoThousands": ".",
             "sLengthMenu": "Mostrar _MENU_ registros por página",
@@ -136,7 +138,6 @@ function DataTable() {
         }
     });
 
-    //DoubleClick outside the grouping
     $('#idGrid tbody').on('dblclick', 'tr.odd, tr.even', function () {
         Render('PreConsulta', 'Edit', table.row(this).data().ID);
     });

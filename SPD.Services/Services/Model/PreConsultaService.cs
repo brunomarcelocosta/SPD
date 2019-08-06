@@ -85,13 +85,11 @@ namespace SPD.Services.Services.Model
                     preConsulta.ID_ASSINATURA = assinatura.ID;
                 }
 
-                preConsulta.AGENDA = agenda;
-
                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 //{
                 _PreConsultaRepository.Insert(preConsulta);
 
-                _HistoricoOperacaoRepository.Insert($"Adicionou o Pré Atendimento ao paciente {preConsulta.AGENDA.PACIENTE.NOME}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
+                _HistoricoOperacaoRepository.Insert($"Adicionou o Pré Atendimento ao paciente {preConsulta.AGENDA.NOME_PACIENTE}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
 
                 //    SaveChanges(transactionScope);
                 //}

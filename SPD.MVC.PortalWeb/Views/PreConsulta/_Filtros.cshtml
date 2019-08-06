@@ -11,25 +11,22 @@
                 @Html.Label("Data")
                 @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @readonly = "readonly", @class = "form-control ", @style = "width: 160px" } })
             </div>
-        </div>
 
-        <div class="form-group col-md-5" id="divNome" style="padding-left:32px;">
-            @Html.Label("Nome do Paciente")
-            @Html.EditorFor(model => model.Paciente_string, new { htmlAttributes = new { @Value = Model.Paciente_string, @class = "form-control ", @style = "width: 250px" } })
-        </div>
 
-        <div class="form-group col-md-3" id="divEmail">
-            @Html.Label("Convênio")
-            @Html.EditorFor(model => model.Convenio, new { htmlAttributes = new { @Value = Model.Convenio, @class = "form-control", @style = "width: 130px" } })
-        </div>
+            <div class="form-group col-md-5" id="divNome" style="padding-left:32px;">
+                @Html.Label("Nome do Paciente")
+                @Html.EditorFor(model => model.Paciente_string, new { htmlAttributes = new { @Value = Model.Paciente_string, @class = "form-control ", @style = "width: 250px" } })
+            </div>
 
+            <div class="form-group col-md-3" id="divEmail" style="padding-left:32px;">
+                @Html.Label("Convênio")
+                @Html.EditorFor(model => model.Convenio, new { htmlAttributes = new { @Value = Model.Convenio, @class = "form-control", @style = "width: 130px" } })
+            </div>
+
+        </div>
     </div>
 
-    <div class="row">
 
-
-        <div class="form-group col-md-2"></div>
-    </div>
 </div>
 
 <div class="row">
@@ -39,7 +36,7 @@
         <button type="button" id="btnLimpar" name="btnLimparFiltro" value="btnLimparFiltro" class="btn btn-default" onclick="limpar_Filtros(); aplicarFiltro();">Limpar Filtros</button>
     </div>
 </div>
-</div>
+
 
 <script type="text/javascript">
 
