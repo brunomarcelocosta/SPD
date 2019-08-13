@@ -19,11 +19,13 @@ namespace SPD.Services.Services.Model
         private readonly IPreConsultaRepository _PreConsultaRepository;
         private readonly IAssinaturaRepository _AssinaturaRepository;
         private readonly IHistoricoAutorizacaoPacienteRepository _HistoricoAutorizacaoPacienteRepository;
+        private readonly IPacienteRepository _PacienteRepository;
 
         public PreConsultaService(IHistoricoOperacaoRepository historicoOperacaoRepository,
                                   IAgendaRepository agendaRepository,
                                   IPreConsultaRepository preConsultaRepository,
                                   IAssinaturaRepository assinaturaRepository,
+                                  IPacienteRepository pacienteRepository,
                                   IHistoricoAutorizacaoPacienteRepository historicoAutorizacaoPacienteRepository)
             : base(preConsultaRepository)
         {
@@ -31,6 +33,7 @@ namespace SPD.Services.Services.Model
             _PreConsultaRepository = preConsultaRepository;
             _HistoricoOperacaoRepository = historicoOperacaoRepository;
             _AssinaturaRepository = assinaturaRepository;
+            _PacienteRepository = pacienteRepository;
             _HistoricoAutorizacaoPacienteRepository = historicoAutorizacaoPacienteRepository;
         }
 
@@ -69,13 +72,15 @@ namespace SPD.Services.Services.Model
                 var agenda = _AgendaRepository.GetById(preConsulta.AGENDA.ID);
                 preConsulta.AGENDA = agenda;
 
+                var paciente = _PacienteRepository.GetById(agenda.ID_PACIENTE.Value);
+
                 if (preConsulta.Assinatura != null)
                 {
                     var assinatura = _AssinaturaRepository.GetAssinatura(preConsulta.Assinatura, ExisteAssinatura(preConsulta.Assinatura));
 
                     var historicoAssinatura = new HistoricoAutorizacaoPaciente()
                     {
-                        PACIENTE = agenda.PACIENTE,
+                        PACIENTE = paciente,
                         ASSINATURA = assinatura,
                         DT_INSERT = DateTime.Now
                     };
@@ -112,7 +117,9 @@ namespace SPD.Services.Services.Model
                 var preConsulta = GetById(id);
                 preConsulta.AGENDA = _AgendaRepository.GetById(preConsulta.ID_AGENDA);
 
-                var nome = preConsulta.AGENDA.PACIENTE.NOME;
+                var paciente = _PacienteRepository.GetById(preConsulta.AGENDA.ID_PACIENTE.Value);
+
+                var nome = paciente.NOME;
 
                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
                 //{
