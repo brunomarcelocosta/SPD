@@ -69,14 +69,16 @@ namespace SPD.Services.Services.Model
                     return false;
                 }
 
-                var agenda = _AgendaRepository.GetById(preConsulta.AGENDA.ID);
+                var agenda = _AgendaRepository.QueryAsNoTracking().Where(a => a.ID == preConsulta.AGENDA.ID).FirstOrDefault();
                 preConsulta.AGENDA = agenda;
 
-                var paciente = _PacienteRepository.GetById(agenda.ID_PACIENTE.Value);
+                var paciente = _PacienteRepository.QueryAsNoTracking().Where(a => a.ID == agenda.ID_PACIENTE.Value).FirstOrDefault();
 
                 if (preConsulta.Assinatura != null)
                 {
                     var assinatura = _AssinaturaRepository.GetAssinatura(preConsulta.Assinatura, ExisteAssinatura(preConsulta.Assinatura));
+
+                    var ass = _AssinaturaRepository.QueryAsNoTracking().Where(a => a.ID == assinatura.ID).FirstOrDefault();
 
                     var historicoAssinatura = new HistoricoAutorizacaoPaciente()
                     {
@@ -85,7 +87,7 @@ namespace SPD.Services.Services.Model
                         DT_INSERT = DateTime.Now
                     };
 
-                    _HistoricoAutorizacaoPacienteRepository.InsertHistorico(historicoAssinatura);
+                    _HistoricoAutorizacaoPacienteRepository.InsertHistorico(paciente.ID, assinatura.ID);
 
                     preConsulta.ID_ASSINATURA = assinatura.ID;
                 }
