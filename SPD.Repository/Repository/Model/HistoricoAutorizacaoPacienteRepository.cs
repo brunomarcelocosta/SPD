@@ -13,10 +13,11 @@ namespace SPD.Repository.Repository.Model
 {
     public class HistoricoAutorizacaoPacienteRepository : RepositoryBase<HistoricoAutorizacaoPaciente>, IHistoricoAutorizacaoPacienteRepository
     {
-        public void InsertHistorico(int id_paciente, int id_assinatura)
+        public void InsertHistorico(int id_paciente, byte[] assinatura, string nome, string cpf, out int id_assinatura)
         {
             try
             {
+                id_assinatura = 0;
 
                 using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlServer"].ToString()))
                 {
@@ -28,11 +29,18 @@ namespace SPD.Repository.Repository.Model
                     };
 
                     cmd.Parameters.Add(new SqlParameter("@fk_id_paciente", id_paciente));
-                    cmd.Parameters.Add(new SqlParameter("@fk_id_assinatura", id_assinatura));
+                    cmd.Parameters.Add(new SqlParameter("@assinatura", assinatura));
+                    cmd.Parameters.Add(new SqlParameter("@nome", nome));
+                    cmd.Parameters.Add(new SqlParameter("@cpf", cpf));
 
                     cmd.CommandTimeout = 0;
 
-                    cmd.ExecuteNonQuery();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        id_assinatura = reader[0] == null ? 0 : Convert.ToInt32(reader[0].ToString());
+                    }
                 }
             }
             catch (Exception ex)

@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Migrations\Comando Migrations.txt" />
+    <Content Include="Procedures\SP_INSERT_HISTORICO_AUTORIZACAO.sql" />
     <Content Include="Procedures\SP_INSERT_HISTORICO_OPERACAO.sql" />
   </ItemGroup>
   <ItemGroup>

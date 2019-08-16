@@ -76,20 +76,12 @@ namespace SPD.Services.Services.Model
 
                 if (preConsulta.Assinatura != null)
                 {
-                    var assinatura = _AssinaturaRepository.GetAssinatura(preConsulta.Assinatura, ExisteAssinatura(preConsulta.Assinatura));
+                    //var assinatura = _AssinaturaRepository.GetAssinatura(preConsulta.Assinatura, ExisteAssinatura(preConsulta.Assinatura));
 
-                    var ass = _AssinaturaRepository.QueryAsNoTracking().Where(a => a.ID == assinatura.ID).FirstOrDefault();
+                    _HistoricoAutorizacaoPacienteRepository
+                    .InsertHistorico(paciente.ID, preConsulta.Assinatura.ASSINATURA, preConsulta.Assinatura.NOME_RESPONSAVEL, preConsulta.Assinatura.CPF_RESPONSAVEL, out int id_assinatura);
 
-                    var historicoAssinatura = new HistoricoAutorizacaoPaciente()
-                    {
-                        PACIENTE = paciente,
-                        ASSINATURA = assinatura,
-                        DT_INSERT = DateTime.Now
-                    };
-
-                    _HistoricoAutorizacaoPacienteRepository.InsertHistorico(paciente.ID, assinatura.ID);
-
-                    preConsulta.ID_ASSINATURA = assinatura.ID;
+                    preConsulta.ID_ASSINATURA = id_assinatura;
                 }
 
                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
