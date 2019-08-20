@@ -10,173 +10,188 @@
 <hr />
 <br />
 
-@using (Html.BeginForm(@*"Reload", "PreConsulta", FormMethod.Post, new { name = "frmMain", id = "frmMain" }*@))
+@using (Html.BeginForm())
 {
-@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-@Html.HiddenFor(model => model.Maior_Idade)
-@Html.HiddenFor(model => model.Idade)
-@Html.HiddenFor(model => model.Img_string)
-@Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.Maior_Idade)
+    @Html.HiddenFor(model => model.Idade)
+    @Html.HiddenFor(model => model.Img_string)
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.ID_Agenda)
 
 
 
-<div class="row">
+    <div class="row">
 
-    <div class="col-md-12">
+        <div class="col-md-12">
 
-        <div class="panel panel-default">
-            <div class="panel-heading"> <b> Paciente</b></div>
-            <div class="panel-body">
-                <div id="dadosPessoais">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Paciente</b></div>
+                <div class="panel-body">
+                    <div id="dadosPessoais">
 
-                    <div class="row">
+                        <div class="row">
 
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.Paciente_string, new
-                                             {
-                                                 htmlAttributes = new { @class = "form-control", @style = "width:260px", @readonly = "@readonly" }
-                                             })
-                        </div>
-
-                    </div>
-
-                    <br />
-
-                    <div class="row">
-
-                        <div class="col-md-3" id="idTpPaciente">
-
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>@Html.CheckBoxFor(model => model.particular, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,1);" })</td>
-                                        <td>&nbsp; @Html.Label("Particular ", htmlAttributes: new { @class = "control-label", @style = "font-size: 17px; padding-top:10px;" })</td>
-                                    </tr>
-                                    <tr>
-                                        <td>@Html.CheckBoxFor(model => model.Conveniado, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,2);" })</td>
-                                        <td>&nbsp;@Html.Label("Conveniado ", htmlAttributes: new { @class = "control-label", @style = "font-size: 17px; padding-top:10px;" }) </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        @if (Model.Conveniado)
-                        {
-                            <div class="col-md-4" id="idNomeConvenio">
-                                @Html.Label("Nome do Convênio", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Convenio, new { htmlAttributes = new { @class = "form-control", @style = "width:200px", @readonly = "@readonly" } })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Paciente_string, new
+                                                 {
+                                                     htmlAttributes = new { @class = "form-control", @style = "width:260px", @readonly = "@readonly" }
+                                                 })
                             </div>
 
-                            <div class="col-md-4" id="idNrCarterinha">
-                                @Html.Label("Número da Carterinha", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Numero_Carterinha, new { htmlAttributes = new { @class = "form-control", @style = "width:200px", @onkeypress = "return SomenteNumero(event)", @readonly = "@readonly" } })
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+
+                            <div class="col-md-3" id="idTpPaciente">
+
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>@Html.CheckBoxFor(model => model.particular, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,1);" })</td>
+                                            <td>&nbsp; @Html.Label("Particular ", htmlAttributes: new { @class = "control-label", @style = "font-size: 17px; padding-top:10px;" })</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@Html.CheckBoxFor(model => model.Conveniado, new { @class = "form-control checkbox", @onchange = "ValidaCheckBox(this,2);" })</td>
+                                            <td>&nbsp;@Html.Label("Conveniado ", htmlAttributes: new { @class = "control-label", @style = "font-size: 17px; padding-top:10px;" }) </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        }
-                    </div>
 
-                    <br />
+                            @if (Model.Conveniado)
+                            {
+                                <div class="col-md-4" id="idNomeConvenio">
+                                    @Html.Label("Nome do Convênio", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Convenio, new { htmlAttributes = new { @class = "form-control", @style = "width:200px" } })
+                                </div>
 
-                    <div class="row" id="idIdade">
+                                <div class="col-md-4" id="idNrCarterinha">
+                                    @Html.Label("Número da Carterinha", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Numero_Carterinha, new { htmlAttributes = new { @class = "form-control", @style = "width:200px", @onkeypress = "return SomenteNumero(event)" } })
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-4" id="idNomeConvenio" hidden="hidden">
+                                    @Html.Label("Nome do Convênio", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Convenio, new { htmlAttributes = new { @class = "form-control", @style = "width:200px" } })
+                                </div>
 
-                        <div class="col-md-3" style="font-size:17px">
-                            @Html.Label("Idade: ", htmlAttributes: new { @name = "lblIdade", @id = "lblIdade", @class = "control-label", @style = "font-weight: bold;font-size: 17px;" }) &nbsp;&nbsp;
-                            <u> @Html.DisplayFor(model => model.Idade, new { htmlAttributes = new { @class = "control-label", @style = "font-size: 17px;" } })</u>
+                                <div class="col-md-4" id="idNrCarterinha" hidden="hidden">
+                                    @Html.Label("Número da Carterinha", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Numero_Carterinha, new { htmlAttributes = new { @class = "form-control", @style = "width:200px", @onkeypress = "return SomenteNumero(event)" } })
+                                </div>
+                            }
+                        </div>
+
+                        <br />
+
+                        <div class="row" id="idIdade">
+
+                            <div class="col-md-3" style="font-size:17px">
+                                @Html.Label("Idade: ", htmlAttributes: new { @name = "lblIdade", @id = "lblIdade", @class = "control-label", @style = "font-weight: bold;font-size: 17px;" }) &nbsp;&nbsp;
+                                <u> @Html.DisplayFor(model => model.Idade, new { htmlAttributes = new { @class = "control-label", @style = "font-size: 17px;" } })</u>
+
+                            </div>
+
+                            @if (!Model.Maior_Idade)
+                            {
+                                <div class="col-md-4" id="idNomeResponsavel">
+                                    @Html.Label("Nome do Responsável", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Nome_Responsavel, new { htmlAttributes = new { @class = "form-control", @readonly = "@readonly", @style = "width:300px" } })
+                                </div>
+
+                                <div class="col-md-4" id="idCpfResponsavel">
+                                    @Html.Label("CPF do Responsável", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
+                                    @Html.EditorFor(model => model.Cpf_Responsavel, new { htmlAttributes = new { @class = "form-control", @readonly = "@readonly", @style = "width: 200px", @maxLength = "14", @onkeypress = "formatarCpf();" } })
+                                </div>
+                            }
 
                         </div>
+
+                        <br />
+                        <br />
 
                         @if (!Model.Maior_Idade)
                         {
-                            <div class="col-md-4" id="idNomeResponsavel">
-                                @Html.Label("Nome do Responsável", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Nome_Responsavel, new { htmlAttributes = new { @class = "form-control", @readonly = "@readonly", @style = "width:300px" } })
-                            </div>
+                            <div id="divTermo" style="padding-left:180px;">
 
-                            <div class="col-md-4" id="idCpfResponsavel">
-                                @Html.Label("CPF do Responsável", htmlAttributes: new { @class = "control-label", @style = "font-weight: bold" })
-                                @Html.EditorFor(model => model.Cpf_Responsavel, new { htmlAttributes = new { @class = "form-control", @readonly = "@readonly", @style = "width: 200px", @maxLength = "14", @onkeypress = "formatarCpf();" } })
+                                <div class="termo" style="font-size:16px">
+
+                                    <br />
+
+                                    <p>
+                                        <h6>
+                                            <b style="font-size:16px">
+                                                CONSENTIMENTO PARA AUTORIZAÇÃO DO TRATAMENTO RECOMENDADO, <br />
+                                                PREPARO PSICOLÓGICO E ESTABILIZAÇÃO PROTETORA DO PACIENTE INFANTIL<br />
+                                            </b>
+                                        </h6>
+
+                                        <br />
+
+                                        O controle de voz é um dos métodos utilizados para o preparo psicológico de pacientes infantis, e tem<br />
+                                        como objetivo chamar a atenção da criança para que esta possa ouvir o profissional, e a partir daí dar<br />
+                                        prosseguimento ao condicionamento do paciente. Esta técnica esta indicada para crianças com idade<br />
+                                        suficiente de compreensão, e com ausência de problemas mentais.<br />
+                                        A estabilização protetora parcial ou completa da criança é indicada para proteger o paciente e equipe<br />
+                                        de trabalho contra injurias durante o atendimento clinico. O objetivo da contenção é evitar ou reduzir a<br />
+                                        ocorrência de movimentos bruscos pela criança, que será executada pelo profissional responsável e<br />
+                                        auxiliado pela equipe e pais/responsáveis. Esse método está indicado para pacientes que necessitem<br />
+                                        diagnóstico ou tratamento e são incapazes de cooperar por falta de maturidade, problemas fisícos ou<br />
+                                        mentais e quando outras técnicas de controle de comportamento se mostram insuficientes. A estabilização<br />
+                                        protetora será utilizada apenas em casos absolutamente necessários.<br />
+                                        As técnicas´ de controle de voz e estabilização protetora serão realizadas pelo profissional em casos<br />
+                                        absolutamente necessários e quando outras técnicas de preparo psicológico se mostrarem insuficientes.<br />
+                                        <br />
+                                        Após ter sido esclarecido a respeito dos objetivos e indicações da estabilização protetora e o controle<br />
+                                        de voz, autorizo sua execução em meu/minha filho(a)/neto(a) conforme as necessidades de tratamento.<br />
+                                        Sendo o paciente incapaz de consentir legalmente, pois apresenta idade menor de 18 anos, eu autorizo<br />
+                                        para o mesmo.<br /><br />
+                                        <br />
+                                        São José dos Campos, @DateTime.Now.Day.ToString() de @ViewBag.Mes @DateTime.Now.Year.ToString() <br /><br />
+
+                                        @*<div id="assinatura">
+                                                <canvas class="panel panel-default" width="350" height="100" id="signature"></canvas>
+
+                                                <br />
+
+                                                <button class="btn" id="accept"><span class="glyphicon glyphicon-ok" style="color:green"></span></button>
+                                                <button class="btn" id="clear"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>
+
+
+                                            </div>*@
+
+                                        <div id="idimgAssinatura" style="padding-left:560px;">
+
+                                            <div id="idimg">
+                                                @*<button class="btn" id="idnewSignature" onclick="NewCanvas();"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>*@
+                                                <br />
+                                                <img width="350" height="100" id="savetarget" src="@Model.Img_string" />
+                                                @Html.HiddenFor(model => model.Img_string)
+                                            </div>
+                                            _______________________________________<br />
+                                            <div style="padding-left:140px;">(Assinatura)</div>
+                                        </div>
+                                    </p>
+
+                                </div>
+
                             </div>
                         }
 
-                    </div>
+                        <br />
+                        <br />
 
-                    <br />
-                    <br />
-
-                    @if (!Model.Maior_Idade)
-                    {
-                        <div id="divTermo" style="padding-left:180px;">
-
-                            <div class="termo" style="font-size:16px">
-
-                                <br />
-
-                                <p>
-                                    <h6>
-                                        <b style="font-size:16px">
-                                            CONSENTIMENTO PARA AUTORIZAÇÃO DO TRATAMENTO RECOMENDADO, <br />
-                                            PREPARO PSICOLÓGICO E ESTABILIZAÇÃO PROTETORA DO PACIENTE INFANTIL<br />
-                                        </b>
-                                    </h6>
-
-                                    <br />
-
-                                    O controle de voz é um dos métodos utilizados para o preparo psicológico de pacientes infantis, e tem<br />
-                                    como objetivo chamar a atenção da criança para que esta possa ouvir o profissional, e a partir daí dar<br />
-                                    prosseguimento ao condicionamento do paciente. Esta técnica esta indicada para crianças com idade<br />
-                                    suficiente de compreensão, e com ausência de problemas mentais.<br />
-                                    A estabilização protetora parcial ou completa da criança é indicada para proteger o paciente e equipe<br />
-                                    de trabalho contra injurias durante o atendimento clinico. O objetivo da contenção é evitar ou reduzir a<br />
-                                    ocorrência de movimentos bruscos pela criança, que será executada pelo profissional responsável e<br />
-                                    auxiliado pela equipe e pais/responsáveis. Esse método está indicado para pacientes que necessitem<br />
-                                    diagnóstico ou tratamento e são incapazes de cooperar por falta de maturidade, problemas fisícos ou<br />
-                                    mentais e quando outras técnicas de controle de comportamento se mostram insuficientes. A estabilização<br />
-                                    protetora será utilizada apenas em casos absolutamente necessários.<br />
-                                    As técnicas´ de controle de voz e estabilização protetora serão realizadas pelo profissional em casos<br />
-                                    absolutamente necessários e quando outras técnicas de preparo psicológico se mostrarem insuficientes.<br />
-                                    <br />
-                                    Após ter sido esclarecido a respeito dos objetivos e indicações da estabilização protetora e o controle<br />
-                                    de voz, autorizo sua execução em meu/minha filho(a)/neto(a) conforme as necessidades de tratamento.<br />
-                                    Sendo o paciente incapaz de consentir legalmente, pois apresenta idade menor de 18 anos, eu autorizo<br />
-                                    para o mesmo.<br /><br />
-                                    <br />
-                                    São José dos Campos, @DateTime.Now.Day.ToString() de @ViewBag.Mes @DateTime.Now.Year.ToString() <br /><br />
-
-                                    @*<div id="assinatura">
-                                            <canvas class="panel panel-default" width="350" height="100" id="signature"></canvas>
-
-                                            <br />
-
-                                            <button class="btn" id="accept"><span class="glyphicon glyphicon-ok" style="color:green"></span></button>
-                                            <button class="btn" id="clear"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>
-
-
-                                        </div>*@
-
-                                    <div id="idimgAssinatura" style="padding-left:560px;">
-
-                                        <div id="idimg">
-                                            @*<button class="btn" id="idnewSignature" onclick="NewCanvas();"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>*@
-                                            <br />
-                                            <img width="350" height="100" id="savetarget" src="@Model.Img_string" />
-                                            @Html.HiddenFor(model => model.Img_string)
-                                        </div>
-                                        _______________________________________<br />
-                                        <div style="padding-left:140px;">(Assinatura)</div>
-                                    </div>
-                                </p>
-
-                            </div>
-
+                        <div class="row" id="divButtons" style="padding-left:875px;">
+                            <input type=button id="btnSalvarPreConsulta" class="btn btn-success" value="Salvar" onClick="SalvarPreConsulta();" hidden="hidden">
+                            <input type=button class="btn btn-danger" value="Voltar" onClick="CancelPreConsulta();">
                         </div>
-                    }
 
-                    <br />
-                    <br />
-
-                    <div class="row" id="divButtons" style="padding-left:875px;">
-                        @*<input type=button id="btnSalvarPreConsulta" class="btn btn-success" value="Salvar" onClick="SalvarPreConsulta();" hidden="hidden">*@
-                        <input type=button class="btn btn-danger" value="Voltar" onClick="CancelPreConsulta();">
                     </div>
 
                 </div>
@@ -186,8 +201,6 @@
         </div>
 
     </div>
-
-</div>
 }
 
 @section Scripts{
@@ -197,5 +210,6 @@
 
     <script src="~/Scripts/signature_pad.min.js"></script>
 
+    <script src="~/Scripts/PreConsulta/PreConsultaEdit.js"></script>
 
 }

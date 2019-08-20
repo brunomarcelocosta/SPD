@@ -12,5 +12,7 @@ namespace SPD.Services.Interface.Model
 
         //[Transactional]
         bool Delete(int id, Usuario usuario, out string resultado);
+
+        bool Update(PreConsulta preConsulta, Usuario usuario, out string resultado);
     }
 }

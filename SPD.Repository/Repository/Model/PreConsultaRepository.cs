@@ -16,12 +16,9 @@ namespace SPD.Repository.Repository.Model
             try
             {
                 preConsultaUpdate.AGENDA = agenda;
-                preConsultaUpdate.MAIOR_IDADE = preConsulta.MAIOR_IDADE;
                 preConsultaUpdate.AUTORIZADO = preConsulta.AUTORIZADO;
                 preConsultaUpdate.CONVENIO = preConsulta.CONVENIO;
                 preConsultaUpdate.NUMERO_CARTERINHA = preConsulta.NUMERO_CARTERINHA;
-                //preConsultaUpdate.VALOR_CONSULTA = preConsulta.VALOR_CONSULTA;
-                //preConsultaUpdate.TIPO_PAGAMENTO = preConsulta.TIPO_PAGAMENTO;
                 preConsultaUpdate.DT_INSERT = preConsulta.DT_INSERT;
 
                 UpdateEntity(preConsultaUpdate);

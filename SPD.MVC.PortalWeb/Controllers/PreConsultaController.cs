@@ -75,7 +75,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             List<object> listToView = new List<object>();
 
-            foreach (var item in preConsultaViewModel.ListPreConsultaViewModel)
+            foreach (var item in preConsultaViewModel.ListPreConsultaViewModel.OrderBy(a => a.Agenda.Dentista.Nome).ThenBy(a => a.Agenda.Hora_Inicio))
             {
                 listToView.Add(new
                 {
@@ -235,27 +235,27 @@ namespace SPD.MVC.PortalWeb.Controllers
             return View(preConsultaViewModel);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Update(PreConsultaViewModel preConsultaViewModel)
-        //{
-        //    var resultado = "";
+        public ActionResult Update(PreConsultaViewModel preConsultaViewModel)
+        {
 
-        //    var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
+            var preConsulta = ToViewModel(_PreConsultaService.GetById(preConsultaViewModel.ID));
 
-        //    var paciente = ToViewModel<Paciente, PacienteViewModel>(_PacienteService.Query().Where(a => a.NOME.Equals(preConsultaViewModel.Paciente_string)).FirstOrDefault());
-        //    preConsultaViewModel.Paciente = paciente;
+            preConsulta.ID_Agenda = preConsultaViewModel.ID_Agenda;
+            preConsulta.Autorizado = true;
+            preConsulta.Convenio = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? "Particular" : preConsultaViewModel.Convenio;
+            preConsulta.Numero_Carterinha = string.IsNullOrWhiteSpace(preConsultaViewModel.Numero_Carterinha) ? "" : preConsultaViewModel.Numero_Carterinha;
+            preConsulta.Dt_Insert = DateTime.Now;
 
-        //    var preConsulta = ToModel(preConsultaViewModel);
+            var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
-        //    if (!_PreConsultaService.Update(preConsulta, user_logado, out resultado))
-        //    {
-        //        return Json(new { Success = false, Response = resultado });
-        //    }
+            if (!_PreConsultaService.Update(ToModel(preConsulta), user_logado, out string resultado))
+            {
+                return Json(new { Success = false, Response = resultado });
+            }
 
-        //    return Json(new { Success = true });
+            return Json(new { Success = true });
 
-        //}
+        }
 
         #endregion
 

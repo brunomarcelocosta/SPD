@@ -133,11 +133,28 @@ namespace SPD.Services.Services.Model
             }
         }
 
-        private Assinatura GetAssinatura(Assinatura assinatura)
+        public bool Update(PreConsulta preConsulta, Usuario usuario, out string resultado)
         {
-            var assinaturaReturn = _AssinaturaRepository.GetAssinatura(assinatura, ExisteAssinatura(assinatura));
+            resultado = "";
 
-            return assinaturaReturn;
+            try
+            {
+
+                var agenda = _AgendaRepository.Query().Where(a => a.ID == preConsulta.AGENDA.ID).FirstOrDefault();
+                //preConsulta.AGENDA = agenda;
+
+
+                _PreConsultaRepository.UpdatePreConsulta(preConsulta, agenda);
+
+                _HistoricoOperacaoRepository.Insert($"Atualizou o Pré Atendimento ao paciente {preConsulta.AGENDA.NOME_PACIENTE}", usuario, Tipo_Operacao.Inclusao, Tipo_Funcionalidades.PreConsulta);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+                return false;
+            }
         }
     }
 }
