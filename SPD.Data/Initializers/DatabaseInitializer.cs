@@ -167,7 +167,7 @@ namespace SPD.Data.Initializers
 
             Funcionalidade editPreConsulta = new Funcionalidade()
             {
-                NOME = "Consultar Pré Atendimentos"
+                NOME = "Editar Pré Atendimentos"
 
             };
 
@@ -177,9 +177,21 @@ namespace SPD.Data.Initializers
 
             };
 
-            Funcionalidade consulta = new Funcionalidade()
+            Funcionalidade addconsulta = new Funcionalidade()
             {
-                NOME = "Gerenciar Consultas"
+                NOME = "Iniciar Consulta"
+
+            };
+
+            Funcionalidade listconsulta = new Funcionalidade()
+            {
+                NOME = "Listar Consultas"
+
+            };
+
+            Funcionalidade histconsulta = new Funcionalidade()
+            {
+                NOME = "Histórico de Consultas"
 
             };
 
@@ -197,8 +209,8 @@ namespace SPD.Data.Initializers
 
             return new Funcionalidade[] { login, logoff, usuario, editusuario, deleteusuario, addusuario, desblusuario, descusuario,
                                           redefinirSenha, agenda,agendaADD,agendaEDIT, agendaDEL, paciente, addPaciente, editPaciente, delPaciente, dentista, addDentista,
-                                          editDentista, delDentista,preConsulta, addPreConsulta, editPreConsulta, delPreConsulta,
-                                          consulta, historico, notificacao };
+                                          editDentista, delDentista,preConsulta, addPreConsulta, editPreConsulta, delPreConsulta, listconsulta,
+                                          addconsulta, histconsulta, historico, notificacao };
 
         }
 

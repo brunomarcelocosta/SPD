@@ -196,7 +196,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Edit 
 
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Consultar Pré Atendimentos\"}")]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Editar Pré Atendimentos\"}")]
         public ActionResult Edit(int id)
         {
             PreConsultaViewModel preConsultaViewModel = new PreConsultaViewModel();

@@ -26,6 +26,6 @@ namespace SPD.Model.Model
 
         public DateTime DT_CONSULTA { get; set; }
 
-        public bool EXCLUIDO { get; set; } // 0 - NAO       1 -  SIM 
+        //public bool EXCLUIDO { get; set; } // 0 - NAO       1 -  SIM 
     }
 }

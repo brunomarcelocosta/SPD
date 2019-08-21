@@ -31,6 +31,8 @@ namespace SPD.MVC.Geral.ViewModels
 
         public string DataDe_Filtro { get; set; }
         public string DataAte_Filtro { get; set; }
+        public string HoraDe_Filtro { get; set; }
+        public string HoraAte_Filtro { get; set; }
         public string Descricao_Filtro { get; set; }
 
         public string TipoOperacao_Filtro { get; set; }

@@ -1,5 +1,6 @@
 ﻿using SPD.MVC.Geral.ViewModels;
 using System;
+using System.Collections.Generic;
 
 namespace SPD.MVC.PortalWeb.ViewModels
 {
@@ -28,5 +29,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public string Dentista_string { get; set; }
         public string Img_string { get; set; }
 
+
+        public List<ConsultaViewModel> ListConsultaViewModel { get; set; }
     }
 }
