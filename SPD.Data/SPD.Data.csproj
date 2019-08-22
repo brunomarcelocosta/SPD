@@ -102,6 +102,10 @@
     <Compile Include="Migrations\201908020314302_add_id_agenda_na_pre_consulta.Designer.cs">
       <DependentUpon>201908020314302_add_id_agenda_na_pre_consulta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908220410336_configurando_metodos_consulta.cs" />
+    <Compile Include="Migrations\201908220410336_configurando_metodos_consulta.Designer.cs">
+      <DependentUpon>201908220410336_configurando_metodos_consulta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ContextDebugger.cs" />
@@ -147,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908020314302_add_id_agenda_na_pre_consulta.resx">
       <DependentUpon>201908020314302_add_id_agenda_na_pre_consulta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908220410336_configurando_metodos_consulta.resx">
+      <DependentUpon>201908220410336_configurando_metodos_consulta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

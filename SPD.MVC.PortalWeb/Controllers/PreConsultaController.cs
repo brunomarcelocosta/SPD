@@ -173,6 +173,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 Assinatura = assinatura.ASSINATURA == null ? null : assinatura,
                 Maior_Idade = preConsultaViewModel.Maior_Idade,
                 Autorizado = true,
+                Consulta_Iniciada = false,
                 Convenio = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? "Particular" : preConsultaViewModel.Convenio,
                 Numero_Carterinha = string.IsNullOrWhiteSpace(preConsultaViewModel.Numero_Carterinha) ? "" : preConsultaViewModel.Numero_Carterinha,
                 Dt_Insert = DateTime.Now
@@ -242,6 +243,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             preConsulta.ID_Agenda = preConsultaViewModel.ID_Agenda;
             preConsulta.Autorizado = true;
+            preConsulta.Consulta_Iniciada = false;
             preConsulta.Convenio = string.IsNullOrWhiteSpace(preConsultaViewModel.Convenio) ? "Particular" : preConsultaViewModel.Convenio;
             preConsulta.Numero_Carterinha = string.IsNullOrWhiteSpace(preConsultaViewModel.Numero_Carterinha) ? "" : preConsultaViewModel.Numero_Carterinha;
             preConsulta.Dt_Insert = DateTime.Now;

@@ -54,8 +54,6 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .HasColumnName("dt_consulta")
            .IsRequired();
 
-            Property(consulta => consulta.EXCLUIDO)
-           .HasColumnName("excluido");
         }
     }
 }

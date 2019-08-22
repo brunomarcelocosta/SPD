@@ -13,6 +13,8 @@ namespace SPD.Model.Model
 
         public bool? AUTORIZADO { get; set; }
 
+        public bool? CONSULTA_INICIADA { get; set; }
+
         public string CONVENIO { get; set; }
 
         public string NUMERO_CARTERINHA { get; set; }

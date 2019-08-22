@@ -30,6 +30,6 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public string Img_string { get; set; }
 
 
-        public List<ConsultaViewModel> ListConsultaViewModel { get; set; }
+        public List<PreConsultaViewModel> ListPreConsultaViewModel { get; set; }
     }
 }

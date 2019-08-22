@@ -33,6 +33,9 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
             Property(pre => pre.AUTORIZADO)
            .HasColumnName("autorizado");
 
+            Property(pre => pre.CONSULTA_INICIADA)
+           .HasColumnName("consulta_inic");
+
             Property(pre => pre.CONVENIO)
            .HasColumnName("convenio")
            .HasMaxLength(50);

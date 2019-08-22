@@ -488,6 +488,7 @@
     <Content Include="Content\Styles\bootstrap.css.map" />
     <Content Include="Content\Styles\bootstrap.min.css.map" />
     <Content Include="Scripts\Consulta\Consulta.js" />
+    <Content Include="Scripts\Consulta\ConsultaNew.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap4.js" />
@@ -664,11 +665,11 @@
     <Content Include="Views\PreConsulta\New.cshtml" />
     <Content Include="Views\PreConsulta\Edit.cshtml" />
     <Content Include="Views\Shared\_modalAutorizarConsulta.cshtml" />
-    <Content Include="Views\Consulta\Index.cshtml" />
     <Content Include="Views\Agenda\List.cshtml" />
     <Content Include="Views\Agenda\_List.cshtml" />
     <Content Include="Views\Agenda\_Filtros.cshtml" />
     <Content Include="Views\Agenda\New.cshtml" />
+    <Content Include="Views\Consulta\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
