@@ -125,8 +125,7 @@ function IniciarConsulta(obj) {
 
     $.ajax({
         type: "POST",
-        url: '/Consulta/New',
-        data: { id: valueID },
+        url: '/Consulta/ValidaDentista',
         dataType: 'JSON',
         success: function (result) {
 

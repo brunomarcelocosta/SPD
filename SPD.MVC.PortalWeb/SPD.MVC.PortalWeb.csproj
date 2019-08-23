@@ -670,6 +670,9 @@
     <Content Include="Views\Agenda\_Filtros.cshtml" />
     <Content Include="Views\Agenda\New.cshtml" />
     <Content Include="Views\Consulta\List.cshtml" />
+    <Content Include="Views\Consulta\New.cshtml" />
+    <Content Include="Views\Consulta\_List.cshtml" />
+    <Content Include="Views\Consulta\_Filtros.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

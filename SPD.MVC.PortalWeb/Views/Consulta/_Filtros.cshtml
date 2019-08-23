@@ -1,4 +1,4 @@
-﻿@model SPD.MVC.PortalWeb.ViewModels.PreConsultaViewModel
+﻿@model SPD.MVC.PortalWeb.ViewModels.ConsultaViewModel
 
 <div class="row alert alert-info" style="margin-left:5px; margin-right:6px;">
     <h4><span class="glyphicon glyphicon-filter"></span> <b>Filtros </b></h4>
@@ -8,19 +8,23 @@
         <div class="row">
 
             <div class="form-group col-md-4" id="divDataOper" style="padding-left:32px;">
-                @Html.Label("Data")
-                @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @readonly = "readonly", @class = "form-control ", @style = "width: 160px" } })
+                @Html.Label("Dentista")
+                @Html.EditorFor(model => model.Dentista_string, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @readonly = "readonly", @class = "form-control ", @style = "width: 160px" } })
             </div>
 
 
             <div class="form-group col-md-5" id="divNome" style="padding-left:32px;">
-                @Html.Label("Nome do Paciente")
+                @Html.Label("Paciente")
                 @Html.EditorFor(model => model.Paciente_string, new { htmlAttributes = new { @Value = Model.Paciente_string, @class = "form-control ", @style = "width: 250px" } })
             </div>
 
-            <div class="form-group col-md-3" id="divEmail" style="padding-left:32px;">
-                @Html.Label("Convênio")
-                @Html.EditorFor(model => model.Convenio, new { htmlAttributes = new { @Value = Model.Convenio, @class = "form-control", @style = "width: 130px" } })
+            <div class="form-group col-md-3" id="divDataOper">
+                @Html.Label("Data de Criação")
+                <div class="input-group input-daterange col-md-12">
+                    @Html.EditorFor(model => model.HoraDe_Filtro, new { htmlAttributes = new { @Value = Model.HoraDe_Filtro, @class = "form-control", @name = "start", @style = "width: 100px" } })
+                    <span class="input-group-addon" style="vertical-align: top; height: 18px; font-size:small"><b>até</b></span>
+                    @Html.EditorFor(model => model.HoraAte_Filtro, new { htmlAttributes = new { @Value = Model.HoraAte_Filtro, @class = "form-control", @name = "end", @style = "width: 100px" } })
+                </div>
             </div>
 
         </div>
@@ -46,10 +50,13 @@
 
     function limpar_Filtros() {
 
+        $("#Dentista_string").val("");
         $("#Paciente_string").val("");
-        $("#Convenio").val("");
+        $("#HoraDe_Filtro").val("");
+        $("#HoraAte_Filtro").val("");
     }
 
 </script>
+
 
 

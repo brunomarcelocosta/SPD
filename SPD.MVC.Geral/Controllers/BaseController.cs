@@ -64,5 +64,15 @@ namespace SPD.MVC.Geral.Controllers
             return value.ToString();
         }
 
+        public int ReturnIdade(string dt_nascimento)
+        {
+            var dt_nasc = Convert.ToDateTime(dt_nascimento);
+            int idade = DateTime.Now.Year - dt_nasc.Year;
+            if (DateTime.Now.Month < dt_nasc.Month || (DateTime.Now.Month == dt_nasc.Month && DateTime.Now.Day < dt_nasc.Day))
+                idade--;
+
+            return idade;
+        }
+
     }
 }

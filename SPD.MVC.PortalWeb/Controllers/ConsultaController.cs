@@ -19,13 +19,15 @@ namespace SPD.MVC.PortalWeb.Controllers
         private readonly IUsuarioService _UsuarioService;
         private readonly IFuncionalidadeService _FuncionalidadeService;
         private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
+        private readonly IHistoricoConsultaService _HistoricoConsultaService;
 
         public ConsultaController(IConsultaService consultaService,
                                   IPreConsultaService preconsultaService,
                                   IDentistaService dentistaService,
                                   IUsuarioService usuarioService,
                                   IFuncionalidadeService funcionalidadeService,
-                                  IUsuarioFuncionalidadeService usuariofuncionalidadeService)
+                                  IUsuarioFuncionalidadeService usuariofuncionalidadeService,
+                                  IHistoricoConsultaService historicoConsultaService)
                 : base(consultaService)
         {
             _ConsultaService = consultaService;
@@ -34,6 +36,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             _UsuarioService = usuarioService;
             _FuncionalidadeService = funcionalidadeService;
             _UsuarioFuncionalidadeService = usuariofuncionalidadeService;
+            _HistoricoConsultaService = historicoConsultaService;
         }
 
         #region List
@@ -182,15 +185,59 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Novo
 
-        public ActionResult Add(PreConsultaViewModel preConsultaViewModel)
+        public ActionResult New(string id)
         {
+            var preConsulta = ToViewModel<PreConsulta, PreConsultaViewModel>(_PreConsultaService.GetById(int.Parse(id)));
+            var dentista = _DentistaService.Query().Where(a => a.ID_USUARIO == this.GetAuthenticationFromSession().ID).FirstOrDefault();
+
+            var id_paciente = preConsulta.Agenda.ID_Paciente;
+
+            var historicos = ToListViewModel<HistoricoConsulta, HistoricoConsultaViewModel>
+                            (
+                                _HistoricoConsultaService
+                                .Query()
+                                .Where(a => a.CONSULTA.ID_DENTISTA == dentista.ID &&
+                                            a.CONSULTA.PRE_CONSULTA.AGENDA.ID_PACIENTE == id_paciente
+                                       )
+                                .ToList()
+                            );
 
 
+            ConsultaViewModel consultaViewModel = new ConsultaViewModel
+            {
+                ID_Pre_Consulta = preConsulta.ID,
+                ID_Dentista = dentista.ID,
+                Paciente_string = preConsulta.Agenda.Nome_Paciente,
+                Celular = preConsulta.Agenda.Celular,
+                Idade_string = $"{ReturnIdade(preConsulta.Agenda.Paciente.Data_Nasc)} anos",
+                ListHistoricoConsultaViewModels = historicos
+            };
+
+            return View(consultaViewModel);
         }
 
         #endregion
 
         #region Validações
+
+        public ActionResult ValidaDentista()
+        {
+            var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
+
+            if (!ReturnPermission(user_logado, "Iniciar Consulta"))
+            {
+                return Json(new { Success = false, Response = "Você não tem permissão para esta funcionalidade." });
+            }
+
+            var dentista = _DentistaService.Query().Where(a => a.ID_USUARIO == user_logado.ID).FirstOrDefault();
+
+            if (dentista == null)
+            {
+                return Json(new { Success = false, Response = "É necessário ser um dentista." });
+            }
+
+            return Json(new { Success = true });
+        }
 
         public bool ReturnPermission(Usuario usuario, string func)
         {

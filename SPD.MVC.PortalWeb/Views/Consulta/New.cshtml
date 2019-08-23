@@ -1,0 +1,21 @@
+﻿@model SPD.MVC.PortalWeb.ViewModels.ConsultaViewModel
+
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Nova Consulta</h2>
+
+<br />
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(a => a.ID_Pre_Consulta)
+    @Html.HiddenFor(a => a.ID_Dentista)
+
+}
+
