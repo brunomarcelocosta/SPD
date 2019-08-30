@@ -5,9 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Nova Consulta</h2>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-<br />
+<h2> Consulta</h2>
+
 <hr />
 
 @using (Html.BeginForm())
@@ -17,5 +20,155 @@
     @Html.HiddenFor(a => a.ID_Pre_Consulta)
     @Html.HiddenFor(a => a.ID_Dentista)
 
+    <input type="text" id="img_string_value" name="img_string_value" hidden="hidden" value="@ViewBag.Img" />
+    <input type="text" id="accept_string_value" name="accept_string_value" hidden="hidden" value="@ViewBag.Accept" />
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Dados do paciente</b></div>
+                <div class="panel-body">
+                    <div id="dadosPessoais">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                @Html.Label("Nome", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Paciente_string, new
+                                                 {
+                                                     htmlAttributes = new { @class = "form-control", @style = "width:220px", @readonly = "@readonly" }
+                                                 })
+                            </div>
+
+                            <div class="col-md-6" style="padding-left:40px">
+                                @Html.Label("Idade", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Idade_string, new { htmlAttributes = new { @class = "form-control", @style = "width:90px", @readonly = "@readonly" } })
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                @Html.Label("Convênio", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Convenio_string, new { htmlAttributes = new { @class = "form-control", @style = "width:220px", @readonly = "@readonly" } })
+                            </div>
+
+                            <div class="col-md-6" style="padding-left:40px">
+                                @Html.Label("Celular", htmlAttributes: new { @class = "control-label ", @style = "font-weight: bold" })
+                                @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control", @style = "width:140px", @readonly = "@readonly" } })
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Histórico de consultas</b></div>
+                <div class="panel-body">
+                    <div id="idHistoricoPaciente">
+                        <table id="idGrid" class="table table-hover table-condensed text-left" cellspacing="0" style="border-collapse:collapse;border:0px">
+                            <thead>
+                                <tr>
+                                    <th> Dia </th>
+                                    <th> Hora </th>
+                                    <th> Descrição </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ListHistoricoConsultaViewModels)
+                                {
+                                    <tr>
+                                        <td> @item.Dt_Consulta</td>
+                                        <td> @item.Consulta.Pre_Consulta.Agenda.Hora_Inicio</td>
+                                        <td>  @item.Consulta.Descricao_Procedimento</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Inserir Raio-x</b></div>
+                <div class="panel-body">
+                    <div id="dadosPessoais">
+                        @*ToDo*@
+                        Validar...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Odontograma</b></div>
+                <div class="panel-body">
+                    <div id="dadosPessoais">
+
+                        @*<div id="assinatura">
+                                <canvas class="panel panel-default" width="350" height="100" id="odontogramaAdulto"></canvas>
+
+                                <br />
+
+                                <button class="btn" id="accept"><span class="glyphicon glyphicon-ok" style="color:green"></span></button>
+                                <button class="btn" id="clear"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>
+
+
+                            </div>*@
+
+                        <div>
+                            <img width="350" height="100" id="savetarget" src="@Model.Img_string" />
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <b> Descrição do atendimento</b></div>
+                <div class="panel-body">
+                    <div id="dadosPessoais">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 }
 
+@section Scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/site")
+
+    @*<script src="~/Scripts/signature_pad.min.js"></script>*@
+    <script src="~/Scripts/Consulta/ConsultaNew.js"></script>
+
+}

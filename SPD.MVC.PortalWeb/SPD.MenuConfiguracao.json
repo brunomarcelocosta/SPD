@@ -78,7 +78,7 @@
         "Titulo": "Consulta",
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "Consulta",
-        "Acao": "Index",
+        "Acao": "List",
         "Perfil": "Listar Consultas"
       },
       {

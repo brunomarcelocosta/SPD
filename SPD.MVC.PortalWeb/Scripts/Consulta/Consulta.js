@@ -68,8 +68,8 @@ function DataTable() {
             "data": {
                 'Dentista_string': $('#Dentista_string').val(),
                 'Paciente_string': $('#Paciente_string').val(),
-                'HoraDe': $('#HoraDe').val(),
-                'HoraAte': $('#HoraAte').val()
+                'HoraDe_Filtro': $('#HoraDe_Filtro').val(),
+                'HoraAte_Filtro': $('#HoraAte_Filtro').val()
             }
         },
 

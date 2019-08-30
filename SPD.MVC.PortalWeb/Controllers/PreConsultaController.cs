@@ -221,8 +221,6 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 var assinatura = ToViewModel<Assinatura, AssinaturaViewModel>(_AssinaturaService.GetById(preConsultaViewModel.ID_Assinatura.Value));
 
-                var teste = Convert.ToBase64String(assinatura.ASSINATURA);
-
                 preConsultaViewModel.Nome_Responsavel = assinatura.NOME_RESPONSAVEL;
                 preConsultaViewModel.Cpf_Responsavel = assinatura.CPF_RESPONSAVEL;
                 preConsultaViewModel.Img_string = $"data:image/png;base64,{Convert.ToBase64String(assinatura.ASSINATURA)}";

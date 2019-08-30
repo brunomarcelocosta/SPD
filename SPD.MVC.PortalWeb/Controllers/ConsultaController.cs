@@ -5,6 +5,8 @@ using SPD.MVC.PortalWeb.ViewModels;
 using SPD.Services.Interface.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +22,7 @@ namespace SPD.MVC.PortalWeb.Controllers
         private readonly IFuncionalidadeService _FuncionalidadeService;
         private readonly IUsuarioFuncionalidadeService _UsuarioFuncionalidadeService;
         private readonly IHistoricoConsultaService _HistoricoConsultaService;
+        private readonly IPacienteService _PacienteService;
 
         public ConsultaController(IConsultaService consultaService,
                                   IPreConsultaService preconsultaService,
@@ -27,6 +30,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                                   IUsuarioService usuarioService,
                                   IFuncionalidadeService funcionalidadeService,
                                   IUsuarioFuncionalidadeService usuariofuncionalidadeService,
+                                  IPacienteService pacienteService,
                                   IHistoricoConsultaService historicoConsultaService)
                 : base(consultaService)
         {
@@ -37,6 +41,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             _FuncionalidadeService = funcionalidadeService;
             _UsuarioFuncionalidadeService = usuariofuncionalidadeService;
             _HistoricoConsultaService = historicoConsultaService;
+            _PacienteService = pacienteService;
         }
 
         #region List
@@ -45,6 +50,11 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult List(FormCollection collection = null)
         {
             ConsultaViewModel consultaViewModel = new ConsultaViewModel();
+
+            var id_sessao = this.GetAuthenticationFromSession().ID;
+
+            var dentista = _DentistaService.Query().Where(a => a.ID_USUARIO == id_sessao).FirstOrDefault();
+            consultaViewModel.Dentista_string = dentista.NOME;
 
             consultaViewModel = ReturnConsulta(collection);
 
@@ -79,6 +89,7 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 listToView.Add(new
                 {
+                    item.ID,
                     Hora = item.Agenda.Hora_Inicio,
                     Paciente = item.Agenda.Nome_Paciente,
                     Autorizado = item.Autorizado == true ? "Sim" : "Não",
@@ -123,14 +134,6 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             if (collection != null)
             {
-                if (!string.IsNullOrWhiteSpace(collection["Dentista_string"]))
-                {
-                    var nome = collection["Dentista_string"].ToString();
-
-                    ListaFiltrada = ListaFiltrada.Where(a => a.Agenda.Dentista.Nome.Contains(nome)).ToList();
-                    consultaViewModel.Dentista_string = nome;
-                }
-
                 if (!string.IsNullOrWhiteSpace(collection["Paciente_string"]))
                 {
                     var nome = collection["Paciente_string"].ToString();
@@ -139,34 +142,34 @@ namespace SPD.MVC.PortalWeb.Controllers
                     consultaViewModel.Paciente_string = nome;
                 }
 
-                if (!string.IsNullOrWhiteSpace(collection["HoraDe"]) && !string.IsNullOrWhiteSpace(collection["DataAte"]))
+                if (!string.IsNullOrWhiteSpace(collection["HoraDe_Filtro"]) && !string.IsNullOrWhiteSpace(collection["DataAte"]))
                 {
-                    var dataDe = Convert.ToDateTime(collection["HoraDe"].ToString());
-                    var dataAte = Convert.ToDateTime(collection["HoraAte"].ToString());
+                    var dataDe = Convert.ToDateTime(collection["HoraDe_Filtro"].ToString());
+                    var dataAte = Convert.ToDateTime(collection["HoraAte_Filtro"].ToString());
 
                     ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Agenda.Hora_Inicio) >= dataDe &&
                                                              Convert.ToDateTime(a.Agenda.Hora_Fim) < dataAte.AddHours(1))
                                                  .ToList();
 
-                    consultaViewModel.DataDe_Filtro = collection["HoraDe"];
-                    consultaViewModel.DataAte_Filtro = collection["HoraAte"];
+                    consultaViewModel.DataDe_Filtro = collection["HoraDe_Filtro"];
+                    consultaViewModel.DataAte_Filtro = collection["HoraAte_Filtro"];
                 }
 
-                else if (!string.IsNullOrWhiteSpace(collection["HoraDe"]))
+                else if (!string.IsNullOrWhiteSpace(collection["HoraDe_Filtro"]))
                 {
-                    var dataDe = Convert.ToDateTime(collection["HoraDe"].ToString());
+                    var dataDe = Convert.ToDateTime(collection["HoraDe_Filtro"].ToString());
 
                     ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Agenda.Hora_Inicio) >= dataDe).ToList();
-                    consultaViewModel.DataDe_Filtro = collection["HoraDe"];
+                    consultaViewModel.DataDe_Filtro = collection["HoraDe_Filtro"];
 
                 }
 
-                else if (!string.IsNullOrWhiteSpace(collection["HoraAte"]))
+                else if (!string.IsNullOrWhiteSpace(collection["HoraAte_Filtro"]))
                 {
-                    var dataAte = Convert.ToDateTime(collection["HoraAte"].ToString());
+                    var dataAte = Convert.ToDateTime(collection["HoraAte_Filtro"].ToString());
 
                     ListaFiltrada = ListaFiltrada.Where(a => Convert.ToDateTime(a.Agenda.Hora_Fim) < dataAte.AddHours(1)).ToList();
-                    consultaViewModel.DataAte_Filtro = collection["HoraAte"];
+                    consultaViewModel.DataAte_Filtro = collection["HoraAte_Filtro"];
                 }
             }
 
@@ -175,6 +178,12 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             ListaFiltrada = ListaFiltrada.Where(a => a.Agenda.Data_Consulta.Equals(datenow)).ToList();
             consultaViewModel.DataDe_Filtro = date_string;
+
+            var id_sessao = this.GetAuthenticationFromSession().ID;
+            var dentista = _DentistaService.Query().Where(a => a.ID_USUARIO == id_sessao).FirstOrDefault().NOME;
+
+            ListaFiltrada = ListaFiltrada.Where(a => a.Agenda.Dentista.Nome.Contains(dentista)).ToList();
+            consultaViewModel.Dentista_string = dentista;
 
             consultaViewModel.ListPreConsultaViewModel = ListaFiltrada;
 
@@ -188,9 +197,12 @@ namespace SPD.MVC.PortalWeb.Controllers
         public ActionResult New(string id)
         {
             var preConsulta = ToViewModel<PreConsulta, PreConsultaViewModel>(_PreConsultaService.GetById(int.Parse(id)));
-            var dentista = _DentistaService.Query().Where(a => a.ID_USUARIO == this.GetAuthenticationFromSession().ID).FirstOrDefault();
+
+            var id_sessao = this.GetAuthenticationFromSession().ID;
+            var dentista = _DentistaService.Query().Where(a => a.ID_USUARIO == id_sessao).FirstOrDefault();
 
             var id_paciente = preConsulta.Agenda.ID_Paciente;
+            var paciente = ToViewModel<Paciente, PacienteViewModel>(_PacienteService.GetById(id_paciente.Value));
 
             var historicos = ToListViewModel<HistoricoConsulta, HistoricoConsultaViewModel>
                             (
@@ -203,15 +215,24 @@ namespace SPD.MVC.PortalWeb.Controllers
                             );
 
 
+            var odontograma = GetOdontograma();
+            var odontograma_string = $"data:image/png;base64,{Convert.ToBase64String(odontograma)}";
+
             ConsultaViewModel consultaViewModel = new ConsultaViewModel
             {
                 ID_Pre_Consulta = preConsulta.ID,
                 ID_Dentista = dentista.ID,
                 Paciente_string = preConsulta.Agenda.Nome_Paciente,
                 Celular = preConsulta.Agenda.Celular,
-                Idade_string = $"{ReturnIdade(preConsulta.Agenda.Paciente.Data_Nasc)} anos",
-                ListHistoricoConsultaViewModels = historicos
+                Idade_string = $"{ReturnIdade(paciente.Data_Nasc)} anos",
+                ListHistoricoConsultaViewModels = historicos,
+                Odontograma = odontograma,
+                Img_string = odontograma_string
             };
+
+
+
+
 
             return View(consultaViewModel);
         }
@@ -258,6 +279,25 @@ namespace SPD.MVC.PortalWeb.Controllers
             {
                 return false;
             }
+        }
+
+        #endregion
+
+        #region Gets
+
+        public byte[] GetOdontograma()
+        {
+            var filePath = ConfigurationManager.AppSettings["odontograma"].ToString();
+
+            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+
+            byte[] imagemArray = br.ReadBytes((int)fs.Length);
+
+            br.Close();
+            fs.Close();
+
+            return imagemArray;
         }
 
         #endregion
