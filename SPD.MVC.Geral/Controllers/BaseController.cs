@@ -64,12 +64,14 @@ namespace SPD.MVC.Geral.Controllers
             return value.ToString();
         }
 
-        public int ReturnIdade(string dt_nascimento)
+        public int ReturnIdade(string dt_nascimento, out bool maior_idade)
         {
             var dt_nasc = Convert.ToDateTime(dt_nascimento);
             int idade = DateTime.Now.Year - dt_nasc.Year;
             if (DateTime.Now.Month < dt_nasc.Month || (DateTime.Now.Month == dt_nasc.Month && DateTime.Now.Day < dt_nasc.Day))
                 idade--;
+
+            maior_idade = idade > 17 ? true : false;
 
             return idade;
         }

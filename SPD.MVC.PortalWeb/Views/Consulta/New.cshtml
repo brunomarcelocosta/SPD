@@ -19,7 +19,9 @@
 
     @Html.HiddenFor(a => a.ID_Pre_Consulta)
     @Html.HiddenFor(a => a.ID_Dentista)
+    @Html.HiddenFor(a => a.Img_string)
 
+    <input type="text" id="src_img" name="src_img" hidden="hidden" value="@ViewBag.SRC_IMG" />
     <input type="text" id="img_string_value" name="img_string_value" hidden="hidden" value="@ViewBag.Img" />
     <input type="text" id="accept_string_value" name="accept_string_value" hidden="hidden" value="@ViewBag.Accept" />
 
@@ -104,6 +106,7 @@
     <br />
 
     <div class="row">
+
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading"> <b> Inserir Raio-x</b></div>
@@ -116,50 +119,54 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <br />
 
     <div class="row">
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading"> <b> Odontograma</b></div>
                 <div class="panel-body">
                     <div id="dadosPessoais">
 
-                        @*<div id="assinatura">
-                                <canvas class="panel panel-default" width="350" height="100" id="odontogramaAdulto"></canvas>
-
-                                <br />
-
-                                <button class="btn" id="accept"><span class="glyphicon glyphicon-ok" style="color:green"></span></button>
-                                <button class="btn" id="clear"><span class="glyphicon glyphicon-repeat" style="color:darkblue"></span></button>
-
-
-                            </div>*@
-
-                        <div>
-                            <img width="350" height="100" id="savetarget" src="@Model.Img_string" />
-
+                        <div id="assinatura">
+                            <div class=" col-lg-12">
+                                <canvas class="panel panel-default" id="odontogramaAdulto"></canvas>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading"> <b> Descrição do atendimento</b></div>
                 <div class="panel-body">
                     <div id="dadosPessoais">
+                        <div class="col-md-12">
+                            @Html.EditorFor(a => a.Descricao_Procedimento, new { htmlAttributes = new { @class = "form-control", @style = "width:1000px;height:100px", } })
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <div class="row">
+        <div class="row" id="divButtons" style="padding-left:875px;">
+            <input type=button id="btnSalvarPreConsulta" class="btn btn-success" value="Salvar" onClick="SalvarConsulta();" hidden="hidden">
+            <input type=button class="btn btn-danger" value="Cancelar" onClick="CancelConsulta();">
+        </div>
     </div>
 }
 
@@ -168,7 +175,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/site")
 
-    @*<script src="~/Scripts/signature_pad.min.js"></script>*@
+    <script src="~/Scripts/signature_pad.min.js"></script>
     <script src="~/Scripts/Consulta/ConsultaNew.js"></script>
 
 }

@@ -447,7 +447,9 @@
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\odont.PNG" />
     <Content Include="Content\Images\odontograma.png" />
+    <Content Include="Content\Images\OdontogramaAdulto.png" />
     <Content Include="Content\Images\ui-icons_444444_256x240.png" />
     <Content Include="Content\Images\ui-icons_555555_256x240.png" />
     <Content Include="Content\Images\ui-icons_777620_256x240.png" />

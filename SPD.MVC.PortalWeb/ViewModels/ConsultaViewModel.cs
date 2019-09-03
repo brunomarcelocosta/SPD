@@ -30,10 +30,7 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public string Convenio_string { get; set; }
         public string Idade_string { get; set; }
         public string Celular { get; set; }
-
-
         public string Img_string { get; set; }
-
 
         public List<PreConsultaViewModel> ListPreConsultaViewModel { get; set; }
 

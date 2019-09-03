@@ -214,8 +214,8 @@ namespace SPD.MVC.PortalWeb.Controllers
                                 .ToList()
                             );
 
-
-            var odontograma = GetOdontograma();
+            var idade = ReturnIdade(paciente.Data_Nasc, out bool maior_idade);
+            var odontograma = GetOdontograma(maior_idade);
             var odontograma_string = $"data:image/png;base64,{Convert.ToBase64String(odontograma)}";
 
             ConsultaViewModel consultaViewModel = new ConsultaViewModel
@@ -224,19 +224,43 @@ namespace SPD.MVC.PortalWeb.Controllers
                 ID_Dentista = dentista.ID,
                 Paciente_string = preConsulta.Agenda.Nome_Paciente,
                 Celular = preConsulta.Agenda.Celular,
-                Idade_string = $"{ReturnIdade(paciente.Data_Nasc)} anos",
+                Idade_string = $"{idade} anos",
                 ListHistoricoConsultaViewModels = historicos,
-                Odontograma = odontograma,
                 Img_string = odontograma_string
             };
-
-
-
-
 
             return View(consultaViewModel);
         }
 
+        public ActionResult Add(ConsultaViewModel consultaViewModel)
+        {
+            var img = consultaViewModel.Img_string.Substring("data:image/png;base64,".Length);
+
+            var dentista = _DentistaService.GetById(consultaViewModel.ID_Dentista);
+            var preConsulta = _PreConsultaService.GetById(consultaViewModel.ID_Pre_Consulta);
+
+            var consulta = new Consulta()
+            {
+                DENTISTA = dentista,
+                PRE_CONSULTA = preConsulta,
+                DESCRICAO_PROCEDIMENTO = consultaViewModel.Descricao_Procedimento,
+                ODONTOGRAMA = Convert.FromBase64String(img),
+                DT_CONSULTA = DateTime.Now
+            };
+
+            var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
+
+            if (!_ConsultaService.Insert(consulta, user_logado, out string resultado))
+            {
+                return Json(new
+                {
+                    Success = false,
+                    Response = resultado
+                });
+            }
+
+            return Json(new { Success = true });
+        }
         #endregion
 
         #region Validações
@@ -285,9 +309,9 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region Gets
 
-        public byte[] GetOdontograma()
+        public byte[] GetOdontograma(bool maior_idade)
         {
-            var filePath = ConfigurationManager.AppSettings["odontograma"].ToString();
+            var filePath = maior_idade ? ConfigurationManager.AppSettings["odontograma"].ToString() : ConfigurationManager.AppSettings["odontogramaInfantil"].ToString();
 
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
