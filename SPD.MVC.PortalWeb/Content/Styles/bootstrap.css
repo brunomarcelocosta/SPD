@@ -134,8 +134,7 @@ samp {
 button,
 input,
 optgroup,
-select,
-textarea {
+select {
     margin: 0;
     font: inherit;
     color: inherit;
@@ -207,10 +206,6 @@ fieldset {
 legend {
     padding: 0;
     border: 0;
-}
-
-textarea {
-    overflow: auto;
 }
 
 optgroup {
@@ -1410,8 +1405,7 @@ body {
 
 input,
 button,
-select,
-textarea {
+select {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -3276,10 +3270,6 @@ output {
         cursor: not-allowed;
     }
 
-textarea.form-control {
-    height: auto;
-}
-
 input[type="search"] {
     -webkit-appearance: none;
 }
@@ -3416,11 +3406,6 @@ select.input-sm {
     line-height: 30px;
 }
 
-textarea.input-sm,
-select[multiple].input-sm {
-    height: auto;
-}
-
 .form-group-sm .form-control {
     height: 30px;
     padding: 5px 10px;
@@ -3434,7 +3419,6 @@ select[multiple].input-sm {
     line-height: 30px;
 }
 
-.form-group-sm textarea.form-control,
 .form-group-sm select[multiple].form-control {
     height: auto;
 }
@@ -3460,7 +3444,6 @@ select.input-lg {
     line-height: 46px;
 }
 
-textarea.input-lg,
 select[multiple].input-lg {
     height: auto;
 }
@@ -3478,7 +3461,6 @@ select[multiple].input-lg {
     line-height: 46px;
 }
 
-.form-group-lg textarea.form-control,
 .form-group-lg select[multiple].form-control {
     height: auto;
 }
@@ -4739,9 +4721,6 @@ select.input-group-lg > .input-group-btn > .btn {
     line-height: 46px;
 }
 
-textarea.input-group-lg > .form-control,
-textarea.input-group-lg > .input-group-addon,
-textarea.input-group-lg > .input-group-btn > .btn,
 select[multiple].input-group-lg > .form-control,
 select[multiple].input-group-lg > .input-group-addon,
 select[multiple].input-group-lg > .input-group-btn > .btn {
@@ -4765,9 +4744,6 @@ select.input-group-sm > .input-group-btn > .btn {
     line-height: 30px;
 }
 
-textarea.input-group-sm > .form-control,
-textarea.input-group-sm > .input-group-addon,
-textarea.input-group-sm > .input-group-btn > .btn,
 select[multiple].input-group-sm > .form-control,
 select[multiple].input-group-sm > .input-group-addon,
 select[multiple].input-group-sm > .input-group-btn > .btn {

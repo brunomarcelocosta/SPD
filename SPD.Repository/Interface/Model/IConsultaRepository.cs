@@ -2,7 +2,10 @@
 
 namespace SPD.Repository.Interface.Model
 {
-    public interface IConsultaRepository :IRepositoryBase<Consulta>
+    public interface IConsultaRepository : IRepositoryBase<Consulta>
     {
+        void Insert(Consulta consulta);
+
+        void InsertSQL(Consulta consulta);
     }
 }

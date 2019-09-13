@@ -2,7 +2,9 @@
 $(function () {
 
     var canvas = document.getElementById("odontogramaAdulto");
+
     var ctx = canvas.getContext("2d");
+
 
     var fundoImg = new Image();
 
@@ -15,8 +17,8 @@ $(function () {
     };
 
     var signaturePad = new SignaturePad(canvas);
-    signaturePad.minWidth = 1;
-    signaturePad.maxWidth = 1;
+    signaturePad.minWidth = 3;
+    signaturePad.maxWidth = 3;
     signaturePad.penColor = "rgb(66, 133, 244)";
 
 
@@ -24,10 +26,19 @@ $(function () {
 
 
 function SalvarConsulta() {
+
+    if (!ValidaDescricao()) {
+        swal("", "A descrição do atendimento é obrigatório.", "error");
+        return false;
+    }
+
     var urlList = '/Consulta/List';
     var msg = "Deseja realmente finalizar Atendimento?";
 
+    var canvas = document.querySelector('#odontogramaAdulto');
+    var pad = new SignaturePad(canvas);
     var data = pad.toDataURL();
+
     $("#Img_string").val(data);
 
     var data = {
@@ -74,4 +85,15 @@ function SalvarConsulta() {
     return false;
 
 }
+
+function ValidaDescricao() {
+    var desc = $("#Descricao_Procedimento").val();
+
+    if (desc == null || desc == "") {
+        return false
+    }
+
+    return true;
+}
+
 

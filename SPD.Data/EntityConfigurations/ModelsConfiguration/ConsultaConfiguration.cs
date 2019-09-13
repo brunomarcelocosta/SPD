@@ -45,11 +45,6 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
             Property(consulta => consulta.EXAME)
            .HasColumnName("exame");
 
-            Property(consulta => consulta.COMENTARIOS)
-           .HasColumnName("comentarios")
-           .HasMaxLength(null)
-           .IsRequired();
-
             Property(consulta => consulta.DT_CONSULTA)
            .HasColumnName("dt_consulta")
            .IsRequired();

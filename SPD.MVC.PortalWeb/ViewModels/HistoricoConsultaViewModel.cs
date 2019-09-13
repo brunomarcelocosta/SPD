@@ -1,5 +1,6 @@
 ﻿using SPD.MVC.Geral.ViewModels;
 using System;
+using System.Collections.Generic;
 
 namespace SPD.MVC.PortalWeb.ViewModels
 {
@@ -11,5 +12,13 @@ namespace SPD.MVC.PortalWeb.ViewModels
         public virtual ConsultaViewModel Consulta { get; set; }
 
         public DateTime Dt_Consulta { get; set; }
+
+        public List<HistoricoConsultaViewModel> ListHistoricoConsultaViewModels { get; set; }
+
+        public string DataConsulta { get; set; }
+        public string DescricaoConsulta { get; set; }
+        public string Dentista { get; set; }
+        public string Paciente { get; set; }
+
     }
 }

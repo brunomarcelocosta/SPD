@@ -87,6 +87,9 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             foreach (var item in consultaViewModel.ListPreConsultaViewModel.OrderBy(a => a.Agenda.Dentista.Nome).ThenBy(a => a.Agenda.Hora_Inicio))
             {
+                var existe = _ConsultaService.QueryAsNoTracking().Where(a => a.ID_PRE_CONSULTA == item.ID).ToList().Count() > 0 ? true : false;
+
+
                 listToView.Add(new
                 {
                     item.ID,
@@ -94,6 +97,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     Paciente = item.Agenda.Nome_Paciente,
                     Autorizado = item.Autorizado == true ? "Sim" : "Não",
                     item.Convenio,
+                    existe
                 });
             }
 
@@ -142,7 +146,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     consultaViewModel.Paciente_string = nome;
                 }
 
-                if (!string.IsNullOrWhiteSpace(collection["HoraDe_Filtro"]) && !string.IsNullOrWhiteSpace(collection["DataAte"]))
+                if (!string.IsNullOrWhiteSpace(collection["HoraDe_Filtro"]) && !string.IsNullOrWhiteSpace(collection["HoraDe_Filtro"]))
                 {
                     var dataDe = Convert.ToDateTime(collection["HoraDe_Filtro"].ToString());
                     var dataAte = Convert.ToDateTime(collection["HoraAte_Filtro"].ToString());
@@ -226,6 +230,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                 Celular = preConsulta.Agenda.Celular,
                 Idade_string = $"{idade} anos",
                 ListHistoricoConsultaViewModels = historicos,
+                Convenio_string = preConsulta.Convenio,
                 Img_string = odontograma_string
             };
 
@@ -250,7 +255,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
             var user_logado = _UsuarioService.GetById(this.GetAuthenticationFromSession().ID);
 
-            if (!_ConsultaService.Insert(consulta, user_logado, out string resultado))
+            if (!_ConsultaService.Insert(consulta, preConsulta.AGENDA.NOME_PACIENTE, user_logado, out string resultado))
             {
                 return Json(new
                 {

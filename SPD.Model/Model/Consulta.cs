@@ -22,8 +22,6 @@ namespace SPD.Model.Model
 
         public byte[] EXAME { get; set; }
 
-        public string COMENTARIOS { get; set; }
-
         public DateTime DT_CONSULTA { get; set; }
 
         //public bool EXCLUIDO { get; set; } // 0 - NAO       1 -  SIM 

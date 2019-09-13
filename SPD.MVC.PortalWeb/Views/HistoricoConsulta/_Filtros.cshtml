@@ -1,0 +1,69 @@
+﻿
+@model SPD.MVC.PortalWeb.ViewModels.HistoricoConsultaViewModel
+
+<div class="row alert alert-info" style="margin-left:5px; margin-right:6px;">
+    <h4><span class="glyphicon glyphicon-filter"></span> <b>Filtros </b></h4>
+    <div class="row" id="linha_ordenada"></div>
+    <div class="row" id="linha">
+
+        <div class="row">
+
+            <div class="form-group col-md-3" style="padding-left:32px;">
+                @Html.Label("Dentista")
+                @Html.EditorFor(model => model.Dentista, new { htmlAttributes = new { @Value = Model.Dentista, @class = "form-control " } })
+            </div>
+
+            <div class="form-group col-md-1" style="padding-left:0px;">
+            </div>
+
+            <div class="form-group col-md-3" style="padding-left:0px;">
+                @Html.Label("Paciente")
+                @Html.EditorFor(model => model.Paciente, new { htmlAttributes = new { @Value = Model.Paciente, @class = "form-control " } })
+            </div>
+
+            <div class="form-group col-md-1" style="padding-left:0px;">
+            </div>
+
+            <div class="form-group col-md-4" id="divDataOper" style="padding-left:0px;">
+                @Html.Label("Data da Consulta")
+                <div class="input-group input-daterange col-md-12">
+                    @Html.EditorFor(model => model.DataDe, new { htmlAttributes = new { @Value = Model.DataDe_Filtro, @class = "form-control data  ", @name = "start", @style = "width:167px" } })
+                    <span class="input-group-addon" style="vertical-align: top; height: 18px; font-size:small;position:center;">até</span>
+                    @Html.EditorFor(model => model.DataAte, new { htmlAttributes = new { @Value = Model.DataAte_Filtro, @class = "form-control data  ", @name = "end", @style = "width:156px" } })
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4 col-md-offset-4 text-center" id="divAcoes">
+        <br />
+        <button type="button" ID="btnFiltrar" class="btn btn-primary" name="btnFiltrar" value="btnFiltrar" onclick="aplicarFiltro();">Filtrar</button>
+        <button type="button" id="btnLimpar" name="btnLimparFiltro" value="btnLimparFiltro" class="btn btn-default" onclick="limpar_Filtros(); aplicarFiltro();">Limpar Filtros</button>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function aplicarFiltro() {
+        $('#frmPrincipal').submit();
+    }
+
+    function limpar_Filtros() {
+
+        $("#Dentista").val("");
+        $("#Paciente").val("");
+        $("#DataDe").val("");
+        $("#DataAte").val("");
+    }
+
+</script>
+
+
+

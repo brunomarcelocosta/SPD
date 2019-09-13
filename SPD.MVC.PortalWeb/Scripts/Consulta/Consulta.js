@@ -92,6 +92,9 @@ function DataTable() {
             { "data": "Convenio", "orderable": false, "autoWidth": true },
             {
                 "data": null, "render": function (data, type, row) {
+                    if (row.existe) {
+                        return '<span style="color:green;" class="glyphicon glyphicon-ok"></span> <b style="color:green">Consulta Realizada</b> ';
+                    }
                     return '<button type="button" id="' + row.ID + '" class="btn btn-primary btn-sm" onclick="IniciarConsulta(this)" >Iniciar Consulta</button>';
                 }
             }

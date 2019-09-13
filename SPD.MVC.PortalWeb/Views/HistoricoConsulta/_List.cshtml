@@ -1,0 +1,54 @@
+﻿
+@using PagedList.Mvc;
+
+@model PagedList.IPagedList<SPD.MVC.PortalWeb.ViewModels.HistoricoConsultaViewModel>
+
+
+<style>
+    .sorting {
+        color: #428bca;
+        font: bold;
+    }
+
+    .sorting_asc {
+        color: #428bca;
+        font: bold;
+    }
+
+    .sorting_desc {
+        color: #428bca;
+        font: bold;
+    }
+</style>
+
+<table id="idGrid" class="table table-hover table-condensed text-left" cellspacing="0" style="border-collapse:collapse;border:0px">
+    <thead>
+        <tr>
+            <th scope="col"> Data da Consulta</th>
+            <th scope="col"> Paciente</th>
+            <th scope="col"> Dentista</th>
+            <th scope="col"> Descrição</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ListHistoricoConsultaViewModels)
+        {
+            <tr>
+                <td> @item.DataConsulta</td>
+                <td> @item.Paciente</td>
+                <td> @item.Dentista</td>
+                <td> @item.DescricaoConsulta</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<div id='Paging' style="text-align:left">
+    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount*@
+
+    @Html.PagedListPager(Model, page => Url.Action("Pagination", new { page }))
+</div>
+
