@@ -24,6 +24,7 @@ namespace SPD.MVC.Geral.ViewModels
         public string FieldSort { get; set; }
         public int PageNumber { get; set; }
         public int PageCount { get; set; }
+        public int PageSize { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? DataDe { get; set; }

@@ -124,9 +124,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Migrations\Comando Migrations.txt" />
-    <Content Include="Procedures\SP_INSERT_HISTORICO_AUTORIZACAO.sql" />
+    <Content Include="Procedures\SP_INSERT_CONSULTA.sql" />
     <Content Include="Procedures\SP_INSERT_HISTORICO_CONSULTA.sql" />
     <Content Include="Procedures\SP_INSERT_HISTORICO_OPERACAO.sql" />
+    <Content Include="Procedures\SP_SELECT_CONSULTA.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SPD.Model\SPD.Model.csproj">

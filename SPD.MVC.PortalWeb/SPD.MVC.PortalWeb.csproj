@@ -577,6 +577,7 @@
     <Content Include="Scripts\Dentista\Dentista.js" />
     <Content Include="Scripts\Dentista\DentistaEdit.js" />
     <Content Include="Scripts\Dentista\DentistaNew.js" />
+    <Content Include="Scripts\HistoricoConsulta\Historico.js" />
     <Content Include="Scripts\HistoricoOperacao\HistoricoOperacao.js" />
     <Content Include="bin\roslyn\csc.exe.config" />
     <Content Include="bin\roslyn\csc.rsp" />

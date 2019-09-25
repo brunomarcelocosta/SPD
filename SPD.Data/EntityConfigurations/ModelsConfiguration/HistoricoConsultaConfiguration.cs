@@ -29,6 +29,12 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
             Property(hist => hist.DT_CONSULTA)
            .HasColumnName("dt_consulta")
            .IsRequired();
+
+            this.Ignore(hist => hist.DataConsulta);
+            this.Ignore(hist => hist.Dentista);
+            this.Ignore(hist => hist.Paciente);
+            this.Ignore(hist => hist.Descricao);
+
         }
     }
 }

@@ -15,5 +15,10 @@ namespace SPD.Model.Model
 
         public DateTime DT_CONSULTA { get; set; }
 
+        public virtual string DataConsulta { get; set; }
+        public virtual string Dentista { get; set; }
+        public virtual string Paciente { get; set; }
+        public virtual string Descricao { get; set; }
+
     }
 }

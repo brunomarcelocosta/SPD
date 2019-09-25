@@ -1,7 +1,7 @@
 ﻿
 @using PagedList.Mvc;
 
-@model PagedList.IPagedList<SPD.MVC.PortalWeb.ViewModels.HistoricoConsultaViewModel>
+@model SPD.MVC.PortalWeb.ViewModels.HistoricoConsultaViewModel
 
 
 <style>
@@ -31,13 +31,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ListHistoricoConsultaViewModels)
+        @if (Model.ListHistoricoConsulta.Count <= 0)
+        {
+            <tr>
+                <td colspan="4" align="center"> Nenhum registro encontrado.</td>
+            </tr>
+        }
+
+        @foreach (var item in Model.ListHistoricoConsulta)
         {
             <tr>
                 <td> @item.DataConsulta</td>
                 <td> @item.Paciente</td>
                 <td> @item.Dentista</td>
-                <td> @item.DescricaoConsulta</td>
+                <td> @item.Descricao</td>
 
             </tr>
         }
@@ -46,9 +53,16 @@
 
 <br />
 <div id='Paging' style="text-align:left">
-    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-        of @Model.PageCount*@
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("Pagination", new { page }))
+    @Html.PagedListPager(Model.ListHistoricoConsulta, page => Url.Action("List", new
+{
+    page,
+    dt_init = Model.DataDe.ToString(),
+    dt_end = Model.DataAte.ToString(),
+    dentista = Model.Dentista,
+    paciente = Model.Paciente
+}))
 </div>
 

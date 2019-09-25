@@ -18,5 +18,11 @@ namespace SPD.Services.Services.Model
         {
             _HistoricoConsultaRepository = historicoConsultaRepository;
         }
+
+        public List<HistoricoConsulta> Select()
+        {
+            return _HistoricoConsultaRepository.Select();
+        }
+
     }
 }

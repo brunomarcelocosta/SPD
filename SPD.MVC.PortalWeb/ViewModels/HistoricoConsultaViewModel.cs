@@ -1,4 +1,5 @@
-﻿using SPD.MVC.Geral.ViewModels;
+﻿using PagedList;
+using SPD.MVC.Geral.ViewModels;
 using System;
 using System.Collections.Generic;
 
@@ -15,8 +16,10 @@ namespace SPD.MVC.PortalWeb.ViewModels
 
         public List<HistoricoConsultaViewModel> ListHistoricoConsultaViewModels { get; set; }
 
+        public IPagedList<HistoricoConsultaViewModel> ListHistoricoConsulta { get; set; }
+
         public string DataConsulta { get; set; }
-        public string DescricaoConsulta { get; set; }
+        public string Descricao { get; set; }
         public string Dentista { get; set; }
         public string Paciente { get; set; }
 
