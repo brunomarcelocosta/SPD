@@ -20,6 +20,7 @@ namespace SPDService.Controllers
             try
             {
                 Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("pt-BR");
+                // site :  https://seguro10.iphotel.com.br/crownodonto/novosite/dentistas.html
 
                 Service service = new Service();
             }
