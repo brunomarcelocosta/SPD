@@ -34,7 +34,7 @@ namespace SPD.MVC.PortalWeb.Controllers
 
         #region List
 
-        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Visualizar Histórico de Operação\"}")]
+        [UseAuthorization(Funcionalidades = "{\"Nome\":\"Histórico de Consultas\"}")]
         public ActionResult List(int? page, string dt_init = "", string dt_end = "", string dentista = "", string paciente = "")
         {
             int pageNumber = (page ?? 1);

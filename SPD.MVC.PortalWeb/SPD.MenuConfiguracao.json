@@ -87,7 +87,7 @@
         "Modulo": "SPD.MVC.PortalWeb",
         "Controle": "HistoricoConsulta",
         "Acao": "List",
-        "Perfil": "Listar Histórico de Consultas"
+        "Perfil": "Histórico de Consultas"
       }
     ]
   }

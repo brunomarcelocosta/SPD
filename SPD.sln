@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Projetos Web", "0 - Projetos Web", "{EC2E5758-7751-47AA-8C22-35569E5F1BDD}"
 EndProject
@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Data", "4 - Data", "{AF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Model", "1 - Model", "{73574920-95E7-48DB-9856-B6B569EBF635}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Itens Config", "6 - Itens Config", "{5EFF05F8-FA19-4BE3-8487-AA5E5009B179}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7 - Itens Config", "7 - Itens Config", "{5EFF05F8-FA19-4BE3-8487-AA5E5009B179}"
 	ProjectSection(SolutionItems) = preProject
 		DROP TABLE SQL.txt = DROP TABLE SQL.txt
 		SPD.Data\SPD.Data.ConnectionStrings.config = SPD.Data\SPD.Data.ConnectionStrings.config
@@ -37,6 +37,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.MVC.PortalWeb", "SPD.MVC.PortalWeb\SPD.MVC.PortalWeb.csproj", "{5B3BCC0B-6BD0-46E8-8040-C82C070F06D7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPD.MVC.Geral", "SPD.MVC.Geral\SPD.MVC.Geral.csproj", "{1F423BBE-8065-4B88-A336-00B7576A3B88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Robô", "6 - Robô", "{8195F0F3-99BE-46E7-9FA4-05D568E7497A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPDService", "SPDService\SPDService.csproj", "{01454347-86E4-4EB9-843C-30F24CA5E16E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +76,10 @@ Global
 		{1F423BBE-8065-4B88-A336-00B7576A3B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F423BBE-8065-4B88-A336-00B7576A3B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F423BBE-8065-4B88-A336-00B7576A3B88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01454347-86E4-4EB9-843C-30F24CA5E16E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01454347-86E4-4EB9-843C-30F24CA5E16E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01454347-86E4-4EB9-843C-30F24CA5E16E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01454347-86E4-4EB9-843C-30F24CA5E16E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +92,7 @@ Global
 		{DECB053B-11F8-4AE2-9609-149700D703C8} = {806FFC2F-9F07-4337-B424-30DA3C62F441}
 		{5B3BCC0B-6BD0-46E8-8040-C82C070F06D7} = {EC2E5758-7751-47AA-8C22-35569E5F1BDD}
 		{1F423BBE-8065-4B88-A336-00B7576A3B88} = {EC2E5758-7751-47AA-8C22-35569E5F1BDD}
+		{01454347-86E4-4EB9-843C-30F24CA5E16E} = {8195F0F3-99BE-46E7-9FA4-05D568E7497A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0FED0231-10FF-4987-986A-D22D82C72620}

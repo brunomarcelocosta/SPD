@@ -78,38 +78,6 @@
     <Compile Include="EntityConfigurations\ModelsConfiguration\UsuarioFuncionalidadeConfiguration.cs" />
     <Compile Include="Initializers\DatabaseInitializer.cs" />
     <Compile Include="Interfaces\Contexts\IDataContext.cs" />
-    <Compile Include="Migrations\201907181418480_Agenda.cs" />
-    <Compile Include="Migrations\201907181418480_Agenda.Designer.cs">
-      <DependentUpon>201907181418480_Agenda.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907241241525_add_campo_data_consulta_fim.cs" />
-    <Compile Include="Migrations\201907241241525_add_campo_data_consulta_fim.Designer.cs">
-      <DependentUpon>201907241241525_add_campo_data_consulta_fim.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907241503571_add_campo_hora_inicio_fim.cs" />
-    <Compile Include="Migrations\201907241503571_add_campo_hora_inicio_fim.Designer.cs">
-      <DependentUpon>201907241503571_add_campo_hora_inicio_fim.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907261259069_add_campo_celular_paciente.cs" />
-    <Compile Include="Migrations\201907261259069_add_campo_celular_paciente.Designer.cs">
-      <DependentUpon>201907261259069_add_campo_celular_paciente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907301804273_drop_column_dump_and_isativoFuncionalidade.cs" />
-    <Compile Include="Migrations\201907301804273_drop_column_dump_and_isativoFuncionalidade.Designer.cs">
-      <DependentUpon>201907301804273_drop_column_dump_and_isativoFuncionalidade.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908020314302_add_id_agenda_na_pre_consulta.cs" />
-    <Compile Include="Migrations\201908020314302_add_id_agenda_na_pre_consulta.Designer.cs">
-      <DependentUpon>201908020314302_add_id_agenda_na_pre_consulta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908220410336_configurando_metodos_consulta.cs" />
-    <Compile Include="Migrations\201908220410336_configurando_metodos_consulta.Designer.cs">
-      <DependentUpon>201908220410336_configurando_metodos_consulta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909130301023_remove campo comentario spd_consulta.cs" />
-    <Compile Include="Migrations\201909130301023_remove campo comentario spd_consulta.Designer.cs">
-      <DependentUpon>201909130301023_remove campo comentario spd_consulta.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ContextDebugger.cs" />
@@ -125,7 +93,6 @@
   <ItemGroup>
     <Content Include="Migrations\Comando Migrations.txt" />
     <Content Include="Procedures\SP_INSERT_CONSULTA.sql" />
-    <Content Include="Procedures\SP_INSERT_HISTORICO_CONSULTA.sql" />
     <Content Include="Procedures\SP_INSERT_HISTORICO_OPERACAO.sql" />
     <Content Include="Procedures\SP_SELECT_CONSULTA.sql" />
   </ItemGroup>
@@ -139,30 +106,6 @@
     <EmbeddedResource Include="Content\Texts\ErrorResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907181418480_Agenda.resx">
-      <DependentUpon>201907181418480_Agenda.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907241241525_add_campo_data_consulta_fim.resx">
-      <DependentUpon>201907241241525_add_campo_data_consulta_fim.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907241503571_add_campo_hora_inicio_fim.resx">
-      <DependentUpon>201907241503571_add_campo_hora_inicio_fim.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907261259069_add_campo_celular_paciente.resx">
-      <DependentUpon>201907261259069_add_campo_celular_paciente.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907301804273_drop_column_dump_and_isativoFuncionalidade.resx">
-      <DependentUpon>201907301804273_drop_column_dump_and_isativoFuncionalidade.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908020314302_add_id_agenda_na_pre_consulta.resx">
-      <DependentUpon>201908020314302_add_id_agenda_na_pre_consulta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908220410336_configurando_metodos_consulta.resx">
-      <DependentUpon>201908220410336_configurando_metodos_consulta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909130301023_remove campo comentario spd_consulta.resx">
-      <DependentUpon>201909130301023_remove campo comentario spd_consulta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

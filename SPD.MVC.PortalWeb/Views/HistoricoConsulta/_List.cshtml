@@ -53,8 +53,7 @@
 
 <br />
 <div id='Paging' style="text-align:left">
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-    of @Model.PageCount
+ 
 
     @Html.PagedListPager(Model.ListHistoricoConsulta, page => Url.Action("List", new
 {

@@ -52,7 +52,7 @@ namespace SPD.Model.Enums
             Login = 7,
             Logoff = 8,
             Sistema = 9,
-            Senha = 12
+            Senha = 10
         }
 
         public enum Tipo_Funcionalidades

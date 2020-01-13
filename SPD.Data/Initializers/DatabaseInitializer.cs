@@ -192,7 +192,6 @@ namespace SPD.Data.Initializers
             Funcionalidade histconsulta = new Funcionalidade()
             {
                 NOME = "Histórico de Consultas"
-
             };
 
             Funcionalidade historico = new Funcionalidade()

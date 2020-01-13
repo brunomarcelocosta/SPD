@@ -37,7 +37,7 @@ namespace SPD.Data.Contexts
                 .ConnectionStrings["SqlServer"]
                 .ConnectionString
                 .Split(";".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                .Where(token => token.Contains("User Id"))
+                //.Where(token => token.Contains("User Id"))
                 .First()
                 .Split("=".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                 .Last();
