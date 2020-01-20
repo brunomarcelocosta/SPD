@@ -1,0 +1,17 @@
+﻿using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SPDService.Controllers
+{
+    public class CaptchaController
+    {
+        public void GetCaptcha(IWebDriver driver)
+        {
+            //https://www.deathbycaptcha.eu/user/info
+        }
+    }
+}

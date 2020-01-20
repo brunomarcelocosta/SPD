@@ -1,6 +1,11 @@
 ﻿using System.Diagnostics;
 using System.ServiceProcess;
 using ServiceController = SPDService.Controllers.ServiceController;
+using tessnet2;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System;
 
 namespace SPDService
 {
@@ -13,18 +18,18 @@ namespace SPDService
             _eventLog = CreateApplicationLog();
             _eventLog.WriteEntry("Iniciando Serviço", EventLogEntryType.Information);
 
-            if (args.Length > 0)
-            {
-                new ServiceController().StartMethod();
-            }
-            else
-            {
-                ServiceBase[] ServicesToRun;
+            //if (args.Length > 0)
+            //{
+            new ServiceController().StartMethod();
+            //}
+            //else
+            //{
+            //    ServiceBase[] ServicesToRun;
 
-                ServicesToRun = new ServiceBase[] { new SPDService() };
+            //    ServicesToRun = new ServiceBase[] { new SPDService() };
 
-                ServiceBase.Run(ServicesToRun);
-            }
+            //    ServiceBase.Run(ServicesToRun);
+            //}
         }
 
         private static EventLog CreateApplicationLog()
