@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using SPDService.Services;
 using System;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -10,7 +11,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Policy;
+using System.Text;
 using System.Threading;
+using DeathByCaptcha;
 
 namespace SPDService.Controllers
 {
@@ -23,15 +26,26 @@ namespace SPDService.Controllers
         {
             try
             {
-                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
 
-                Console.WriteLine("Iniciando a task.");
+                Client client = (Client)new SocketClient(ConfigurationManager.AppSettings["usernameCaptcha"].ToString(),
+                                                          ConfigurationManager.AppSettings["passwordCaptcha"].ToString());
 
-                Begin();
+                Captcha captcha = client.Decode(ConfigurationManager.AppSettings["downloadCaptcha"].ToString(), 120);
 
-                Service service = new Service();
+                if (captcha.Solved && captcha.Correct)
+                {
+                    Console.WriteLine("CAPTCHA {0}: {1}", captcha.Id, captcha.Text);
+                }
+
+                //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
+
+                //Console.WriteLine("Iniciando a task.");
+
+                //Begin();
+
+                //Service service = new Service();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 var msg = ex.Message;
             }
@@ -51,10 +65,7 @@ namespace SPDService.Controllers
         private IWebDriver OpenWebDriver()
         {
 
-            var download = ConfigurationManager.AppSettings["download"].ToString();
-
             var co = new ChromeOptions();
-            co.AddUserProfilePreference("download.default_directory", download);
             co.AddArgument("--incognito");
 
             string chromeDriver = ConfigurationManager.AppSettings["chromedriver"].ToString();
@@ -67,7 +78,7 @@ namespace SPDService.Controllers
 
 
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 throw ex;
             }
@@ -77,40 +88,50 @@ namespace SPDService.Controllers
 
         private void GetImageCaptcha(IWebDriver driver)
         {
-            var download = ConfigurationManager.AppSettings["download"].ToString();
+            var downloadCaptcha = ConfigurationManager.AppSettings["downloadCaptcha"].ToString();
+            var downloadSite = ConfigurationManager.AppSettings["downloadSite"].ToString();
 
             driver.SwitchTo().ParentFrame();
 
-            var url_img = driver.FindElement(By.XPath("//img[contains(@src, 'CaptchaImage.aspx')]")).GetAttribute("src");
+            ITakesScreenshot ssdriver = driver as ITakesScreenshot;
+            Screenshot screenshot = ssdriver.GetScreenshot();
 
-            IWebElement txtID = driver.FindElement(By.XPath("//input[contains(@id, 'txtId')]"));
+            Screenshot tempImage = screenshot;
 
+            tempImage.SaveAsFile(downloadSite, ScreenshotImageFormat.Png);
 
+            IWebElement my_image = driver.FindElement(By.XPath("//img[contains(@src, 'CaptchaImage.aspx')]"));
 
-            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            Point point = my_image.Location;
+            int width = my_image.Size.Width;
+            int height = my_image.Size.Height;
 
-            var url = js.ExecuteScript(@" var text = 'CaptchaImage'; JQuery('img[src*= text]')") as string;
+            Rectangle section = new Rectangle(point, new Size(width, height));
+            Bitmap source = new Bitmap(downloadSite);
+            Bitmap final_image = CropImage(source, section);
 
-            var base64string = js.ExecuteScript(" Image img = new Image(); img.src = " + url_img + "
-                                                    var c = document.createElement('canvas');
-                                                    var ctx = c.getContext('2d');
-                                                    var img = document.getElementByTagName('img');
-                                                    c.height=img.naturalHeight;
-                                                    c.width=img.naturalWidth;
-                                                    ctx.drawImage(img, 0, 0,img.naturalWidth, img.naturalHeight);
-                                                    var base64String = c.toDataURL();
-                                                    return base64String",url_img) as string;
+            final_image.Save(downloadCaptcha);
 
-            var base64 = base64string.Split(',').Last();
-            //using (var stream = new MemoryStream(Convert.FromBase64String(base64)))
-            //{
-            //    using (var bitmap = new Bitmap(stream))
-            //    {
-            //        var filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ImageName.png");
-            //        bitmap.Save(filepath, ImageFormat.Png);
-            //    }
-            //}
+        }
 
+        public Bitmap CropImage(Bitmap source, Rectangle section)
+        {
+            Bitmap bmp = new Bitmap(section.Width, section.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            g.DrawImage(source, 0, 0, section, GraphicsUnit.Pixel);
+            return bmp;
+        }
+
+        private void GetTextCaptcha(IWebDriver driver)
+        {
+            driver.FindElement(By.CssSelector("body")).SendKeys(Keys.Control + "t");
+            driver.SwitchTo().Window(driver.WindowHandles.Last());
+            driver.Navigate().GoToUrl(ConfigurationManager.AppSettings["breakcaptcha"].ToString());
+
+            //login-username
+            //login-password
+
+            //driver.SwitchTo().Window(driver.WindowHandles.First());
         }
 
     }
