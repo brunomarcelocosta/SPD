@@ -27,23 +27,22 @@ namespace SPDService.Controllers
             try
             {
 
-                Client client = (Client)new SocketClient(ConfigurationManager.AppSettings["usernameCaptcha"].ToString(),
-                                                          ConfigurationManager.AppSettings["passwordCaptcha"].ToString());
+                //Client client = (Client)new SocketClient(ConfigurationManager.AppSettings["usernameCaptcha"].ToString(),
+                //                                          ConfigurationManager.AppSettings["passwordCaptcha"].ToString());
 
-                Captcha captcha = client.Decode(ConfigurationManager.AppSettings["downloadCaptcha"].ToString(), 120);
+                //Captcha captcha = client.Decode(ConfigurationManager.AppSettings["downloadCaptcha"].ToString(), 120);
 
-                if (captcha.Solved && captcha.Correct)
-                {
-                    Console.WriteLine("CAPTCHA {0}: {1}", captcha.Id, captcha.Text);
-                }
+                //if (captcha.Solved && captcha.Correct)
+                //{
+                //    Console.WriteLine("CAPTCHA {0}: {1}", captcha.Id, captcha.Text);
+                //}
 
-                //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
+                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
 
-                //Console.WriteLine("Iniciando a task.");
+                Console.WriteLine("Iniciando a task.");
 
-                //Begin();
+                Begin();
 
-                //Service service = new Service();
             }
             catch (System.Exception ex)
             {
@@ -56,9 +55,16 @@ namespace SPDService.Controllers
             // var infos = GetDataProntuario();
             // separar por convenios
 
+            var files = Directory.GetFiles(ConfigurationManager.AppSettings["filaPath"].ToString());
+            foreach (string file in files)
+            {
+                File.Delete(file);
+            }
+
             var driver = OpenWebDriver();
             driver.Navigate().GoToUrl(ConfigurationManager.AppSettings["odontoCrown"].ToString());
             GetImageCaptcha(driver);
+            GetTextCaptcha(driver);
 
         }
 
@@ -128,8 +134,19 @@ namespace SPDService.Controllers
             driver.SwitchTo().Window(driver.WindowHandles.Last());
             driver.Navigate().GoToUrl(ConfigurationManager.AppSettings["breakcaptcha"].ToString());
 
+
+            var login = ConfigurationManager.AppSettings["usernameCaptcha"].ToString();
+            var password = ConfigurationManager.AppSettings["passwordCaptcha"].ToString();
+
             //login-username
+            driver.FindElement(By.Id("login-username")).SendKeys(login);
             //login-password
+            driver.FindElement(By.Id("login-password")).SendKeys(password);
+
+            IWebElement frame = driver.FindElement(By.XPath("//div[contains(@class, 'g-recaptcha'"));
+            driver.SwitchTo().Frame(frame);
+            IWebElement checkbox = driver.FindElement(By.XPath("//div[contains(@id, 'recaptcha-checkbox')]"));
+            checkbox.Click();
 
             //driver.SwitchTo().Window(driver.WindowHandles.First());
         }
