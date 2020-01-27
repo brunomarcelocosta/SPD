@@ -1,13 +1,8 @@
 ﻿using SPD.Data.EntityTypeConfigurations;
 using SPD.Model.Model;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SPD.Data.EntityConfigurations.ModelsConfiguration
 {
@@ -33,13 +28,14 @@ namespace SPD.Data.EntityConfigurations.ModelsConfiguration
            .HasMaxLength(50)
            .IsRequired();
 
-            Property(dentista => dentista.ID_USUARIO)
-           .HasColumnName("fk_id_usuario")
+            Property(dentista => dentista.ID_CLINICA)
+           .HasColumnName("fk_id_clinica")
            .IsRequired()
            .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("SPD_DENTISTA_SPD_USUARIO_FK")));
-            HasRequired(dentista => dentista.USUARIO)
+            HasRequired(dentista => dentista.CLINICA)
            .WithMany()
-           .HasForeignKey(dentista => dentista.ID_USUARIO);
+           .HasForeignKey(dentista => dentista.ID_CLINICA);
+
             Property(dentista => dentista.DT_INSERT)
            .HasColumnName("dt_insert")
            .IsRequired();

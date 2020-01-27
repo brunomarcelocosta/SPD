@@ -40,7 +40,7 @@ namespace SPD.Services.Services.Model
 
         public bool ExisteDentistaUsuario(Dentista dentista)
         {
-            var list = _DentistaRepository.Query().Where(a => a.ID_USUARIO == dentista.USUARIO.ID).ToList();
+            var list = _DentistaRepository.Query().Where(a => a.ID_USUARIO == dentista.CLINICA.ID).ToList();
 
             if (list.Count > 0)
                 return true;
@@ -66,7 +66,7 @@ namespace SPD.Services.Services.Model
                     return false;
                 }
 
-                dentista.USUARIO = _UsuarioRepository.GetById(dentista.USUARIO.ID);
+                dentista.CLINICA = _UsuarioRepository.GetById(dentista.CLINICA.ID);
                 dentista.DT_INSERT = DateTime.Now;
 
                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))
@@ -101,8 +101,8 @@ namespace SPD.Services.Services.Model
                 return false;
             }
 
-            dentistaBD = _dentistaBD.Where(a => a.ID_USUARIO == dentista.USUARIO.ID).FirstOrDefault();
-            if (dentistaBD.ID_USUARIO != dentista.USUARIO.ID)
+            dentistaBD = _dentistaBD.Where(a => a.ID_USUARIO == dentista.CLINICA.ID).FirstOrDefault();
+            if (dentistaBD.ID_USUARIO != dentista.CLINICA.ID)
             {
                 resultado = "Já existe dentista vinculado com este usuário.";
                 return false;
@@ -110,7 +110,7 @@ namespace SPD.Services.Services.Model
 
             try
             {
-                var user = _UsuarioRepository.GetById(dentista.USUARIO.ID);
+                var user = _UsuarioRepository.GetById(dentista.CLINICA.ID);
                 dentista.DT_INSERT = DateTime.Now;
 
                 //using (TransactionScope transactionScope = Transactional.ExtractTransactional(this.TransactionalMaps))

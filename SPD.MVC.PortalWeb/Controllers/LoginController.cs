@@ -73,7 +73,7 @@ namespace SPD.MVC.PortalWeb.Controllers
                     authenticationViewModel.Nome = usuario.NOME;
                     authenticationViewModel.TrocaSenhaObrigatoria = usuario.TROCA_SENHA_OBRIGATORIA;
                     authenticationViewModel.EnderecoIP = enderecoIP;
-                    authenticationViewModel.SessionID = this._SessaoUsuarioService.GetSessaoByUsuarioID(usuario.ID).ID;
+                    //authenticationViewModel.SessionID = this._SessaoUsuarioService.GetSessaoByUsuarioID(usuario.ID).ID;
                     authenticationViewModel.FuncionalidadesUsuarioIDs = usuario.FuncionalidadesUsuarioIDs;
                     authenticationViewModel.FuncionalidadesUsuarioNomes = usuario.FuncionalidadesUsuarioNomes;
 

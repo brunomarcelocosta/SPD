@@ -13,7 +13,7 @@ namespace SPD.Repository.Repository.Model
             {
                 dentistaUpdate.NOME = dentista.NOME;
                 dentistaUpdate.CRO = dentista.CRO;
-                dentistaUpdate.USUARIO = usuario;
+                dentistaUpdate.CLINICA = usuario;
                 dentistaUpdate.DT_INSERT = dentista.DT_INSERT;
 
                 UpdateEntity(dentistaUpdate);

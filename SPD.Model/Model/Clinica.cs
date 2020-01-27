@@ -2,18 +2,17 @@
 
 namespace SPD.Model.Model
 {
-    public class Dentista
+    public class Clinica
     {
         public int ID { get; set; }
 
         public string NOME { get; set; }
 
-        public string CRO { get; set; }
+        public byte[] LOGO { get; set; }
 
-        public int ID_CLINICA { get; set; }
-        public virtual Clinica CLINICA { get; set; }
+        public int ID_USUARIO { get; set; }
+        public virtual Usuario USUARIO { get; set; }
 
         public DateTime DT_INSERT { get; set; }
-
     }
 }

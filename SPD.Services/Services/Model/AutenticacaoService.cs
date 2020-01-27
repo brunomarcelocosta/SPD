@@ -74,35 +74,28 @@ namespace SPD.Services.Services.Model
                     {
                         if (user.IsATIVO)
                         {
-                            if (!user.IsBLOQUEADO)
+                            var conexoes = this._SessaoUsuarioRepository.QueryAsNoTracking().Where(sessaoUsuario => sessaoUsuario.ID_USUARIO.Equals(user.ID)).ToList();
+
+                            if (conexoes.Count > 0)
                             {
-                                var conexoes = this._SessaoUsuarioRepository.QueryAsNoTracking().Where(sessaoUsuario => sessaoUsuario.ID_USUARIO.Equals(user.ID)).ToList();
-
-                                if (conexoes.Count > 0)
-                                {
-                                    _SessaoUsuarioRepository.DeleteSessao(user.ID);
-                                }
-
-                                this._SessaoUsuarioRepository.InsertSessao(user.ID, enderecoIP);
-
-                                this._HistoricoOperacaoRepository.Insert("Usuário efetuou login", user, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
-
-                                usuario = user;
-
-                                var list = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID).ToList();
-
-                                usuario.ListUsuarioFuncionalidade = list;
-
-                                usuario.FuncionalidadesUsuarioIDs = list.Select(a => a.ID_FUNCIONALIDADE).ToList();
-                                usuario.FuncionalidadesUsuarioNomes = list.Select(a => a.Funcionalidade.NOME).ToList();
+                                _SessaoUsuarioRepository.DeleteSessao(user.ID);
                             }
 
-                            else
-                            {
-                                this._HistoricoOperacaoRepository.Insert("Tentativa de acesso de usuário bloqueado.", usuario, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+                            this._SessaoUsuarioRepository.InsertSessao(user.ID, enderecoIP);
 
-                                throw new Exception("Usuário bloqueado. Contate o administrador.");
-                            }
+                            this._HistoricoOperacaoRepository.Insert("Usuário efetuou login", user, Tipo_Operacao.Login, Tipo_Funcionalidades.EfetuarLogin);
+
+                            usuario = user;
+
+                            var list = _UsuarioFuncionalidadeRepository.Query().Where(a => a.ID_USUARIO == user.ID).ToList();
+
+                            usuario.ListUsuarioFuncionalidade = list;
+
+                            usuario.FuncionalidadesUsuarioIDs = list.Select(a => a.ID_FUNCIONALIDADE).ToList();
+                            usuario.FuncionalidadesUsuarioNomes = list.Select(a => a.Funcionalidade.NOME).ToList();
+
+
+
                         }
                         else
                         {
